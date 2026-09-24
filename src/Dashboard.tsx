@@ -1,170 +1,113 @@
-import type { Player } from "./App";
-
-type Match = {
-  id: number;
-  home: string;
-  away: string;
-  homeGoals: number;
-  awayGoals: number;
-  date: string;
-};
+import type { Match, Player } from "./App";
 
 type DashboardProps = {
   matches: Match[];
   playerList: Player[];
   team: string;
+  setTeam: (team: string) => void;
 };
 
-function Dashboard({
-  matches,
-  playerList,
-  team
-}: DashboardProps) {
-  const playedMatches = matches.filter(
-    (match) =>
-      match.home === team || match.away === team
-  );
+function Dashboard({ matches, playerList, team, setTeam }: DashboardProps) {
+  const played = matches.filter((match) => match.home === team || match.away === team);
 
-  const wins = playedMatches.filter((match) => {
-    const teamGoals =
-      match.home === team
-        ? match.homeGoals
-        : match.awayGoals;
+  const getTeamGoals = (match: Match) => match.home === team ? match.homeGoals : match.awayGoals;
+  const getOpponentGoals = (match: Match) => match.home === team ? match.awayGoals : match.homeGoals;
 
-    const opponentGoals =
-      match.home === team
-        ? match.awayGoals
-        : match.homeGoals;
-
-    return teamGoals > opponentGoals;
-  }).length;
-
-  const draws = playedMatches.filter((match) => {
-    return match.homeGoals === match.awayGoals;
-  }).length;
-
-  const losses = playedMatches.filter((match) => {
-    const teamGoals =
-      match.home === team
-        ? match.homeGoals
-        : match.awayGoals;
-
-    const opponentGoals =
-      match.home === team
-        ? match.awayGoals
-        : match.homeGoals;
-
-    return teamGoals < opponentGoals;
-  }).length;
-
+  const wins = played.filter((match) => getTeamGoals(match) > getOpponentGoals(match)).length;
+  const draws = played.filter((match) => getTeamGoals(match) === getOpponentGoals(match)).length;
+  const losses = played.filter((match) => getTeamGoals(match) < getOpponentGoals(match)).length;
   const points = wins * 3 + draws;
-
-  const goalsFor = playedMatches.reduce(
-    (total, match) =>
-      total +
-      (match.home === team
-        ? match.homeGoals
-        : match.awayGoals),
-    0
-  );
-
-  const goalsAgainst = playedMatches.reduce(
-    (total, match) =>
-      total +
-      (match.home === team
-        ? match.awayGoals
-        : match.homeGoals),
-    0
-  );
-
+  const goalsFor = played.reduce((sum, match) => sum + getTeamGoals(match), 0);
+  const goalsAgainst = played.reduce((sum, match) => sum + getOpponentGoals(match), 0);
   const goalDifference = goalsFor - goalsAgainst;
+  const winPercentage = played.length ? Math.round((wins / played.length) * 100) : 0;
+  const averageGoals = played.length ? (goalsFor / played.length).toFixed(2) : "0.00";
 
-  const winPercentage =
-    playedMatches.length > 0
-      ? Math.round(
-          (wins / playedMatches.length) * 100
-        )
-      : 0;
+  const form = [...played]
+    .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+    .slice(0, 5)
+    .map((match) => {
+      const result = getTeamGoals(match) > getOpponentGoals(match) ? "W" : getTeamGoals(match) === getOpponentGoals(match) ? "G" : "V";
+      return <span key={match.id} className={`form-badge result-${result === "W" ? "win" : result === "G" ? "draw" : "loss"}`}>{result}</span>;
+    });
 
-  const averageGoals =
-    playedMatches.length > 0
-      ? (goalsFor / playedMatches.length).toFixed(2)
-      : "0.00";
-
-  const topScorer =
-    playerList.length > 0
-      ? [...playerList].sort(
-          (a, b) => b.goals - a.goals
-        )[0]
-      : null;
+  const topScorer = [...playerList].sort((a, b) => b.goals - a.goals)[0];
+  const bestPlayer = [...playerList].sort((a, b) => b.rating - a.rating)[0];
+  const totalGoals = playerList.reduce((sum, player) => sum + player.goals, 0);
+  const totalAssists = playerList.reduce((sum, player) => sum + player.assists, 0);
+  const totalMatches = playerList.reduce((sum, player) => sum + player.matches, 0);
+  const averageRating = playerList.length
+    ? (playerList.reduce((sum, player) => sum + player.rating, 0) / playerList.length).toFixed(1)
+    : "0.0";
 
   return (
     <div className="dashboard">
-      <h1>⚽ Dashboard</h1>
-
-      <h2>{team}</h2>
-
-      <div className="stats-grid">
-        <div className="stat-card">
-          <h3>Wedstrijden</h3>
-          <p>{playedMatches.length}</p>
+      <div className="page-heading">
+        <div>
+          <p className="eyebrow">TEAM OVERVIEW</p>
+          <h1>⚽ Dashboard</h1>
         </div>
-
-        <div className="stat-card">
-          <h3>Gewonnen</h3>
-          <p>{wins}</p>
-        </div>
-
-        <div className="stat-card">
-          <h3>Gelijk</h3>
-          <p>{draws}</p>
-        </div>
-
-        <div className="stat-card">
-          <h3>Verloren</h3>
-          <p>{losses}</p>
-        </div>
-
-        <div className="stat-card">
-          <h3>Punten</h3>
-          <p>{points}</p>
-        </div>
-
-        <div className="stat-card">
-          <h3>Doelsaldo</h3>
-          <p>{goalDifference}</p>
-        </div>
-
-        <div className="stat-card">
-          <h3>Winstpercentage</h3>
-          <p>{winPercentage}%</p>
-        </div>
-
-        <div className="stat-card">
-          <h3>Gem. goals</h3>
-          <p>{averageGoals}</p>
-        </div>
+        <select value={team} onChange={(e) => setTeam(e.target.value)} className="team-select">
+          <option>Feyenoord</option>
+          <option>Ajax</option>
+          <option>PSV</option>
+          <option>AZ</option>
+          <option>FC Twente</option>
+          <option>FC Utrecht</option>
+        </select>
       </div>
 
-      <div className="dashboard-extra">
-        <h2>Extra statistieken</h2>
+      <div className="stats-grid">
+        {[
+          ["Wedstrijden", played.length],
+          ["Gewonnen", wins],
+          ["Gelijk", draws],
+          ["Verloren", losses],
+          ["Punten", points],
+          ["Doelsaldo", goalDifference],
+          ["Winstpercentage", `${winPercentage}%`],
+          ["Gem. goals", averageGoals]
+        ].map(([label, value]) => (
+          <div className="stat-card" key={label}>
+            <h3>{label}</h3>
+            <p>{value}</p>
+          </div>
+        ))}
+      </div>
 
-        <p>
-          <strong>Goals voor:</strong>{" "}
-          {goalsFor}
-        </p>
+      <div className="dashboard-grid">
+        <section className="panel">
+          <h2>Teamstatistieken</h2>
+          <div className="stat-list">
+            <p><span>Goals voor</span><strong>{goalsFor}</strong></p>
+            <p><span>Goals tegen</span><strong>{goalsAgainst}</strong></p>
+            <p><span>Doelsaldo</span><strong>{goalDifference}</strong></p>
+            <p><span>Gemiddeld goals</span><strong>{averageGoals}</strong></p>
+          </div>
+        </section>
 
-        <p>
-          <strong>Goals tegen:</strong>{" "}
-          {goalsAgainst}
-        </p>
+        <section className="panel">
+          <h2>Teamvorm</h2>
+          <div className="form-row">{form.length ? form : <span>Geen wedstrijden</span>}</div>
+          <p className="muted">Laatste 5 wedstrijden</p>
+        </section>
 
-        <p>
-          <strong>Topscorer:</strong>{" "}
-          {topScorer
-            ? `${topScorer.name} (${topScorer.goals} goals)`
-            : "Nog geen spelers"}
-        </p>
+        <section className="panel">
+          <h2>Beste speler</h2>
+          {bestPlayer ? <div className="highlight-player"><span>⭐ {bestPlayer.name}</span><strong>{bestPlayer.rating.toFixed(1)}</strong></div> : <p>Geen spelers</p>}
+          {topScorer && <p className="muted">Topscorer: {topScorer.name} · {topScorer.goals} goals</p>}
+        </section>
+
+        <section className="panel">
+          <h2>Spelersstatistieken</h2>
+          <div className="stat-list">
+            <p><span>Spelers</span><strong>{playerList.length}</strong></p>
+            <p><span>Goals</span><strong>{totalGoals}</strong></p>
+            <p><span>Assists</span><strong>{totalAssists}</strong></p>
+            <p><span>Wedstrijden</span><strong>{totalMatches}</strong></p>
+            <p><span>Gem. rating</span><strong>{averageRating}</strong></p>
+          </div>
+        </section>
       </div>
     </div>
   );
