@@ -1,3 +1,4 @@
+
 import { useEffect, useState } from "react";
 import {
   BrowserRouter,
@@ -9,8 +10,8 @@ import {
 import "./App.css";
 import players from "./players.tsx";
 import PlayersPage from "./PlayersPage.tsx";
-import MatchCard from "./MatchCard.tsx";
-
+import Dashboard from "./Dashboard.tsx";
+import MatchesPage from "./MatchesPage.tsx";
 
 export type Player = {
   name: string;
@@ -21,54 +22,67 @@ export type Player = {
   rating: number;
 };
 
-type Match = {
+export type Match = {
   id: number;
   home: string;
   away: string;
   homeGoals: number;
   awayGoals: number;
+  date: string;
 };
 
 function App() {
   const [team, setTeam] = useState("Feyenoord");
 
-  const [playerList, setPlayerList] = useState<Player[]>(() => {
-    const savedPlayers = localStorage.getItem("players");
+  const [playerList, setPlayerList] = useState<Player[]>(
+    () => {
+      const savedPlayers =
+        localStorage.getItem("players");
 
-    return savedPlayers
-      ? JSON.parse(savedPlayers)
-      : players;
-  });
-
-  const [matches, setMatches] = useState<Match[]>([
-    {
-      id: 1,
-      home: "Ajax",
-      away: "PSV",
-      homeGoals: 3,
-      awayGoals: 1
-    },
-    {
-      id: 2,
-      home: "Ajax",
-      away: "Feyenoord",
-      homeGoals: 2,
-      awayGoals: 2
-    },
-    {
-      id: 3,
-      home: "Feyenoord",
-      away: "PSV",
-      homeGoals: 4,
-      awayGoals: 1
+      return savedPlayers
+        ? JSON.parse(savedPlayers)
+        : players;
     }
-  ]);
+  );
 
-  const [home, setHome] = useState("");
-  const [away, setAway] = useState("");
-  const [homeGoals, setHomeGoals] = useState(0);
-  const [awayGoals, setAwayGoals] = useState(0);
-  const [editingMatch, setEditingMatch] = useState<Match | null>(null);
+  const [matches, setMatches] = useState<Match[]>(
+    () => {
+      const savedMatches =
+        localStorage.getItem("matches");
+
+      if (savedMatches) {
+        return JSON.parse(savedMatches);
+      }
+
+      return [
+        {
+          id: 1,
+          home: "Ajax",
+          away: "PSV",
+          homeGoals: 3,
+          awayGoals: 1,
+          date: "2026-09-06"
+        },
+        {
+          id: 2,
+          home: "Ajax",
+          away: "Feyenoord",
+          homeGoals: 2,
+          awayGoals: 2,
+          date: "2026-09-03"
+        },
+        {
+          id: 3,
+          home: "Feyenoord",
+          away: "PSV",
+          homeGoals: 4,
+          awayGoals: 1,
+          date: "2026-08-30"
+        }
+      ];
+    }
+  );
+
   useEffect(() => {
     localStorage.setItem(
       "players",
@@ -76,56 +90,23 @@ function App() {
     );
   }, [playerList]);
 
-  function addMatch() {
-    if (home.trim() === "" || away.trim() === "") {
-      return;
-    }
-
-    const newMatch: Match = {
-      id: editingMatch ? editingMatch.id : Date.now(),
-      home,
-      away,
-      homeGoals,
-      awayGoals
-    };
-
-    if (editingMatch) {
-      setMatches(
-        matches.map((match) =>
-          match.id === editingMatch.id
-            ? newMatch
-            : match
-        )
-      );
-    } else {
-      setMatches([...matches, newMatch]);
-    }
-
-    setHome("");
-    setAway("");
-    setHomeGoals(0);
-    setAwayGoals(0);
-    setEditingMatch(null);
-  }
-
-  function deleteMatch(id: number) {
-    setMatches(
-      matches.filter((match) => match.id !== id)
+  useEffect(() => {
+    localStorage.setItem(
+      "matches",
+      JSON.stringify(matches)
     );
-  }
-  function editMatch(match: Match) {
-    setEditingMatch(match);
-
-    setHome(match.home);
-    setAway(match.away);
-    setHomeGoals(match.homeGoals);
-    setAwayGoals(match.awayGoals);
-  }
+  }, [matches]);
 
   return (
     <BrowserRouter>
       <nav className="nav">
-        <NavLink to="/">Home</NavLink>
+        <NavLink to="/">
+          Dashboard
+        </NavLink>
+
+        <NavLink to="/wedstrijden">
+          Wedstrijden
+        </NavLink>
 
         <NavLink to="/spelers">
           Spelers
@@ -136,93 +117,22 @@ function App() {
         <Route
           path="/"
           element={
-            <div>
-              <h1>⚽ Voetbaltracker</h1>
+            <Dashboard
+              matches={matches}
+              playerList={playerList}
+              team={team}
+            />
+          }
+        />
 
-              <h2 className="favoriet">
-                Favoriete team
-              </h2>
-
-              <h2>{team}</h2>
-
-              <button
-                onClick={() => setTeam("PSV")}
-              >
-                Kies PSV
-              </button>
-
-              <button
-                onClick={() => setTeam("Ajax")}
-              >
-                Kies Ajax
-              </button>
-
-              <button
-                onClick={() => setTeam("Feyenoord")}
-              >
-                Kies Feyenoord
-              </button>
-
-              <h2>Wedstrijden</h2>
-
-              <input
-                list="teams"
-                placeholder="Thuisteam"
-                value={home}
-                onChange={(e) => setHome(e.target.value)}
-              />
-
-              <input
-                list="teams"
-                placeholder="Uitteam"
-                value={away}
-                onChange={(e) => setAway(e.target.value)}
-              />
-
-              <datalist id="teams">
-                <option value="Ajax" />
-                <option value="PSV" />
-                <option value="Feyenoord" />
-                <option value="AZ" />
-                <option value="FC Twente" />
-                <option value="FC Utrecht" />
-              </datalist>
-
-              <input
-                type="number"
-                placeholder="Goals thuis"
-                value={homeGoals}
-                onChange={(e) =>
-                  setHomeGoals(
-                    Number(e.target.value)
-                  )
-                }
-              />
-
-              <input
-                type="number"
-                placeholder="Goals uit"
-                value={awayGoals}
-                onChange={(e) =>
-                  setAwayGoals(
-                    Number(e.target.value)
-                  )
-                }
-              />
-
-              <button onClick={addMatch}>
-                {editingMatch ? "Wijzigingen opslaan" : "Wedstrijden toevoegen"}
-              </button>
-
-              {matches.map((match) => (
-                <MatchCard
-                  key={match.id}
-                  match={match}
-                  onDelete={deleteMatch}
-                  onEdit={editMatch}
-                />
-              ))}
-            </div>
+        <Route
+          path="/wedstrijden"
+          element={
+            <MatchesPage
+              matches={matches}
+              setMatches={setMatches}
+              team={team}
+            />
           }
         />
 
@@ -241,3 +151,4 @@ function App() {
 }
 
 export default App;
+

@@ -1,41 +1,43 @@
 type Match = {
-    id: number;
-    home: string;
-    away: string;
-    homeGoals: number;
-    awayGoals: number;
+  id: number;
+  home: string;
+  away: string;
+  homeGoals: number;
+  awayGoals: number;
+  date: string;
 };
 
 type MatchCardProps = {
-    match: Match;
-    onDelete: (id: number) => void;
-    onEdit: (match: Match) => void;
+  match: Match;
+  onDelete: (id: number) => void;
+  onEdit: (match: Match) => void;
 };
 
 function MatchCard({
-    match,
-    onDelete,
-    onEdit
+  match,
+  onDelete,
+  onEdit
 }: MatchCardProps) {
-    return (
-        <div className="match-card">
+  return (
+    <div className="match-card">
+      <h2>
+        {match.home} {match.homeGoals} -{" "}
+        {match.awayGoals} {match.away}
+      </h2>
 
-            <h2>
-                {match.home} {match.homeGoals} - {match.awayGoals} {match.away}
-            </h2>
+      <div className="match-buttons">
+        <button onClick={() => onEdit(match)}>
+          Bewerken
+        </button>
 
-            <div className="match-buttons">
-                <button onClick={() => onEdit(match)}>
-                    Bewerken
-                </button>
-
-                <button onClick={() => onDelete(match.id)}>
-                    Verwijderen
-                </button>
-            </div>
-
-        </div>
-    );
+        <button
+          onClick={() => onDelete(match.id)}
+        >
+          Verwijderen
+        </button>
+      </div>
+    </div>
+  );
 }
 
 export default MatchCard;
