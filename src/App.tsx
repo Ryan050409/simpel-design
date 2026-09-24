@@ -31,7 +31,7 @@ export type Match = {
 };
 
 function App() {
-  const [team, setTeam] = useState("Feyenoord");
+  const team = "Feyenoord";
 
   const [playerList, setPlayerList] = useState<Player[]>(
     () => {
