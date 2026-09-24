@@ -1,4 +1,3 @@
-
 body {
   background: #f4f6f8;
   font-family: Arial, sans-serif;
@@ -62,10 +61,12 @@ h1 {
 h2 {
   margin-top: 30px;
 }
-h2.favoriet { 
+
+h2.favoriet {
   font-size: 40px;
 }
-.player-card  { 
+
+.player-card {
   padding: 20px;
   border: 3px, solid #153b8d;
   border-radius: 10px;
@@ -73,6 +74,7 @@ h2.favoriet {
   margin-left: 8px;
   margin-right: 8px;
 }
+
 .modal-overlay {
   position: fixed;
   inset: 0;
@@ -81,6 +83,7 @@ h2.favoriet {
   align-items: center;
   background: rgba(0, 0, 0, 0.7);
 }
+
 .modal {
   position: relative;
   background: #1f2937;
@@ -88,13 +91,15 @@ h2.favoriet {
   padding: 56px;
   border-radius: 12px;
   border: 2px solid #2563eb;
-  min-width: 300px; 
+  min-width: 300px;
 }
-.h2-player { 
+
+.h2-player {
   color: white;
   padding-bottom: 15px;
-  font-size:xxx-large;
+  font-size: xxx-large;
 }
+
 .modal-close {
   position: absolute;
   top: 10px;
@@ -105,11 +110,13 @@ h2.favoriet {
   padding: 4px 12px;
   border-radius: 6px;
   cursor: pointer;
-  font-size:28px;
+  font-size: 28px;
 }
-.modal-close:hover { 
+
+.modal-close:hover {
   background: #153b8d;
 }
+
 nav {
   display: flex;
   justify-content: center;
@@ -141,6 +148,7 @@ nav a.active {
   background: #2563eb;
   box-shadow: 0 0 10px rgba(37, 99, 235, 0.4);
 }
+
 .warning {
   color: #ef4444;
   font-weight: bold;

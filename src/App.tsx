@@ -76,51 +76,51 @@ function App() {
     );
   }, [playerList]);
 
- function addMatch() {
-  if (home.trim() === "" || away.trim() === "") {
-    return;
+  function addMatch() {
+    if (home.trim() === "" || away.trim() === "") {
+      return;
+    }
+
+    const newMatch: Match = {
+      id: editingMatch ? editingMatch.id : Date.now(),
+      home,
+      away,
+      homeGoals,
+      awayGoals
+    };
+
+    if (editingMatch) {
+      setMatches(
+        matches.map((match) =>
+          match.id === editingMatch.id
+            ? newMatch
+            : match
+        )
+      );
+    } else {
+      setMatches([...matches, newMatch]);
+    }
+
+    setHome("");
+    setAway("");
+    setHomeGoals(0);
+    setAwayGoals(0);
+    setEditingMatch(null);
   }
-
-  const newMatch: Match = {
-    id: editingMatch ? editingMatch.id : Date.now(),
-    home,
-    away,
-    homeGoals,
-    awayGoals
-  };
-
-  if (editingMatch) {
-    setMatches(
-      matches.map((match) =>
-        match.id === editingMatch.id
-          ? newMatch
-          : match
-      )
-    );
-  } else {
-    setMatches([...matches, newMatch]);
-  }
-
-  setHome("");
-  setAway("");
-  setHomeGoals(0);
-  setAwayGoals(0);
-  setEditingMatch(null);
-}
 
   function deleteMatch(id: number) {
     setMatches(
       matches.filter((match) => match.id !== id)
     );
   }
- function editMatch(match: Match) { 
-  setEditingMatch(match); 
-  
-  setHome(match.home);
-  setAway(match.away); 
-  setHomeGoals(match.homeGoals);
-  setAwayGoals(match.awayGoals);
- }
+  function editMatch(match: Match) {
+    setEditingMatch(match);
+
+    setHome(match.home);
+    setAway(match.away);
+    setHomeGoals(match.homeGoals);
+    setAwayGoals(match.awayGoals);
+  }
 
   return (
     <BrowserRouter>
@@ -166,20 +166,27 @@ function App() {
               <h2>Wedstrijden</h2>
 
               <input
+                list="teams"
                 placeholder="Thuisteam"
                 value={home}
-                onChange={(e) =>
-                  setHome(e.target.value)
-                }
+                onChange={(e) => setHome(e.target.value)}
               />
 
               <input
+                list="teams"
                 placeholder="Uitteam"
                 value={away}
-                onChange={(e) =>
-                  setAway(e.target.value)
-                }
+                onChange={(e) => setAway(e.target.value)}
               />
+
+              <datalist id="teams">
+                <option value="Ajax" />
+                <option value="PSV" />
+                <option value="Feyenoord" />
+                <option value="AZ" />
+                <option value="FC Twente" />
+                <option value="FC Utrecht" />
+              </datalist>
 
               <input
                 type="number"
@@ -208,13 +215,13 @@ function App() {
               </button>
 
               {matches.map((match) => (
-  <MatchCard
-    key={match.id}
-    match={match}
-    onDelete={deleteMatch}
-    onEdit= {editMatch}
-  />
-))}
+                <MatchCard
+                  key={match.id}
+                  match={match}
+                  onDelete={deleteMatch}
+                  onEdit={editMatch}
+                />
+              ))}
             </div>
           }
         />
