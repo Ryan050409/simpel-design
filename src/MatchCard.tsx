@@ -1,24 +1,42 @@
-import type { Match } from "./App";
+type Match = {
+  id: number;
+  home: string;
+  away: string;
+  homeGoals: number;
+  awayGoals: number;
+  date: string;
+};
 
-type Props = {
+type MatchCardProps = {
   match: Match;
   onDelete: (id: number) => void;
   onEdit: (match: Match) => void;
 };
 
-function MatchCard({ match, onDelete, onEdit }: Props) {
+function MatchCard({
+  match,
+  onDelete,
+  onEdit
+}: MatchCardProps) {
   return (
-    <article className="match-card">
-      <div className="match-teams">
-        <div><span>{match.home}</span><strong>{match.homeGoals}</strong></div>
-        <span className="match-separator">-</span>
-        <div><strong>{match.awayGoals}</strong><span>{match.away}</span></div>
-      </div>
+    <div className="match-card">
+      <h2>
+        {match.home} {match.homeGoals} -{" "}
+        {match.awayGoals} {match.away}
+      </h2>
+
       <div className="match-buttons">
-        <button onClick={() => onEdit(match)}>Bewerken</button>
-        <button className="button-danger" onClick={() => onDelete(match.id)}>Verwijderen</button>
+        <button onClick={() => onEdit(match)}>
+          Bewerken
+        </button>
+
+        <button
+          onClick={() => onDelete(match.id)}
+        >
+          Verwijderen
+        </button>
       </div>
-    </article>
+    </div>
   );
 }
 
