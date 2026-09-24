@@ -171,7 +171,7 @@ function PlayersPage({
                         </h2>
 
                         {warning && (
-                            <p className="Warning">
+                            <p className="warning">
                                 {warning}
                             </p>
                         )}
