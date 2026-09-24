@@ -1,4 +1,5 @@
 import { useState } from "react";
+import type { Dispatch, SetStateAction } from "react";
 import MatchCard from "./MatchCard.tsx";
 
 type Match = {
@@ -12,7 +13,7 @@ type Match = {
 
 type MatchesPageProps = {
   matches: Match[];
-  setMatches: React.Dispatch<React.SetStateAction<Match[]>>;
+  setMatches: Dispatch<SetStateAction<Match[]>>;
   team: string;
 };
 
