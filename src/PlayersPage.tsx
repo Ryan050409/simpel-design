@@ -4,7 +4,7 @@ import type { Dispatch, SetStateAction } from "react";
 type Player = {
     name: string;
     team: string;
-    position : string;
+    position: string;
     goals: number;
     assists: number;
     matches: number;
@@ -35,11 +35,34 @@ function PlayersPage({
     const [newPlayerRating, setNewPlayerRating] = useState("");
     const [warning, setWarning] = useState("");
 
+    function resetForm() {
+        setNewPlayerName("");
+        setNewPlayerTeam("");
+        setNewPlayerPosition("");
+        setNewPlayerGoals("");
+        setNewPlayerAssists("");
+        setNewPlayerMatches("");
+        setNewPlayerMinutesPlayed("");
+        setNewPlayerRating("");
+        setEditingPlayer(null);
+        setWarning("");
+    }
+
+    function openAddPlayer() {
+        resetForm();
+        setShowAddPlayer(true);
+    }
+
+    function closeModal() {
+        resetForm();
+        setShowAddPlayer(false);
+    }
+
     function addPlayer() {
         if (
             newPlayerName.trim() === "" ||
             newPlayerTeam.trim() === "" ||
-            newPlayerPosition.trim() === ""  ||
+            newPlayerPosition.trim() === "" ||
             newPlayerGoals.trim() === "" ||
             newPlayerAssists.trim() === "" ||
             newPlayerMatches.trim() === "" ||
@@ -50,17 +73,15 @@ function PlayersPage({
             return;
         }
 
-        setWarning("");
-
         const newPlayer: Player = {
-            name: newPlayerName,
-            team: newPlayerTeam,
-            position: newPlayerPosition,
-            goals: Number(newPlayerGoals) || 0,
-            assists: Number(newPlayerAssists) || 0,
-            matches: Number(newPlayerMatches) || 0,
-            minutesplayed: Number(newPlayerMinutesPlayed) || 0,
-            rating: Number(newPlayerRating) || 0
+            name: newPlayerName.trim(),
+            team: newPlayerTeam.trim(),
+            position: newPlayerPosition.trim(),
+            goals: Number(newPlayerGoals),
+            assists: Number(newPlayerAssists),
+            matches: Number(newPlayerMatches),
+            minutesplayed: Number(newPlayerMinutesPlayed),
+            rating: Number(newPlayerRating)
         };
 
         if (editingPlayer) {
@@ -78,16 +99,7 @@ function PlayersPage({
             ]);
         }
 
-        setNewPlayerName("");
-        setNewPlayerTeam("");
-        setNewPlayerPosition("");
-        setNewPlayerGoals("");
-        setNewPlayerAssists("");
-        setNewPlayerMatches("");
-        setNewPlayerMinutesPlayed("");
-        setNewPlayerRating("");
-        setEditingPlayer(null);
-        setShowAddPlayer(false);
+        closeModal();
     }
 
     function deletePlayer(name: string) {
@@ -103,36 +115,32 @@ function PlayersPage({
 
         setNewPlayerName(player.name);
         setNewPlayerTeam(player.team);
-        setNewPlayerPosition(player.position); 
+        setNewPlayerPosition(player.position);
         setNewPlayerGoals(String(player.goals));
         setNewPlayerAssists(String(player.assists));
         setNewPlayerMatches(String(player.matches));
         setNewPlayerMinutesPlayed(String(player.minutesplayed));
         setNewPlayerRating(String(player.rating));
 
-        setShowAddPlayer(true);
-    }
-
-    function openAddPlayer() {
-        setEditingPlayer(null);
-        setNewPlayerName("");
-        setNewPlayerTeam("");
-        setNewPlayerPosition("");
-        setNewPlayerGoals("");
-        setNewPlayerAssists("");
-        setNewPlayerMatches("");
-        setNewPlayerMinutesPlayed("");
-        setNewPlayerRating("");
+        setWarning("");
         setShowAddPlayer(true);
     }
 
     return (
-        <div>
-            <h1>⚽ Spelers</h1>
+        <div className="players-page">
+            <div className="players-page-header">
+                <div>
+                    <h1>⚽ Spelers</h1>
+                    <p>Bekijk en beheer je spelers.</p>
+                </div>
 
-            <button onClick={openAddPlayer}>
-                + Speler toevoegen
-            </button>
+                <button
+                    className="add-player-button"
+                    onClick={openAddPlayer}
+                >
+                    + Speler toevoegen
+                </button>
+            </div>
 
             <div className="players">
                 {playerList.map((player) => (
@@ -140,29 +148,62 @@ function PlayersPage({
                         className="player-card"
                         key={player.name}
                     >
-                        <h2>{player.name}</h2>
+                        <div className="player-card-header">
+                            <div>
+                                <h2>{player.name}</h2>
+                                <p className="player-team">
+                                    {player.team}
+                                </p>
+                            </div>
 
-                        <p>Team: {player.team}</p>
-                        <p>Positie: {player.position}</p>
-                        <p>Goals: {player.goals}</p>
-                        <p>Assists: {player.assists}</p>
-                        <p>Wedstrijden: {player.matches}</p>
-                        <p>Gespeelde minuten:  {player.minutesplayed}</p>
-                        <p>Rating: {player.rating}</p>
+                            <div className="player-rating">
+                                <span>RATING</span>
+                                <strong>{player.rating}</strong>
+                            </div>
+                        </div>
 
-                        <button
-                            onClick={() => editPlayer(player)}
-                        >
-                            Bewerken
-                        </button>
+                        <div className="player-position">
+                            {player.position}
+                        </div>
 
-                        <button
-                            onClick={() =>
-                                deletePlayer(player.name)
-                            }
-                        >
-                            Verwijderen
-                        </button>
+                        <div className="player-stats">
+                            <div className="player-stat">
+                                <strong>{player.goals}</strong>
+                                <span>Goals</span>
+                            </div>
+
+                            <div className="player-stat">
+                                <strong>{player.assists}</strong>
+                                <span>Assists</span>
+                            </div>
+
+                            <div className="player-stat">
+                                <strong>{player.matches}</strong>
+                                <span>Wedstrijden</span>
+                            </div>
+
+                            <div className="player-stat">
+                                <strong>{player.minutesplayed}</strong>
+                                <span>Minuten</span>
+                            </div>
+                        </div>
+
+                        <div className="player-actions">
+                            <button
+                                onClick={() => editPlayer(player)}
+                            >
+                                Bewerken
+                            </button>
+
+                            <button
+                                className="delete-button"
+                                onClick={() =>
+                                    deletePlayer(player.name)
+                                }
+                            >
+                                Verwijderen
+                            </button>
+                        </div>
                     </div>
                 ))}
             </div>
@@ -172,10 +213,7 @@ function PlayersPage({
                     <div className="modal">
                         <button
                             className="modal-close"
-                            onClick={() => {
-                                setShowAddPlayer(false);
-                                setWarning("");
-                            }}
+                            onClick={closeModal}
                         >
                             ×
                         </button>
@@ -191,95 +229,104 @@ function PlayersPage({
                                 {warning}
                             </p>
                         )}
+
                         <div className="form-grid">
-                        <input
-                            type="text"
-                            placeholder="Naam speler"
-                            value={newPlayerName}
-                            onChange={(e) =>
-                                setNewPlayerName(e.target.value)
-                            }
-                        />
+                            <input
+                                type="text"
+                                placeholder="Naam speler"
+                                value={newPlayerName}
+                                onChange={(e) =>
+                                    setNewPlayerName(e.target.value)
+                                }
+                            />
 
-                        <input
-                            list="teams"
-                            type="text"
-                            placeholder="Team"
-                            value={newPlayerTeam}
-                            onChange={(e) =>
-                                setNewPlayerTeam(e.target.value)
-                            }
-                        />
+                            <input
+                                list="teams"
+                                type="text"
+                                placeholder="Team"
+                                value={newPlayerTeam}
+                                onChange={(e) =>
+                                    setNewPlayerTeam(e.target.value)
+                                }
+                            />
 
-                        <datalist id="teams">
-                            <option value="Ajax" />
-                            <option value="PSV" />
-                            <option value="Feyenoord" />
-                            <option value="AZ" />
-                            <option value="FC Twente" />
-                            <option value="FC Utrecht" />
-                        </datalist>
-                        <input
-                            list="position"
-                            type="text"
-                            placeholder="Positie"
-                            value={newPlayerPosition}
-                            onChange={(e) =>
-                                setNewPlayerPosition(e.target.value)
-                            }
-                        />
-                        <datalist id="position"> 
-                            <option value="Keeper"/>
-                            <option value ="Verdediger"/>
-                            <option value="Middenvelder"/>
-                            <option value ="Aanvaller"/>
-                        </datalist>
-                        <input
-                            type="number"
-                            placeholder="Goals"
-                            value={newPlayerGoals}
-                            onChange={(e) =>
-                                setNewPlayerGoals(e.target.value)
-                            }
-                        />
+                            <datalist id="teams">
+                                <option value="Ajax" />
+                                <option value="PSV" />
+                                <option value="Feyenoord" />
+                                <option value="AZ" />
+                                <option value="FC Twente" />
+                                <option value="FC Utrecht" />
+                            </datalist>
 
-                        <input
-                            type="number"
-                            placeholder="Assists"
-                            value={newPlayerAssists}
-                            onChange={(e) =>
-                                setNewPlayerAssists(e.target.value)
-                            }
-                        />
+                            <input
+                                list="positions"
+                                type="text"
+                                placeholder="Positie"
+                                value={newPlayerPosition}
+                                onChange={(e) =>
+                                    setNewPlayerPosition(e.target.value)
+                                }
+                            />
 
-                        <input
-                            type="number"
-                            placeholder="Wedstrijden"
-                            value={newPlayerMatches}
-                            onChange={(e) =>
-                                setNewPlayerMatches(e.target.value)
-                            }
-                        />
+                            <datalist id="positions">
+                                <option value="Keeper" />
+                                <option value="Verdediger" />
+                                <option value="Middenvelder" />
+                                <option value="Aanvaller" />
+                            </datalist>
 
-                        <input 
-                        type ="number" 
-                        placeholder="Gespeelde minuten "
-                        value={newPlayerMinutesPlayed}
-                        onChange={(e) => 
-                            setNewPlayerMinutesPlayed(e.target.value)
-                        } 
-                        />
-                        <input
-                            type="number"
-                            step="0.1"
-                            placeholder="Rating"
-                            value={newPlayerRating}
-                            onChange={(e) =>
-                                setNewPlayerRating(e.target.value)
-                            }
-                        />
+                            <input
+                                type="number"
+                                placeholder="Goals"
+                                value={newPlayerGoals}
+                                onChange={(e) =>
+                                    setNewPlayerGoals(e.target.value)
+                                }
+                            />
+
+                            <input
+                                type="number"
+                                placeholder="Assists"
+                                value={newPlayerAssists}
+                                onChange={(e) =>
+                                    setNewPlayerAssists(e.target.value)
+                                }
+                            />
+
+                            <input
+                                type="number"
+                                placeholder="Wedstrijden"
+                                value={newPlayerMatches}
+                                onChange={(e) =>
+                                    setNewPlayerMatches(e.target.value)
+                                }
+                            />
+
+                            <input
+                                type="number"
+                                placeholder="Gespeelde minuten"
+                                value={newPlayerMinutesPlayed}
+                                onChange={(e) =>
+                                    setNewPlayerMinutesPlayed(e.target.value)
+                                }
+                            />
+
+                            <input
+                                type="number"
+                                step="0.1"
+                                placeholder="Rating"
+                                value={newPlayerRating}
+                                onChange={(e) =>
+                                    setNewPlayerRating(e.target.value)
+                                }
+                            />
                         </div>
-                        <button onClick={addPlayer}>
+
+                        <button
+                            className="save-player-button"
+                            onClick={addPlayer}
+                        >
                             {editingPlayer
                                 ? "Wijzigingen opslaan"
                                 : "Speler opslaan"}
