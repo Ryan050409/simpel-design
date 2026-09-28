@@ -113,9 +113,9 @@ function App() {
         <NavLink to="/spelers">
           Spelers
         </NavLink>
-        <NavLink to="/settingspage">
-        Instellingen
-        </NavLink>
+        <NavLink to="/instellingen">
+  Instellingen
+</NavLink>
       </nav>
 
       <Routes>
@@ -150,7 +150,19 @@ function App() {
             />
           }
         />
+              <Route
+  path="/settingspage"
+  element={
+    <SettingsPage
+      matches={matches}
+      setMatches={setMatches}
+      playerList={playerList}
+      setPlayerList={setPlayerList}
+    />
+  }
+/>
       </Routes>
+
     </BrowserRouter>
   );
 }

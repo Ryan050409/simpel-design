@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useSearchParams } from "react-router-dom";
 import type { Dispatch, SetStateAction } from "react";
 
 type Player = {
@@ -24,7 +25,7 @@ function PlayersPage({
     const [showAddPlayer, setShowAddPlayer] = useState(false);
     const [editingPlayer, setEditingPlayer] =
         useState<Player | null>(null);
-
+    const [searchParams] = useSearchParams();
     const [newPlayerName, setNewPlayerName] = useState("");
     const [newPlayerTeam, setNewPlayerTeam] = useState("");
     const [newPlayerPosition, setNewPlayerPosition] = useState("");
@@ -34,7 +35,7 @@ function PlayersPage({
     const [newPlayerMinutesPlayed, setNewPlayerMinutesPlayed] = useState("");
     const [newPlayerRating, setNewPlayerRating] = useState("");
     const [warning, setWarning] = useState("");
-
+    
     function resetForm() {
         setNewPlayerName("");
         setNewPlayerTeam("");
@@ -52,7 +53,11 @@ function PlayersPage({
         resetForm();
         setShowAddPlayer(true);
     }
-
+        useEffect(() => {
+        if (searchParams.get("toevoegen") === "1") {
+            openAddPlayer();
+        }
+    }, [searchParams]);
     function closeModal() {
         resetForm();
         setShowAddPlayer(false);
