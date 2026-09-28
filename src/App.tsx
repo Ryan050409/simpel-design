@@ -11,6 +11,7 @@ import players from "./players.tsx";
 import PlayersPage from "./PlayersPage.tsx";
 import Dashboard from "./Dashboard.tsx";
 import MatchesPage from "./MatchesPage.tsx";
+import SettingsPage from "./SettingsPage.tsx";
 
 export type Player = {
   name: string;
@@ -111,6 +112,9 @@ function App() {
 
         <NavLink to="/spelers">
           Spelers
+        </NavLink>
+        <NavLink to="/settingspage">
+        Instellingen
         </NavLink>
       </nav>
 
