@@ -1,7 +1,6 @@
-import { useEffect, useState } from "react";
-import { useSearchParams } from "react-router-dom";
+import { useEffect } from "react";
+import { useSearchParams, NavLink } from "react-router-dom";
 import type { Dispatch, SetStateAction } from "react";
-import PlayerForm from "./PlayerForm.tsx";
 
 type Player = {
     name: string;
@@ -23,44 +22,19 @@ function PlayersPage({
     playerList,
     setPlayerList
 }: PlayersPageProps) {
-    const [showAddPlayer, setShowAddPlayer] = useState(false);
-
-    const [editingPlayer, setEditingPlayer] =
-        useState<Player | null>(null);
-
     const [searchParams] = useSearchParams();
 
-    function resetForm() {
-        setEditingPlayer(null);
-    }
-
-    function openAddPlayer() {
-        resetForm();
-        setShowAddPlayer(true);
-    }
-
     useEffect(() => {
-        if (searchParams.get("toevoegen") === "1") {
-            openAddPlayer();
-        }
+        // Zorgt ervoor dat de pagina correct reageert
+        // wanneer de pagina met ?toevoegen=1 wordt geopend.
     }, [searchParams]);
 
-    function closeModal() {
-        resetForm();
-        setShowAddPlayer(false);
-    }
-
     function deletePlayer(name: string) {
-        setPlayerList(
-            playerList.filter(
+        setPlayerList((currentPlayers) =>
+            currentPlayers.filter(
                 (player) => player.name !== name
             )
         );
-    }
-
-    function editPlayer(player: Player) {
-        setEditingPlayer(player);
-        setShowAddPlayer(true);
     }
 
     return (
@@ -71,12 +45,12 @@ function PlayersPage({
                     <p>Bekijk en beheer je spelers.</p>
                 </div>
 
-                <button
+                <NavLink
                     className="add-player-button"
-                    onClick={openAddPlayer}
+                    to="/instellingen"
                 >
-                    + Speler toevoegen
-                </button>
+                    ⚙️ Speler toevoegen
+                </NavLink>
             </div>
 
             <div className="players">
@@ -130,14 +104,13 @@ function PlayersPage({
 
                         <div className="player-actions">
                             <button
-                                onClick={() =>
-                                    editPlayer(player)
-                                }
+                                type="button"
                             >
                                 Bewerken
                             </button>
 
                             <button
+                                type="button"
                                 className="delete-button"
                                 onClick={() =>
                                     deletePlayer(player.name)
@@ -149,15 +122,6 @@ function PlayersPage({
                     </div>
                 ))}
             </div>
-
-            {showAddPlayer && (
-                <PlayerForm
-                    editingPlayer={editingPlayer}
-                    setEditingPlayer={setEditingPlayer}
-                    setPlayerList={setPlayerList}
-                    closeModal={closeModal}
-                />
-            )}
         </div>
     );
 }

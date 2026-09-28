@@ -1,6 +1,7 @@
 import { useState } from "react";
 import type { Dispatch, SetStateAction } from "react";
 import PlayerForm from "./PlayerForm.tsx";
+import MatchForm from "./MatchForm.tsx";
 
 type Player = {
     name: string;
@@ -30,14 +31,22 @@ type SettingsPageProps = {
 };
 
 function SettingsPage({
+    matches,
+    setMatches,
     playerList,
     setPlayerList
 }: SettingsPageProps) {
     const [showPlayerPopup, setShowPlayerPopup] =
         useState(false);
 
+    const [showMatchPopup, setShowMatchPopup] =
+        useState(false);
+
     const [editingPlayer, setEditingPlayer] =
         useState<Player | null>(null);
+
+    const [editingMatch, setEditingMatch] =
+        useState<Match | null>(null);
 
     function openPlayerPopup() {
         setEditingPlayer(null);
@@ -49,6 +58,16 @@ function SettingsPage({
         setShowPlayerPopup(false);
     }
 
+    function openMatchPopup() {
+        setEditingMatch(null);
+        setShowMatchPopup(true);
+    }
+
+    function closeMatchPopup() {
+        setEditingMatch(null);
+        setShowMatchPopup(false);
+    }
+
     return (
         <div className="settings-page">
             <h1>⚙️ Instellingen</h1>
@@ -57,6 +76,7 @@ function SettingsPage({
                 <div className="setting-row">
                     <div>
                         <strong>Spelers</strong>
+
                         <small>
                             Voeg een nieuwe speler toe aan je
                             voetbaltracker.
@@ -74,13 +94,17 @@ function SettingsPage({
                 <div className="setting-row">
                     <div>
                         <strong>Wedstrijden</strong>
+
                         <small>
                             Voeg een nieuwe wedstrijd toe aan
                             je voetbaltracker.
                         </small>
                     </div>
 
-                    <button type="button">
+                    <button
+                        type="button"
+                        onClick={openMatchPopup}
+                    >
                         + Wedstrijd toevoegen
                     </button>
                 </div>
@@ -92,6 +116,15 @@ function SettingsPage({
                     setEditingPlayer={setEditingPlayer}
                     setPlayerList={setPlayerList}
                     closeModal={closePlayerPopup}
+                />
+            )}
+
+            {showMatchPopup && (
+                <MatchForm
+                    editingMatch={editingMatch}
+                    setEditingMatch={setEditingMatch}
+                    setMatches={setMatches}
+                    closeModal={closeMatchPopup}
                 />
             )}
         </div>

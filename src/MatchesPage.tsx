@@ -1,234 +1,67 @@
-import { useState } from "react";
+import { NavLink } from "react-router-dom";
 import type { Dispatch, SetStateAction } from "react";
 import MatchCard from "./MatchCard.tsx";
 
 type Match = {
-  id: number;
-  home: string;
-  away: string;
-  homeGoals: number;
-  awayGoals: number;
-  date: string;
+    id: number;
+    home: string;
+    away: string;
+    homeGoals: number;
+    awayGoals: number;
+    date: string;
 };
 
 type MatchesPageProps = {
-  matches: Match[];
-  setMatches: Dispatch<SetStateAction<Match[]>>;
-  team: string;
+    matches: Match[];
+    setMatches: Dispatch<SetStateAction<Match[]>>;
+    team: string;
 };
 
 function MatchesPage({
-  matches,
-  setMatches,
-  team
+    matches,
+    setMatches,
+    team
 }: MatchesPageProps) {
-  const [home, setHome] = useState("");
-  const [away, setAway] = useState("");
-  const [homeGoals, setHomeGoals] = useState(0);
-  const [awayGoals, setAwayGoals] = useState(0);
-  const [date, setDate] = useState(
-    new Date().toISOString().split("T")[0]
-  );
-
-  const [editingMatch, setEditingMatch] =
-    useState<Match | null>(null);
-
-  function addMatch() {
-    if (
-      home.trim() === "" ||
-      away.trim() === ""
-    ) {
-      return;
-    }
-
-    const newMatch: Match = {
-      id: editingMatch
-        ? editingMatch.id
-        : Date.now(),
-      home,
-      away,
-      homeGoals,
-      awayGoals,
-      date
-    };
-
-    if (editingMatch) {
-      setMatches((currentMatches) =>
-        currentMatches.map((match) =>
-          match.id === editingMatch.id
-            ? newMatch
-            : match
-        )
-      );
-    } else {
-      setMatches((currentMatches) =>
-        [...currentMatches, newMatch].sort(
-          (a, b) =>
-            new Date(b.date).getTime() -
-            new Date(a.date).getTime()
-        )
-      );
-    }
-
-    resetForm();
-  }
-
-  function deleteMatch(id: number) {
-    setMatches((currentMatches) =>
-      currentMatches.filter(
-        (match) => match.id !== id
-      )
-    );
-  }
-
-  function editMatch(match: Match) {
-    setEditingMatch(match);
-
-    setHome(match.home);
-    setAway(match.away);
-    setHomeGoals(match.homeGoals);
-    setAwayGoals(match.awayGoals);
-    setDate(match.date);
-  }
-
-  function resetForm() {
-    setHome("");
-    setAway("");
-    setHomeGoals(0);
-    setAwayGoals(0);
-    setDate(
-      new Date().toISOString().split("T")[0]
-    );
-    setEditingMatch(null);
-  }
-
-  function getResult(match: Match) {
-    if (match.homeGoals === match.awayGoals) {
-      return "G";
-    }
-
-    const teamGoals =
-      match.home === team
-        ? match.homeGoals
-        : match.awayGoals;
-
-    const opponentGoals =
-      match.home === team
-        ? match.awayGoals
-        : match.homeGoals;
-
-    return teamGoals > opponentGoals
-      ? "W"
-      : "V";
-  }
-
-  function getResultClass(match: Match) {
-    const result = getResult(match);
-
-    if (result === "W") {
-      return "result-win";
-    }
-
-    if (result === "G") {
-      return "result-draw";
-    }
-
-    return "result-loss";
-  }
-
-  return (
-    <div className="matches-page">
-      <h1>⚽ Wedstrijden</h1>
-
-      <h2>{team}</h2>
-
-      <div className="match-form">
-        <input
-          list="teams"
-          type="text"
-          placeholder="Thuisteam"
-          value={home}
-          onChange={(e) =>
-            setHome(e.target.value)
-          }
-        />
-
-        <input
-          list="teams"
-          type="text"
-          placeholder="Uitteam"
-          value={away}
-          onChange={(e) =>
-            setAway(e.target.value)
-          }
-        />
-
-        <datalist id="teams">
-          <option value="Ajax" />
-          <option value="PSV" />
-          <option value="Feyenoord" />
-          <option value="AZ" />
-          <option value="FC Twente" />
-          <option value="FC Utrecht" />
-        </datalist>
-
-        <input
-          type="number"
-          min="0"
-          placeholder="Goals thuis"
-          value={homeGoals}
-          onChange={(e) =>
-            setHomeGoals(
-              Number(e.target.value)
+    function deleteMatch(id: number) {
+        setMatches((currentMatches) =>
+            currentMatches.filter(
+                (match) => match.id !== id
             )
-          }
-        />
+        );
+    }
 
-        <input
-          type="number"
-          min="0"
-          placeholder="Goals uit"
-          value={awayGoals}
-          onChange={(e) =>
-            setAwayGoals(
-              Number(e.target.value)
-            )
-          }
-        />
+    function editMatch(match: Match) {
+        console.log("Wedstrijd bewerken:", match);
+    }
 
-        <input
-          type="date"
-          value={date}
-          onChange={(e) =>
-            setDate(e.target.value)
-          }
-        />
+    return (
+        <div className="matches-page">
+            <div className="matches-page-header">
+                <div>
+                    <h1>⚽ Wedstrijden</h1>
+                    <h2>{team}</h2>
+                </div>
 
-        <button onClick={addMatch}>
-          {editingMatch
-            ? "Wijzigingen opslaan"
-            : "Wedstrijd toevoegen"}
-        </button>
+                <NavLink
+                    className="add-player-button"
+                    to="/instellingen"
+                >
+                    ⚙️ Wedstrijd toevoegen
+                </NavLink>
+            </div>
 
-        {editingMatch && (
-          <button onClick={resetForm}>
-            Annuleren
-          </button>
-        )}
-      </div>
-
-      <div className="matches-list">
-        {matches.map((match) => (
-          <MatchCard
-            key={match.id}
-            match={match}
-            onDelete={deleteMatch}
-            onEdit={editMatch}
-          />
-        ))}
-      </div>
-    </div>
-  );
+            <div className="matches-list">
+                {matches.map((match) => (
+                    <MatchCard
+                        key={match.id}
+                        match={match}
+                        onDelete={deleteMatch}
+                        onEdit={editMatch}
+                    />
+                ))}
+            </div>
+        </div>
+    );
 }
 
 export default MatchesPage;
