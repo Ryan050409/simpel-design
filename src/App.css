@@ -378,3 +378,8 @@ nav a.active {
     width: 90%;
   }
 }
+.form-grid { 
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}

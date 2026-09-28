@@ -8,6 +8,7 @@ type Player = {
     goals: number;
     assists: number;
     matches: number;
+    minutesplayed: number;
     rating: number;
 };
 
@@ -30,6 +31,7 @@ function PlayersPage({
     const [newPlayerGoals, setNewPlayerGoals] = useState("");
     const [newPlayerAssists, setNewPlayerAssists] = useState("");
     const [newPlayerMatches, setNewPlayerMatches] = useState("");
+    const [newPlayerMinutesPlayed, setNewPlayerMinutesPlayed] = useState("");
     const [newPlayerRating, setNewPlayerRating] = useState("");
     const [warning, setWarning] = useState("");
 
@@ -41,6 +43,7 @@ function PlayersPage({
             newPlayerGoals.trim() === "" ||
             newPlayerAssists.trim() === "" ||
             newPlayerMatches.trim() === "" ||
+            newPlayerMinutesPlayed.trim() === "" ||
             newPlayerRating.trim() === ""
         ) {
             setWarning("Alle velden moeten ingevuld worden!");
@@ -56,6 +59,7 @@ function PlayersPage({
             goals: Number(newPlayerGoals) || 0,
             assists: Number(newPlayerAssists) || 0,
             matches: Number(newPlayerMatches) || 0,
+            minutesplayed: Number(newPlayerMinutesPlayed) || 0,
             rating: Number(newPlayerRating) || 0
         };
 
@@ -80,6 +84,7 @@ function PlayersPage({
         setNewPlayerGoals("");
         setNewPlayerAssists("");
         setNewPlayerMatches("");
+        setNewPlayerMinutesPlayed("");
         setNewPlayerRating("");
         setEditingPlayer(null);
         setShowAddPlayer(false);
@@ -102,6 +107,7 @@ function PlayersPage({
         setNewPlayerGoals(String(player.goals));
         setNewPlayerAssists(String(player.assists));
         setNewPlayerMatches(String(player.matches));
+        setNewPlayerMinutesPlayed(String(player.minutesplayed));
         setNewPlayerRating(String(player.rating));
 
         setShowAddPlayer(true);
@@ -115,6 +121,7 @@ function PlayersPage({
         setNewPlayerGoals("");
         setNewPlayerAssists("");
         setNewPlayerMatches("");
+        setNewPlayerMinutesPlayed("");
         setNewPlayerRating("");
         setShowAddPlayer(true);
     }
@@ -140,6 +147,7 @@ function PlayersPage({
                         <p>Goals: {player.goals}</p>
                         <p>Assists: {player.assists}</p>
                         <p>Wedstrijden: {player.matches}</p>
+                        <p>Gespeelde minuten:{player.minutesplayed}</p>
                         <p>Rating: {player.rating}</p>
 
                         <button
@@ -183,7 +191,7 @@ function PlayersPage({
                                 {warning}
                             </p>
                         )}
-
+                        <div className="form-grid">
                         <input
                             type="text"
                             placeholder="Naam speler"
@@ -253,6 +261,14 @@ function PlayersPage({
                             }
                         />
 
+                        <input 
+                        type ="number" 
+                        placeholder="Gespeelde minuten"
+                        value={newPlayerMinutesPlayed}
+                        onChange={(e) => 
+                            setNewPlayerMinutesPlayed(e.target.value)
+                        } 
+                        />
                         <input
                             type="number"
                             step="0.1"
@@ -262,7 +278,7 @@ function PlayersPage({
                                 setNewPlayerRating(e.target.value)
                             }
                         />
-
+                        </div>
                         <button onClick={addPlayer}>
                             {editingPlayer
                                 ? "Wijzigingen opslaan"
