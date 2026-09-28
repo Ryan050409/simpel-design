@@ -1,3 +1,4 @@
+import { useState } from "react";
 import type { Dispatch, SetStateAction } from "react";
 
 type Player = {
@@ -33,111 +34,87 @@ function SettingsPage({
   playerList,
   setPlayerList
 }: SettingsPageProps) {
+  const [home, setHome] = useState("");
+  const [away, setAway] = useState("");
+  const [homeGoals, setHomeGoals] = useState("");
+  const [awayGoals, setAwayGoals] = useState("");
+  const [date, setDate] = useState("");
+
+  const [name, setName] = useState("");
+  const [playerTeam, setPlayerTeam] = useState("");
+  const [position, setPosition] = useState("");
+  const [goals, setGoals] = useState("");
+  const [assists, setAssists] = useState("");
+  const [playerMatches, setPlayerMatches] = useState("");
+  const [minutesPlayed, setMinutesPlayed] = useState("");
+  const [rating, setRating] = useState("");
+
   function addMatch() {
-    const home = (
-      document.getElementById("settings-home") as HTMLInputElement
-    ).value;
-
-    const away = (
-      document.getElementById("settings-away") as HTMLInputElement
-    ).value;
-
-    const homeGoals = Number(
-      (document.getElementById("settings-home-goals") as HTMLInputElement)
-        .value
-    );
-
-    const awayGoals = Number(
-      (document.getElementById("settings-away-goals") as HTMLInputElement)
-        .value
-    );
-
-    const date = (
-      document.getElementById("settings-date") as HTMLInputElement
-    ).value;
-
-    if (!home || !away || !date) {
+    if (
+      home.trim() === "" ||
+      away.trim() === "" ||
+      date === ""
+    ) {
       return;
     }
 
     const newMatch: Match = {
       id: Date.now(),
-      home,
-      away,
-      homeGoals,
-      awayGoals,
+      home: home.trim(),
+      away: away.trim(),
+      homeGoals: Number(homeGoals) || 0,
+      awayGoals: Number(awayGoals) || 0,
       date
     };
 
-    setMatches([...matches, newMatch]);
+    setMatches((currentMatches) =>
+      [...currentMatches, newMatch].sort(
+        (a, b) =>
+          new Date(b.date).getTime() -
+          new Date(a.date).getTime()
+      )
+    );
+
+    setHome("");
+    setAway("");
+    setHomeGoals("");
+    setAwayGoals("");
+    setDate("");
   }
 
   function addPlayer() {
-    const name = (
-      document.getElementById("settings-player-name") as HTMLInputElement
-    ).value;
-
-    const team = (
-      document.getElementById("settings-player-team") as HTMLInputElement
-    ).value;
-
-    const position = (
-      document.getElementById("settings-player-position") as HTMLInputElement
-    ).value;
-
-    const goals = Number(
-      (document.getElementById("settings-player-goals") as HTMLInputElement)
-        .value
-    );
-
-    const assists = Number(
-      (
-        document.getElementById(
-          "settings-player-assists"
-        ) as HTMLInputElement
-      ).value
-    );
-
-    const playerMatches = Number(
-      (
-        document.getElementById(
-          "settings-player-matches"
-        ) as HTMLInputElement
-      ).value
-    );
-
-    const minutesplayed = Number(
-      (
-        document.getElementById(
-          "settings-player-minutes"
-        ) as HTMLInputElement
-      ).value
-    );
-
-    const rating = Number(
-      (
-        document.getElementById(
-          "settings-player-rating"
-        ) as HTMLInputElement
-      ).value
-    );
-
-    if (!name || !team || !position) {
+    if (
+      name.trim() === "" ||
+      playerTeam.trim() === "" ||
+      position.trim() === ""
+    ) {
       return;
     }
 
     const newPlayer: Player = {
-      name,
-      team,
-      position,
-      goals,
-      assists,
-      matches: playerMatches,
-      minutesplayed,
-      rating
+      name: name.trim(),
+      team: playerTeam.trim(),
+      position: position.trim(),
+      goals: Number(goals) || 0,
+      assists: Number(assists) || 0,
+      matches: Number(playerMatches) || 0,
+      minutesplayed: Number(minutesPlayed) || 0,
+      rating: Number(rating) || 0
     };
 
-    setPlayerList([...playerList, newPlayer]);
+    setPlayerList((currentPlayers) => [
+      ...currentPlayers,
+      newPlayer
+    ]);
+
+    setName("");
+    setPlayerTeam("");
+    setPosition("");
+    setGoals("");
+    setAssists("");
+    setPlayerMatches("");
+    setMinutesPlayed("");
+    setRating("");
   }
 
   return (
@@ -149,17 +126,23 @@ function SettingsPage({
 
         <div className="match-form">
           <input
-            id="settings-home"
             list="settings-teams"
             type="text"
             placeholder="Thuisteam"
+            value={home}
+            onChange={(e) =>
+              setHome(e.target.value)
+            }
           />
 
           <input
-            id="settings-away"
             list="settings-teams"
             type="text"
             placeholder="Uitteam"
+            value={away}
+            onChange={(e) =>
+              setAway(e.target.value)
+            }
           />
 
           <datalist id="settings-teams">
@@ -172,22 +155,31 @@ function SettingsPage({
           </datalist>
 
           <input
-            id="settings-home-goals"
             type="number"
             min="0"
             placeholder="Goals thuis"
+            value={homeGoals}
+            onChange={(e) =>
+              setHomeGoals(e.target.value)
+            }
           />
 
           <input
-            id="settings-away-goals"
             type="number"
             min="0"
             placeholder="Goals uit"
+            value={awayGoals}
+            onChange={(e) =>
+              setAwayGoals(e.target.value)
+            }
           />
 
           <input
-            id="settings-date"
             type="date"
+            value={date}
+            onChange={(e) =>
+              setDate(e.target.value)
+            }
           />
 
           <button onClick={addMatch}>
@@ -201,16 +193,22 @@ function SettingsPage({
 
         <div className="form-grid">
           <input
-            id="settings-player-name"
             type="text"
             placeholder="Naam speler"
+            value={name}
+            onChange={(e) =>
+              setName(e.target.value)
+            }
           />
 
           <input
-            id="settings-player-team"
             list="settings-player-teams"
             type="text"
             placeholder="Team"
+            value={playerTeam}
+            onChange={(e) =>
+              setPlayerTeam(e.target.value)
+            }
           />
 
           <datalist id="settings-player-teams">
@@ -223,10 +221,13 @@ function SettingsPage({
           </datalist>
 
           <input
-            id="settings-player-position"
             list="settings-positions"
             type="text"
             placeholder="Positie"
+            value={position}
+            onChange={(e) =>
+              setPosition(e.target.value)
+            }
           />
 
           <datalist id="settings-positions">
@@ -237,39 +238,54 @@ function SettingsPage({
           </datalist>
 
           <input
-            id="settings-player-goals"
             type="number"
             min="0"
             placeholder="Goals"
+            value={goals}
+            onChange={(e) =>
+              setGoals(e.target.value)
+            }
           />
 
           <input
-            id="settings-player-assists"
             type="number"
             min="0"
             placeholder="Assists"
+            value={assists}
+            onChange={(e) =>
+              setAssists(e.target.value)
+            }
           />
 
           <input
-            id="settings-player-matches"
             type="number"
             min="0"
             placeholder="Wedstrijden"
+            value={playerMatches}
+            onChange={(e) =>
+              setPlayerMatches(e.target.value)
+            }
           />
 
           <input
-            id="settings-player-minutes"
             type="number"
             min="0"
             placeholder="Gespeelde minuten"
+            value={minutesPlayed}
+            onChange={(e) =>
+              setMinutesPlayed(e.target.value)
+            }
           />
 
           <input
-            id="settings-player-rating"
             type="number"
             min="0"
             step="0.1"
             placeholder="Rating"
+            value={rating}
+            onChange={(e) =>
+              setRating(e.target.value)
+            }
           />
 
           <button onClick={addPlayer}>

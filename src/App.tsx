@@ -151,7 +151,7 @@ function App() {
           }
         />
               <Route
-  path="/settingspage"
+  path="/instellingen"
   element={
     <SettingsPage
       matches={matches}
