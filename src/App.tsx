@@ -15,9 +15,11 @@ import MatchesPage from "./MatchesPage.tsx";
 export type Player = {
   name: string;
   team: string;
+  position: string;
   goals: number;
   assists: number;
   matches: number;
+  minutesplayed: number;
   rating: number;
 };
 

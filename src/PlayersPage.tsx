@@ -147,7 +147,7 @@ function PlayersPage({
                         <p>Goals: {player.goals}</p>
                         <p>Assists: {player.assists}</p>
                         <p>Wedstrijden: {player.matches}</p>
-                        <p>Gespeelde minuten:{player.minutesplayed}</p>
+                        <p>Gespeelde minuten:  {player.minutesplayed}</p>
                         <p>Rating: {player.rating}</p>
 
                         <button
@@ -263,7 +263,7 @@ function PlayersPage({
 
                         <input 
                         type ="number" 
-                        placeholder="Gespeelde minuten"
+                        placeholder="Gespeelde minuten "
                         value={newPlayerMinutesPlayed}
                         onChange={(e) => 
                             setNewPlayerMinutesPlayed(e.target.value)
