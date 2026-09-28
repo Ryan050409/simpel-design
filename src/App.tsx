@@ -33,6 +33,11 @@ export type Match = {
   date: string;
 };
 
+export type Team = {
+  id: number;
+  name: string;
+};
+
 function App() {
   const team = "Feyenoord";
 
@@ -85,6 +90,42 @@ function App() {
     }
   );
 
+  const [teams, setTeams] = useState<Team[]>(
+    () => {
+      const savedTeams =
+        localStorage.getItem("teams");
+
+      return savedTeams
+        ? JSON.parse(savedTeams)
+        : [
+            {
+              id: 1,
+              name: "Ajax"
+            },
+            {
+              id: 2,
+              name: "PSV"
+            },
+            {
+              id: 3,
+              name: "Feyenoord"
+            },
+            {
+              id: 4,
+              name: "AZ"
+            },
+            {
+              id: 5,
+              name: "FC Twente"
+            },
+            {
+              id: 6,
+              name: "FC Utrecht"
+            }
+          ];
+    }
+  );
+
   useEffect(() => {
     localStorage.setItem(
       "players",
@@ -98,6 +139,13 @@ function App() {
       JSON.stringify(matches)
     );
   }, [matches]);
+
+  useEffect(() => {
+    localStorage.setItem(
+      "teams",
+      JSON.stringify(teams)
+    );
+  }, [teams]);
 
   return (
     <BrowserRouter>
@@ -113,9 +161,10 @@ function App() {
         <NavLink to="/spelers">
           Spelers
         </NavLink>
+
         <NavLink to="/instellingen">
-  Instellingen
-</NavLink>
+          Instellingen
+        </NavLink>
       </nav>
 
       <Routes>
@@ -150,19 +199,19 @@ function App() {
             />
           }
         />
-              <Route
-  path="/instellingen"
-  element={
-    <SettingsPage
-      matches={matches}
-      setMatches={setMatches}
-      playerList={playerList}
-      setPlayerList={setPlayerList}
-    />
-  }
-/>
-      </Routes>
 
+        <Route
+          path="/instellingen"
+          element={
+            <SettingsPage
+              setMatches={setMatches}
+              setPlayerList={setPlayerList}
+              teams={teams}
+              setTeams={setTeams}
+            />
+          }
+        />
+      </Routes>
     </BrowserRouter>
   );
 }
