@@ -219,30 +219,12 @@ function MatchesPage({
 
       <div className="matches-list">
         {matches.map((match) => (
-          <div
+          <MatchCard
             key={match.id}
-            className="match-wrapper"
-          >
-            <MatchCard
-              match={match}
-              onDelete={deleteMatch}
-              onEdit={editMatch}
-            />
-
-            <div
-              className={`match-result ${getResultClass(
-                match
-              )}`}
-            >
-              {getResult(match)}
-            </div>
-
-            <p className="match-date">
-              {new Date(
-                match.date
-              ).toLocaleDateString("nl-NL")}
-            </p>
-          </div>
+            match={match}
+            onDelete={deleteMatch}
+            onEdit={editMatch}
+          />
         ))}
       </div>
     </div>
