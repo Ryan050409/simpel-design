@@ -10,18 +10,25 @@ type Match = {
     date: string;
 };
 
+type Team = {
+    id: number;
+    name: string;
+};
+
 type MatchFormProps = {
     editingMatch: Match | null;
     setEditingMatch: Dispatch<SetStateAction<Match | null>>;
     setMatches: Dispatch<SetStateAction<Match[]>>;
     closeModal: () => void;
+    teams: Team[];
 };
 
 function MatchForm({
     editingMatch,
     setEditingMatch,
     setMatches,
-    closeModal
+    closeModal,
+    teams
 }: MatchFormProps) {
     const [home, setHome] = useState(
         editingMatch?.home ?? ""
@@ -139,12 +146,12 @@ function MatchForm({
                     />
 
                     <datalist id="match-teams">
-                        <option value="Ajax" />
-                        <option value="PSV" />
-                        <option value="Feyenoord" />
-                        <option value="AZ" />
-                        <option value="FC Twente" />
-                        <option value="FC Utrecht" />
+                        {teams.map((team) => (
+                            <option
+                                key={team.id}
+                                value={team.name}
+                            />
+                        ))}
                     </datalist>
 
                     <input
