@@ -34,58 +34,30 @@ function SettingsPage({
   playerList,
   setPlayerList
 }: SettingsPageProps) {
-  const [home, setHome] = useState("");
-  const [away, setAway] = useState("");
-  const [homeGoals, setHomeGoals] = useState("");
-  const [awayGoals, setAwayGoals] = useState("");
-  const [date, setDate] = useState("");
+  const [favoriteTeam, setFavoriteTeam] =
+    useState("Feyenoord");
+
+  const [showPlayerPopup, setShowPlayerPopup] =
+    useState(false);
+
+  const [showMatchPopup, setShowMatchPopup] =
+    useState(false);
 
   const [name, setName] = useState("");
-  const [playerTeam, setPlayerTeam] = useState("");
+  const [team, setTeam] = useState("");
   const [position, setPosition] = useState("");
   const [goals, setGoals] = useState("");
   const [assists, setAssists] = useState("");
-  const [playerMatches, setPlayerMatches] = useState("");
-  const [minutesPlayed, setMinutesPlayed] = useState("");
+  const [matchesPlayed, setMatchesPlayed] =
+    useState("");
+  const [minutesPlayed, setMinutesPlayed] =
+    useState("");
   const [rating, setRating] = useState("");
-
-  function addMatch() {
-    if (
-      home.trim() === "" ||
-      away.trim() === "" ||
-      date === ""
-    ) {
-      return;
-    }
-
-    const newMatch: Match = {
-      id: Date.now(),
-      home: home.trim(),
-      away: away.trim(),
-      homeGoals: Number(homeGoals) || 0,
-      awayGoals: Number(awayGoals) || 0,
-      date
-    };
-
-    setMatches((currentMatches) =>
-      [...currentMatches, newMatch].sort(
-        (a, b) =>
-          new Date(b.date).getTime() -
-          new Date(a.date).getTime()
-      )
-    );
-
-    setHome("");
-    setAway("");
-    setHomeGoals("");
-    setAwayGoals("");
-    setDate("");
-  }
 
   function addPlayer() {
     if (
       name.trim() === "" ||
-      playerTeam.trim() === "" ||
+      team.trim() === "" ||
       position.trim() === ""
     ) {
       return;
@@ -93,11 +65,11 @@ function SettingsPage({
 
     const newPlayer: Player = {
       name: name.trim(),
-      team: playerTeam.trim(),
+      team: team.trim(),
       position: position.trim(),
       goals: Number(goals) || 0,
       assists: Number(assists) || 0,
-      matches: Number(playerMatches) || 0,
+      matches: Number(matchesPlayed) || 0,
       minutesplayed: Number(minutesPlayed) || 0,
       rating: Number(rating) || 0
     };
@@ -108,191 +80,244 @@ function SettingsPage({
     ]);
 
     setName("");
-    setPlayerTeam("");
+    setTeam("");
     setPosition("");
     setGoals("");
     setAssists("");
-    setPlayerMatches("");
+    setMatchesPlayed("");
     setMinutesPlayed("");
     setRating("");
+
+    setShowPlayerPopup(false);
   }
 
   return (
     <div className="settings-page">
       <h1>⚙️ Instellingen</h1>
 
-      <section>
-        <h2>Wedstrijd toevoegen</h2>
+      <div className="settings-list">
 
-        <div className="match-form">
-          <input
-            list="settings-teams"
-            type="text"
-            placeholder="Thuisteam"
-            value={home}
-            onChange={(e) =>
-              setHome(e.target.value)
+        <label className="setting-row">
+          <span>
+            <strong>Favoriet team</strong>
+            <small>
+              Gebruik dit team in je dashboard.
+            </small>
+          </span>
+
+          <select
+            value={favoriteTeam}
+            onChange={(event) =>
+              setFavoriteTeam(event.target.value)
             }
-          />
+          >
+            <option>Feyenoord</option>
+            <option>Ajax</option>
+            <option>PSV</option>
+            <option>AZ</option>
+          </select>
+        </label>
 
-          <input
-            list="settings-teams"
-            type="text"
-            placeholder="Uitteam"
-            value={away}
-            onChange={(e) =>
-              setAway(e.target.value)
-            }
-          />
+        <div className="settings-action-section">
+          <div>
+            <strong>Spelers</strong>
+            <small>
+              Voeg een nieuwe speler toe aan je tracker.
+            </small>
+          </div>
 
-          <datalist id="settings-teams">
-            <option value="Ajax" />
-            <option value="PSV" />
-            <option value="Feyenoord" />
-            <option value="AZ" />
-            <option value="FC Twente" />
-            <option value="FC Utrecht" />
-          </datalist>
-
-          <input
-            type="number"
-            min="0"
-            placeholder="Goals thuis"
-            value={homeGoals}
-            onChange={(e) =>
-              setHomeGoals(e.target.value)
-            }
-          />
-
-          <input
-            type="number"
-            min="0"
-            placeholder="Goals uit"
-            value={awayGoals}
-            onChange={(e) =>
-              setAwayGoals(e.target.value)
-            }
-          />
-
-          <input
-            type="date"
-            value={date}
-            onChange={(e) =>
-              setDate(e.target.value)
-            }
-          />
-
-          <button onClick={addMatch}>
-            Wedstrijd toevoegen
+          <button
+            type="button"
+            onClick={() => setShowPlayerPopup(true)}
+          >
+            + Speler toevoegen
           </button>
         </div>
-      </section>
 
-      <section>
-        <h2>Speler toevoegen</h2>
+        <div className="settings-action-section">
+          <div>
+            <strong>Wedstrijden</strong>
+            <small>
+              Voeg een nieuwe wedstrijd toe aan je tracker.
+            </small>
+          </div>
 
-        <div className="form-grid">
-          <input
-            type="text"
-            placeholder="Naam speler"
-            value={name}
-            onChange={(e) =>
-              setName(e.target.value)
-            }
-          />
-
-          <input
-            list="settings-player-teams"
-            type="text"
-            placeholder="Team"
-            value={playerTeam}
-            onChange={(e) =>
-              setPlayerTeam(e.target.value)
-            }
-          />
-
-          <datalist id="settings-player-teams">
-            <option value="Ajax" />
-            <option value="PSV" />
-            <option value="Feyenoord" />
-            <option value="AZ" />
-            <option value="FC Twente" />
-            <option value="FC Utrecht" />
-          </datalist>
-
-          <input
-            list="settings-positions"
-            type="text"
-            placeholder="Positie"
-            value={position}
-            onChange={(e) =>
-              setPosition(e.target.value)
-            }
-          />
-
-          <datalist id="settings-positions">
-            <option value="Keeper" />
-            <option value="Verdediger" />
-            <option value="Middenvelder" />
-            <option value="Aanvaller" />
-          </datalist>
-
-          <input
-            type="number"
-            min="0"
-            placeholder="Goals"
-            value={goals}
-            onChange={(e) =>
-              setGoals(e.target.value)
-            }
-          />
-
-          <input
-            type="number"
-            min="0"
-            placeholder="Assists"
-            value={assists}
-            onChange={(e) =>
-              setAssists(e.target.value)
-            }
-          />
-
-          <input
-            type="number"
-            min="0"
-            placeholder="Wedstrijden"
-            value={playerMatches}
-            onChange={(e) =>
-              setPlayerMatches(e.target.value)
-            }
-          />
-
-          <input
-            type="number"
-            min="0"
-            placeholder="Gespeelde minuten"
-            value={minutesPlayed}
-            onChange={(e) =>
-              setMinutesPlayed(e.target.value)
-            }
-          />
-
-          <input
-            type="number"
-            min="0"
-            step="0.1"
-            placeholder="Rating"
-            value={rating}
-            onChange={(e) =>
-              setRating(e.target.value)
-            }
-          />
-
-          <button onClick={addPlayer}>
-            Speler toevoegen
+          <button
+            type="button"
+            onClick={() => setShowMatchPopup(true)}
+          >
+            + Wedstrijd toevoegen
           </button>
         </div>
-      </section>
+
+      </div>
+
+      {showPlayerPopup && (
+        <div className="popup-overlay">
+          <div className="popup">
+
+            <div className="popup-header">
+              <div>
+                <span>Spelerbeheer</span>
+                <h2>Speler toevoegen</h2>
+              </div>
+
+              <button
+                type="button"
+                onClick={() => setShowPlayerPopup(false)}
+                aria-label="Sluit popup"
+              >
+                ×
+              </button>
+            </div>
+
+            <div className="form-grid">
+
+              <input
+                type="text"
+                placeholder="Naam speler"
+                value={name}
+                onChange={(event) =>
+                  setName(event.target.value)
+                }
+              />
+
+              <input
+                list="player-teams"
+                type="text"
+                placeholder="Team"
+                value={team}
+                onChange={(event) =>
+                  setTeam(event.target.value)
+                }
+              />
+
+              <datalist id="player-teams">
+                <option value="Feyenoord" />
+                <option value="Ajax" />
+                <option value="PSV" />
+                <option value="AZ" />
+                <option value="FC Twente" />
+                <option value="FC Utrecht" />
+              </datalist>
+
+              <input
+                list="player-positions"
+                type="text"
+                placeholder="Positie"
+                value={position}
+                onChange={(event) =>
+                  setPosition(event.target.value)
+                }
+              />
+
+              <datalist id="player-positions">
+                <option value="Keeper" />
+                <option value="Verdediger" />
+                <option value="Middenvelder" />
+                <option value="Aanvaller" />
+              </datalist>
+
+              <input
+                type="number"
+                min="0"
+                placeholder="Goals"
+                value={goals}
+                onChange={(event) =>
+                  setGoals(event.target.value)
+                }
+              />
+
+              <input
+                type="number"
+                min="0"
+                placeholder="Assists"
+                value={assists}
+                onChange={(event) =>
+                  setAssists(event.target.value)
+                }
+              />
+
+              <input
+                type="number"
+                min="0"
+                placeholder="Wedstrijden"
+                value={matchesPlayed}
+                onChange={(event) =>
+                  setMatchesPlayed(event.target.value)
+                }
+              />
+
+              <input
+                type="number"
+                min="0"
+                placeholder="Gespeelde minuten"
+                value={minutesPlayed}
+                onChange={(event) =>
+                  setMinutesPlayed(event.target.value)
+                }
+              />
+
+              <input
+                type="number"
+                min="0"
+                step="0.1"
+                placeholder="Rating"
+                value={rating}
+                onChange={(event) =>
+                  setRating(event.target.value)
+                }
+              />
+
+            </div>
+
+            <div className="form-actions">
+              <button
+                type="button"
+                onClick={() => setShowPlayerPopup(false)}
+              >
+                Annuleren
+              </button>
+
+              <button
+                type="button"
+                onClick={addPlayer}
+              >
+                Speler toevoegen
+              </button>
+            </div>
+
+          </div>
+        </div>
+      )}
+
+      {showMatchPopup && (
+        <div className="popup-overlay">
+          <div className="popup">
+
+            <div className="popup-header">
+              <div>
+                <span>Wedstrijdbeheer</span>
+                <h2>Wedstrijd toevoegen</h2>
+              </div>
+
+              <button
+                type="button"
+                onClick={() => setShowMatchPopup(false)}
+                aria-label="Sluit popup"
+              >
+                ×
+              </button>
+            </div>
+
+            <p>
+              Hier komt straks het formulier om een
+              wedstrijd toe te voegen.
+            </p>
+
+          </div>
+        </div>
+      )}
     </div>
   );
 }
