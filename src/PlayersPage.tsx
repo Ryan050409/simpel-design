@@ -4,6 +4,7 @@ import type { Dispatch, SetStateAction } from "react";
 type Player = {
     name: string;
     team: string;
+    position : string;
     goals: number;
     assists: number;
     matches: number;
@@ -25,6 +26,7 @@ function PlayersPage({
 
     const [newPlayerName, setNewPlayerName] = useState("");
     const [newPlayerTeam, setNewPlayerTeam] = useState("");
+    const [newPlayerPosition, setNewPlayerPosition] = useState("");
     const [newPlayerGoals, setNewPlayerGoals] = useState("");
     const [newPlayerAssists, setNewPlayerAssists] = useState("");
     const [newPlayerMatches, setNewPlayerMatches] = useState("");
@@ -35,6 +37,7 @@ function PlayersPage({
         if (
             newPlayerName.trim() === "" ||
             newPlayerTeam.trim() === "" ||
+            newPlayerPosition.trim() === ""  ||
             newPlayerGoals.trim() === "" ||
             newPlayerAssists.trim() === "" ||
             newPlayerMatches.trim() === "" ||
@@ -49,6 +52,7 @@ function PlayersPage({
         const newPlayer: Player = {
             name: newPlayerName,
             team: newPlayerTeam,
+            position: newPlayerPosition,
             goals: Number(newPlayerGoals) || 0,
             assists: Number(newPlayerAssists) || 0,
             matches: Number(newPlayerMatches) || 0,
@@ -72,6 +76,7 @@ function PlayersPage({
 
         setNewPlayerName("");
         setNewPlayerTeam("");
+        setNewPlayerPosition("");
         setNewPlayerGoals("");
         setNewPlayerAssists("");
         setNewPlayerMatches("");
@@ -93,6 +98,7 @@ function PlayersPage({
 
         setNewPlayerName(player.name);
         setNewPlayerTeam(player.team);
+        setNewPlayerPosition(player.position); 
         setNewPlayerGoals(String(player.goals));
         setNewPlayerAssists(String(player.assists));
         setNewPlayerMatches(String(player.matches));
@@ -105,6 +111,7 @@ function PlayersPage({
         setEditingPlayer(null);
         setNewPlayerName("");
         setNewPlayerTeam("");
+        setNewPlayerPosition("");
         setNewPlayerGoals("");
         setNewPlayerAssists("");
         setNewPlayerMatches("");
@@ -129,6 +136,7 @@ function PlayersPage({
                         <h2>{player.name}</h2>
 
                         <p>Team: {player.team}</p>
+                        <p>Positie: {player.position}</p>
                         <p>Goals: {player.goals}</p>
                         <p>Assists: {player.assists}</p>
                         <p>Wedstrijden: {player.matches}</p>
@@ -203,7 +211,21 @@ function PlayersPage({
                             <option value="FC Twente" />
                             <option value="FC Utrecht" />
                         </datalist>
-
+                        <input
+                            list="position"
+                            type="text"
+                            placeholder="Positie"
+                            value={newPlayerPosition}
+                            onChange={(e) =>
+                                setNewPlayerPosition(e.target.value)
+                            }
+                        />
+                        <datalist id="position"> 
+                            <option value="Keeper"/>
+                            <option value ="Verdediger"/>
+                            <option value="Middenvelder"/>
+                            <option value ="Aanvaller"/>
+                        </datalist>
                         <input
                             type="number"
                             placeholder="Goals"
