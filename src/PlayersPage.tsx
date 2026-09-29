@@ -2,24 +2,26 @@ import { useState } from "react";
 import { NavLink } from "react-router-dom";
 import type { Dispatch, SetStateAction } from "react";
 import PlayerForm from "./PlayerForm.tsx";
-import type { Player} from "./types.ts";
+import type { Player, Team } from "./types.ts";
 
 type PlayersPageProps = {
     playerList: Player[];
     setPlayerList: Dispatch<SetStateAction<Player[]>>;
+    teams: Team[];
 };
 
 function PlayersPage({
     playerList,
-    setPlayerList
+    setPlayerList,
+    teams
 }: PlayersPageProps) {
     const [editingPlayer, setEditingPlayer] =
         useState<Player | null>(null);
 
-    function deletePlayer(name: string) {
+    function deletePlayer(id: number) {
         setPlayerList((currentPlayers) =>
             currentPlayers.filter(
-                (player) => player.firstname !== name
+                (player) => player.id !== id
             )
         );
     }
@@ -50,17 +52,20 @@ function PlayersPage({
                 {playerList.map((player) => (
                     <div
                         className="player-card"
-                        key={player.firstname}
+                        key={player.id}
                     >
                         <div className="player-card-header">
                             <div>
                                 <div className="player-fullname-row">
-                                    <h2>{player.firstname} {player.lastname}</h2>
+                                    <h2>
+                                        {player.firstname}{" "}
+                                        {player.lastname}
+                                    </h2>
+
                                     <span className="player-number">
                                         #{player.number}
                                     </span>
                                 </div>
-                                    
 
                                 <p className="player-team">
                                     {player.team}
@@ -69,6 +74,7 @@ function PlayersPage({
 
                             <div className="player-rating">
                                 <span>RATING</span>
+
                                 <strong>
                                     {player.rating}
                                 </strong>
@@ -81,23 +87,17 @@ function PlayersPage({
 
                         <div className="player-stats">
                             <div className="player-stat">
-                                <strong>
-                                    {player.goals}
-                                </strong>
+                                <strong>{player.goals}</strong>
                                 <span>Goals</span>
                             </div>
 
                             <div className="player-stat">
-                                <strong>
-                                    {player.assists}
-                                </strong>
+                                <strong>{player.assists}</strong>
                                 <span>Assists</span>
                             </div>
 
                             <div className="player-stat">
-                                <strong>
-                                    {player.matches}
-                                </strong>
+                                <strong>{player.matches}</strong>
                                 <span>Wedstrijden</span>
                             </div>
 
@@ -124,7 +124,7 @@ function PlayersPage({
                                 type="button"
                                 className="delete-button"
                                 onClick={() =>
-                                    deletePlayer(player.firstname)
+                                    deletePlayer(player.id)
                                 }
                             >
                                 Verwijderen
@@ -142,6 +142,7 @@ function PlayersPage({
                     closeModal={() =>
                         setEditingPlayer(null)
                     }
+                    teams={teams}
                 />
             )}
         </div>

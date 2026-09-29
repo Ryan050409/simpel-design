@@ -2,6 +2,7 @@ import type { Player } from "./types.ts";
 
 const players: Player[] = [
     {
+        id: 1,
         firstname: "Ryan",
         lastname: "Koster",
         team: "Feyenoord",
@@ -14,6 +15,7 @@ const players: Player[] = [
         rating: 7.6
     },
     {
+        id: 2,
         firstname: "Sam",
         lastname: "Oudewater",
         team: "Ajax",
@@ -26,6 +28,7 @@ const players: Player[] = [
         rating: 6.9
     },
     {
+        id: 3,
         firstname: "Kevin",
         lastname: "de Jong",
         team: "PSV",

@@ -1,11 +1,13 @@
 import { useState } from "react";
 import type { Dispatch, SetStateAction } from "react";
-import type {Player} from "./types.ts"
+import type { Player, Team } from "./types.ts";
+
 type PlayerFormProps = {
     editingPlayer: Player | null;
     setEditingPlayer: Dispatch<SetStateAction<Player | null>>;
     setPlayerList: Dispatch<SetStateAction<Player[]>>;
     closeModal: () => void;
+    teams: Team[];
 };
 
 function PlayerForm({
@@ -31,7 +33,7 @@ function PlayerForm({
     );
 
     const [newPlayerNumber, setNewPlayerNumber] = useState(
-        editingPlayer?.number?.toString() || ""
+        editingPlayer?.number?.toString() ?? ""
     );
 
     const [newPlayerGoals, setNewPlayerGoals] = useState(
@@ -58,7 +60,7 @@ function PlayerForm({
 
     const [warning, setWarning] = useState("");
 
-    function addPlayer() {
+    function savePlayer() {
         if (
             newPlayerFirstName.trim() === "" ||
             newPlayerLastName.trim() === "" ||
@@ -76,6 +78,10 @@ function PlayerForm({
         }
 
         const newPlayer: Player = {
+            id: editingPlayer
+                ? editingPlayer.id
+                : Date.now(),
+
             firstname: newPlayerFirstName.trim(),
             lastname: newPlayerLastName.trim(),
             team: newPlayerTeam.trim(),
@@ -91,7 +97,7 @@ function PlayerForm({
         if (editingPlayer) {
             setPlayerList((currentPlayers) =>
                 currentPlayers.map((player) =>
-                    player.firstname === editingPlayer.firstname
+                    player.id === editingPlayer.id
                         ? newPlayer
                         : player
                 )
@@ -138,6 +144,7 @@ function PlayerForm({
                             setNewPlayerFirstName(e.target.value)
                         }
                     />
+
                     <input
                         type="text"
                         placeholder="Achternaam speler"
@@ -146,6 +153,7 @@ function PlayerForm({
                             setNewPlayerLastName(e.target.value)
                         }
                     />
+
                     <input
                         list="player-teams"
                         type="text"
@@ -155,14 +163,13 @@ function PlayerForm({
                             setNewPlayerTeam(e.target.value)
                         }
                     />
-
                     <datalist id="player-teams">
-                        <option value="Ajax" />
-                        <option value="PSV" />
-                        <option value="Feyenoord" />
-                        <option value="AZ" />
-                        <option value="FC Twente" />
-                        <option value="FC Utrecht" />
+                        {teams.map((team) => (
+                            <option
+                                key={team.id}
+                                value={team.name}
+                            />
+                        ))}
                     </datalist>
 
                     <input
@@ -175,19 +182,21 @@ function PlayerForm({
                         }
                     />
 
-                    <input
-                        type="number"
-                        placeholder="Rugnummer"
-                        value={newPlayerNumber}
-                        onChange={(e) => setNewPlayerNumber(e.target.value)}>
-                    </input>
-
                     <datalist id="player-positions">
                         <option value="Keeper" />
                         <option value="Verdediger" />
                         <option value="Middenvelder" />
                         <option value="Aanvaller" />
                     </datalist>
+
+                    <input
+                        type="number"
+                        placeholder="Rugnummer"
+                        value={newPlayerNumber}
+                        onChange={(e) =>
+                            setNewPlayerNumber(e.target.value)
+                        }
+                    />
 
                     <input
                         type="number"
@@ -238,7 +247,7 @@ function PlayerForm({
 
                 <button
                     className="save-player-button"
-                    onClick={addPlayer}
+                    onClick={savePlayer}
                 >
                     {editingPlayer
                         ? "Wijzigingen opslaan"

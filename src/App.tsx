@@ -74,31 +74,31 @@ function App() {
       return savedTeams
         ? JSON.parse(savedTeams)
         : [
-            {
-              id: 1,
-              name: "Ajax"
-            },
-            {
-              id: 2,
-              name: "PSV"
-            },
-            {
-              id: 3,
-              name: "Feyenoord"
-            },
-            {
-              id: 4,
-              name: "AZ"
-            },
-            {
-              id: 5,
-              name: "FC Twente"
-            },
-            {
-              id: 6,
-              name: "FC Utrecht"
-            }
-          ];
+          {
+            id: 1,
+            name: "Ajax"
+          },
+          {
+            id: 2,
+            name: "PSV"
+          },
+          {
+            id: 3,
+            name: "Feyenoord"
+          },
+          {
+            id: 4,
+            name: "AZ"
+          },
+          {
+            id: 5,
+            name: "FC Twente"
+          },
+          {
+            id: 6,
+            name: "FC Utrecht"
+          }
+        ];
     }
   );
 
@@ -173,6 +173,7 @@ function App() {
             <PlayersPage
               playerList={playerList}
               setPlayerList={setPlayerList}
+              teams={teams}
             />
           }
         />
