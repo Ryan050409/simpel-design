@@ -4,7 +4,8 @@ import type { Dispatch, SetStateAction } from "react";
 import PlayerForm from "./PlayerForm.tsx";
 
 type Player = {
-    name: string;
+    firstname: string;
+    lastname: string;
     team: string;
     position: string;
     number: number;
@@ -37,7 +38,7 @@ function PlayersPage({
     function deletePlayer(name: string) {
         setPlayerList((currentPlayers) =>
             currentPlayers.filter(
-                (player) => player.name !== name
+                (player) => player.firstname !== name
             )
         );
     }
@@ -68,12 +69,12 @@ function PlayersPage({
                 {playerList.map((player) => (
                     <div
                         className="player-card"
-                        key={player.name}
+                        key={player.firstname}
                     >
                         <div className="player-card-header">
                             <div>
                                 <div className="player-name-row">
-                                    <h2>{player.name}</h2>
+                                    <h2>{player.firstname}</h2>
 
                                     <span className="player-number">
                                         #{player.number}
@@ -142,7 +143,7 @@ function PlayersPage({
                                 type="button"
                                 className="delete-button"
                                 onClick={() =>
-                                    deletePlayer(player.name)
+                                    deletePlayer(player.firstname)
                                 }
                             >
                                 Verwijderen

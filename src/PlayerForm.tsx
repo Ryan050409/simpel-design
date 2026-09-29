@@ -2,7 +2,8 @@ import { useState } from "react";
 import type { Dispatch, SetStateAction } from "react";
 
 type Player = {
-    name: string;
+    firstname: string;
+    lastname: string;
     team: string;
     position: string;
     number: number;
@@ -26,8 +27,12 @@ function PlayerForm({
     setPlayerList,
     closeModal
 }: PlayerFormProps) {
-    const [newPlayerName, setNewPlayerName] = useState(
-        editingPlayer?.name ?? ""
+    const [newPlayerFirstName, setNewPlayerFirstName] = useState(
+        editingPlayer?.firstname ?? ""
+    );
+
+    const [newPlayerLastName, setNewPlayerLastName] = useState(
+        editingPlayer?.lastname ?? ""
     );
 
     const [newPlayerTeam, setNewPlayerTeam] = useState(
@@ -68,7 +73,8 @@ function PlayerForm({
 
     function addPlayer() {
         if (
-            newPlayerName.trim() === "" ||
+            newPlayerFirstName.trim() === "" ||
+            newPlayerLastName.trim() === "" ||
             newPlayerTeam.trim() === "" ||
             newPlayerPosition.trim() === "" ||
             newPlayerNumber.trim() === "" ||
@@ -83,10 +89,11 @@ function PlayerForm({
         }
 
         const newPlayer: Player = {
-            name: newPlayerName.trim(),
+            firstname: newPlayerFirstName.trim(),
+            lastname: newPlayerLastName.trim(),
             team: newPlayerTeam.trim(),
             position: newPlayerPosition.trim(),
-            number:  Number(newPlayerNumber),
+            number: Number(newPlayerNumber),
             goals: Number(newPlayerGoals),
             assists: Number(newPlayerAssists),
             matches: Number(newPlayerMatches),
@@ -97,7 +104,7 @@ function PlayerForm({
         if (editingPlayer) {
             setPlayerList((currentPlayers) =>
                 currentPlayers.map((player) =>
-                    player.name === editingPlayer.name
+                    player.firstname === editingPlayer.firstname
                         ? newPlayer
                         : player
                 )
@@ -138,13 +145,20 @@ function PlayerForm({
                 <div className="form-grid">
                     <input
                         type="text"
-                        placeholder="Naam speler"
-                        value={newPlayerName}
+                        placeholder="Voornaam speler"
+                        value={newPlayerFirstName}
                         onChange={(e) =>
-                            setNewPlayerName(e.target.value)
+                            setNewPlayerFirstName(e.target.value)
                         }
                     />
-
+                    <input
+                        type="text"
+                        placeholder="Achternaam speler"
+                        value={newPlayerLastName}
+                        onChange={(e) =>
+                            setNewPlayerLastName(e.target.value)
+                        }
+                    />
                     <input
                         list="player-teams"
                         type="text"
@@ -174,11 +188,11 @@ function PlayerForm({
                         }
                     />
 
-                    <input 
-                    type="number"
-                    placeholder="Rugnummer"
-                    value={newPlayerNumber}
-                    onChange={(e) => setNewPlayerNumber(e.target.value)}> 
+                    <input
+                        type="number"
+                        placeholder="Rugnummer"
+                        value={newPlayerNumber}
+                        onChange={(e) => setNewPlayerNumber(e.target.value)}>
                     </input>
 
                     <datalist id="player-positions">
