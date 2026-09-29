@@ -187,6 +187,7 @@ function App() {
               matches={matches}
               setMatches={setMatches}
               team={team}
+              teams={teams}
             />
           }
         />

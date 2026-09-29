@@ -1,7 +1,8 @@
+import {useState} from "react";
 import { NavLink } from "react-router-dom";
 import type { Dispatch, SetStateAction } from "react";
 import MatchCard from "./MatchCard.tsx";
-
+import MatchForm from "./MatchForm.tsx";
 type Match = {
     id: number;
     home: string;
@@ -10,17 +11,23 @@ type Match = {
     awayGoals: number;
     date: string;
 };
-
+ type Team = { 
+    id: number; 
+    name: string;
+ }
 type MatchesPageProps = {
     matches: Match[];
     setMatches: Dispatch<SetStateAction<Match[]>>;
     team: string;
+    teams: Team[];
 };
-
+ const [editingMatch, setEditingMatch] = 
+    useState<Match | null>(null);
 function MatchesPage({
     matches,
     setMatches,
-    team
+    team,
+    teams
 }: MatchesPageProps) {
     function deleteMatch(id: number) {
         setMatches((currentMatches) =>
@@ -31,9 +38,11 @@ function MatchesPage({
     }
 
     function editMatch(match: Match) {
-        console.log("Wedstrijd bewerken:", match);
+        setEditingMatch(match);
     }
-
+    function closeModal() { 
+        setEditingMatch(null);
+    }
     return (
         <div className="matches-page">
             <div className="matches-page-header">
@@ -60,6 +69,15 @@ function MatchesPage({
                     />
                 ))}
             </div>
+            {editingMatch && ( 
+                <MatchForm 
+                editingMatch={editingMatch}
+                setEditingMatch={setEditingMatch}
+                setMatches={setMatches}
+                closeModal={closeModal}
+                teams={teams}
+                />
+            )}
         </div>
     );
 }
