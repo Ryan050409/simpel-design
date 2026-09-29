@@ -21,8 +21,7 @@ type MatchesPageProps = {
     team: string;
     teams: Team[];
 };
- const [editingMatch, setEditingMatch] = 
-    useState<Match | null>(null);
+
 function MatchesPage({
     matches,
     setMatches,
@@ -36,7 +35,8 @@ function MatchesPage({
             )
         );
     }
-
+     const [editingMatch, setEditingMatch] = 
+    useState<Match | null>(null);
     function editMatch(match: Match) {
         setEditingMatch(match);
     }
@@ -68,6 +68,7 @@ function MatchesPage({
                         onEdit={editMatch}
                     />
                 ))}
+                
             </div>
             {editingMatch && ( 
                 <MatchForm 
