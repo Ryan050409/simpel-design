@@ -14,7 +14,8 @@ function PlayerForm({
     editingPlayer,
     setEditingPlayer,
     setPlayerList,
-    closeModal
+    closeModal,
+    teams
 }: PlayerFormProps) {
     const [newPlayerFirstName, setNewPlayerFirstName] = useState(
         editingPlayer?.firstname ?? ""

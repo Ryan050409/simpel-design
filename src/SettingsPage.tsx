@@ -237,6 +237,7 @@ function SettingsPage({
                     setEditingPlayer={setEditingPlayer}
                     setPlayerList={setPlayerList}
                     closeModal={closePlayerPopup}
+                    teams ={teams}
                 />
             )}
 
