@@ -1,6 +1,6 @@
 import { useState } from "react";
 import type { Dispatch, SetStateAction } from "react";
-import type {Player} from "./types"
+import type {Player} from "./types.ts"
 type PlayerFormProps = {
     editingPlayer: Player | null;
     setEditingPlayer: Dispatch<SetStateAction<Player | null>>;

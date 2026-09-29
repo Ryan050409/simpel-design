@@ -1,13 +1,4 @@
-import type { Player } from "./App";
-
-type Match = {
-  id: number;
-  home: string;
-  away: string;
-  homeGoals: number;
-  awayGoals: number;
-  date: string;
-};
+import type { Player, Match } from "./types.ts";
 
 type DashboardProps = {
   matches: Match[];

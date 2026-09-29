@@ -1,11 +1,4 @@
-type Match = {
-  id: number;
-  home: string;
-  away: string;
-  homeGoals: number;
-  awayGoals: number;
-  date: string;
-};
+import type { Match} from "./types";
 
 type MatchCardProps = {
   match: Match;

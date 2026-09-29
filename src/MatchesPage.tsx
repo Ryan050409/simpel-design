@@ -3,18 +3,8 @@ import { NavLink } from "react-router-dom";
 import type { Dispatch, SetStateAction } from "react";
 import MatchCard from "./MatchCard.tsx";
 import MatchForm from "./MatchForm.tsx";
-type Match = {
-    id: number;
-    home: string;
-    away: string;
-    homeGoals: number;
-    awayGoals: number;
-    date: string;
-};
- type Team = { 
-    id: number; 
-    name: string;
- }
+import type {Match, Team} from "./types.ts"
+
 type MatchesPageProps = {
     matches: Match[];
     setMatches: Dispatch<SetStateAction<Match[]>>;
