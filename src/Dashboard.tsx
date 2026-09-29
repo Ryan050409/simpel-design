@@ -162,7 +162,7 @@ function Dashboard({
         <p>
           <strong>Topscorer:</strong>{" "}
           {topScorer
-            ? `${topScorer.name} (${topScorer.goals} goals)`
+            ? `${topScorer.firstname} (${topScorer.goals} goals)`
             : "Nog geen spelers"}
         </p>
       </div>

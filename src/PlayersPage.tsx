@@ -73,13 +73,13 @@ function PlayersPage({
                     >
                         <div className="player-card-header">
                             <div>
-                                <div className="player-name-row">
-                                    <h2>{player.firstname}</h2>
-
+                                <div className="player-fullname-row">
+                                    <h2>{player.firstname} {player.lastname}</h2>
                                     <span className="player-number">
                                         #{player.number}
                                     </span>
                                 </div>
+                                    
 
                                 <p className="player-team">
                                     {player.team}

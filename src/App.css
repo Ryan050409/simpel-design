@@ -298,7 +298,7 @@ nav a.active {
   align-items: flex-start;
   gap: 15px;
 }
-.player-name-row { 
+.player-fullname-row { 
   display: flex;
   align-items: center;
   gap: 229px;
