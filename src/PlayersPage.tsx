@@ -1,6 +1,7 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useSearchParams, NavLink } from "react-router-dom";
 import type { Dispatch, SetStateAction } from "react";
+import PlayerForm from "./PlayerForm.tsx";
 
 type Player = {
     name: string;
@@ -23,6 +24,7 @@ function PlayersPage({
     playerList,
     setPlayerList
 }: PlayersPageProps) {
+    const [editingPlayer, setEditingPlayer] = useState<Player | null>(null)
     const [searchParams] = useSearchParams();
 
     useEffect(() => {
@@ -37,7 +39,9 @@ function PlayersPage({
             )
         );
     }
-
+    function editPlayer(player: Player) {
+        setEditingPlayer(player);
+    }
     return (
         <div className="players-page">
             <div className="players-page-header">
@@ -78,9 +82,12 @@ function PlayersPage({
                         <div className="player-position">
                             {player.position}
                         </div>
-                        <div> 
+
+                        <div>
                             <h2>{player.name}</h2>
                             <span>#{player.number}</span>
+                        </div>
+
                         <div className="player-stats">
                             <div className="player-stat">
                                 <strong>{player.goals}</strong>
@@ -108,7 +115,9 @@ function PlayersPage({
                         <div className="player-actions">
                             <button
                                 type="button"
-                            >
+                                className="edit-button"
+                                onClick={() =>
+                                    editPlayer(player)}>
                                 Bewerken
                             </button>
 
@@ -116,17 +125,24 @@ function PlayersPage({
                                 type="button"
                                 className="delete-button"
                                 onClick={() =>
-                                    deletePlayer(player.name)
-                                }
-                            >
+                                    deletePlayer(player.name)}>
                                 Verwijderen
                             </button>
                         </div>
                     </div>
-                    </div>
                 ))}
-            </div>
         </div>
+            {
+        editingPlayer && (
+            <PlayerForm
+                editingPlayer={editingPlayer}
+                setEditingPlayer={setEditingPlayer}
+                setPlayerList={setPlayerList}
+                closeModal={() => setEditingPlayer(null)}
+            />
+        )
+    }
+        </div >
     );
 }
 
