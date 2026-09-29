@@ -1,19 +1,6 @@
 import { useState } from "react";
 import type { Dispatch, SetStateAction } from "react";
-
-type Match = {
-    id: number;
-    home: string;
-    away: string;
-    homeGoals: number;
-    awayGoals: number;
-    date: string;
-};
-
-type Team = {
-    id: number;
-    name: string;
-};
+import type { Match, Team} from "./types";
 
 type MatchFormProps = {
     editingMatch: Match | null;

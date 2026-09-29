@@ -1,20 +1,8 @@
-import { useEffect, useState } from "react";
-import { useSearchParams, NavLink } from "react-router-dom";
+import { useState } from "react";
+import { NavLink } from "react-router-dom";
 import type { Dispatch, SetStateAction } from "react";
 import PlayerForm from "./PlayerForm.tsx";
-
-type Player = {
-    firstname: string;
-    lastname: string;
-    team: string;
-    position: string;
-    number: number;
-    goals: number;
-    assists: number;
-    matches: number;
-    minutesplayed: number;
-    rating: number;
-};
+import type { Player} from "./types.ts";
 
 type PlayersPageProps = {
     playerList: Player[];
@@ -27,13 +15,6 @@ function PlayersPage({
 }: PlayersPageProps) {
     const [editingPlayer, setEditingPlayer] =
         useState<Player | null>(null);
-
-    const [searchParams] = useSearchParams();
-
-    useEffect(() => {
-        // Zorgt ervoor dat de pagina correct reageert
-        // wanneer de pagina met ?toevoegen=1 wordt geopend.
-    }, [searchParams]);
 
     function deletePlayer(name: string) {
         setPlayerList((currentPlayers) =>

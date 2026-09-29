@@ -1,26 +1,28 @@
-const players = [
+import type { Player } from "./types.ts";
+
+const players: Player[] = [
     {
-    firstname: "Ryan",
-    lastname: "Koster",
-    team: "Feyenoord",
-    position: "Middenvelder",
-    number: 7,
-    goals: 8,
-    assists: 6,
-    matches: 12,
-    minutesplayed: 900,
-    rating: 7.6
-},
+        firstname: "Ryan",
+        lastname: "Koster",
+        team: "Feyenoord",
+        position: "Middenvelder",
+        number: 7,
+        goals: 8,
+        assists: 6,
+        matches: 12,
+        minutesplayed: 900,
+        rating: 7.6
+    },
     {
         firstname: "Sam",
-        lastname:"Oudewater",
+        lastname: "Oudewater",
         team: "Ajax",
         position: "Aanvaller",
         number: 8,
         goals: 6,
         assists: 8,
         matches: 12,
-        minutesplayed: 855,
+        minutesplayed: 850,
         rating: 6.9
     },
     {
@@ -32,7 +34,7 @@ const players = [
         goals: 7,
         assists: 4,
         matches: 12,
-        minutesplayed: 865,
+        minutesplayed: 780,
         rating: 6.8
     }
 ];

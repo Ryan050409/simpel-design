@@ -1,19 +1,6 @@
 import { useState } from "react";
 import type { Dispatch, SetStateAction } from "react";
-
-type Player = {
-    firstname: string;
-    lastname: string;
-    team: string;
-    position: string;
-    number: number;
-    goals: number;
-    assists: number;
-    matches: number;
-    minutesplayed: number;
-    rating: number;
-};
-
+import type {Player} from "./types"
 type PlayerFormProps = {
     editingPlayer: Player | null;
     setEditingPlayer: Dispatch<SetStateAction<Player | null>>;

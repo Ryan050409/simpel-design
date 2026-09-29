@@ -2,33 +2,7 @@ import { useState } from "react";
 import type { Dispatch, SetStateAction } from "react";
 import PlayerForm from "./PlayerForm.tsx";
 import MatchForm from "./MatchForm.tsx";
-
-type Player = {
-    firstname: string;
-    lastname: string;
-    team: string;
-    position: string;
-    number:number;
-    goals: number;
-    assists: number;
-    matches: number;
-    minutesplayed: number;
-    rating: number;
-};
-
-type Match = {
-    id: number;
-    home: string;
-    away: string;
-    homeGoals: number;
-    awayGoals: number;
-    date: string;
-};
-
-type Team = {
-    id: number;
-    name: string;
-};
+import type { Player, Match, Team } from "./types.ts";
 
 type SettingsPageProps = {
     setMatches: Dispatch<SetStateAction<Match[]>>;
