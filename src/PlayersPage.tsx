@@ -24,7 +24,9 @@ function PlayersPage({
     playerList,
     setPlayerList
 }: PlayersPageProps) {
-    const [editingPlayer, setEditingPlayer] = useState<Player | null>(null)
+    const [editingPlayer, setEditingPlayer] =
+        useState<Player | null>(null);
+
     const [searchParams] = useSearchParams();
 
     useEffect(() => {
@@ -39,15 +41,19 @@ function PlayersPage({
             )
         );
     }
+
     function editPlayer(player: Player) {
         setEditingPlayer(player);
     }
+
     return (
         <div className="players-page">
             <div className="players-page-header">
                 <div>
                     <h1>⚽ Spelers</h1>
-                    <p>Bekijk en beheer je spelers.</p>
+                    <p>
+                        Bekijk en beheer je spelers.
+                    </p>
                 </div>
 
                 <NavLink
@@ -66,7 +72,13 @@ function PlayersPage({
                     >
                         <div className="player-card-header">
                             <div>
-                                <h2>{player.name}</h2>
+                                <div className="player-name-row">
+                                    <h2>{player.name}</h2>
+
+                                    <span className="player-number">
+                                        #{player.number}
+                                    </span>
+                                </div>
 
                                 <p className="player-team">
                                     {player.team}
@@ -75,7 +87,9 @@ function PlayersPage({
 
                             <div className="player-rating">
                                 <span>RATING</span>
-                                <strong>{player.rating}</strong>
+                                <strong>
+                                    {player.rating}
+                                </strong>
                             </div>
                         </div>
 
@@ -83,24 +97,25 @@ function PlayersPage({
                             {player.position}
                         </div>
 
-                        <div>
-                            <h2>{player.name}</h2>
-                            <span>#{player.number}</span>
-                        </div>
-
                         <div className="player-stats">
                             <div className="player-stat">
-                                <strong>{player.goals}</strong>
+                                <strong>
+                                    {player.goals}
+                                </strong>
                                 <span>Goals</span>
                             </div>
 
                             <div className="player-stat">
-                                <strong>{player.assists}</strong>
+                                <strong>
+                                    {player.assists}
+                                </strong>
                                 <span>Assists</span>
                             </div>
 
                             <div className="player-stat">
-                                <strong>{player.matches}</strong>
+                                <strong>
+                                    {player.matches}
+                                </strong>
                                 <span>Wedstrijden</span>
                             </div>
 
@@ -117,7 +132,9 @@ function PlayersPage({
                                 type="button"
                                 className="edit-button"
                                 onClick={() =>
-                                    editPlayer(player)}>
+                                    editPlayer(player)
+                                }
+                            >
                                 Bewerken
                             </button>
 
@@ -125,24 +142,27 @@ function PlayersPage({
                                 type="button"
                                 className="delete-button"
                                 onClick={() =>
-                                    deletePlayer(player.name)}>
+                                    deletePlayer(player.name)
+                                }
+                            >
                                 Verwijderen
                             </button>
                         </div>
                     </div>
                 ))}
+            </div>
+
+            {editingPlayer && (
+                <PlayerForm
+                    editingPlayer={editingPlayer}
+                    setEditingPlayer={setEditingPlayer}
+                    setPlayerList={setPlayerList}
+                    closeModal={() =>
+                        setEditingPlayer(null)
+                    }
+                />
+            )}
         </div>
-            {
-        editingPlayer && (
-            <PlayerForm
-                editingPlayer={editingPlayer}
-                setEditingPlayer={setEditingPlayer}
-                setPlayerList={setPlayerList}
-                closeModal={() => setEditingPlayer(null)}
-            />
-        )
-    }
-        </div >
     );
 }
 

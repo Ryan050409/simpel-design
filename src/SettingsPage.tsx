@@ -7,6 +7,7 @@ type Player = {
     name: string;
     team: string;
     position: string;
+    number:number;
     goals: number;
     assists: number;
     matches: number;

@@ -298,7 +298,12 @@ nav a.active {
   align-items: flex-start;
   gap: 15px;
 }
-
+.player-name-row { 
+  display: flex;
+  align-items: center;
+  gap: 229px;
+  font-size: 23px;
+}
 .player-card h2 {
   margin: 0;
   font-size: 25px;
