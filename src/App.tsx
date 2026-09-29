@@ -14,7 +14,8 @@ import MatchesPage from "./MatchesPage.tsx";
 import SettingsPage from "./SettingsPage.tsx";
 
 export type Player = {
-  name: string;
+  firstname: string;
+  lastname: string;
   team: string;
   position: string;
   number: number;

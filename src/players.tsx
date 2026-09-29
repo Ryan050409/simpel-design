@@ -1,6 +1,7 @@
 const players = [
     {
-        name: "Ryan",
+        firstname: "Ryan",
+        lastname: "Koster",
         team: "Feyenoord",
         number: 7,
         goals: 8,
@@ -9,7 +10,8 @@ const players = [
         rating: 7.6
     },
     {
-        name: "Sam",
+        firstname: "Sam",
+        lastname:"Oudewater",
         team: "Ajax",
         number: 8,
         goals: 6,
@@ -18,7 +20,8 @@ const players = [
         rating: 6.9
     },
     {
-        name: "Kevin",
+        firstname: "Kevin",
+        lastname: "de Jong",
         team: "PSV",
         number: 11,
         goals: 7,

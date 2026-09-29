@@ -4,7 +4,8 @@ import PlayerForm from "./PlayerForm.tsx";
 import MatchForm from "./MatchForm.tsx";
 
 type Player = {
-    name: string;
+    firstname: string;
+    lastname: string;
     team: string;
     position: string;
     number:number;
