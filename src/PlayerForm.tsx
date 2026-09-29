@@ -5,6 +5,7 @@ type Player = {
     name: string;
     team: string;
     position: string;
+    number: number;
     goals: number;
     assists: number;
     matches: number;
@@ -37,6 +38,10 @@ function PlayerForm({
         editingPlayer?.position ?? ""
     );
 
+    const [newPlayerNumber, setNewPlayerNumber] = useState(
+        editingPlayer?.number?.toString() || ""
+    );
+
     const [newPlayerGoals, setNewPlayerGoals] = useState(
         editingPlayer ? String(editingPlayer.goals) : ""
     );
@@ -66,6 +71,7 @@ function PlayerForm({
             newPlayerName.trim() === "" ||
             newPlayerTeam.trim() === "" ||
             newPlayerPosition.trim() === "" ||
+            newPlayerNumber.trim() === "" ||
             newPlayerGoals.trim() === "" ||
             newPlayerAssists.trim() === "" ||
             newPlayerMatches.trim() === "" ||
@@ -80,6 +86,7 @@ function PlayerForm({
             name: newPlayerName.trim(),
             team: newPlayerTeam.trim(),
             position: newPlayerPosition.trim(),
+            number:  Number(newPlayerNumber),
             goals: Number(newPlayerGoals),
             assists: Number(newPlayerAssists),
             matches: Number(newPlayerMatches),
@@ -166,6 +173,13 @@ function PlayerForm({
                             setNewPlayerPosition(e.target.value)
                         }
                     />
+
+                    <input 
+                    type="number"
+                    placeholder="Rugnummer"
+                    value={newPlayerNumber}
+                    onChange={(e) => setNewPlayerNumber(e.target.value)}> 
+                    </input>
 
                     <datalist id="player-positions">
                         <option value="Keeper" />

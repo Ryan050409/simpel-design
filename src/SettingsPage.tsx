@@ -275,7 +275,7 @@ function SettingsPage({
             )}
 
             <div className="faq-section">
-                <h2>Veelgestelde vragen</h2>
+                <h2>❓Veelgestelde vragen</h2>
 
                 <div className="faq-list">
                     {faqs.map((faq, index) => (

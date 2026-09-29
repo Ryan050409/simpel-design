@@ -2,6 +2,7 @@ const players = [
     {
         name: "Ryan",
         team: "Feyenoord",
+        number: 7,
         goals: 8,
         assists: 6,
         matches: 12,
@@ -10,6 +11,7 @@ const players = [
     {
         name: "Sam",
         team: "Ajax",
+        number: 8,
         goals: 6,
         assists: 8,
         matches: 12,
@@ -18,6 +20,7 @@ const players = [
     {
         name: "Kevin",
         team: "PSV",
+        number: 11,
         goals: 7,
         assists: 4,
         matches: 12,

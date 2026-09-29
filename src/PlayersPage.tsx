@@ -6,6 +6,7 @@ type Player = {
     name: string;
     team: string;
     position: string;
+    number: number;
     goals: number;
     assists: number;
     matches: number;
@@ -77,7 +78,9 @@ function PlayersPage({
                         <div className="player-position">
                             {player.position}
                         </div>
-
+                        <div> 
+                            <h2>{player.name}</h2>
+                            <span>#{player.number}</span>
                         <div className="player-stats">
                             <div className="player-stat">
                                 <strong>{player.goals}</strong>
@@ -119,6 +122,7 @@ function PlayersPage({
                                 Verwijderen
                             </button>
                         </div>
+                    </div>
                     </div>
                 ))}
             </div>
