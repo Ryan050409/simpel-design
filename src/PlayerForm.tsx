@@ -17,6 +17,7 @@ function PlayerForm({
     closeModal,
     teams
 }: PlayerFormProps) {
+    const [formStep, setFormStep] = useState(1);
     const [newPlayerFirstName, setNewPlayerFirstName] = useState(
         editingPlayer?.firstname ?? ""
     );
@@ -77,7 +78,20 @@ function PlayerForm({
             setWarning("Alle velden moeten ingevuld worden!");
             return;
         }
+        function goToNextStep() {
+            if (
+                newPlayerFirstName.trim() === "" ||
+                newPlayerLastName.trim() === "" ||
+                newPlayerNumber.trim() === "" ||
+                newPlayerPosition.trim() === ""
+            ) {
+                setWarning("Vul eerst alle basisgegevens in!");
+                return;
+            }
 
+            setWarning("");
+            setFormStep(2);
+        }
         const newPlayer: Player = {
             id: editingPlayer
                 ? editingPlayer.id
@@ -136,116 +150,79 @@ function PlayerForm({
                     </p>
                 )}
 
-                <div className="form-grid">
-                    <input
-                        type="text"
-                        placeholder="Voornaam speler"
-                        value={newPlayerFirstName}
-                        onChange={(e) =>
-                            setNewPlayerFirstName(e.target.value)
-                        }
-                    />
+                {formStep === 1 && (
+                    <div className="form-grid">
+                        <input
+                            type="text"
+                            placeholder="Voornaam speler"
+                            value={newPlayerFirstName}
+                            onChange={(e) =>
+                                setNewPlayerFirstName(e.target.value)
+                            }
+                        />
 
-                    <input
-                        type="text"
-                        placeholder="Achternaam speler"
-                        value={newPlayerLastName}
-                        onChange={(e) =>
-                            setNewPlayerLastName(e.target.value)
-                        }
-                    />
+                        <input
+                            type="text"
+                            placeholder="Achternaam speler"
+                            value={newPlayerLastName}
+                            onChange={(e) =>
+                                setNewPlayerLastName(e.target.value)
+                            }
+                        />
 
-                    <input
-                        list="player-teams"
-                        type="text"
-                        placeholder="Team"
-                        value={newPlayerTeam}
-                        onChange={(e) =>
-                            setNewPlayerTeam(e.target.value)
-                        }
-                    />
-                    <datalist id="player-teams">
-                        {teams.map((team) => (
-                            <option
-                                key={team.id}
-                                value={team.name}
-                            />
-                        ))}
-                    </datalist>
+                        <input
+                            type="number"
+                            placeholder="Rugnummer"
+                            value={newPlayerNumber}
+                            onChange={(e) =>
+                                setNewPlayerNumber(e.target.value)
+                            }
+                        />
 
-                    <input
-                        list="player-positions"
-                        type="text"
-                        placeholder="Positie"
-                        value={newPlayerPosition}
-                        onChange={(e) =>
-                            setNewPlayerPosition(e.target.value)
-                        }
-                    />
+                        <input
+                            list="player-positions"
+                            type="text"
+                            placeholder="Positie"
+                            value={newPlayerPosition}
+                            onChange={(e) =>
+                                setNewPlayerPosition(e.target.value)
+                            }
+                        />
 
-                    <datalist id="player-positions">
-                        <option value="Keeper" />
-                        <option value="Verdediger" />
-                        <option value="Middenvelder" />
-                        <option value="Aanvaller" />
-                    </datalist>
+                        <datalist id="player-positions">
+                            <option value="Keeper" />
+                            <option value="Verdediger" />
+                            <option value="Middenvelder" />
+                            <option value="Aanvaller" />
+                        </datalist>
+                    </div>
+                )}
 
-                    <input
-                        type="number"
-                        placeholder="Rugnummer"
-                        value={newPlayerNumber}
-                        onChange={(e) =>
-                            setNewPlayerNumber(e.target.value)
-                        }
-                    />
+                {formStep === 2 && (
+                    <div className="form-grid">
+                        {/* Deze statistieken vullen we hierna per positie in */}
+                    </div>
+                )}
 
-                    <input
-                        type="number"
-                        placeholder="Goals"
-                        value={newPlayerGoals}
-                        onChange={(e) =>
-                            setNewPlayerGoals(e.target.value)
-                        }
-                    />
+                <input
+                    type="number"
+                    step="0.1"
+                    placeholder="Rating"
+                    value={newPlayerRating}
+                    onChange={(e) =>
+                        setNewPlayerRating(e.target.value)
+                    }
+                />
+            </div>
 
-                    <input
-                        type="number"
-                        placeholder="Assists"
-                        value={newPlayerAssists}
-                        onChange={(e) =>
-                            setNewPlayerAssists(e.target.value)
-                        }
-                    />
-
-                    <input
-                        type="number"
-                        placeholder="Wedstrijden"
-                        value={newPlayerMatches}
-                        onChange={(e) =>
-                            setNewPlayerMatches(e.target.value)
-                        }
-                    />
-
-                    <input
-                        type="number"
-                        placeholder="Gespeelde minuten"
-                        value={newPlayerMinutesPlayed}
-                        onChange={(e) =>
-                            setNewPlayerMinutesPlayed(e.target.value)
-                        }
-                    />
-
-                    <input
-                        type="number"
-                        step="0.1"
-                        placeholder="Rating"
-                        value={newPlayerRating}
-                        onChange={(e) =>
-                            setNewPlayerRating(e.target.value)
-                        }
-                    />
-                </div>
-
+            {formStep === 1 ? (
+                <button
+                    className="save-player-button"
+                    onClick={goToNextStep}
+                >
+                    Doorgaan
+                </button>
+            ) : (
                 <button
                     className="save-player-button"
                     onClick={savePlayer}
@@ -254,7 +231,7 @@ function PlayerForm({
                         ? "Wijzigingen opslaan"
                         : "Speler opslaan"}
                 </button>
-            </div>
+            )}
         </div>
     );
 }
