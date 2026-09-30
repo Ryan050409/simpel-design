@@ -277,169 +277,203 @@ function PlayerForm({
                     <>
                         <div className="form-grid">
 
-                            <input
-                                list="player-teams"
-                                type="text"
-                                placeholder="Team"
-                                value={newPlayerTeam}
-                                onChange={(e) =>
-                                    setNewPlayerTeam(e.target.value)
-                                }
-                            />
+                            <div className="form-field">
+                                <label>Team</label>
+                                <input
+                                    list="player-teams"
+                                    type="text"
+                                    value={newPlayerTeam}
+                                    onChange={(e) =>
+                                        setNewPlayerTeam(e.target.value)
+                                    }
+                                />
 
-                            <datalist id="player-teams">
-                                {teams.map((team) => (
-                                    <option
-                                        key={team.id}
-                                        value={team.name}
-                                    />
-                                ))}
-                            </datalist>
+                                <datalist id="player-teams">
+                                    {teams.map((team) => (
+                                        <option
+                                            key={team.id}
+                                            value={team.name}
+                                        />
+                                    ))}
+                                </datalist>
+                            </div>
 
-                            <input
-                                type="number"
-                                placeholder="Goals"
-                                value={newPlayerGoals}
-                                onChange={(e) =>
-                                    setNewPlayerGoals(e.target.value)
-                                }
-                            />
+                            <div className="form-field">
+                                <label>Goals</label>
+                                <input
+                                    type="number"
+                                    value={newPlayerGoals}
+                                    onChange={(e) =>
+                                        setNewPlayerGoals(e.target.value)
+                                    }
+                                />
+                            </div>
 
-                            <input
-                                type="number"
-                                placeholder="Assists"
-                                value={newPlayerAssists}
-                                onChange={(e) =>
-                                    setNewPlayerAssists(e.target.value)
-                                }
-                            />
+                            <div className="form-field">
+                                <label>Assists</label>
+                                <input
+                                    type="number"
+                                    value={newPlayerAssists}
+                                    onChange={(e) =>
+                                        setNewPlayerAssists(e.target.value)
+                                    }
+                                />
+                            </div>
 
-                            <input
-                                type="number"
-                                placeholder="Wedstrijden"
-                                value={newPlayerMatches}
-                                onChange={(e) =>
-                                    setNewPlayerMatches(e.target.value)
-                                }
-                            />
+                            <div className="form-field">
+                                <label>Wedstrijden</label>
+                                <input
+                                    type="number"
+                                    value={newPlayerMatches}
+                                    onChange={(e) =>
+                                        setNewPlayerMatches(e.target.value)
+                                    }
+                                />
+                            </div>
 
-                            <input
-                                type="number"
-                                placeholder="Minuten gespeeld"
-                                value={newPlayerMinutesPlayed}
-                                onChange={(e) =>
-                                    setNewPlayerMinutesPlayed(e.target.value)
-                                }
-                            />
+                            <div className="form-field">
+                                <label>Minuten gespeeld</label>
+                                <input
+                                    type="number"
+                                    value={newPlayerMinutesPlayed}
+                                    onChange={(e) =>
+                                        setNewPlayerMinutesPlayed(e.target.value)
+                                    }
+                                />
+                            </div>
 
-                            <input
-                                type="number"
-                                placeholder="Tackles"
-                                value={newPlayerTackle}
-                                onChange={(e) =>
-                                    setNewPlayerTackle(e.target.value)
-                                }
-                            />
+                            <div className="form-field">
+                                <label>Tackles</label>
+                                <input
+                                    type="number"
+                                    value={newPlayerTackle}
+                                    onChange={(e) =>
+                                        setNewPlayerTackle(e.target.value)
+                                    }
+                                />
+                            </div>
 
-                            <input
-                                type="number"
-                                placeholder="Interceptions"
-                                value={newPlayerInterceptions}
-                                onChange={(e) =>
-                                    setNewPlayerInterceptions(e.target.value)
-                                }
-                            />
+                            <div className="form-field">
+                                <label>Interceptions</label>
+                                <input
+                                    type="number"
+                                    value={newPlayerInterceptions}
+                                    onChange={(e) =>
+                                        setNewPlayerInterceptions(e.target.value)
+                                    }
+                                />
+                            </div>
 
-                            <input
-                                type="number"
-                                placeholder="Blocks"
-                                value={newPlayerBlocks}
-                                onChange={(e) =>
-                                    setNewPlayerBlocks(e.target.value)
-                                }
-                            />
+                            <div className="form-field">
+                                <label>Blocks</label>
+                                <input
+                                    type="number"
+                                    value={newPlayerBlocks}
+                                    onChange={(e) =>
+                                        setNewPlayerBlocks(e.target.value)
+                                    }
+                                />
+                            </div>
 
-                            <input
-                                type="number"
-                                placeholder="Clearences"
-                                value={newPlayerClearences}
-                                onChange={(e) =>
-                                    setNewPlayerClearences(e.target.value)
-                                }
-                            />
+                            <div className="form-field">
+                                <label>Clearences</label>
+                                <input
+                                    type="number"
+                                    value={newPlayerClearences}
+                                    onChange={(e) =>
+                                        setNewPlayerClearences(e.target.value)
+                                    }
+                                />
+                            </div>
 
-                            <input
-                                type="number"
-                                placeholder="Gewonnen duels"
-                                value={newPlayerDuelsWon}
-                                onChange={(e) =>
-                                    setNewPlayerDuelsWon(e.target.value)
-                                }
-                            />
+                            <div className="form-field">
+                                <label>Gewonnen duels</label>
+                                <input
+                                    type="number"
+                                    value={newPlayerDuelsWon}
+                                    onChange={(e) =>
+                                        setNewPlayerDuelsWon(e.target.value)
+                                    }
+                                />
+                            </div>
 
-                            <input
-                                type="number"
-                                placeholder="Overtredingen"
-                                value={newPlayerFouls}
-                                onChange={(e) =>
-                                    setNewPlayerFouls(e.target.value)
-                                }
-                            />
+                            <div className="form-field">
+                                <label>Overtredingen</label>
+                                <input
+                                    type="number"
+                                    value={newPlayerFouls}
+                                    onChange={(e) =>
+                                        setNewPlayerFouls(e.target.value)
+                                    }
+                                />
+                            </div>
 
-                            <input
-                                type="number"
-                                placeholder="Reddingen"
-                                value={newPlayerSaves}
-                                onChange={(e) =>
-                                    setNewPlayerSaves(e.target.value)
-                                }
-                            />
+                            <div className="form-field">
+                                <label>Reddingen</label>
+                                <input
+                                    type="number"
+                                    value={newPlayerSaves}
+                                    onChange={(e) =>
+                                        setNewPlayerSaves(e.target.value)
+                                    }
+                                />
+                            </div>
 
-                            <input
-                                type="number"
-                                placeholder="1-op-1 reddingen"
-                                value={newPlayerOneVsOneSaves}
-                                onChange={(e) =>
-                                    setNewPlayerOneVsOneSaves(e.target.value)
-                                }
-                            />
+                            <div className="form-field">
+                                <label>1-op-1 reddingen</label>
+                                <input
+                                    type="number"
+                                    value={newPlayerOneVsOneSaves}
+                                    onChange={(e) =>
+                                        setNewPlayerOneVsOneSaves(e.target.value)
+                                    }
+                                />
+                            </div>
 
-                            <input
-                                type="number"
-                                placeholder="Clean Sheets"
-                                value={newPlayerCleanSheets}
-                                onChange={(e) =>
-                                    setNewPlayerCleanSheets(e.target.value)
-                                }
-                            />
+                            <div className="form-field">
+                                <label>Clean Sheets</label>
+                                <input
+                                    type="number"
+                                    value={newPlayerCleanSheets}
+                                    onChange={(e) =>
+                                        setNewPlayerCleanSheets(e.target.value)
+                                    }
+                                />
+                            </div>
 
-                            <input
-                                type="number"
-                                placeholder="Penalty's gehouden"
-                                value={newPlayerPenaltySaves}
-                                onChange={(e) =>
-                                    setNewPlayerPenaltySaves(e.target.value)
-                                }
-                            />
+                            <div className="form-field">
+                                <label>Penalty's gehouden</label>
+                                <input
+                                    type="number"
+                                    value={newPlayerPenaltySaves}
+                                    onChange={(e) =>
+                                        setNewPlayerPenaltySaves(e.target.value)
+                                    }
+                                />
+                            </div>
 
-                            <input
-                                type="number"
-                                placeholder="Tegengoals"
-                                value={newPlayerGoalsConceded}
-                                onChange={(e) =>
-                                    setNewPlayerGoalsConceded(e.target.value)
-                                }
-                            />
+                            <div className="form-field">
+                                <label>Tegengoals</label>
+                                <input
+                                    type="number"
+                                    value={newPlayerGoalsConceded}
+                                    onChange={(e) =>
+                                        setNewPlayerGoalsConceded(e.target.value)
+                                    }
+                                />
+                            </div>
 
-                            <input
-                                type="number"
-                                step="0.1"
-                                placeholder="Rating"
-                                value={newPlayerRating}
-                                onChange={(e) =>
-                                    setNewPlayerRating(e.target.value)
-                                }
-                            />
+                            <div className="form-field">
+                                <label>Rating</label>
+                                <input
+                                    type="number"
+                                    step="0.1"
+                                    value={newPlayerRating}
+                                    onChange={(e) =>
+                                        setNewPlayerRating(e.target.value)
+                                    }
+                                />
+                            </div>
 
                         </div>
 

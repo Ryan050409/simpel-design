@@ -265,7 +265,7 @@ nav a.active {
 
 .player-card {
   position: relative;
-  width:320px;
+  width:335px;
   overflow: hidden;
   background:
     linear-gradient(#1f2937, #1f2937) padding-box,
@@ -299,7 +299,7 @@ nav a.active {
 .player-fullname-row {
   display: flex;
   align-items: center;
-  gap: 229px;
+  gap: 12px;
   font-size: 23px;
 }
 
@@ -507,7 +507,22 @@ nav a.active {
   grid-template-columns: 1fr 1fr;
   gap: 12px;
 }
+.form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
 
+.form-field label {
+  color: white;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.form-field input {
+  width: 100%;
+  box-sizing: border-box;
+}
 @media (max-width: 700px) {
   body {
     padding: 20px;
