@@ -1,6 +1,6 @@
 import { useState } from "react";
 import type { Dispatch, SetStateAction } from "react";
-import type { Match, Team} from "./types.ts";
+import type { Match, Team } from "./types.ts";
 
 type MatchFormProps = {
     editingMatch: Match | null;

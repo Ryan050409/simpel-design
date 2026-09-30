@@ -73,8 +73,8 @@ function Dashboard({
   const winPercentage =
     playedMatches.length > 0
       ? Math.round(
-          (wins / playedMatches.length) * 100
-        )
+        (wins / playedMatches.length) * 100
+      )
       : 0;
 
   const averageGoals =
@@ -85,8 +85,8 @@ function Dashboard({
   const topScorer =
     playerList.length > 0
       ? [...playerList].sort(
-          (a, b) => b.goals - a.goals
-        )[0]
+        (a, b) => b.goals - a.goals
+      )[0]
       : null;
 
   return (
@@ -153,7 +153,7 @@ function Dashboard({
         <p>
           <strong>Topscorer:</strong>{" "}
           {topScorer
-            ? `${topScorer.firstname} (${topScorer.goals} goals)`
+            ? `${topScorer.firstname} ${topScorer.lastname}(${topScorer.goals} goals)`
             : "Nog geen spelers"}
         </p>
       </div>

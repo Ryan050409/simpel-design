@@ -1,4 +1,4 @@
-import type { Match} from "./types.ts";
+import type { Match } from "./types.ts";
 
 type MatchCardProps = {
   match: Match;

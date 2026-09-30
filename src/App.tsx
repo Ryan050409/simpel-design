@@ -19,23 +19,23 @@ function App() {
 
   const [playerList, setPlayerList] = useState<Player[]>(
     () => {
-        const savedPlayers =
-            localStorage.getItem("players");
+      const savedPlayers =
+        localStorage.getItem("players");
 
-        if (!savedPlayers) {
-            return players;
-        }
+      if (!savedPlayers) {
+        return players;
+      }
 
-        const parsedPlayers = JSON.parse(savedPlayers);
+      const parsedPlayers = JSON.parse(savedPlayers);
 
-        return parsedPlayers.map(
-            (player: Player, index: number) => ({
-                ...player,
-                id: player.id ?? Date.now() + index
-            })
-        );
+      return parsedPlayers.map(
+        (player: Player, index: number) => ({
+          ...player,
+          id: player.id ?? Date.now() + index
+        })
+      );
     }
-);
+  );
 
   const [matches, setMatches] = useState<Match[]>(
     () => {

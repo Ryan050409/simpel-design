@@ -1,9 +1,9 @@
-import {useState} from "react";
+import { useState } from "react";
 import { NavLink } from "react-router-dom";
 import type { Dispatch, SetStateAction } from "react";
 import MatchCard from "./MatchCard.tsx";
 import MatchForm from "./MatchForm.tsx";
-import type {Match, Team} from "./types.ts"
+import type { Match, Team } from "./types.ts"
 
 type MatchesPageProps = {
     matches: Match[];
@@ -25,12 +25,12 @@ function MatchesPage({
             )
         );
     }
-     const [editingMatch, setEditingMatch] = 
-    useState<Match | null>(null);
+    const [editingMatch, setEditingMatch] =
+        useState<Match | null>(null);
     function editMatch(match: Match) {
         setEditingMatch(match);
     }
-    function closeModal() { 
+    function closeModal() {
         setEditingMatch(null);
     }
     return (
@@ -58,15 +58,15 @@ function MatchesPage({
                         onEdit={editMatch}
                     />
                 ))}
-                
+
             </div>
-            {editingMatch && ( 
-                <MatchForm 
-                editingMatch={editingMatch}
-                setEditingMatch={setEditingMatch}
-                setMatches={setMatches}
-                closeModal={closeModal}
-                teams={teams}
+            {editingMatch && (
+                <MatchForm
+                    editingMatch={editingMatch}
+                    setEditingMatch={setEditingMatch}
+                    setMatches={setMatches}
+                    closeModal={closeModal}
+                    teams={teams}
                 />
             )}
         </div>

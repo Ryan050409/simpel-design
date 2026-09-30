@@ -93,8 +93,6 @@ function SettingsPage({
     function addTeam() {
         const teamName = newTeam.trim();
 
-
-
         if (teamName === "") {
             setTeamWarning("Vul een teamnaam in.");
             return;
@@ -237,7 +235,7 @@ function SettingsPage({
                     setEditingPlayer={setEditingPlayer}
                     setPlayerList={setPlayerList}
                     closeModal={closePlayerPopup}
-                    teams ={teams}
+                    teams={teams}
                 />
             )}
 
