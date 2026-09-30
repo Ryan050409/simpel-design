@@ -48,18 +48,86 @@ function MatchesPage({
                     ⚙️ Wedstrijd toevoegen
                 </NavLink>
             </div>
+            <table className="matches-table">
+                <thead>
+                    <tr>
+                        <th>Datum</th>
+                        <th>Thuis</th>
+                        <th>Uit</th>
+                        <th>Uitslag</th>
+                        <th>Resultaat</th>
+                        <th>Acties</th>
+                    </tr>
+                </thead>
 
-            <div className="matches-list">
-                {matches.map((match) => (
-                    <MatchCard
-                        key={match.id}
-                        match={match}
-                        onDelete={deleteMatch}
-                        onEdit={editMatch}
-                    />
-                ))}
+                <tbody>
+                    {matches.map((match) => (
+                        <tr
+                            key={match.id}
+                            className={
+                                match.home === team
+                                    ? match.homeGoals > match.awayGoals
+                                        ? "match-row-win"
+                                        : match.homeGoals === match.awayGoals
+                                            ? "match-row-draw"
+                                            : "match-row-loss"
+                                    : match.awayGoals > match.homeGoals
+                                        ? "match-row-win"
+                                        : match.awayGoals === match.homeGoals
+                                            ? "match-row-draw"
+                                            : "match-row-loss"
+                            }
+                        >
+                            <td>{match.date}</td>
+                            <td>{match.home}</td>
+                            <td>{match.away}</td>
+                            <td>
+                                {match.homeGoals} - {match.awayGoals}
+                            </td>
+                            <td>
+                                <span
+                                    className={
+                                        match.home === team || match.away === team
+                                            ? match.home === team
+                                                ? match.homeGoals > match.awayGoals
+                                                    ? "match-row-win"
+                                                    : match.homeGoals === match.awayGoals
+                                                        ? "match-row-draw"
+                                                        : "match-row-loss"
+                                                : match.awayGoals > match.homeGoals
+                                                    ? "match-row-win"
+                                                    : match.awayGoals === match.homeGoals
+                                                        ? "match-row-draw"
+                                                        : "match-row-loss"
+                                            : undefined
+                                    }
+                                >
+                                    {match.home === team
+                                        ? match.homeGoals > match.awayGoals
+                                            ? "W"
+                                            : match.homeGoals === match.awayGoals
+                                                ? "G"
+                                                : "V"
+                                        : match.awayGoals > match.homeGoals
+                                            ? "W"
+                                            : match.awayGoals === match.homeGoals
+                                                ? "G"
+                                                : "V"}
+                                </span>
+                            </td>
+                            <td className="match-actions">
+                                <button onClick={() => editMatch(match)}>
+                                    Bewerken
+                                </button>
 
-            </div>
+                                <button onClick={() => deleteMatch(match.id)}>
+                                    Verwijderen
+                                </button>
+                            </td>
+                        </tr>
+                    ))}
+                </tbody>
+            </table>
             {editingMatch && (
                 <MatchForm
                     editingMatch={editingMatch}
@@ -72,5 +140,6 @@ function MatchesPage({
         </div>
     );
 }
+
 
 export default MatchesPage;

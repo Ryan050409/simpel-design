@@ -941,3 +941,74 @@ nav a.active {
     padding: 0 16px 16px;
   }
 }
+.matches-table {
+  width: 100%;
+  max-width: 1100px;
+  margin: 30px auto;
+  border-collapse: collapse;
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.matches-table th,
+.matches-table td {
+  padding: 14px 16px;
+  text-align: center;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.matches-table th {
+  background: #1f2937;
+  color: white;
+  font-weight: 600;
+}
+
+.matches-table td {
+  color: #1f2937;
+}
+
+.matches-table tbody tr:hover {
+  background: #f3f4f6;
+}
+
+.matches-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.matches-table .match-actions {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+}
+
+.matches-table .match-actions button {
+  margin: 0;
+}
+.match-row-win {
+  background: #dcfce7;
+}
+
+.match-row-draw {
+  background: #fef3c7;
+}
+
+.match-row-loss {
+  background: #fee2e2;
+}
+
+.match-row-win:hover {
+  background: #bbf7d0;
+}
+
+.match-row-draw:hover {
+  background: #fde68a;
+}
+
+.match-row-loss:hover {
+  background: #fecaca;
+}
+.match-row-normal { 
+  background: white;
+}

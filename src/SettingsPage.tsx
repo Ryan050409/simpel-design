@@ -9,13 +9,17 @@ type SettingsPageProps = {
     setPlayerList: Dispatch<SetStateAction<Player[]>>;
     teams: Team[];
     setTeams: Dispatch<SetStateAction<Team[]>>;
+    team: string;
+    setTeam: Dispatch<SetStateAction<string>>;
 };
 
 function SettingsPage({
     setMatches,
     setPlayerList,
     teams,
-    setTeams
+    setTeams,
+    team,
+    setTeam
 }: SettingsPageProps) {
     const [showPlayerPopup, setShowPlayerPopup] =
         useState(false);
@@ -120,6 +124,7 @@ function SettingsPage({
         setNewTeam("");
         setTeamWarning("");
     }
+
     function deleteTeam(id: number) {
         setTeams((currentTeams) =>
             currentTeams.filter(
@@ -127,11 +132,40 @@ function SettingsPage({
             )
         );
     }
+
     return (
         <div className="settings-page">
             <h1>⚙️ Instellingen</h1>
 
             <div className="settings-list">
+
+                <div className="setting-row">
+                    <div>
+                        <strong>Favoriete team</strong>
+
+                        <small>
+                            Kies het team waarvoor je de
+                            statistieken wilt bekijken.
+                        </small>
+                    </div>
+
+                    <select
+                        value={team}
+                        onChange={(event) =>
+                            setTeam(event.target.value)
+                        }
+                    >
+                        {teams.map((teamOption) => (
+                            <option
+                                key={teamOption.id}
+                                value={teamOption.name}
+                            >
+                                {teamOption.name}
+                            </option>
+                        ))}
+                    </select>
+                </div>
+
                 <div className="setting-row">
                     <div>
                         <strong>Teams</strong>
@@ -219,6 +253,7 @@ function SettingsPage({
                         key={team.id}
                     >
                         <span>{team.name}</span>
+
                         <button
                             type="button"
                             onClick={() => deleteTeam(team.id)}
