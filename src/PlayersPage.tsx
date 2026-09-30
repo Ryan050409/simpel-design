@@ -171,152 +171,116 @@ function PlayersPage({
                 ))}
             </div>
             {selectedPlayer && (
-                <div
-                    className="modal-overlay"
-                    onClick={() => setSelectedPlayer(null)}
-                >
-                    <div
-                        className="modal"
-                        onClick={(e) => e.stopPropagation()}
-                    >
-                        <button
-                            className="modal-close"
-                            onClick={() => setSelectedPlayer(null)}
-                        >
-                            ×
-                        </button>
+    <div
+        className="modal-overlay"
+        onClick={() => setSelectedPlayer(null)}
+    >
+        <div
+            className="modal"
+            onClick={(e) => e.stopPropagation()}
+        >
+            <button
+                className="modal-close"
+                onClick={() => setSelectedPlayer(null)}
+            >
+                ×
+            </button>
 
-                        <h2>
-                            {selectedPlayer.firstname}{" "}
-                            {selectedPlayer.lastname}
-                        </h2>
+            <h2>
+                {selectedPlayer.firstname}{" "}
+                {selectedPlayer.lastname}
+            </h2>
 
-                        <p>{selectedPlayer.position}</p>
+            <p>{selectedPlayer.position}</p>
 
-                        <div className="player-stats">
+            <div className="player-stats">
 
-                            {(selectedPlayer.position === "Aanvaller" ||
-                                selectedPlayer.position === "Middenvelder") && (
-                                    <>
-                                        <div className="player-stat">
-                                            <strong>{selectedPlayer.goals}</strong>
-                                            <span>Goals</span>
-                                        </div>
-
-                                        <div className="player-stat">
-                                            <strong>{selectedPlayer.assists}</strong>
-                                            <span>Assists</span>
-                                        </div>
-
-                                        <div className="player-stat">
-                                            <strong>{selectedPlayer.matches}</strong>
-                                            <span>Wedstrijden</span>
-                                        </div>
-
-                                        <div className="player-stat">
-                                            <strong>{selectedPlayer.minutesplayed}</strong>
-                                            <span>Minuten</span>
-                                        </div>
-
-                                        <div className="player-stat">
-                                            <strong>{selectedPlayer.fouls ?? 0}</strong>
-                                            <span>Overtredingen</span>
-                                        </div>
-                                    </>
-                                )}
-
-                            {selectedPlayer.position === "Verdediger" && (
-                                <>
-                                    <div className="player-stat">
-                                        <strong>{selectedPlayer.tackles ?? 0}</strong>
-                                        <span>Tackles</span>
-                                    </div>
-
-                                    <div className="player-stat">
-                                        <strong>{selectedPlayer.interceptions ?? 0}</strong>
-                                        <span>Interceptions</span>
-                                    </div>
-
-                                    <div className="player-stat">
-                                        <strong>{selectedPlayer.matches}</strong>
-                                        <span>Wedstrijden</span>
-                                    </div>
-
-                                    <div className="player-stat">
-                                        <strong>{selectedPlayer.minutesplayed}</strong>
-                                        <span>Minuten</span>
-                                    </div>
-
-                                    <div className="player-stat">
-                                        <strong>{selectedPlayer.blocks ?? 0}</strong>
-                                        <span>Blocks</span>
-                                    </div>
-
-                                    <div className="player-stat">
-                                        <strong>{selectedPlayer.clearences ?? 0}</strong>
-                                        <span>Clearences</span>
-                                    </div>
-
-                                    <div className="player-stat">
-                                        <strong>{selectedPlayer.duelsWon ?? 0}</strong>
-                                        <span>Gewonnen duels</span>
-                                    </div>
-
-                                    <div className="player-stat">
-                                        <strong>{selectedPlayer.fouls ?? 0}</strong>
-                                        <span>Overtredingen</span>
-                                    </div>
-                                </>
-                            )}
-
-                            {selectedPlayer.position === "Keeper" && (
-                                <>
-                                    <div className="player-stat">
-                                        <strong>{selectedPlayer.saves ?? 0}</strong>
-                                        <span>Reddingen</span>
-                                    </div>
-
-                                    <div className="player-stat">
-                                        <strong>{selectedPlayer.oneVSOneSaves ?? 0}</strong>
-                                        <span>1-op-1 reddingen</span>
-                                    </div>
-
-                                    <div className="player-stat">
-                                        <strong>{selectedPlayer.matches}</strong>
-                                        <span>Wedstrijden</span>
-                                    </div>
-
-                                    <div className="player-stat">
-                                        <strong>{selectedPlayer.minutesplayed}</strong>
-                                        <span>Minuten</span>
-                                    </div>
-
-                                    <div className="player-stat">
-                                        <strong>{selectedPlayer.cleanSheets ?? 0}</strong>
-                                        <span>Clean sheets</span>
-                                    </div>
-
-                                    <div className="player-stat">
-                                        <strong>{selectedPlayer.penaltySaves ?? 0}</strong>
-                                        <span>Penalty's gehouden</span>
-                                    </div>
-
-                                    <div className="player-stat">
-                                        <strong>{selectedPlayer.goalsConceded ?? 0}</strong>
-                                        <span>Tegengoals</span>
-                                    </div>
-
-                                    <div className="player-stat">
-                                        <strong>{selectedPlayer.fouls ?? 0}</strong>
-                                        <span>Overtredingen</span>
-                                    </div>
-                                </>
-                            )}
-
-                        </div>
-                    </div>
+                <div className="player-stat">
+                    <strong>{selectedPlayer.goals}</strong>
+                    <span>Goals</span>
                 </div>
-            )}
+
+                <div className="player-stat">
+                    <strong>{selectedPlayer.assists}</strong>
+                    <span>Assists</span>
+                </div>
+
+                <div className="player-stat">
+                    <strong>{selectedPlayer.matches}</strong>
+                    <span>Wedstrijden</span>
+                </div>
+
+                <div className="player-stat">
+                    <strong>{selectedPlayer.minutesplayed}</strong>
+                    <span>Minuten</span>
+                </div>
+
+                <div className="player-stat">
+                    <strong>{selectedPlayer.tackles ?? 0}</strong>
+                    <span>Tackles</span>
+                </div>
+
+                <div className="player-stat">
+                    <strong>{selectedPlayer.interceptions ?? 0}</strong>
+                    <span>Interceptions</span>
+                </div>
+
+                <div className="player-stat">
+                    <strong>{selectedPlayer.blocks ?? 0}</strong>
+                    <span>Blocks</span>
+                </div>
+
+                <div className="player-stat">
+                    <strong>{selectedPlayer.clearences ?? 0}</strong>
+                    <span>Clearences</span>
+                </div>
+
+                <div className="player-stat">
+                    <strong>{selectedPlayer.duelsWon ?? 0}</strong>
+                    <span>Gewonnen duels</span>
+                </div>
+
+                <div className="player-stat">
+                    <strong>{selectedPlayer.fouls ?? 0}</strong>
+                    <span>Overtredingen</span>
+                </div>
+
+                <div className="player-stat">
+                    <strong>{selectedPlayer.saves ?? 0}</strong>
+                    <span>Reddingen</span>
+                </div>
+
+                <div className="player-stat">
+                    <strong>
+                        {selectedPlayer.oneVSOneSaves ?? 0}
+                    </strong>
+                    <span>1-op-1 reddingen</span>
+                </div>
+
+                <div className="player-stat">
+                    <strong>{selectedPlayer.cleanSheets ?? 0}</strong>
+                    <span>Clean sheets</span>
+                </div>
+
+                <div className="player-stat">
+                    <strong>{selectedPlayer.penaltySaves ?? 0}</strong>
+                    <span>Penalty's gehouden</span>
+                </div>
+
+                <div className="player-stat">
+                    <strong>{selectedPlayer.goalsConceded ?? 0}</strong>
+                    <span>Tegengoals</span>
+                </div>
+
+                <div className="player-stat">
+                    <strong>{selectedPlayer.rating}</strong>
+                    <span>Rating</span>
+                </div>
+
+            </div>
+        </div>
+    </div>
+)}
             {editingPlayer && (
                 <PlayerForm
                     editingPlayer={editingPlayer}

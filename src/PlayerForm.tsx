@@ -52,79 +52,55 @@ function PlayerForm({
     );
 
     const [newPlayerMinutesPlayed, setNewPlayerMinutesPlayed] = useState(
-        editingPlayer
-            ? String(editingPlayer.minutesplayed)
-            : ""
+        editingPlayer ? String(editingPlayer.minutesplayed) : ""
+    );
+
+    const [newPlayerTackle, setNewPlayerTackle] = useState(
+        editingPlayer ? String(editingPlayer.tackles ?? "") : ""
+    );
+
+    const [newPlayerInterceptions, setNewPlayerInterceptions] = useState(
+        editingPlayer ? String(editingPlayer.interceptions ?? "") : ""
+    );
+
+    const [newPlayerBlocks, setNewPlayerBlocks] = useState(
+        editingPlayer ? String(editingPlayer.blocks ?? "") : ""
+    );
+
+    const [newPlayerClearences, setNewPlayerClearences] = useState(
+        editingPlayer ? String(editingPlayer.clearences ?? "") : ""
+    );
+
+    const [newPlayerDuelsWon, setNewPlayerDuelsWon] = useState(
+        editingPlayer ? String(editingPlayer.duelsWon ?? "") : ""
+    );
+
+    const [newPlayerFouls, setNewPlayerFouls] = useState(
+        editingPlayer ? String(editingPlayer.fouls ?? "") : ""
+    );
+
+    const [newPlayerCleanSheets, setNewPlayerCleanSheets] = useState(
+        editingPlayer ? String(editingPlayer.cleanSheets ?? "") : ""
+    );
+
+    const [newPlayerSaves, setNewPlayerSaves] = useState(
+        editingPlayer ? String(editingPlayer.saves ?? "") : ""
+    );
+
+    const [newPlayerOneVsOneSaves, setNewPlayerOneVsOneSaves] = useState(
+        editingPlayer ? String(editingPlayer.oneVSOneSaves ?? "") : ""
+    );
+
+    const [newPlayerPenaltySaves, setNewPlayerPenaltySaves] = useState(
+        editingPlayer ? String(editingPlayer.penaltySaves ?? "") : ""
+    );
+
+    const [newPlayerGoalsConceded, setNewPlayerGoalsConceded] = useState(
+        editingPlayer ? String(editingPlayer.goalsConceded ?? "") : ""
     );
 
     const [newPlayerRating, setNewPlayerRating] = useState(
         editingPlayer ? String(editingPlayer.rating) : ""
-    );
-
-    const [newPlayerTackle, setNewPlayerTackle] = useState(
-        editingPlayer
-            ? String(editingPlayer.tackles ?? "")
-            : ""
-    );
-
-    const [newPlayerInterceptions, setNewPlayerInterceptions] = useState(
-        editingPlayer
-            ? String(editingPlayer.interceptions ?? "")
-            : ""
-    );
-
-    const [newPlayerBlocks, setNewPlayerBlocks] = useState(
-        editingPlayer
-            ? String(editingPlayer.blocks ?? "")
-            : ""
-    );
-
-    const [newPlayerClearences, setNewPlayerClearences] = useState(
-        editingPlayer
-            ? String(editingPlayer.clearences ?? "")
-            : ""
-    );
-
-    const [newPlayerDuelsWon, setNewPlayerDuelsWon] = useState(
-        editingPlayer
-            ? String(editingPlayer.duelsWon ?? "")
-            : ""
-    );
-
-    const [newPlayerFouls, setNewPlayerFouls] = useState(
-        editingPlayer
-            ? String(editingPlayer.fouls ?? "")
-            : ""
-    );
-
-    const [newPlayerCleanSheets, setNewPlayerCleanSheets] = useState(
-        editingPlayer
-            ? String(editingPlayer.cleanSheets ?? "")
-            : ""
-    );
-
-    const [newPlayerSaves, setNewPlayerSaves] = useState(
-        editingPlayer
-            ? String(editingPlayer.saves ?? "")
-            : ""
-    );
-
-    const [newPlayerOneVsOneSaves, setNewPlayerOneVsOneSaves] = useState(
-        editingPlayer
-            ? String(editingPlayer.oneVSOneSaves ?? "")
-            : ""
-    );
-
-    const [newPlayerPenaltySaves, setNewPlayerPenaltySaves] = useState(
-        editingPlayer
-            ? String(editingPlayer.penaltySaves ?? "")
-            : ""
-    );
-
-    const [newPlayerGoalsConceded, setNewPlayerGoalsConceded] = useState(
-        editingPlayer
-            ? String(editingPlayer.goalsConceded ?? "")
-            : ""
     );
 
     const [warning, setWarning] = useState("");
@@ -180,7 +156,6 @@ function PlayerForm({
             blocks: Number(newPlayerBlocks),
             clearences: Number(newPlayerClearences),
             duelsWon: Number(newPlayerDuelsWon),
-
             fouls: Number(newPlayerFouls),
 
             cleanSheets: Number(newPlayerCleanSheets),
@@ -321,126 +296,23 @@ function PlayerForm({
                                 ))}
                             </datalist>
 
-                            {(newPlayerPosition === "Aanvaller" ||
-                                newPlayerPosition === "Middenvelder") && (
-                                <>
-                                    <input
-                                        type="number"
-                                        placeholder="Goals"
-                                        value={newPlayerGoals}
-                                        onChange={(e) =>
-                                            setNewPlayerGoals(e.target.value)
-                                        }
-                                    />
+                            <input
+                                type="number"
+                                placeholder="Goals"
+                                value={newPlayerGoals}
+                                onChange={(e) =>
+                                    setNewPlayerGoals(e.target.value)
+                                }
+                            />
 
-                                    <input
-                                        type="number"
-                                        placeholder="Assists"
-                                        value={newPlayerAssists}
-                                        onChange={(e) =>
-                                            setNewPlayerAssists(e.target.value)
-                                        }
-                                    />
-                                </>
-                            )}
-
-                            {newPlayerPosition === "Verdediger" && (
-                                <>
-                                    <input
-                                        type="number"
-                                        placeholder="Tackles"
-                                        value={newPlayerTackle}
-                                        onChange={(e) =>
-                                            setNewPlayerTackle(e.target.value)
-                                        }
-                                    />
-
-                                    <input
-                                        type="number"
-                                        placeholder="Interceptions"
-                                        value={newPlayerInterceptions}
-                                        onChange={(e) =>
-                                            setNewPlayerInterceptions(e.target.value)
-                                        }
-                                    />
-
-                                    <input
-                                        type="number"
-                                        placeholder="Blocks"
-                                        value={newPlayerBlocks}
-                                        onChange={(e) =>
-                                            setNewPlayerBlocks(e.target.value)
-                                        }
-                                    />
-
-                                    <input
-                                        type="number"
-                                        placeholder="Clearences"
-                                        value={newPlayerClearences}
-                                        onChange={(e) =>
-                                            setNewPlayerClearences(e.target.value)
-                                        }
-                                    />
-
-                                    <input
-                                        type="number"
-                                        placeholder="Gewonnen duels"
-                                        value={newPlayerDuelsWon}
-                                        onChange={(e) =>
-                                            setNewPlayerDuelsWon(e.target.value)
-                                        }
-                                    />
-                                </>
-                            )}
-
-                            {newPlayerPosition === "Keeper" && (
-                                <>
-                                    <input
-                                        type="number"
-                                        placeholder="Clean Sheets"
-                                        value={newPlayerCleanSheets}
-                                        onChange={(e) =>
-                                            setNewPlayerCleanSheets(e.target.value)
-                                        }
-                                    />
-
-                                    <input
-                                        type="number"
-                                        placeholder="Reddingen"
-                                        value={newPlayerSaves}
-                                        onChange={(e) =>
-                                            setNewPlayerSaves(e.target.value)
-                                        }
-                                    />
-
-                                    <input
-                                        type="number"
-                                        placeholder="1-op-1 reddingen"
-                                        value={newPlayerOneVsOneSaves}
-                                        onChange={(e) =>
-                                            setNewPlayerOneVsOneSaves(e.target.value)
-                                        }
-                                    />
-
-                                    <input
-                                        type="number"
-                                        placeholder="Penalty's gehouden"
-                                        value={newPlayerPenaltySaves}
-                                        onChange={(e) =>
-                                            setNewPlayerPenaltySaves(e.target.value)
-                                        }
-                                    />
-
-                                    <input
-                                        type="number"
-                                        placeholder="Tegengoals"
-                                        value={newPlayerGoalsConceded}
-                                        onChange={(e) =>
-                                            setNewPlayerGoalsConceded(e.target.value)
-                                        }
-                                    />
-                                </>
-                            )}
+                            <input
+                                type="number"
+                                placeholder="Assists"
+                                value={newPlayerAssists}
+                                onChange={(e) =>
+                                    setNewPlayerAssists(e.target.value)
+                                }
+                            />
 
                             <input
                                 type="number"
@@ -462,10 +334,100 @@ function PlayerForm({
 
                             <input
                                 type="number"
+                                placeholder="Tackles"
+                                value={newPlayerTackle}
+                                onChange={(e) =>
+                                    setNewPlayerTackle(e.target.value)
+                                }
+                            />
+
+                            <input
+                                type="number"
+                                placeholder="Interceptions"
+                                value={newPlayerInterceptions}
+                                onChange={(e) =>
+                                    setNewPlayerInterceptions(e.target.value)
+                                }
+                            />
+
+                            <input
+                                type="number"
+                                placeholder="Blocks"
+                                value={newPlayerBlocks}
+                                onChange={(e) =>
+                                    setNewPlayerBlocks(e.target.value)
+                                }
+                            />
+
+                            <input
+                                type="number"
+                                placeholder="Clearences"
+                                value={newPlayerClearences}
+                                onChange={(e) =>
+                                    setNewPlayerClearences(e.target.value)
+                                }
+                            />
+
+                            <input
+                                type="number"
+                                placeholder="Gewonnen duels"
+                                value={newPlayerDuelsWon}
+                                onChange={(e) =>
+                                    setNewPlayerDuelsWon(e.target.value)
+                                }
+                            />
+
+                            <input
+                                type="number"
                                 placeholder="Overtredingen"
                                 value={newPlayerFouls}
                                 onChange={(e) =>
                                     setNewPlayerFouls(e.target.value)
+                                }
+                            />
+
+                            <input
+                                type="number"
+                                placeholder="Reddingen"
+                                value={newPlayerSaves}
+                                onChange={(e) =>
+                                    setNewPlayerSaves(e.target.value)
+                                }
+                            />
+
+                            <input
+                                type="number"
+                                placeholder="1-op-1 reddingen"
+                                value={newPlayerOneVsOneSaves}
+                                onChange={(e) =>
+                                    setNewPlayerOneVsOneSaves(e.target.value)
+                                }
+                            />
+
+                            <input
+                                type="number"
+                                placeholder="Clean Sheets"
+                                value={newPlayerCleanSheets}
+                                onChange={(e) =>
+                                    setNewPlayerCleanSheets(e.target.value)
+                                }
+                            />
+
+                            <input
+                                type="number"
+                                placeholder="Penalty's gehouden"
+                                value={newPlayerPenaltySaves}
+                                onChange={(e) =>
+                                    setNewPlayerPenaltySaves(e.target.value)
+                                }
+                            />
+
+                            <input
+                                type="number"
+                                placeholder="Tegengoals"
+                                value={newPlayerGoalsConceded}
+                                onChange={(e) =>
+                                    setNewPlayerGoalsConceded(e.target.value)
                                 }
                             />
 
