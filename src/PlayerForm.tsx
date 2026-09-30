@@ -3,313 +3,480 @@ import type { Dispatch, SetStateAction } from "react";
 import type { Player, Team } from "./types.ts";
 
 type PlayerFormProps = {
-editingPlayer: Player | null;
-setEditingPlayer: Dispatch<SetStateAction<Player | null>>;
-setPlayerList: Dispatch<SetStateAction<Player[]>>;
-closeModal: () => void;
-teams: Team[];
+    editingPlayer: Player | null;
+    setEditingPlayer: Dispatch<SetStateAction<Player | null>>;
+    setPlayerList: Dispatch<SetStateAction<Player[]>>;
+    closeModal: () => void;
+    teams: Team[];
 };
 
 function PlayerForm({
-editingPlayer,
-setEditingPlayer,
-setPlayerList,
-closeModal,
-teams
+    editingPlayer,
+    setEditingPlayer,
+    setPlayerList,
+    closeModal,
+    teams
 }: PlayerFormProps) {
-const [formStep, setFormStep] = useState(1);
+    const [formStep, setFormStep] = useState(1);
 
-const [newPlayerFirstName, setNewPlayerFirstName] = useState(
-    editingPlayer?.firstname ?? ""
-);
+    const [newPlayerFirstName, setNewPlayerFirstName] = useState(
+        editingPlayer?.firstname ?? ""
+    );
 
-const [newPlayerLastName, setNewPlayerLastName] = useState(
-    editingPlayer?.lastname ?? ""
-);
+    const [newPlayerLastName, setNewPlayerLastName] = useState(
+        editingPlayer?.lastname ?? ""
+    );
 
-const [newPlayerTeam, setNewPlayerTeam] = useState(
-    editingPlayer?.team ?? ""
-);
+    const [newPlayerTeam, setNewPlayerTeam] = useState(
+        editingPlayer?.team ?? ""
+    );
 
-const [newPlayerPosition, setNewPlayerPosition] = useState(
-    editingPlayer?.position ?? ""
-);
+    const [newPlayerPosition, setNewPlayerPosition] = useState(
+        editingPlayer?.position ?? ""
+    );
 
-const [newPlayerNumber, setNewPlayerNumber] = useState(
-    editingPlayer?.number?.toString() ?? ""
-);
+    const [newPlayerNumber, setNewPlayerNumber] = useState(
+        editingPlayer?.number?.toString() ?? ""
+    );
 
-const [newPlayerGoals, setNewPlayerGoals] = useState(
-    editingPlayer ? String(editingPlayer.goals) : ""
-);
+    const [newPlayerGoals, setNewPlayerGoals] = useState(
+        editingPlayer ? String(editingPlayer.goals) : ""
+    );
 
-const [newPlayerAssists, setNewPlayerAssists] = useState(
-    editingPlayer ? String(editingPlayer.assists) : ""
-);
+    const [newPlayerAssists, setNewPlayerAssists] = useState(
+        editingPlayer ? String(editingPlayer.assists) : ""
+    );
 
-const [newPlayerMatches, setNewPlayerMatches] = useState(
-    editingPlayer ? String(editingPlayer.matches) : ""
-);
+    const [newPlayerMatches, setNewPlayerMatches] = useState(
+        editingPlayer ? String(editingPlayer.matches) : ""
+    );
 
-const [newPlayerMinutesPlayed, setNewPlayerMinutesPlayed] = useState(
-    editingPlayer
-        ? String(editingPlayer.minutesplayed)
-        : ""
-);
+    const [newPlayerMinutesPlayed, setNewPlayerMinutesPlayed] = useState(
+        editingPlayer
+            ? String(editingPlayer.minutesplayed)
+            : ""
+    );
 
-const [newPlayerRating, setNewPlayerRating] = useState(
-    editingPlayer ? String(editingPlayer.rating) : ""
-);
+    const [newPlayerRating, setNewPlayerRating] = useState(
+        editingPlayer ? String(editingPlayer.rating) : ""
+    );
 
-const [warning, setWarning] = useState("");
+    const [newPlayerTackle, setNewPlayerTackle] = useState(
+        editingPlayer ? String(editingPlayer.tackles ?? "") : ""
+    );
 
-function goToNextStep() {
-    if (
-        newPlayerFirstName.trim() === "" ||
-        newPlayerLastName.trim() === "" ||
-        newPlayerNumber.trim() === "" ||
-        newPlayerPosition.trim() === ""
-    ) {
-        setWarning("Vul eerst alle basisgegevens in!");
-        return;
+    const [newPlayerInterceptions, setNewPlayerInterceptions] = useState(
+        editingPlayer ? String(editingPlayer.interceptions ?? "") : ""
+    );
+
+    const [newPlayerBlocks, setNewPlayerBlocks] = useState(
+        editingPlayer ? String(editingPlayer.blocks ?? "") : ""
+    );
+
+    const [newPlayerClearences, setNewPlayerClearences] = useState(
+        editingPlayer ? String(editingPlayer.clearences ?? "") : ""
+    );
+
+    const [newPlayerDuelsWon, setNewPlayerDuelsWon] = useState(
+        editingPlayer ? String(editingPlayer.duelsWon ?? "") : ""
+    );
+
+    const [newPlayerFouls, setNewPlayerFouls] = useState (
+        editingPlayer ? String(editingPlayer.fouls ?? "") : ""
+    );
+    const [newPlayerCleanSheets, setNewPlayerCleanSheets] = useState(
+        editingPlayer ? String(editingPlayer.cleanSheets ?? "") : ""
+    );
+
+    const [newPlayerSaves, setNewPlayerSaves] = useState(
+        editingPlayer ? String(editingPlayer.saves ?? "") : ""
+    );
+
+    const [newPlayerOneVsOneSaves, setNewPlayerOneVsOneSaves] = useState(
+        editingPlayer ? String(editingPlayer.oneVSOneSaves ?? "") : ""
+    );
+
+    const [newPlayerPenaltySaves, setNewPlayerPenaltySaves] = useState(
+        editingPlayer ? String(editingPlayer.penaltySaves ?? "") : ""
+    );
+
+    const [newPlayerGoalsConceded, setNewPlayerGoalsConceded] = useState(
+        editingPlayer ? String(editingPlayer.goalsConceded ?? "") : ""
+    );
+
+    const [warning, setWarning] = useState("");
+
+    function goToNextStep() {
+        if (
+            newPlayerFirstName.trim() === "" ||
+            newPlayerLastName.trim() === "" ||
+            newPlayerNumber.trim() === "" ||
+            newPlayerPosition.trim() === ""
+        ) {
+            setWarning("Vul eerst alle basisgegevens in!");
+            return;
+        }
+
+        setWarning("");
+        setFormStep(2);
     }
 
-    setWarning("");
-    setFormStep(2);
-}
+    function savePlayer() {
+        if (
+            newPlayerFirstName.trim() === "" ||
+            newPlayerLastName.trim() === "" ||
+            newPlayerTeam.trim() === "" ||
+            newPlayerPosition.trim() === "" ||
+            newPlayerNumber.trim() === "" ||
+            newPlayerGoals.trim() === "" ||
+            newPlayerAssists.trim() === "" ||
+            newPlayerMatches.trim() === "" ||
+            newPlayerMinutesPlayed.trim() === "" ||
+            newPlayerRating.trim() === ""
+        ) {
+            setWarning("Alle velden moeten ingevuld worden!");
+            return;
+        }
 
-function savePlayer() {
-    if (
-        newPlayerFirstName.trim() === "" ||
-        newPlayerLastName.trim() === "" ||
-        newPlayerTeam.trim() === "" ||
-        newPlayerPosition.trim() === "" ||
-        newPlayerNumber.trim() === "" ||
-        newPlayerGoals.trim() === "" ||
-        newPlayerAssists.trim() === "" ||
-        newPlayerMatches.trim() === "" ||
-        newPlayerMinutesPlayed.trim() === "" ||
-        newPlayerRating.trim() === ""
-    ) {
-        setWarning("Alle velden moeten ingevuld worden!");
-        return;
+        const newPlayer: Player = {
+            id: editingPlayer
+                ? editingPlayer.id
+                : Date.now(),
+
+            firstname: newPlayerFirstName.trim(),
+            lastname: newPlayerLastName.trim(),
+            team: newPlayerTeam.trim(),
+            position: newPlayerPosition.trim(),
+            number: Number(newPlayerNumber),
+            goals: Number(newPlayerGoals),
+            assists: Number(newPlayerAssists),
+            matches: Number(newPlayerMatches),
+            minutesplayed: Number(newPlayerMinutesPlayed),
+            tackles: Number(newPlayerTackle),
+            interceptions: Number(newPlayerInterceptions),
+            blocks: Number(newPlayerBlocks),
+            clearences: Number(newPlayerClearences),
+            duelsWon: Number(newPlayerDuelsWon),
+            rating: Number(newPlayerRating),
+            fouls: Number(newPlayerFouls)
+        };
+
+        if (editingPlayer) {
+            setPlayerList((currentPlayers) =>
+                currentPlayers.map((player) =>
+                    player.id === editingPlayer.id
+                        ? newPlayer
+                        : player
+                )
+            );
+        } else {
+            setPlayerList((currentPlayers) => [
+                ...currentPlayers,
+                newPlayer
+            ]);
+        }
+
+        setEditingPlayer(null);
+        closeModal();
     }
 
-    const newPlayer: Player = {
-        id: editingPlayer
-            ? editingPlayer.id
-            : Date.now(),
-
-        firstname: newPlayerFirstName.trim(),
-        lastname: newPlayerLastName.trim(),
-        team: newPlayerTeam.trim(),
-        position: newPlayerPosition.trim(),
-        number: Number(newPlayerNumber),
-        goals: Number(newPlayerGoals),
-        assists: Number(newPlayerAssists),
-        matches: Number(newPlayerMatches),
-        minutesplayed: Number(newPlayerMinutesPlayed),
-        rating: Number(newPlayerRating)
-    };
-
-    if (editingPlayer) {
-        setPlayerList((currentPlayers) =>
-            currentPlayers.map((player) =>
-                player.id === editingPlayer.id
-                    ? newPlayer
-                    : player
-            )
-        );
-    } else {
-        setPlayerList((currentPlayers) => [
-            ...currentPlayers,
-            newPlayer
-        ]);
+    function goBack() {
+        setWarning("");
+        setFormStep(1);
     }
 
-    setEditingPlayer(null);
-    closeModal();
-}
+    return (
+        <div className="modal-overlay">
+            <div className="modal">
 
-function goBack() {
-    setWarning("");
-    setFormStep(1);
-}
+                <button
+                    className="modal-close"
+                    onClick={closeModal}
+                >
+                    ×
+                </button>
 
-return (
-    <div className="modal-overlay">
-        <div className="modal">
+                <h2 className="h2-player">
+                    {editingPlayer
+                        ? "Speler bewerken"
+                        : "Speler toevoegen"}
+                </h2>
 
-            <button
-                className="modal-close"
-                onClick={closeModal}
-            >
-                ×
-            </button>
+                {warning && (
+                    <p className="warning">
+                        {warning}
+                    </p>
+                )}
 
-            <h2 className="h2-player">
-                {editingPlayer
-                    ? "Speler bewerken"
-                    : "Speler toevoegen"}
-            </h2>
+                {formStep === 1 && (
+                    <>
+                        <div className="form-grid">
 
-            {warning && (
-                <p className="warning">
-                    {warning}
-                </p>
-            )}
+                            <input
+                                type="text"
+                                placeholder="Voornaam speler"
+                                value={newPlayerFirstName}
+                                onChange={(e) =>
+                                    setNewPlayerFirstName(e.target.value)
+                                }
+                            />
 
-            {formStep === 1 && (
-                <>
-                    <div className="form-grid">
+                            <input
+                                type="text"
+                                placeholder="Achternaam speler"
+                                value={newPlayerLastName}
+                                onChange={(e) =>
+                                    setNewPlayerLastName(e.target.value)
+                                }
+                            />
 
-                        <input
-                            type="text"
-                            placeholder="Voornaam speler"
-                            value={newPlayerFirstName}
-                            onChange={(e) =>
-                                setNewPlayerFirstName(e.target.value)
-                            }
-                        />
+                            <input
+                                type="number"
+                                placeholder="Rugnummer"
+                                value={newPlayerNumber}
+                                onChange={(e) =>
+                                    setNewPlayerNumber(e.target.value)
+                                }
+                            />
 
-                        <input
-                            type="text"
-                            placeholder="Achternaam speler"
-                            value={newPlayerLastName}
-                            onChange={(e) =>
-                                setNewPlayerLastName(e.target.value)
-                            }
-                        />
+                            <input
+                                list="player-positions"
+                                type="text"
+                                placeholder="Positie"
+                                value={newPlayerPosition}
+                                onChange={(e) =>
+                                    setNewPlayerPosition(e.target.value)
+                                }
+                            />
 
-                        <input
-                            type="number"
-                            placeholder="Rugnummer"
-                            value={newPlayerNumber}
-                            onChange={(e) =>
-                                setNewPlayerNumber(e.target.value)
-                            }
-                        />
+                            <datalist id="player-positions">
+                                <option value="Keeper" />
+                                <option value="Verdediger" />
+                                <option value="Middenvelder" />
+                                <option value="Aanvaller" />
+                            </datalist>
 
-                        <input
-                            list="player-positions"
-                            type="text"
-                            placeholder="Positie"
-                            value={newPlayerPosition}
-                            onChange={(e) =>
-                                setNewPlayerPosition(e.target.value)
-                            }
-                        />
+                        </div>
 
-                        <datalist id="player-positions">
-                            <option value="Keeper" />
-                            <option value="Verdediger" />
-                            <option value="Middenvelder" />
-                            <option value="Aanvaller" />
-                        </datalist>
+                        <button
+                            className="save-player-button"
+                            onClick={goToNextStep}
+                        >
+                            Doorgaan
+                        </button>
+                    </>
+                )}
 
-                    </div>
+                {formStep === 2 && (
+                    <>
+                        <div className="form-grid">
 
-                    <button
-                        className="save-player-button"
-                        onClick={goToNextStep}
-                    >
-                        Doorgaan
-                    </button>
-                </>
-            )}
+                            <input
+                                list="player-teams"
+                                type="text"
+                                placeholder="Team"
+                                value={newPlayerTeam}
+                                onChange={(e) =>
+                                    setNewPlayerTeam(e.target.value)
+                                }
+                            />
 
-            {formStep === 2 && (
-                <>
-                    <div className="form-grid">
+                            <datalist id="player-teams">
+                                {teams.map((team) => (
+                                    <option
+                                        key={team.id}
+                                        value={team.name}
+                                    />
+                                ))}
+                            </datalist>
+                            {newPlayerPosition === "Keeper" ? (
+                                <>
+                                    <input
+                                        type="number"
+                                        placeholder="Wedstrijden"
+                                        value={newPlayerMatches}
+                                        onChange={(e) =>
+                                            setNewPlayerMatches(e.target.value)
+                                        } />
 
-                        <input
-                            list="player-teams"
-                            type="text"
-                            placeholder="Team"
-                            value={newPlayerTeam}
-                            onChange={(e) =>
-                                setNewPlayerTeam(e.target.value)
-                            }
-                        />
+                                    <input
+                                        type="number"
+                                        placeholder="Minuten Gespeeld"
+                                        value={newPlayerMinutesPlayed}
+                                        onChange={(e) =>
+                                            setNewPlayerMinutesPlayed(e.target.value)
+                                        } />
 
-                        <datalist id="player-teams">
-                            {teams.map((team) => (
-                                <option
-                                    key={team.id}
-                                    value={team.name}
-                                />
-                            ))}
-                        </datalist>
+                                    <input
+                                        type="number"
+                                        placeholder="Clean Sheets"
+                                        value={newPlayerCleanSheets}
+                                        onChange={(e) =>
+                                            setNewPlayerCleanSheets(e.target.value)
+                                        } />
 
-                        <input
-                            type="number"
-                            placeholder="Goals"
-                            value={newPlayerGoals}
-                            onChange={(e) =>
-                                setNewPlayerGoals(e.target.value)
-                            }
-                        />
+                                    <input
+                                        type="number"
+                                        placeholder="Reddingen"
+                                        value={newPlayerSaves}
+                                        onChange={(e) =>
+                                            setNewPlayerSaves(e.target.value)
+                                        } />
 
-                        <input
-                            type="number"
-                            placeholder="Assists"
-                            value={newPlayerAssists}
-                            onChange={(e) =>
-                                setNewPlayerAssists(e.target.value)
-                            }
-                        />
+                                    <input
+                                        type="number"
+                                        placeholder="1-op-1 reddingen"
+                                        value={newPlayerOneVsOneSaves}
+                                        onChange={(e) =>
+                                            setNewPlayerOneVsOneSaves(e.target.value)
+                                        } />
 
-                        <input
-                            type="number"
-                            placeholder="Wedstrijden"
-                            value={newPlayerMatches}
-                            onChange={(e) =>
-                                setNewPlayerMatches(e.target.value)
-                            }
-                        />
+                                    <input
+                                        type="number"
+                                        placeholder="Penalty's gehouden"
+                                        value={newPlayerPenaltySaves}
+                                        onChange={(e) =>
+                                            setNewPlayerPenaltySaves(e.target.value)
+                                        } />
 
-                        <input
-                            type="number"
-                            placeholder="Minuten gespeeld"
-                            value={newPlayerMinutesPlayed}
-                            onChange={(e) =>
-                                setNewPlayerMinutesPlayed(e.target.value)
-                            }
-                        />
+                                    <input
+                                        type="number"
+                                        placeholder="Tegengoals"
+                                        value={newPlayerGoalsConceded}
+                                        onChange={(e) =>
+                                            setNewPlayerGoalsConceded(e.target.value)
+                                        }
+                                    />
 
-                        <input
-                            type="number"
-                            step="0.1"
-                            placeholder="Rating"
-                            value={newPlayerRating}
-                            onChange={(e) =>
-                                setNewPlayerRating(e.target.value)
-                            }
-                        />
+                                    <input
+                                        type="number"
+                                        step="0.1"
+                                        placeholder="Rating"
+                                        value={newPlayerRating}
+                                        onChange={(e) =>
+                                            setNewPlayerRating(e.target.value)
+                                        }
+                                    />
+                                </>
+                            ) : (
+                                <>
+                                    <input
+                                        type="number"
+                                        placeholder="Goals"
+                                        value={newPlayerGoals}
+                                        onChange={(e) =>
+                                            setNewPlayerGoals(e.target.value)
+                                        }
+                                    />
 
-                    </div>
+                                    <input
+                                        type="number"
+                                        placeholder="Assists"
+                                        value={newPlayerAssists}
+                                        onChange={(e) =>
+                                            setNewPlayerAssists(e.target.value)
+                                        }
+                                    />
 
-                    <button
-                        className="save-player-button"
-                        onClick={goBack}
-                    >
-                        Terug
-                    </button>
+                                    <input
+                                        type="number"
+                                        placeholder="Wedstrijden"
+                                        value={newPlayerMatches}
+                                        onChange={(e) =>
+                                            setNewPlayerMatches(e.target.value)
+                                        }
+                                    />
 
-                    <button
-                        className="save-player-button"
-                        onClick={savePlayer}
-                    >
-                        {editingPlayer
-                            ? "Wijzigingen opslaan"
-                            : "Speler opslaan"}
-                    </button>
-                </>
-            )}
+                                    <input
+                                        type="number"
+                                        placeholder="Minuten gespeeld"
+                                        value={newPlayerMinutesPlayed}
+                                        onChange={(e) =>
+                                            setNewPlayerMinutesPlayed(e.target.value)
+                                        }
+                                    />
 
+
+                                    <input
+                                        type="number"
+                                        placeholder="Tackles"
+                                        value={newPlayerTackle}
+                                        onChange={(e) =>
+                                            setNewPlayerTackle(e.target.value)
+                                        } />
+
+                                    <input
+                                        type="number"
+                                        placeholder="Interceptions"
+                                        value={newPlayerInterceptions}
+                                        onChange={(e) =>
+                                            setNewPlayerInterceptions(e.target.value)
+                                        } />
+
+                                    <input
+                                        type="number"
+                                        placeholder="Blocks"
+                                        value={newPlayerBlocks}
+                                        onChange={(e) =>
+                                            setNewPlayerBlocks(e.target.value)
+                                        } />
+
+                                    <input
+                                        type="number"
+                                        placeholder="Clearences"
+                                        value={newPlayerClearences}
+                                        onChange={(e) =>
+                                            setNewPlayerClearences(e.target.value)
+                                        } />
+
+                                    <input
+                                        type="number"
+                                        placeholder="Gewonnen duels"
+                                        value={newPlayerDuelsWon}
+                                        onChange={(e) =>
+                                            setNewPlayerDuelsWon(e.target.value)
+                                        } />
+
+                                    <input
+                                        type="number"
+                                    placeholder="Overtredingen"
+                                    value={newPlayerFouls}
+                                    onChange={(e) =>
+                                        setNewPlayerFouls(e.target.value)
+                                    }/>
+                                    <input
+                                        type="number"
+                                        step="0.1"
+                                        placeholder="Rating"
+                                        value={newPlayerRating}
+                                        onChange={(e) =>
+                                            setNewPlayerRating(e.target.value)
+                                        } />
+                                </>
+                            )}
+                        </div>
+
+                        <button
+                            className="save-player-button"
+                            onClick={goBack}
+                        >
+                            Terug
+                        </button>
+
+                        <button
+                            className="save-player-button"
+                            onClick={savePlayer}
+                        >
+                            {editingPlayer
+                                ? "Wijzigingen opslaan"
+                                : "Speler opslaan"}
+                        </button>
+                    </>
+                )}
+
+            </div>
         </div>
-    </div>
-);
+    );
 
 
 }

@@ -5,11 +5,25 @@ export type Player = {
     team: string;
     position: string;
     number: number;
+
     goals: number;
     assists: number;
     matches: number;
     minutesplayed: number;
     rating: number;
+
+    tackles: number; 
+    interceptions:number;
+    blocks: number;
+    clearences: number;
+    duelsWon: number;
+    fouls: number;
+
+    cleanSheets?: number;
+    saves?: number;
+    oneVSOneSaves?: number;
+    penaltySaves?: number;
+    goalsConceded?: number;
 };
 
 export type Match = {

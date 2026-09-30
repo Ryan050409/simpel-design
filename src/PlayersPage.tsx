@@ -17,7 +17,6 @@ function PlayersPage({
 }: PlayersPageProps) {
     const [editingPlayer, setEditingPlayer] =
         useState<Player | null>(null);
-
     function deletePlayer(id: number) {
         setPlayerList((currentPlayers) =>
             currentPlayers.filter(

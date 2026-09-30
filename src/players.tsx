@@ -12,6 +12,12 @@ const players: Player[] = [
         assists: 6,
         matches: 12,
         minutesplayed: 900,
+        tackles: 3,
+        interceptions:4 ,
+        blocks: 1,
+        clearences:1 ,
+        duelsWon:4,
+        fouls: 2,
         rating: 7.6
     },
     {
@@ -25,6 +31,12 @@ const players: Player[] = [
         assists: 8,
         matches: 12,
         minutesplayed: 850,
+        tackles: 3,
+        interceptions:4 ,
+        blocks: 1,
+        clearences:1 ,
+        duelsWon:4,
+        fouls:2,
         rating: 6.9
     },
     {
@@ -38,6 +50,12 @@ const players: Player[] = [
         assists: 4,
         matches: 12,
         minutesplayed: 780,
+        tackles: 3,
+        interceptions:4 ,
+        blocks: 1,
+        clearences:1 ,
+        duelsWon:4,
+        fouls:2,
         rating: 6.8
     }
 ];
