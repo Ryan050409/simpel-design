@@ -265,6 +265,7 @@ nav a.active {
 
 .player-card {
   position: relative;
+  width:320px;
   overflow: hidden;
   background:
     linear-gradient(#1f2937, #1f2937) padding-box,
@@ -275,6 +276,7 @@ nav a.active {
   border: 3.6px solid transparent;
   border-radius: 18px;
   padding: 22px;
+  margin:10px;
   color: white;
   text-align: left;
   transition:
@@ -391,22 +393,71 @@ nav a.active {
   display: flex;
   justify-content: center;
   align-items: center;
-  background: rgba(0, 0, 0, 0.7);
+  padding: 30px;
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(6px);
+  z-index: 1000;
 }
 
 .modal {
   position: relative;
-  background: #1f2937;
-  color: white;
-  padding: 56px;
-  border-radius: 12px;
-  border: 2px solid #2563eb;
-  min-width: 300px;
-  max-width: 900px;
+  width: min(850px, 100%);
   max-height: 90vh;
   overflow-y: auto;
+
+  background: linear-gradient(
+    145deg,
+    #1f2937,
+    #111827
+  );
+
+  color: white;
+  padding: 36px;
+  border-radius: 20px;
+  border: 2px solid #2563eb;
+
+  box-shadow:
+    0 25px 60px rgba(0, 0, 0, 0.55),
+    0 0 35px rgba(37, 99, 235, 0.15);
+}
+.modal .player-stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+  margin-top: 20px;
 }
 
+.modal .player-stat {
+  background: #111827;
+  border: 1px solid #374151;
+  border-radius: 14px;
+  padding: 18px 12px;
+  text-align: center;
+  transition:
+    transform 0.2s ease,
+    border-color 0.2s ease,
+    background 0.2s ease;
+}
+
+.modal .player-stat:hover {
+  transform: translateY(-3px);
+  border-color: #2563eb;
+  background: #172033;
+}
+
+.modal .player-stat strong {
+  display: block;
+  margin-bottom: 5px;
+  font-size: 25px;
+  color: white;
+}
+
+.modal .player-stat span {
+  display: block;
+  color: #9ca3af;
+  font-size: 12px;
+  font-weight: 600;
+}
 .h2-player {
   color: white;
   padding-bottom: 15px;
@@ -415,19 +466,34 @@ nav a.active {
 
 .modal-close {
   position: absolute;
-  top: 10px;
-  right: 10px;
+  top: 18px;
+  right: 18px;
+
+  width: 42px;
+  height: 42px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
   background: #2563eb;
   color: white;
+
   border: none;
-  padding: 4px 12px;
-  border-radius: 6px;
+  border-radius: 10px;
+
   cursor: pointer;
-  font-size: 28px;
+  font-size: 27px;
+  line-height: 1;
+
+  transition:
+    background 0.2s ease,
+    transform 0.2s ease;
 }
 
 .modal-close:hover {
   background: #153b8d;
+  transform: scale(1.1);
 }
 
 .warning {
@@ -532,6 +598,10 @@ nav a.active {
     width: 100%;
   }
 }
+  .modal .player-stats {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
 
 @media (max-width: 450px) {
   .stats-grid {
