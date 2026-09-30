@@ -17,6 +17,8 @@ function PlayersPage({
 }: PlayersPageProps) {
     const [editingPlayer, setEditingPlayer] =
         useState<Player | null>(null);
+    const [selectedPlayer, setSelectedPlayer] =
+        useState<Player | null>(null);
     function deletePlayer(id: number) {
         setPlayerList((currentPlayers) =>
             currentPlayers.filter(
@@ -52,6 +54,7 @@ function PlayersPage({
                     <div
                         className="player-card"
                         key={player.id}
+                        onClick={() => setSelectedPlayer(player)}
                     >
                         <div className="player-card-header">
                             <div>
@@ -85,15 +88,49 @@ function PlayersPage({
                         </div>
 
                         <div className="player-stats">
-                            <div className="player-stat">
-                                <strong>{player.goals}</strong>
-                                <span>Goals</span>
-                            </div>
 
-                            <div className="player-stat">
-                                <strong>{player.assists}</strong>
-                                <span>Assists</span>
-                            </div>
+                            {(player.position === "Aanvaller" ||
+                                player.position === "Middenvelder") && (
+                                    <>
+                                        <div className="player-stat">
+                                            <strong>{player.goals}</strong>
+                                            <span>Goals</span>
+                                        </div>
+
+                                        <div className="player-stat">
+                                            <strong>{player.assists}</strong>
+                                            <span>Assists</span>
+                                        </div>
+                                    </>
+                                )}
+
+                            {player.position === "Verdediger" && (
+                                <>
+                                    <div className="player-stat">
+                                        <strong>{player.tackles ?? 0}</strong>
+                                        <span>Tackles</span>
+                                    </div>
+
+                                    <div className="player-stat">
+                                        <strong>{player.interceptions ?? 0}</strong>
+                                        <span>Interceptions</span>
+                                    </div>
+                                </>
+                            )}
+
+                            {player.position === "Keeper" && (
+                                <>
+                                    <div className="player-stat">
+                                        <strong>{player.saves ?? 0}</strong>
+                                        <span>Reddingen</span>
+                                    </div>
+
+                                    <div className="player-stat">
+                                        <strong>{player.oneVSOneSaves ?? 0}</strong>
+                                        <span>1-op-1 reddingen</span>
+                                    </div>
+                                </>
+                            )}
 
                             <div className="player-stat">
                                 <strong>{player.matches}</strong>
@@ -101,20 +138,20 @@ function PlayersPage({
                             </div>
 
                             <div className="player-stat">
-                                <strong>
-                                    {player.minutesplayed}
-                                </strong>
+                                <strong>{player.minutesplayed}</strong>
                                 <span>Minuten</span>
                             </div>
+
                         </div>
 
                         <div className="player-actions">
                             <button
                                 type="button"
                                 className="edit-button"
-                                onClick={() =>
-                                    editPlayer(player)
-                                }
+                                onClick={(e) => {
+                                    e.stopPropagation();
+                                    editPlayer(player);
+                                }}
                             >
                                 Bewerken
                             </button>
@@ -122,9 +159,10 @@ function PlayersPage({
                             <button
                                 type="button"
                                 className="delete-button"
-                                onClick={() =>
-                                    deletePlayer(player.id)
-                                }
+                                onClick={(e) => {
+                                    e.stopPropagation();
+                                    deletePlayer(player.id);
+                                }}
                             >
                                 Verwijderen
                             </button>
@@ -132,7 +170,99 @@ function PlayersPage({
                     </div>
                 ))}
             </div>
+            {selectedPlayer && (
+                <div
+                    className="modal-overlay"
+                    onClick={() => setSelectedPlayer(null)}
+                >
+                    <div
+                        className="modal"
+                        onClick={(e) => e.stopPropagation()}
+                    >
+                        <button
+                            className="modal-close"
+                            onClick={() => setSelectedPlayer(null)}
+                        >
+                            ×
+                        </button>
 
+                        <h2>
+                            {selectedPlayer.firstname}{" "}
+                            {selectedPlayer.lastname}
+                        </h2>
+
+                        <p>{selectedPlayer.position}</p>
+
+                        <div className="player-stats">
+
+                            {selectedPlayer.position === "Aanvaller" ||
+                                selectedPlayer.position === "Middenvelder" ? (
+                                <>
+                                    <div className="player-stat">
+                                        <strong>{selectedPlayer.goals}</strong>
+                                        <span>Goals</span>
+                                    </div>
+
+                                    <div className="player-stat">
+                                        <strong>{selectedPlayer.assists}</strong>
+                                        <span>Assists</span>
+                                    </div>
+
+                                    <div className="player-stat">
+                                        <strong>{selectedPlayer.fouls ?? 0}</strong>
+                                        <span>Overtredingen</span>
+                                    </div>
+                                </>
+                            ) : selectedPlayer.position === "Verdediger" ? (
+                                <>
+                                    <div className="player-stat">
+                                        <strong>{selectedPlayer.blocks ?? 0}</strong>
+                                        <span>Blocks</span>
+                                    </div>
+
+                                    <div className="player-stat">
+                                        <strong>{selectedPlayer.clearences ?? 0}</strong>
+                                        <span>Clearences</span>
+                                    </div>
+
+                                    <div className="player-stat">
+                                        <strong>{selectedPlayer.duelsWon ?? 0}</strong>
+                                        <span>Gewonnen duels</span>
+                                    </div>
+
+                                    <div className="player-stat">
+                                        <strong>{selectedPlayer.fouls ?? 0}</strong>
+                                        <span>Overtredingen</span>
+                                    </div>
+                                </>
+                            ) : selectedPlayer.position === "Keeper" ? (
+                                <>
+                                    <div className="player-stat">
+                                        <strong>{selectedPlayer.cleanSheets ?? 0}</strong>
+                                        <span>Clean sheets</span>
+                                    </div>
+
+                                    <div className="player-stat">
+                                        <strong>{selectedPlayer.penaltySaves ?? 0}</strong>
+                                        <span>Penalty's gehouden</span>
+                                    </div>
+
+                                    <div className="player-stat">
+                                        <strong>{selectedPlayer.goalsConceded ?? 0}</strong>
+                                        <span>Tegengoals</span>
+                                    </div>
+
+                                    <div className="player-stat">
+                                        <strong>{selectedPlayer.fouls ?? 0}</strong>
+                                        <span>Overtredingen</span>
+                                    </div>
+                                </>
+                            ) : null}
+
+                        </div>
+                    </div>
+                </div>
+            )}
             {editingPlayer && (
                 <PlayerForm
                     editingPlayer={editingPlayer}

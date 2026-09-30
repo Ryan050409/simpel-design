@@ -62,46 +62,69 @@ function PlayerForm({
     );
 
     const [newPlayerTackle, setNewPlayerTackle] = useState(
-        editingPlayer ? String(editingPlayer.tackles ?? "") : ""
+        editingPlayer
+            ? String(editingPlayer.tackles ?? "")
+            : ""
     );
 
     const [newPlayerInterceptions, setNewPlayerInterceptions] = useState(
-        editingPlayer ? String(editingPlayer.interceptions ?? "") : ""
+        editingPlayer
+            ? String(editingPlayer.interceptions ?? "")
+            : ""
     );
 
     const [newPlayerBlocks, setNewPlayerBlocks] = useState(
-        editingPlayer ? String(editingPlayer.blocks ?? "") : ""
+        editingPlayer
+            ? String(editingPlayer.blocks ?? "")
+            : ""
     );
 
     const [newPlayerClearences, setNewPlayerClearences] = useState(
-        editingPlayer ? String(editingPlayer.clearences ?? "") : ""
+        editingPlayer
+            ? String(editingPlayer.clearences ?? "")
+            : ""
     );
 
     const [newPlayerDuelsWon, setNewPlayerDuelsWon] = useState(
-        editingPlayer ? String(editingPlayer.duelsWon ?? "") : ""
+        editingPlayer
+            ? String(editingPlayer.duelsWon ?? "")
+            : ""
     );
 
-    const [newPlayerFouls, setNewPlayerFouls] = useState (
-        editingPlayer ? String(editingPlayer.fouls ?? "") : ""
+    const [newPlayerFouls, setNewPlayerFouls] = useState(
+        editingPlayer
+            ? String(editingPlayer.fouls ?? "")
+            : ""
     );
+
     const [newPlayerCleanSheets, setNewPlayerCleanSheets] = useState(
-        editingPlayer ? String(editingPlayer.cleanSheets ?? "") : ""
+        editingPlayer
+            ? String(editingPlayer.cleanSheets ?? "")
+            : ""
     );
 
     const [newPlayerSaves, setNewPlayerSaves] = useState(
-        editingPlayer ? String(editingPlayer.saves ?? "") : ""
+        editingPlayer
+            ? String(editingPlayer.saves ?? "")
+            : ""
     );
 
     const [newPlayerOneVsOneSaves, setNewPlayerOneVsOneSaves] = useState(
-        editingPlayer ? String(editingPlayer.oneVSOneSaves ?? "") : ""
+        editingPlayer
+            ? String(editingPlayer.oneVSOneSaves ?? "")
+            : ""
     );
 
     const [newPlayerPenaltySaves, setNewPlayerPenaltySaves] = useState(
-        editingPlayer ? String(editingPlayer.penaltySaves ?? "") : ""
+        editingPlayer
+            ? String(editingPlayer.penaltySaves ?? "")
+            : ""
     );
 
     const [newPlayerGoalsConceded, setNewPlayerGoalsConceded] = useState(
-        editingPlayer ? String(editingPlayer.goalsConceded ?? "") : ""
+        editingPlayer
+            ? String(editingPlayer.goalsConceded ?? "")
+            : ""
     );
 
     const [warning, setWarning] = useState("");
@@ -128,13 +151,11 @@ function PlayerForm({
             newPlayerTeam.trim() === "" ||
             newPlayerPosition.trim() === "" ||
             newPlayerNumber.trim() === "" ||
-            newPlayerGoals.trim() === "" ||
-            newPlayerAssists.trim() === "" ||
             newPlayerMatches.trim() === "" ||
             newPlayerMinutesPlayed.trim() === "" ||
             newPlayerRating.trim() === ""
         ) {
-            setWarning("Alle velden moeten ingevuld worden!");
+            setWarning("Vul alle verplichte velden in!");
             return;
         }
 
@@ -148,17 +169,27 @@ function PlayerForm({
             team: newPlayerTeam.trim(),
             position: newPlayerPosition.trim(),
             number: Number(newPlayerNumber),
+
             goals: Number(newPlayerGoals),
             assists: Number(newPlayerAssists),
             matches: Number(newPlayerMatches),
             minutesplayed: Number(newPlayerMinutesPlayed),
+
             tackles: Number(newPlayerTackle),
             interceptions: Number(newPlayerInterceptions),
             blocks: Number(newPlayerBlocks),
             clearences: Number(newPlayerClearences),
             duelsWon: Number(newPlayerDuelsWon),
-            rating: Number(newPlayerRating),
-            fouls: Number(newPlayerFouls)
+
+            fouls: Number(newPlayerFouls),
+
+            cleanSheets: Number(newPlayerCleanSheets),
+            saves: Number(newPlayerSaves),
+            oneVSOneSaves: Number(newPlayerOneVsOneSaves),
+            penaltySaves: Number(newPlayerPenaltySaves),
+            goalsConceded: Number(newPlayerGoalsConceded),
+
+            rating: Number(newPlayerRating)
         };
 
         if (editingPlayer) {
@@ -289,76 +320,9 @@ function PlayerForm({
                                     />
                                 ))}
                             </datalist>
-                            {newPlayerPosition === "Keeper" ? (
-                                <>
-                                    <input
-                                        type="number"
-                                        placeholder="Wedstrijden"
-                                        value={newPlayerMatches}
-                                        onChange={(e) =>
-                                            setNewPlayerMatches(e.target.value)
-                                        } />
 
-                                    <input
-                                        type="number"
-                                        placeholder="Minuten Gespeeld"
-                                        value={newPlayerMinutesPlayed}
-                                        onChange={(e) =>
-                                            setNewPlayerMinutesPlayed(e.target.value)
-                                        } />
-
-                                    <input
-                                        type="number"
-                                        placeholder="Clean Sheets"
-                                        value={newPlayerCleanSheets}
-                                        onChange={(e) =>
-                                            setNewPlayerCleanSheets(e.target.value)
-                                        } />
-
-                                    <input
-                                        type="number"
-                                        placeholder="Reddingen"
-                                        value={newPlayerSaves}
-                                        onChange={(e) =>
-                                            setNewPlayerSaves(e.target.value)
-                                        } />
-
-                                    <input
-                                        type="number"
-                                        placeholder="1-op-1 reddingen"
-                                        value={newPlayerOneVsOneSaves}
-                                        onChange={(e) =>
-                                            setNewPlayerOneVsOneSaves(e.target.value)
-                                        } />
-
-                                    <input
-                                        type="number"
-                                        placeholder="Penalty's gehouden"
-                                        value={newPlayerPenaltySaves}
-                                        onChange={(e) =>
-                                            setNewPlayerPenaltySaves(e.target.value)
-                                        } />
-
-                                    <input
-                                        type="number"
-                                        placeholder="Tegengoals"
-                                        value={newPlayerGoalsConceded}
-                                        onChange={(e) =>
-                                            setNewPlayerGoalsConceded(e.target.value)
-                                        }
-                                    />
-
-                                    <input
-                                        type="number"
-                                        step="0.1"
-                                        placeholder="Rating"
-                                        value={newPlayerRating}
-                                        onChange={(e) =>
-                                            setNewPlayerRating(e.target.value)
-                                        }
-                                    />
-                                </>
-                            ) : (
+                            {(newPlayerPosition === "Aanvaller" ||
+                                newPlayerPosition === "Middenvelder") && (
                                 <>
                                     <input
                                         type="number"
@@ -377,33 +341,19 @@ function PlayerForm({
                                             setNewPlayerAssists(e.target.value)
                                         }
                                     />
+                                </>
+                            )}
 
-                                    <input
-                                        type="number"
-                                        placeholder="Wedstrijden"
-                                        value={newPlayerMatches}
-                                        onChange={(e) =>
-                                            setNewPlayerMatches(e.target.value)
-                                        }
-                                    />
-
-                                    <input
-                                        type="number"
-                                        placeholder="Minuten gespeeld"
-                                        value={newPlayerMinutesPlayed}
-                                        onChange={(e) =>
-                                            setNewPlayerMinutesPlayed(e.target.value)
-                                        }
-                                    />
-
-
+                            {newPlayerPosition === "Verdediger" && (
+                                <>
                                     <input
                                         type="number"
                                         placeholder="Tackles"
                                         value={newPlayerTackle}
                                         onChange={(e) =>
                                             setNewPlayerTackle(e.target.value)
-                                        } />
+                                        }
+                                    />
 
                                     <input
                                         type="number"
@@ -411,7 +361,8 @@ function PlayerForm({
                                         value={newPlayerInterceptions}
                                         onChange={(e) =>
                                             setNewPlayerInterceptions(e.target.value)
-                                        } />
+                                        }
+                                    />
 
                                     <input
                                         type="number"
@@ -419,7 +370,8 @@ function PlayerForm({
                                         value={newPlayerBlocks}
                                         onChange={(e) =>
                                             setNewPlayerBlocks(e.target.value)
-                                        } />
+                                        }
+                                    />
 
                                     <input
                                         type="number"
@@ -427,7 +379,8 @@ function PlayerForm({
                                         value={newPlayerClearences}
                                         onChange={(e) =>
                                             setNewPlayerClearences(e.target.value)
-                                        } />
+                                        }
+                                    />
 
                                     <input
                                         type="number"
@@ -435,25 +388,97 @@ function PlayerForm({
                                         value={newPlayerDuelsWon}
                                         onChange={(e) =>
                                             setNewPlayerDuelsWon(e.target.value)
-                                        } />
+                                        }
+                                    />
+                                </>
+                            )}
+
+                            {newPlayerPosition === "Keeper" && (
+                                <>
+                                    <input
+                                        type="number"
+                                        placeholder="Clean Sheets"
+                                        value={newPlayerCleanSheets}
+                                        onChange={(e) =>
+                                            setNewPlayerCleanSheets(e.target.value)
+                                        }
+                                    />
 
                                     <input
                                         type="number"
-                                    placeholder="Overtredingen"
-                                    value={newPlayerFouls}
-                                    onChange={(e) =>
-                                        setNewPlayerFouls(e.target.value)
-                                    }/>
+                                        placeholder="Reddingen"
+                                        value={newPlayerSaves}
+                                        onChange={(e) =>
+                                            setNewPlayerSaves(e.target.value)
+                                        }
+                                    />
+
                                     <input
                                         type="number"
-                                        step="0.1"
-                                        placeholder="Rating"
-                                        value={newPlayerRating}
+                                        placeholder="1-op-1 reddingen"
+                                        value={newPlayerOneVsOneSaves}
                                         onChange={(e) =>
-                                            setNewPlayerRating(e.target.value)
-                                        } />
+                                            setNewPlayerOneVsOneSaves(e.target.value)
+                                        }
+                                    />
+
+                                    <input
+                                        type="number"
+                                        placeholder="Penalty's gehouden"
+                                        value={newPlayerPenaltySaves}
+                                        onChange={(e) =>
+                                            setNewPlayerPenaltySaves(e.target.value)
+                                        }
+                                    />
+
+                                    <input
+                                        type="number"
+                                        placeholder="Tegengoals"
+                                        value={newPlayerGoalsConceded}
+                                        onChange={(e) =>
+                                            setNewPlayerGoalsConceded(e.target.value)
+                                        }
+                                    />
                                 </>
                             )}
+
+                            <input
+                                type="number"
+                                placeholder="Wedstrijden"
+                                value={newPlayerMatches}
+                                onChange={(e) =>
+                                    setNewPlayerMatches(e.target.value)
+                                }
+                            />
+
+                            <input
+                                type="number"
+                                placeholder="Minuten gespeeld"
+                                value={newPlayerMinutesPlayed}
+                                onChange={(e) =>
+                                    setNewPlayerMinutesPlayed(e.target.value)
+                                }
+                            />
+
+                            <input
+                                type="number"
+                                placeholder="Overtredingen"
+                                value={newPlayerFouls}
+                                onChange={(e) =>
+                                    setNewPlayerFouls(e.target.value)
+                                }
+                            />
+
+                            <input
+                                type="number"
+                                step="0.1"
+                                placeholder="Rating"
+                                value={newPlayerRating}
+                                onChange={(e) =>
+                                    setNewPlayerRating(e.target.value)
+                                }
+                            />
+
                         </div>
 
                         <button
@@ -477,8 +502,6 @@ function PlayerForm({
             </div>
         </div>
     );
-
-
 }
 
 export default PlayerForm;
