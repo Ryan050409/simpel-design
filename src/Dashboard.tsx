@@ -73,8 +73,8 @@ function Dashboard({
   const winPercentage =
     playedMatches.length > 0
       ? Math.round(
-        (wins / playedMatches.length) * 100
-      )
+          (wins / playedMatches.length) * 100
+        )
       : 0;
 
   const averageGoals =
@@ -85,9 +85,84 @@ function Dashboard({
   const topScorer =
     playerList.length > 0
       ? [...playerList].sort(
-        (a, b) => b.goals - a.goals
-      )[0]
+          (a, b) => b.goals - a.goals
+        )[0]
       : null;
+
+  const lastFiveMatches = [...playedMatches]
+    .sort(
+      (a, b) =>
+        new Date(b.date).getTime() -
+        new Date(a.date).getTime()
+    )
+    .slice(0, 5);
+
+  const lastFiveData = lastFiveMatches.map((match) => {
+    const isHome = match.home === team;
+
+    const teamGoals = isHome
+      ? match.homeGoals
+      : match.awayGoals;
+
+    const opponentGoals = isHome
+      ? match.awayGoals
+      : match.homeGoals;
+
+    let result: "W" | "G" | "V";
+
+    if (teamGoals > opponentGoals) {
+      result = "W";
+    } else if (teamGoals === opponentGoals) {
+      result = "G";
+    } else {
+      result = "V";
+    }
+
+    return {
+      match,
+      opponent: isHome ? match.away : match.home,
+      teamGoals,
+      opponentGoals,
+      result,
+      goalDifference: teamGoals - opponentGoals
+    };
+  });
+
+  const highestGoalDifference =
+    lastFiveData.length > 0
+      ? Math.max(
+          ...lastFiveData.map((item) =>
+            Math.abs(item.goalDifference)
+          )
+        )
+      : 1;
+
+  function getResultClass(
+    result: "W" | "G" | "V"
+  ) {
+    if (result === "W") {
+      return "last-five-win";
+    }
+
+    if (result === "G") {
+      return "last-five-draw";
+    }
+
+    return "last-five-loss";
+  }
+
+  function getBarHeight(goalDifference: number) {
+    if (goalDifference === 0) {
+      return 20;
+    }
+
+    return Math.max(
+      25,
+      (Math.abs(goalDifference) /
+        highestGoalDifference) *
+        100
+    );
+  }
 
   return (
     <div className="dashboard">
@@ -123,7 +198,10 @@ function Dashboard({
 
         <div className="stat-card">
           <h3>Doelsaldo</h3>
-          <p>{goalDifference}</p>
+          <p>
+            {goalDifference > 0 ? "+" : ""}
+            {goalDifference}
+          </p>
         </div>
 
         <div className="stat-card">
@@ -153,12 +231,107 @@ function Dashboard({
         <p>
           <strong>Topscorer:</strong>{" "}
           {topScorer
-            ? `${topScorer.firstname} ${topScorer.lastname}(${topScorer.goals} goals)`
+            ? `${topScorer.firstname} ${topScorer.lastname} (${topScorer.goals} goals)`
             : "Nog geen spelers"}
         </p>
-        <p>
-          <strong>Team:</strong> {team}
-        </p>
+      </div>
+
+      <div className="last-five-section">
+        <div className="last-five-header">
+          <div>
+            <h2>Laatste 5 wedstrijden</h2>
+            <p>
+              Recente resultaten van {team}
+            </p>
+          </div>
+
+          <div className="last-five-legend">
+            <span>
+              <i className="legend-win"></i>
+              Winst
+            </span>
+
+            <span>
+              <i className="legend-draw"></i>
+              Gelijk
+            </span>
+
+            <span>
+              <i className="legend-loss"></i>
+              Verlies
+            </span>
+          </div>
+        </div>
+
+        {lastFiveData.length > 0 ? (
+          <>
+            <div className="last-five-chart">
+              {lastFiveData.map((item) => (
+                <div
+                  className="last-five-column"
+                  key={item.match.id}
+                >
+                  <div className="last-five-value">
+                    {item.goalDifference > 0
+                      ? "+"
+                      : ""}
+                    {item.goalDifference}
+                  </div>
+
+                  <div className="last-five-bar-container">
+                    <div
+                      className={`last-five-bar ${getResultClass(
+                        item.result
+                      )}`}
+                      style={{
+                        height: `${getBarHeight(
+                          item.goalDifference
+                        )}%`
+                      }}
+                    ></div>
+                  </div>
+
+                  <strong className="last-five-result">
+                    {item.result}
+                  </strong>
+
+                  <span className="last-five-opponent">
+                    vs {item.opponent}
+                  </span>
+
+                  <span className="last-five-score">
+                    {item.teamGoals} -{" "}
+                    {item.opponentGoals}
+                  </span>
+
+                  <span className="last-five-date">
+                    {new Date(
+                      item.match.date
+                    ).toLocaleDateString("nl-NL")}
+                  </span>
+                </div>
+              ))}
+            </div>
+
+            <div className="last-five-summary">
+              <span>
+                <strong>Gewonnen:</strong> {wins}
+              </span>
+
+              <span>
+                <strong>Gelijk:</strong> {draws}
+              </span>
+
+              <span>
+                <strong>Verloren:</strong> {losses}
+              </span>
+            </div>
+          </>
+        ) : (
+          <p className="last-five-empty">
+            Nog geen wedstrijden gespeeld.
+          </p>
+        )}
       </div>
     </div>
   );

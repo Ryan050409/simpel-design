@@ -11,6 +11,40 @@ type MatchesPageProps = {
     teams: Team[];
 };
 
+function getMatchResult(match: Match, team: string) {
+    if (match.home !== team && match.away !== team) {
+        return null;
+    }
+
+    const teamGoals =
+        match.home === team
+            ? match.homeGoals
+            : match.awayGoals;
+
+    const opponentGoals =
+        match.home === team
+            ? match.awayGoals
+            : match.homeGoals;
+
+    if (teamGoals > opponentGoals) return "W";
+    if (teamGoals === opponentGoals) return "G";
+    return "V";
+}
+
+function getResultClass(result: string | null) {
+    if (result === "W") return "result-win";
+    if (result === "G") return "result-draw";
+    if (result === "V") return "result-loss";
+    return undefined;
+}
+
+function getRowClass(result: string | null) {
+    if (result === "W") return "match-row-win";
+    if (result === "G") return "match-row-draw";
+    if (result === "V") return "match-row-loss";
+    return undefined;
+}
+
 function MatchesPage({
     matches,
     setMatches,
@@ -192,4 +226,3 @@ function MatchesPage({
 }
 
 export default MatchesPage;
-
