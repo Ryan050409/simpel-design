@@ -156,6 +156,9 @@ function Dashboard({
             ? `${topScorer.firstname} ${topScorer.lastname}(${topScorer.goals} goals)`
             : "Nog geen spelers"}
         </p>
+        <p>
+          <strong>Team:</strong> {team}
+        </p>
       </div>
     </div>
   );

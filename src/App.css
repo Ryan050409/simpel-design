@@ -969,7 +969,7 @@ nav a.active {
   color: #1f2937;
 }
 
-.matches-table tbody tr:hover {
+.matches-table-tbody-tr:hover {
   background: #f3f4f6;
 }
 
@@ -999,16 +999,50 @@ nav a.active {
 }
 
 .match-row-win:hover {
-  background: #bbf7d0;
+  background: #a7dfba;
 }
 
 .match-row-draw:hover {
-  background: #fde68a;
+  background: #f7db6c;
 }
 
 .match-row-loss:hover {
-  background: #fecaca;
+  background: #e78d8d;
 }
 .match-row-normal { 
   background: white;
+}
+/* Mobiele weergave wedstrijden */
+@media (max-width: 700px) {
+  .matches-table {
+    width: calc(100% - 20px);
+    margin: 20px auto;
+    font-size: 14px;
+  }
+
+  .matches-table th,
+  .matches-table td {
+    padding: 10px 6px;
+  }
+
+  .matches-table th:nth-child(1),
+  .matches-table td:nth-child(1) {
+    display: none;
+  }
+
+  .matches-table th:nth-child(5),
+  .matches-table td:nth-child(5) {
+    display: none;
+  }
+
+  .matches-table .match-actions {
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .matches-table .match-actions button {
+    width: 100%;
+    padding: 6px 8px;
+    font-size: 12px;
+  }
 }
