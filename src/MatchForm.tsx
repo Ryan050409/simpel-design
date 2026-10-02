@@ -39,7 +39,9 @@ function MatchForm({
 
     const [date, setDate] = useState(
         editingMatch?.date ??
-        new Date().toISOString().split("T")[0]
+            new Date()
+                .toISOString()
+                .split("T")[0]
     );
 
     const [warning, setWarning] = useState("");
@@ -52,7 +54,9 @@ function MatchForm({
             awayGoals.trim() === "" ||
             date === ""
         ) {
-            setWarning("Alle velden moeten ingevuld worden!");
+            setWarning(
+                "Alle velden moeten ingevuld worden!"
+            );
             return;
         }
 
@@ -67,23 +71,21 @@ function MatchForm({
             date
         };
 
-        if (editingMatch) {
-            setMatches((currentMatches) =>
-                currentMatches.map((match) =>
-                    match.id === editingMatch.id
-                        ? newMatch
-                        : match
-                )
+        setMatches((currentMatches) => {
+            const updatedMatches = editingMatch
+                ? currentMatches.map((match) =>
+                      match.id === editingMatch.id
+                          ? newMatch
+                          : match
+                  )
+                : [...currentMatches, newMatch];
+
+            return [...updatedMatches].sort(
+                (a, b) =>
+                    new Date(b.date).getTime() -
+                    new Date(a.date).getTime()
             );
-        } else {
-            setMatches((currentMatches) =>
-                [...currentMatches, newMatch].sort(
-                    (a, b) =>
-                        new Date(b.date).getTime() -
-                        new Date(a.date).getTime()
-                )
-            );
-        }
+        });
 
         setEditingMatch(null);
         closeModal();
@@ -94,6 +96,7 @@ function MatchForm({
             <div className="modal">
                 <button
                     className="modal-close"
+                    type="button"
                     onClick={closeModal}
                 >
                     ×
@@ -147,7 +150,9 @@ function MatchForm({
                         placeholder="Goals thuis"
                         value={homeGoals}
                         onChange={(e) =>
-                            setHomeGoals(e.target.value)
+                            setHomeGoals(
+                                e.target.value
+                            )
                         }
                     />
 
@@ -157,7 +162,9 @@ function MatchForm({
                         placeholder="Goals uit"
                         value={awayGoals}
                         onChange={(e) =>
-                            setAwayGoals(e.target.value)
+                            setAwayGoals(
+                                e.target.value
+                            )
                         }
                     />
 
@@ -172,6 +179,7 @@ function MatchForm({
 
                 <button
                     className="save-player-button"
+                    type="button"
                     onClick={saveMatch}
                 >
                     {editingMatch
@@ -184,3 +192,4 @@ function MatchForm({
 }
 
 export default MatchForm;
+

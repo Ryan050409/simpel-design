@@ -26,22 +26,46 @@ function getMatchResult(match: Match, team: string) {
             ? match.awayGoals
             : match.homeGoals;
 
-    if (teamGoals > opponentGoals) return "W";
-    if (teamGoals === opponentGoals) return "G";
+    if (teamGoals > opponentGoals) {
+        return "W";
+    }
+
+    if (teamGoals === opponentGoals) {
+        return "G";
+    }
+
     return "V";
 }
 
 function getResultClass(result: string | null) {
-    if (result === "W") return "result-win";
-    if (result === "G") return "result-draw";
-    if (result === "V") return "result-loss";
+    if (result === "W") {
+        return "result-win";
+    }
+
+    if (result === "G") {
+        return "result-draw";
+    }
+
+    if (result === "V") {
+        return "result-loss";
+    }
+
     return undefined;
 }
 
 function getRowClass(result: string | null) {
-    if (result === "W") return "match-row-win";
-    if (result === "G") return "match-row-draw";
-    if (result === "V") return "match-row-loss";
+    if (result === "W") {
+        return "match-row-win";
+    }
+
+    if (result === "G") {
+        return "match-row-draw";
+    }
+
+    if (result === "V") {
+        return "match-row-loss";
+    }
+
     return undefined;
 }
 
@@ -68,67 +92,6 @@ function MatchesPage({
 
     function closeModal() {
         setEditingMatch(null);
-    }
-
-    function getMatchResult(match: Match) {
-        if (
-            match.home !== team &&
-            match.away !== team
-        ) {
-            return null;
-        }
-
-        const teamGoals =
-            match.home === team
-                ? match.homeGoals
-                : match.awayGoals;
-
-        const opponentGoals =
-            match.home === team
-                ? match.awayGoals
-                : match.homeGoals;
-
-        if (teamGoals > opponentGoals) {
-            return "W";
-        }
-
-        if (teamGoals === opponentGoals) {
-            return "G";
-        }
-
-        return "V";
-    }
-
-    function getResultClass(result: string | null) {
-        if (result === "W") {
-            return "result-win";
-        }
-
-        if (result === "G") {
-            return "result-draw";
-        }
-
-        if (result === "V") {
-            return "result-loss";
-        }
-
-        return undefined;
-    }
-
-    function getRowClass(result: string | null) {
-        if (result === "W") {
-            return "match-row-win";
-        }
-
-        if (result === "G") {
-            return "match-row-draw";
-        }
-
-        if (result === "V") {
-            return "match-row-loss";
-        }
-
-        return undefined;
     }
 
     return (
@@ -161,7 +124,10 @@ function MatchesPage({
 
                 <tbody>
                     {matches.map((match) => {
-                        const result = getMatchResult(match);
+                        const result = getMatchResult(
+                            match,
+                            team
+                        );
 
                         return (
                             <tr
@@ -191,6 +157,7 @@ function MatchesPage({
 
                                 <td className="match-actions">
                                     <button
+                                        type="button"
                                         onClick={() =>
                                             editMatch(match)
                                         }
@@ -199,6 +166,7 @@ function MatchesPage({
                                     </button>
 
                                     <button
+                                        type="button"
                                         onClick={() =>
                                             deleteMatch(match.id)
                                         }
@@ -226,3 +194,4 @@ function MatchesPage({
 }
 
 export default MatchesPage;
+
