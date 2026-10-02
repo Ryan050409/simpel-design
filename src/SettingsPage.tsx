@@ -125,13 +125,38 @@ function SettingsPage({
         setTeamWarning("");
     }
 
-    function deleteTeam(id: number) {
-        setTeams((currentTeams) =>
-            currentTeams.filter(
-                (team) => team.id !== id
-            )
-        );
+function deleteTeam(id: number) {
+    const teamToDelete = teams.find(
+        (team) => team.id === id
+    );
+
+    if (!teamToDelete) {
+        return;
     }
+
+    const confirmed = window.confirm(
+        `Weet je zeker dat je ${teamToDelete.name} wilt verwijderen?`
+    );
+
+    if (!confirmed) {
+        return;
+    }
+
+    const remainingTeams = teams.filter(
+        (team) => team.id !== id
+    );
+
+    setTeams(remainingTeams);
+
+    if (teamToDelete.name === team) {
+        if (remainingTeams.length > 0) {
+            setTeam(remainingTeams[0].name);
+        } else {
+            setTeam("");
+        }
+    }
+}
+
 
     return (
         <div className="settings-page">

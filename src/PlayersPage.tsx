@@ -19,13 +19,30 @@ function PlayersPage({
         useState<Player | null>(null);
     const [selectedPlayer, setSelectedPlayer] =
         useState<Player | null>(null);
-    function deletePlayer(id: number) {
-        setPlayerList((currentPlayers) =>
-            currentPlayers.filter(
-                (player) => player.id !== id
-            )
-        );
+ function deletePlayer(id: number) {
+    const playerToDelete = playerList.find(
+        (player) => player.id === id
+    );
+
+    if (!playerToDelete) {
+        return;
     }
+
+    const confirmed = window.confirm(
+        `Weet je zeker dat je ${playerToDelete.firstname} ${playerToDelete.lastname} wilt verwijderen?`
+    );
+
+    if (!confirmed) {
+        return;
+    }
+
+    setPlayerList((currentPlayers) =>
+        currentPlayers.filter(
+            (player) => player.id !== id
+        )
+    );
+}
+
 
     function editPlayer(player: Player) {
         setEditingPlayer(player);
