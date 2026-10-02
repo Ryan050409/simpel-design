@@ -11,12 +11,49 @@ type MatchesPageProps = {
     teams: Team[];
 };
 
+function getMatchResult(match: Match, team: string) {
+    if (match.home !== team && match.away !== team) {
+        return null;
+    }
+
+    const teamGoals =
+        match.home === team
+            ? match.homeGoals
+            : match.awayGoals;
+
+    const opponentGoals =
+        match.home === team
+            ? match.awayGoals
+            : match.homeGoals;
+
+    if (teamGoals > opponentGoals) return "W";
+    if (teamGoals === opponentGoals) return "G";
+    return "V";
+}
+
+function getResultClass(result: string | null) {
+    if (result === "W") return "result-win";
+    if (result === "G") return "result-draw";
+    if (result === "V") return "result-loss";
+    return undefined;
+}
+
+function getRowClass(result: string | null) {
+    if (result === "W") return "match-row-win";
+    if (result === "G") return "match-row-draw";
+    if (result === "V") return "match-row-loss";
+    return undefined;
+}
+
 function MatchesPage({
     matches,
     setMatches,
     team,
     teams
 }: MatchesPageProps) {
+    const [editingMatch, setEditingMatch] =
+        useState<Match | null>(null);
+
     function deleteMatch(id: number) {
         setMatches((currentMatches) =>
             currentMatches.filter(
@@ -24,9 +61,6 @@ function MatchesPage({
             )
         );
     }
-
-    const [editingMatch, setEditingMatch] =
-        useState<Match | null>(null);
 
     function editMatch(match: Match) {
         setEditingMatch(match);
@@ -65,104 +99,56 @@ function MatchesPage({
                 </thead>
 
                 <tbody>
-                    {matches.map((match) => (
-                        <tr
-                            key={match.id}
-                            className={
-                                match.home !== team &&
-                                match.away !== team
-                                    ? undefined
-                                    : match.home === team
-                                        ? match.homeGoals >
-                                          match.awayGoals
-                                            ? "match-row-win"
-                                            : match.homeGoals ===
-                                              match.awayGoals
-                                                ? "match-row-draw"
-                                                : "match-row-loss"
-                                        : match.awayGoals >
-                                          match.homeGoals
-                                            ? "match-row-win"
-                                            : match.awayGoals ===
-                                              match.homeGoals
-                                                ? "match-row-draw"
-                                                : "match-row-loss"
-                            }
-                        >
-                            <td>{match.date}</td>
+                    {matches.map((match) => {
+                        const result = getMatchResult(
+                            match,
+                            team
+                        );
 
-                            <td>{match.home}</td>
+                        return (
+                            <tr
+                                key={match.id}
+                                className={getRowClass(result)}
+                            >
+                                <td>{match.date}</td>
+                                <td>{match.home}</td>
+                                <td>{match.away}</td>
 
-                            <td>{match.away}</td>
+                                <td>
+                                    {match.homeGoals} -{" "}
+                                    {match.awayGoals}
+                                </td>
 
-                            <td>
-                                {match.homeGoals} -{" "}
-                                {match.awayGoals}
-                            </td>
+                                <td>
+                                    <span
+                                        className={getResultClass(
+                                            result
+                                        )}
+                                    >
+                                        {result ?? "-"}
+                                    </span>
+                                </td>
 
-                            <td>
-                                <span
-                                    className={
-                                        match.home !== team &&
-                                        match.away !== team
-                                            ? undefined
-                                            : match.home === team
-                                                ? match.homeGoals >
-                                                  match.awayGoals
-                                                    ? "result-win"
-                                                    : match.homeGoals ===
-                                                      match.awayGoals
-                                                        ? "result-draw"
-                                                        : "result-loss"
-                                                : match.awayGoals >
-                                                  match.homeGoals
-                                                    ? "result-win"
-                                                    : match.awayGoals ===
-                                                      match.homeGoals
-                                                        ? "result-draw"
-                                                        : "result-loss"
-                                    }
-                                >
-                                    {match.home !== team &&
-                                    match.away !== team
-                                        ? "-"
-                                        : match.home === team
-                                            ? match.homeGoals >
-                                              match.awayGoals
-                                                ? "W"
-                                                : match.homeGoals ===
-                                                  match.awayGoals
-                                                    ? "G"
-                                                    : "V"
-                                            : match.awayGoals >
-                                              match.homeGoals
-                                                ? "W"
-                                                : match.awayGoals ===
-                                                  match.homeGoals
-                                                    ? "G"
-                                                    : "V"}
-                                </span>
-                            </td>
+                                <td className="match-actions">
+                                    <button
+                                        onClick={() =>
+                                            editMatch(match)
+                                        }
+                                    >
+                                        Bewerken
+                                    </button>
 
-                            <td className="match-actions">
-                                <button
-                                    onClick={() =>
-                                        editMatch(match)
-                                    }
-                                >
-                                    Bewerken
-                                </button>
-
-                                <button
-                                    onClick={() =>
-                                        deleteMatch(match.id)
-                                    }
-                                >
-                                    Verwijderen
-                                </button>
-                            </td>
-                        </tr>
-                    ))}
+                                    <button
+                                        onClick={() =>
+                                            deleteMatch(match.id)
+                                        }
+                                    >
+                                        Verwijderen
+                                    </button>
+                                </td>
+                            </tr>
+                        );
+                    })}
                 </tbody>
             </table>
 
