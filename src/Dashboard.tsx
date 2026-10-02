@@ -88,7 +88,23 @@ function Dashboard({
           (a, b) => b.goals - a.goals
         )[0]
       : null;
+        const teamPlayers = playerList.filter(
+  (player) => player.team === team
+);
 
+const topAssistPlayer =
+  teamPlayers.length > 0
+    ? [...teamPlayers].sort(
+        (a, b) => b.assists - a.assists
+      )[0]
+    : null;
+
+const highestRatedPlayer =
+  teamPlayers.length > 0
+    ? [...teamPlayers].sort(
+        (a, b) => b.rating - a.rating
+      )[0]
+    : null;
   const lastFiveMatches = [...playedMatches]
     .sort(
       (a, b) =>
@@ -216,25 +232,35 @@ function Dashboard({
       </div>
 
       <div className="dashboard-extra">
-        <h2>Extra statistieken</h2>
+  <h2>Spelersstatistieken</h2>
 
-        <p>
-          <strong>Goals voor:</strong>{" "}
-          {goalsFor}
-        </p>
+  {teamPlayers.length > 0 ? (
+    <>
+      <p>
+        <strong>🥇 Topscorer:</strong>{" "}
+        {topScorer
+          ? `${topScorer.firstname} ${topScorer.lastname} (${topScorer.goals} goals)`
+          : "Nog geen gegevens"}
+      </p>
 
-        <p>
-          <strong>Goals tegen:</strong>{" "}
-          {goalsAgainst}
-        </p>
+      <p>
+        <strong>🎯 Meeste assists:</strong>{" "}
+        {topAssistPlayer
+          ? `${topAssistPlayer.firstname} ${topAssistPlayer.lastname} (${topAssistPlayer.assists} assists)`
+          : "Nog geen gegevens"}
+      </p>
 
-        <p>
-          <strong>Topscorer:</strong>{" "}
-          {topScorer
-            ? `${topScorer.firstname} ${topScorer.lastname} (${topScorer.goals} goals)`
-            : "Nog geen spelers"}
-        </p>
-      </div>
+      <p>
+        <strong>⭐ Hoogste rating:</strong>{" "}
+        {highestRatedPlayer
+          ? `${highestRatedPlayer.firstname} ${highestRatedPlayer.lastname} (${highestRatedPlayer.rating})`
+          : "Nog geen gegevens"}
+      </p>
+    </>
+  ) : (
+    <p>Er zijn nog geen spelers voor {team}.</p>
+  )}
+</div>
 
       <div className="last-five-section">
         <div className="last-five-header">
