@@ -242,26 +242,28 @@ nav a.active {
 
 .players {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(3, 335px);
+  justify-content: center;
   gap: 24px;
-  max-width: 1200px;
+  max-width: 1100px;
   margin: 30px auto;
 }
-
 .player-card {
   position: relative;
-  width:335px;
+  width: 100%;
   overflow: hidden;
   background:
     linear-gradient(#1f2937, #1f2937) padding-box,
-    linear-gradient(135deg,
+    linear-gradient(
+      135deg,
       #2563eb,
       #153b8d,
-      #2563eb) border-box;
+      #2563eb
+    ) border-box;
   border: 3.6px solid transparent;
   border-radius: 18px;
   padding: 22px;
-  margin:10px;
+  margin: 0;
   color: white;
   text-align: left;
   transition:
