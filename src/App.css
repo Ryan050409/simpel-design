@@ -82,7 +82,8 @@ nav a.active {
 .match-card {
   position: relative;
   overflow: hidden;
-  background: linear-gradient(#1f2937, #1f2937) padding-box,
+  background:
+    linear-gradient(#1f2937, #1f2937) padding-box,
     linear-gradient(#2563eb, #2563eb) border-box;
   color: white;
   max-width: 500px;
@@ -95,37 +96,46 @@ nav a.active {
 .match-card.home-win.away-loss {
   background:
     linear-gradient(#1f2937, #1f2937) padding-box,
-    linear-gradient(to right,
-      #22c55e 0%,
-      rgba(34, 197, 94, 0.45) 18%,
-      #2563eb 35%,
-      #2563eb 65%,
-      rgba(220, 38, 38, 0.45) 82%,
-      #dc2626 100%) border-box;
+    linear-gradient(
+        to right,
+        #22c55e 0%,
+        rgba(34, 197, 94, 0.45) 18%,
+        #2563eb 35%,
+        #2563eb 65%,
+        rgba(220, 38, 38, 0.45) 82%,
+        #dc2626 100%
+      )
+      border-box;
 }
 
 .match-card.away-win.home-loss {
   background:
     linear-gradient(#1f2937, #1f2937) padding-box,
-    linear-gradient(to right,
-      #dc2626 0%,
-      rgba(220, 38, 38, 0.45) 18%,
-      #2563eb 35%,
-      #2563eb 65%,
-      rgba(34, 197, 94, 0.45) 82%,
-      #22c55e 100%) border-box;
+    linear-gradient(
+        to right,
+        #dc2626 0%,
+        rgba(220, 38, 38, 0.45) 18%,
+        #2563eb 35%,
+        #2563eb 65%,
+        rgba(34, 197, 94, 0.45) 82%,
+        #22c55e 100%
+      )
+      border-box;
 }
 
 .match-card.result-draw {
   background:
     linear-gradient(#1f2937, #1f2937) padding-box,
-    linear-gradient(to right,
-      #f97316 0%,
-      rgba(249, 115, 22, 0.45) 18%,
-      #2563eb 35%,
-      #2563eb 65%,
-      rgba(249, 115, 22, 0.45) 82%,
-      #f97316 100%) border-box;
+    linear-gradient(
+        to right,
+        #f97316 0%,
+        rgba(249, 115, 22, 0.45) 18%,
+        #2563eb 35%,
+        #2563eb 65%,
+        rgba(249, 115, 22, 0.45) 82%,
+        #f97316 100%
+      )
+      border-box;
 }
 
 .match-header {
@@ -254,12 +264,7 @@ nav a.active {
   overflow: hidden;
   background:
     linear-gradient(#1f2937, #1f2937) padding-box,
-    linear-gradient(
-      135deg,
-      #2563eb,
-      #153b8d,
-      #2563eb
-    ) border-box;
+    linear-gradient(135deg, #2563eb, #153b8d, #2563eb) border-box;
   border: 3.6px solid transparent;
   border-radius: 18px;
   padding: 22px;
@@ -392,11 +397,7 @@ nav a.active {
   max-height: 90vh;
   overflow-y: auto;
 
-  background: linear-gradient(
-    145deg,
-    #1f2937,
-    #111827
-  );
+  background: linear-gradient(145deg, #1f2937, #111827);
 
   color: white;
   padding: 36px;
@@ -600,10 +601,10 @@ nav a.active {
     width: 100%;
   }
 }
-  .modal .player-stats {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 10px;
-  }
+.modal .player-stats {
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
 
 @media (max-width: 450px) {
   .stats-grid {
@@ -654,7 +655,7 @@ nav a.active {
 
 .settings-page h1 {
   margin: 0 0 8px;
-  color: #08060D;
+  color: #08060d;
   font-size: 34px;
   font-weight: 700;
 }
@@ -690,7 +691,7 @@ nav a.active {
   border-bottom: none;
 }
 
-.setting-row>div {
+.setting-row > div {
   min-width: 0;
 }
 
@@ -860,7 +861,7 @@ nav a.active {
 
 .faq-section h2 {
   margin: 0 0 16px;
-  color: #08060D;
+  color: #08060d;
   font-size: 24px;
 }
 
@@ -996,7 +997,7 @@ nav a.active {
 .match-row-loss:hover {
   background: #e78d8d;
 }
-.match-row-normal { 
+.match-row-normal {
   background: white;
 }
 /* Mobiele weergave wedstrijden */
@@ -1251,37 +1252,39 @@ nav a.active {
   }
 }
 .player-search {
-    width: 100%;
-    max-width: 400px;
-    margin: 0 0 24px;
+  width: 100%;
+  max-width: 400px;
+  margin: 0 0 24px;
 }
 
 .player-search input {
-    width: 100%;
-    padding: 12px 16px;
-    border: 1px solid #3b4655;
-    border-radius: 10px;
-    background-color: #1e293b;
-    color: #ffffff;
-    font-size: 15px;
-    outline: none;
-    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  width: 100%;
+  padding: 12px 16px;
+  border: 1px solid #3b4655;
+  border-radius: 10px;
+  background-color: #1e293b;
+  color: #ffffff;
+  font-size: 15px;
+  outline: none;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
 }
 
 .player-search input::placeholder {
-    color: #94a3b8;
+  color: #94a3b8;
 }
 
 .player-search input:focus {
-    border-color: #2563eb;
-    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
 }
 .player-search + p {
-    margin: 0 0 24px;
-    padding: 14px 16px;
-    border-radius: 10px;
-    background: #1e293b;
-    color: #94a3b8;
-    text-align: center;
-    font-size: 15px;
+  margin: 0 0 24px;
+  padding: 14px 16px;
+  border-radius: 10px;
+  background: #1e293b;
+  color: #94a3b8;
+  text-align: center;
+  font-size: 15px;
 }

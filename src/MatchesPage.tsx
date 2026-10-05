@@ -5,239 +5,198 @@ import MatchForm from "./MatchForm.tsx";
 import type { Match, Team } from "./types.ts";
 
 type MatchesPageProps = {
-    matches: Match[];
-    setMatches: Dispatch<SetStateAction<Match[]>>;
-    team: string;
-    teams: Team[];
+  matches: Match[];
+  setMatches: Dispatch<SetStateAction<Match[]>>;
+  team: string;
+  teams: Team[];
 };
 
 function getMatchResult(match: Match, team: string) {
-    if (match.home !== team && match.away !== team) {
-        return null;
-    }
+  if (match.home !== team && match.away !== team) {
+    return null;
+  }
 
-    const teamGoals =
-        match.home === team
-            ? match.homeGoals
-            : match.awayGoals;
+  const teamGoals = match.home === team ? match.homeGoals : match.awayGoals;
 
-    const opponentGoals =
-        match.home === team
-            ? match.awayGoals
-            : match.homeGoals;
+  const opponentGoals = match.home === team ? match.awayGoals : match.homeGoals;
 
-    if (teamGoals > opponentGoals) {
-        return "W";
-    }
+  if (teamGoals > opponentGoals) {
+    return "W";
+  }
 
-    if (teamGoals === opponentGoals) {
-        return "G";
-    }
+  if (teamGoals === opponentGoals) {
+    return "G";
+  }
 
-    return "V";
+  return "V";
 }
 
 function getResultClass(result: string | null) {
-    if (result === "W") {
-        return "result-win";
-    }
+  if (result === "W") {
+    return "result-win";
+  }
 
-    if (result === "G") {
-        return "result-draw";
-    }
+  if (result === "G") {
+    return "result-draw";
+  }
 
-    if (result === "V") {
-        return "result-loss";
-    }
+  if (result === "V") {
+    return "result-loss";
+  }
 
-    return undefined;
+  return undefined;
 }
 
 function getRowClass(result: string | null) {
-    if (result === "W") {
-        return "match-row-win";
-    }
+  if (result === "W") {
+    return "match-row-win";
+  }
 
-    if (result === "G") {
-        return "match-row-draw";
-    }
+  if (result === "G") {
+    return "match-row-draw";
+  }
 
-    if (result === "V") {
-        return "match-row-loss";
-    }
+  if (result === "V") {
+    return "match-row-loss";
+  }
 
-    return undefined;
+  return undefined;
 }
 
-function MatchesPage({
-    matches,
-    setMatches,
-    team,
-    teams
-}: MatchesPageProps) {
-    const [editingMatch, setEditingMatch] =
-        useState<Match | null>(null);
-    const [matchView, setMatchView] =
-    useState<"favorite" | "all">("favorite");
-    const visibleMatches =
+function MatchesPage({ matches, setMatches, team, teams }: MatchesPageProps) {
+  const [editingMatch, setEditingMatch] = useState<Match | null>(null);
+  const [matchView, setMatchView] = useState<"favorite" | "all">("favorite");
+  const visibleMatches =
     matchView === "favorite"
-        ? matches.filter(
-              (match) =>
-                  match.home === team ||
-                  match.away === team
-          )
-        : matches;
-    function deleteMatch(id: number) {
-        const match = matches.find((match) => match.id === id);
+      ? matches.filter((match) => match.home === team || match.away === team)
+      : matches;
+      const sortedMatches = [...visibleMatches].sort(
+    (a, b) =>
+        new Date(b.date).getTime() -
+        new Date(a.date).getTime()
+);
+  function deleteMatch(id: number) {
+    const match = matches.find((match) => match.id === id);
 
-        if (!match) {
-            return;
-        }   
-
-        const confirmed = window.confirm(
-            `Weet je zeker dat je de wedstrijd tegen ${match.home === team ? match.away : match.home} op ${match.date} wilt verwijderen?`
-        );
-
-        if (!confirmed) { 
-            return;
-        }
-
-        setMatches((currentMatches) =>
-            currentMatches.filter((match) => match.id !== id)
-        );
+    if (!match) {
+      return;
     }
 
-    function editMatch(match: Match) {
-        setEditingMatch(match);
-    }
-
-    function closeModal() {
-        setEditingMatch(null);
-    }
-
-    return (
-        <div className="matches-page">
-            <div className="matches-page-header">
-                <div>
-                    <h1>⚽ Wedstrijden</h1>
-                    <h2>{team}</h2>
-                </div>
-
-                <NavLink
-                    className="add-player-button"
-                    to="/instellingen"
-                >
-                    ⚙️ Wedstrijd toevoegen
-                </NavLink>
-            </div>
-
-<div className="match-filter">
-    <label htmlFor="match-view">
-        Toon wedstrijden:
-    </label>
-
-    <select
-        id="match-view"
-        value={matchView}
-        onChange={(event) =>
-            setMatchView(
-                event.target.value as "favorite" | "all"
-            )
-        }
-    >
-        <option value="favorite">
-            Favoriete team
-        </option>
-        <option value="all">
-            Alle teams
-        </option>
-    </select>
-</div>
-
-<table className="matches-table">
-                <thead>
-                    <tr>
-                        <th>Datum</th>
-                        <th>Thuis</th>
-                        <th>Uit</th>
-                        <th>Uitslag</th>
-                        <th>Resultaat</th>
-                        <th>Acties</th>
-                    </tr>
-                </thead>
-
-                <tbody>
-                    {visibleMatches.map((match) => {
-                        const result = getMatchResult(
-                            match,
-                            team
-                        );
-                    
-                        return (
-                            <tr
-                                key={match.id}
-                                className={getRowClass(result)}
-                            >
-                                <td>
-                                    {new Date(match.date).toLocaleDateString("nl-NL")}
-                                </td>
-
-                                <td>{match.home}</td>
-
-                                <td>{match.away}</td>
-
-                                <td>
-                                    {match.homeGoals} -{" "}
-                                    {match.awayGoals}
-                                </td>
-
-                                <td>
-                                    <span
-                                        className={getResultClass(
-                                            result
-                                        )}
-                                    >
-                                        {result ?? "-"}
-                                    </span>
-                                </td>
-
-                                <td className="match-actions">
-                                    <button
-                                        type="button"
-                                        onClick={() =>
-                                            editMatch(match)
-                                        }
-                                    >
-                                        Bewerken
-                                    </button>
-
-                                    <button
-                                        type="button"
-                                        onClick={() =>
-                                            deleteMatch(match.id)
-                                        }
-                                    >
-                                        Verwijderen
-                                    </button>
-                                </td>
-                            </tr>
-                        );
-                    })}
-                </tbody>
-            </table>
-
-            {editingMatch && (
-                <MatchForm
-                    editingMatch={editingMatch}
-                    setEditingMatch={setEditingMatch}
-                    setMatches={setMatches}
-                    closeModal={closeModal}
-                    teams={teams}
-                />
-            )}
-        </div>
+    const confirmed = window.confirm(
+      `Weet je zeker dat je de wedstrijd tegen ${match.home === team ? match.away : match.home} op ${match.date} wilt verwijderen?`,
     );
+
+    if (!confirmed) {
+      return;
+    }
+
+    setMatches((currentMatches) =>
+      currentMatches.filter((match) => match.id !== id),
+    );
+  }
+
+  function editMatch(match: Match) {
+    setEditingMatch(match);
+  }
+
+  function closeModal() {
+    setEditingMatch(null);
+  }
+
+  return (
+    <div className="matches-page">
+      <div className="matches-page-header">
+        <div>
+          <h1>⚽ Wedstrijden</h1>
+          <h2>{team}</h2>
+        </div>
+
+        <NavLink className="add-player-button" to="/instellingen">
+          ⚙️ Wedstrijd toevoegen
+        </NavLink>
+      </div>
+
+      <div className="match-filter">
+        <label htmlFor="match-view">Toon wedstrijden:</label>
+
+        <select
+          id="match-view"
+          value={matchView}
+          onChange={(event) =>
+            setMatchView(event.target.value as "favorite" | "all")
+          }
+        >
+          <option value="favorite">Favoriete team</option>
+          <option value="all">Alle teams</option>
+        </select>
+      </div>
+
+      <table className="matches-table">
+        <thead>
+          <tr>
+            <th>Datum</th>
+            <th>Thuis</th>
+            <th>Uit</th>
+            <th>Uitslag</th>
+            <th>Resultaat</th>
+            <th>Acties</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          {visibleMatches.length === 0 ? (
+            <tr>
+              <td colSpan={6}>Geen wedstrijden gevonden.</td>
+            </tr>
+          ) : (
+            sortedMatches.map((match) => {
+              const result = getMatchResult(match, team);
+
+              return (
+                <tr key={match.id} className={getRowClass(result)}>
+                  <td>{new Date(match.date).toLocaleDateString("nl-NL")}</td>
+
+                  <td>{match.home}</td>
+
+                  <td>{match.away}</td>
+
+                  <td>
+                    {match.homeGoals} - {match.awayGoals}
+                  </td>
+
+                  <td>
+                    <span className={getResultClass(result)}>
+                      {result ?? "-"}
+                    </span>
+                  </td>
+
+                  <td className="match-actions">
+                    <button type="button" onClick={() => editMatch(match)}>
+                      Bewerken
+                    </button>
+
+                    <button type="button" onClick={() => deleteMatch(match.id)}>
+                      Verwijderen
+                    </button>
+                  </td>
+                </tr>
+              );
+            })
+          )}
+        </tbody>
+      </table>
+
+      {editingMatch && (
+        <MatchForm
+          editingMatch={editingMatch}
+          setEditingMatch={setEditingMatch}
+          setMatches={setMatches}
+          closeModal={closeModal}
+          teams={teams}
+        />
+      )}
+    </div>
+  );
 }
 
 export default MatchesPage;
-

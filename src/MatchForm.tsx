@@ -53,13 +53,21 @@ function MatchForm({
             homeGoals.trim() === "" ||
             awayGoals.trim() === "" ||
             date === ""
-        ) {
+        ) 
+        {
             setWarning(
                 "Alle velden moeten ingevuld worden!"
             );
             return;
         }
-
+        if (home.trim().toLowerCase() === away.trim().toLowerCase()) {
+    setWarning("Een team kan niet tegen zichzelf spelen!");
+    return;
+}
+if (Number(homeGoals) < 0 || Number(awayGoals) < 0) {
+    setWarning("Het aantal doelpunten kan niet negatief zijn!");
+    return;
+}
         const newMatch: Match = {
             id: editingMatch
                 ? editingMatch.id
