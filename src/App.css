@@ -189,21 +189,6 @@ nav a.active {
   font-weight: bold;
 }
 
-.result-win {
-  background: #16a34a;
-  color: white;
-}
-
-.result-draw {
-  background: #eab308;
-  color: white;
-}
-
-.result-loss {
-  background: #dc2626;
-  color: white;
-}
-
 .match-date {
   color: #6b7280;
   margin-top: 5px;

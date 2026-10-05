@@ -77,12 +77,33 @@ function MatchesPage({
 }: MatchesPageProps) {
     const [editingMatch, setEditingMatch] =
         useState<Match | null>(null);
-
+    const [matchView, setMatchView] =
+    useState<"favorite" | "all">("favorite");
+    const visibleMatches =
+    matchView === "favorite"
+        ? matches.filter(
+              (match) =>
+                  match.home === team ||
+                  match.away === team
+          )
+        : matches;
     function deleteMatch(id: number) {
+        const match = matches.find((match) => match.id === id);
+
+        if (!match) {
+            return;
+        }   
+
+        const confirmed = window.confirm(
+            `Weet je zeker dat je de wedstrijd tegen ${match.home === team ? match.away : match.home} op ${match.date} wilt verwijderen?`
+        );
+
+        if (!confirmed) { 
+            return;
+        }
+
         setMatches((currentMatches) =>
-            currentMatches.filter(
-                (match) => match.id !== id
-            )
+            currentMatches.filter((match) => match.id !== id)
         );
     }
 
@@ -110,7 +131,30 @@ function MatchesPage({
                 </NavLink>
             </div>
 
-            <table className="matches-table">
+<div className="match-filter">
+    <label htmlFor="match-view">
+        Toon wedstrijden:
+    </label>
+
+    <select
+        id="match-view"
+        value={matchView}
+        onChange={(event) =>
+            setMatchView(
+                event.target.value as "favorite" | "all"
+            )
+        }
+    >
+        <option value="favorite">
+            Favoriete team
+        </option>
+        <option value="all">
+            Alle teams
+        </option>
+    </select>
+</div>
+
+<table className="matches-table">
                 <thead>
                     <tr>
                         <th>Datum</th>
@@ -123,18 +167,20 @@ function MatchesPage({
                 </thead>
 
                 <tbody>
-                    {matches.map((match) => {
+                    {visibleMatches.map((match) => {
                         const result = getMatchResult(
                             match,
                             team
                         );
-
+                    
                         return (
                             <tr
                                 key={match.id}
                                 className={getRowClass(result)}
                             >
-                                <td>{match.date}</td>
+                                <td>
+                                    {new Date(match.date).toLocaleDateString("nl-NL")}
+                                </td>
 
                                 <td>{match.home}</td>
 
