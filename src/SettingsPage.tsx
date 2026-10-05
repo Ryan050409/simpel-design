@@ -11,11 +11,15 @@ type SettingsPageProps = {
     setTeams: Dispatch<SetStateAction<Team[]>>;
     team: string;
     setTeam: Dispatch<SetStateAction<string>>;
+    players: Player[];
+    matches: Match[];
 };
 
 function SettingsPage({
     setMatches,
     setPlayerList,
+    players,
+    matches,
     teams,
     setTeams,
     team,
@@ -131,6 +135,23 @@ function deleteTeam(id: number) {
     );
 
     if (!teamToDelete) {
+        return;
+    }
+
+    const teamIsUsedByPlayer = players.some(
+        (player) => player.team === teamToDelete.name
+    );
+
+    const teamIsUsedInMatch = matches.some(
+        (match) =>
+            match.home === teamToDelete.name ||
+            match.away === teamToDelete.name
+    );
+
+    if (teamIsUsedByPlayer || teamIsUsedInMatch) {
+        window.alert(
+            `Je kunt ${teamToDelete.name} niet verwijderen omdat dit team nog wordt gebruikt bij spelers of wedstrijden.`
+        );
         return;
     }
 

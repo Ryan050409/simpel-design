@@ -1248,4 +1248,38 @@ nav a.active {
     max-width: 55px;
   }
 }
+.player-search {
+    width: 100%;
+    max-width: 400px;
+    margin: 0 0 24px;
+}
 
+.player-search input {
+    width: 100%;
+    padding: 12px 16px;
+    border: 1px solid #3b4655;
+    border-radius: 10px;
+    background-color: #1e293b;
+    color: #ffffff;
+    font-size: 15px;
+    outline: none;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.player-search input::placeholder {
+    color: #94a3b8;
+}
+
+.player-search input:focus {
+    border-color: #2563eb;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+}
+.player-search + p {
+    margin: 0 0 24px;
+    padding: 14px 16px;
+    border-radius: 10px;
+    background: #1e293b;
+    color: #94a3b8;
+    text-align: center;
+    font-size: 15px;
+}

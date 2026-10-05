@@ -279,6 +279,8 @@ function App() {
               teams={teams}
               team={team}
               setTeam={setTeam}
+              players={playerList}
+              matches={matches}
             />
           }
         />

@@ -19,6 +19,7 @@ function PlayersPage({
         useState<Player | null>(null);
     const [selectedPlayer, setSelectedPlayer] =
         useState<Player | null>(null);
+    const [searchTerm, setSearchTerm] = useState("");
  function deletePlayer(id: number) {
     const playerToDelete = playerList.find(
         (player) => player.id === id
@@ -65,9 +66,29 @@ function PlayersPage({
                     ⚙️ Speler toevoegen
                 </NavLink>
             </div>
-
+            <div className="player-search">
+    <input
+        type="text"
+        placeholder="Zoek een speler..."
+        value={searchTerm}
+        onChange={(e) => setSearchTerm(e.target.value)}
+    />
+</div>
             <div className="players">
-                {playerList.map((player) => (
+            {playerList.filter((player) =>
+    `${player.firstname} ${player.lastname}`
+        .toLowerCase()
+        .includes(searchTerm.toLowerCase())
+).length === 0 && (
+    <p>Geen spelers gevonden.</p>
+)}    
+                {playerList
+                .filter((player) => 
+                `${player.firstname} ${player.lastname}`
+                .toLowerCase()
+                .includes(searchTerm.toLowerCase())
+                )
+                .map((player) => (
                     <div
                         className="player-card"
                         key={player.id}
