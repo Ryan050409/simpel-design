@@ -174,6 +174,9 @@ function deleteTeam(id: number) {
             setTeam(remainingTeams[0].name);
         } else {
             setTeam("");
+            window.alert(
+                "Je hebt geen teams meer. Voeg eerst een nieuw team toe voordat je spelers of wedstrijden toevoegt."
+            );
         }
     }
 }

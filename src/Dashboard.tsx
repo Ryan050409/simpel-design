@@ -156,7 +156,17 @@ function Dashboard({
             };
         }
     );
+    const lastFiveWins = lastFiveData.filter(
+    (item) => item.result === "W"
+).length;
 
+const lastFiveDraws = lastFiveData.filter(
+    (item) => item.result === "G"
+).length;
+
+const lastFiveLosses = lastFiveData.filter(
+    (item) => item.result === "V"
+).length;
     const highestGoalDifference =
         lastFiveData.length > 0
             ? Math.max(
@@ -424,21 +434,21 @@ function Dashboard({
                                 <strong>
                                     Gewonnen:
                                 </strong>{" "}
-                                {wins}
+                                {lastFiveWins}
                             </span>
 
                             <span>
                                 <strong>
                                     Gelijk:
                                 </strong>{" "}
-                                {draws}
+                                {lastFiveDraws}
                             </span>
 
                             <span>
                                 <strong>
                                     Verloren:
                                 </strong>{" "}
-                                {losses}
+                                {lastFiveLosses}
                             </span>
                         </div>
                     </>
