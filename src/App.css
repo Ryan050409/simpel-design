@@ -220,12 +220,12 @@ nav a.active {
 }
 
 /* Dashboard */
-
-.dashboard {
+.dashboard-page-header {
   width: 100%;
   max-width: 1000px;
   margin: 0 auto;
 }
+
 .dashboard-stats-section {
   margin-top: 28px;
 }
@@ -285,7 +285,7 @@ nav a.active {
 .stats-grid {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 14px;
+  gap: 12px;
   margin: 0;
 }
 
@@ -293,10 +293,10 @@ nav a.active {
   min-width: 0;
   background: #1f2937;
   color: white;
-  padding: 18px;
-  border-radius: 14px;
+  padding: 16px;
+  border-radius: 12px;
   border: 1px solid #374151;
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   transition:
     transform 0.2s ease,
     border-color 0.2s ease,
@@ -304,21 +304,21 @@ nav a.active {
 }
 
 .stat-card:hover {
-  transform: translateY(-3px);
+  transform: translateY(-2px);
   border-color: #2563eb;
-  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.18);
+  box-shadow: 0 7px 18px rgba(0, 0, 0, 0.15);
 }
 
 .stat-card h3 {
-  margin: 0 0 8px;
-  font-size: 14px;
+  margin: 0 0 6px;
+  font-size: 13px;
   color: #9ca3af;
   font-weight: 600;
 }
 
 .stat-card p {
   margin: 0;
-  font-size: 30px;
+  font-size: 27px;
   line-height: 1.1;
   font-weight: bold;
 }
@@ -355,7 +355,8 @@ nav a.active {
 }
 
 .players-page-header,
-.matches-page-header {
+.matches-page-header,
+.dashboard-page-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -1492,7 +1493,8 @@ nav a.active {
   }
 
   .matches-page-header,
-  .players-page-header {
+  .players-page-header,
+  .dashboard-page-header {
     flex-direction: column;
     align-items: stretch;
     text-align: center;
