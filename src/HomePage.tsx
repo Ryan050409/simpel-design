@@ -71,6 +71,7 @@ function HomePage({ matches, playerList, team }: HomePageProps) {
 
         <div className="home-page-bottom">
           <div className="home-page-panel">
+
             <span className="home-page-panel-label">⭐ Favoriete team</span>
             <h2>{team}</h2>
           </div>
@@ -89,6 +90,15 @@ function HomePage({ matches, playerList, team }: HomePageProps) {
               <p>Nog geen wedstrijden.</p>
             )}
           </div>
+
+          <Link to="/instellingen" className="home-page-panel home-page-settings">
+            <span className="home-page-panel-icon">⚙️</span>
+            <div>
+              <span className="home-page-panel-label">Instellingen</span>
+              <h2>Beheer je team</h2>
+              <p>Pas je favoriete team en andere instellingen aan.</p>
+            </div>
+          </Link>
         </div>
       </div>
     </div>
