@@ -446,13 +446,14 @@ nav a.active {
   display: flex;
   align-items: center;
   gap: 12px;
-  padding: 8px 0;
+  min-height: 40px;
+  padding: 5px 0;
   border-top: 1px solid #374151;
 }
 
 .home-page-match:first-child {
   border-top: none;
-  padding-top: 0;
+  padding-top: 5px;
 }
 
 .home-page-match-info span {
