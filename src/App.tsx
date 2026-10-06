@@ -206,7 +206,7 @@ function App() {
       </nav>
 
       <Routes>
-        <Route path="/" element={<HomePage />} />
+        <Route\n          path="/"\n          element={\n            <HomePage matches={matches} playerList={playerList} team={team} />\n          }\n        />
 
         <Route
           path="/dashboard"
