@@ -8,7 +8,7 @@ body {
   text-align: center;
   margin: 0;
   padding: 20px;
-  color: #1f2937;
+  color: #ffffff;
   overflow-x: hidden;
 }
 
@@ -75,7 +75,7 @@ nav {
 nav a {
   padding: 10px 16px;
   border-radius: 8px;
-  color: #9ca3af;
+  color: #ffffff;
   text-decoration: none;
   font-weight: 600;
   transition:
@@ -135,7 +135,7 @@ nav a.active {
   justify-content: space-between;
   align-items: center;
   margin-bottom: 20px;
-  color: #9ca3af;
+  color: #ffffff;
 }
 
 .match-header .match-result {
@@ -188,7 +188,7 @@ nav a.active {
 }
 
 .match-date {
-  color: #6b7280;
+  color: #ffffff;
   margin-top: 5px;
 }
 
@@ -697,7 +697,7 @@ nav a.active {
 .dashboard-stats-section h2 {
   margin: 0 0 14px;
   font-size: 20px;
-  color: #1f2937;
+  color: #ffffff;
   text-align: left;
 }
 .dashboard-header {
@@ -715,12 +715,12 @@ nav a.active {
 
 .dashboard-header p {
   margin: 0;
-  color: #6b7280;
+  color: #ffffff;
   font-size: 15px;
 }
 
 .dashboard-header strong {
-  color: #1f2937;
+  color: #ffffff;
 }
 
 .dashboard-section {
@@ -738,11 +738,11 @@ nav a.active {
 .dashboard-section-header h2 {
   margin: 0;
   font-size: 20px;
-  color: #1f2937;
+  color: #ffffff;
 }
 
 .dashboard-section-header span {
-  color: #6b7280;
+  color: #ffffff;
   font-size: 13px;
 }
 
@@ -777,7 +777,7 @@ nav a.active {
 .stat-card h3 {
   margin: 0 0 6px;
   font-size: 13px;
-  color: #9ca3af;
+  color: #ffffff;
   font-weight: 600;
 }
 
@@ -844,7 +844,7 @@ nav a.active {
 .dashboard-page-header p,
 .settings-page-header p {
   margin: 0;
-  color: #6b7280;
+  color: #ffffff;
 }
 
 .matches-page {
@@ -914,14 +914,14 @@ nav a.active {
 }
 
 .player-number {
-  color: #9ca3af;
+  color: #ffffff;
   font-size: 14px;
   font-weight: bold;
 }
 
 .player-team {
   margin: 6px 0 0;
-  color: #9ca3af;
+  color: #ffffff;
   font-size: 13px;
 }
 
@@ -940,7 +940,7 @@ nav a.active {
 
 .player-rating span {
   font-size: 9px;
-  color: #9ca3af;
+  color: #ffffff;
   font-weight: bold;
 }
 
@@ -987,7 +987,7 @@ nav a.active {
 .player-stats span {
   display: block;
   margin-top: 3px;
-  color: #9ca3af;
+  color: #ffffff;
   font-size: 11px;
 }
 
@@ -1081,7 +1081,7 @@ nav a.active {
 
 .modal .player-stat span {
   display: block;
-  color: #9ca3af;
+  color: #ffffff;
   font-size: 12px;
   font-weight: 600;
 }
@@ -1195,7 +1195,7 @@ nav a.active {
 .setting-row small {
   display: block;
   max-width: 500px;
-  color: #9ca3af;
+  color: #ffffff;
   font-size: 14px;
   line-height: 1.5;
 }
@@ -1268,7 +1268,7 @@ nav a.active {
 }
 
 .team-setting-form input::placeholder {
-  color: #6b7280;
+  color: #ffffff;
 }
 
 .team-setting-form input:focus {
@@ -1336,7 +1336,7 @@ nav a.active {
 
 .faq-section h2 {
   margin: 0 0 16px;
-  color: #1f2937;
+  color: #ffffff;
   font-size: 24px;
 }
 
@@ -1385,7 +1385,7 @@ nav a.active {
 
 .faq-answer {
   padding: 0 20px 18px;
-  color: #9ca3af;
+  color: #ffffff;
   font-size: 14px;
   line-height: 1.6;
 }
@@ -1402,7 +1402,7 @@ nav a.active {
 }
 
 .match-filter label {
-  color: #9ca3af;
+  color: #ffffff;
   font-size: 13px;
   font-weight: 600;
 }
@@ -1443,7 +1443,7 @@ nav a.active {
 }
 .matches-table tbody td[colspan="6"] {
   padding: 35px 20px;
-  color: #6b7280;
+  color: #ffffff;
   font-size: 14px;
   font-weight: 500;
   text-align: center;
@@ -1463,7 +1463,7 @@ nav a.active {
   content: "Thuis";
   display: block;
   margin-bottom: 3px;
-  color: #9ca3af;
+  color: #ffffff;
   font-size: 10px;
   font-weight: 500;
   text-transform: uppercase;
@@ -1473,7 +1473,7 @@ nav a.active {
   content: "Uit";
   display: block;
   margin-bottom: 3px;
-  color: #9ca3af;
+  color: #ffffff;
   font-size: 10px;
   font-weight: 500;
   text-transform: uppercase;
@@ -1615,7 +1615,7 @@ nav a.active {
 
 .last-five-header p {
   margin: 0;
-  color: #9ca3af;
+  color: #ffffff;
 }
 
 .last-five-legend {
@@ -1628,7 +1628,7 @@ nav a.active {
   display: flex;
   align-items: center;
   gap: 6px;
-  color: #d1d5db;
+  color: #ffffff;
   font-size: 13px;
 }
 
@@ -1672,7 +1672,7 @@ nav a.active {
 
 .last-five-value {
   margin-bottom: 6px;
-  color: #d1d5db;
+  color: #ffffff;
   font-size: 13px;
   font-weight: bold;
 }
@@ -1714,7 +1714,7 @@ nav a.active {
   max-width: 120px;
   margin-top: 5px;
   overflow: hidden;
-  color: #d1d5db;
+  color: #ffffff;
   font-size: 13px;
   font-weight: bold;
   text-align: center;
@@ -1730,7 +1730,7 @@ nav a.active {
 
 .last-five-date {
   margin-top: 4px;
-  color: #9ca3af;
+  color: #ffffff;
   font-size: 12px;
 }
 
@@ -1741,7 +1741,7 @@ nav a.active {
   margin-top: 20px;
   padding-top: 18px;
   border-top: 1px solid #374151;
-  color: #d1d5db;
+  color: #ffffff;
 }
 
 .last-five-summary strong {
@@ -1750,7 +1750,7 @@ nav a.active {
 
 .last-five-empty {
   margin: 20px 0 5px;
-  color: #9ca3af;
+  color: #ffffff;
   text-align: center;
 }
 
@@ -1780,7 +1780,7 @@ nav a.active {
 }
 
 .player-search input::placeholder {
-  color: #94a3b8;
+  color: #ffffff;
 }
 
 .player-search input:focus {
@@ -1793,7 +1793,7 @@ nav a.active {
   padding: 14px 16px;
   border-radius: 10px;
   background: #1e293b;
-  color: #94a3b8;
+  color: #ffffff;
   text-align: center;
   font-size: 15px;
 }
@@ -1805,7 +1805,7 @@ nav a.active {
   padding: 16px;
   border-radius: 10px;
   background: #1f2937;
-  color: #9ca3af;
+  color: #ffffff;
   text-align: center;
   font-size: 15px;
   border: 1px solid #374151;
