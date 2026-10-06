@@ -128,7 +128,7 @@ function MatchesPage({ matches, setMatches, team, teams }: MatchesPageProps) {
           <option value="all">Alle teams</option>
         </select>
       </div>
-
+          <div className="matches-table-wrapper">
       <table className="matches-table">
         <thead>
           <tr>
@@ -197,6 +197,7 @@ function MatchesPage({ matches, setMatches, team, teams }: MatchesPageProps) {
           teams={teams}
         />
       )}
+    </div>
     </div>
   );
 }

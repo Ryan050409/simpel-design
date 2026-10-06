@@ -928,6 +928,64 @@ nav a.active {
   padding: 14px 16px;
   text-align: center;
   border-bottom: 1px solid #e5e7eb;
+  vertical-align: middle;
+}
+.matches-table tbody td[colspan="6"] {
+  padding: 35px 20px;
+  color: #6b7280;
+  font-size: 14px;
+  font-weight: 500;
+  text-align: center;
+}
+.matches-table th:first-child,
+.matches-table td:first-child {
+  width: 120px;
+}
+
+.matches-table th:nth-child(2),
+.matches-table td:nth-child(2),
+.matches-table td:nth-child(3) {
+  font-weight: 600;
+}
+
+.matches-table td:nth-child(2)::before {
+  content: "Thuis";
+  display: block;
+  margin-bottom: 3px;
+  color: #9ca3af;
+  font-size: 10px;
+  font-weight: 500;
+  text-transform: uppercase;
+}
+
+.matches-table td:nth-child(3)::before {
+  content: "Uit";
+  display: block;
+  margin-bottom: 3px;
+  color: #9ca3af;
+  font-size: 10px;
+  font-weight: 500;
+  text-transform: uppercase;
+}
+
+.matches-table th:nth-child(3),
+.matches-table td:nth-child(3) {
+  min-width: 130px;
+}
+
+.matches-table th:nth-child(4),
+.matches-table td:nth-child(4) {
+  width: 110px;
+}
+
+.matches-table th:nth-child(5),
+.matches-table td:nth-child(5) {
+  width: 100px;
+}
+
+.matches-table th:last-child,
+.matches-table td:last-child {
+  width: 190px;
 }
 
 .matches-table th {
@@ -939,23 +997,31 @@ nav a.active {
 .matches-table td {
   color: #1f2937;
 }
-
+.matches-table td:nth-child(4) {
+  font-size: 16px;
+  font-weight: 700;
+  white-space: nowrap;
+}
 .matches-table tbody tr:last-child td {
   border-bottom: none;
 }
 
 .matches-table .match-actions {
   display: flex;
+  align-items: center;
   justify-content: center;
-  gap: 8px;
+  gap: 10px;
+  width: 100%;
   margin-top: 0;
 }
 
 .matches-table .match-actions button {
-  padding: 8px 12px;
+  padding: 8px 14px;
+  min-width: 85px;
   border-radius: 7px;
   font-size: 13px;
   font-weight: 600;
+  white-space: nowrap;
 }
 
 .matches-table .match-actions .delete-button {
@@ -1265,7 +1331,66 @@ nav a.active {
 
 /* Mobiel */
 
-@media (max-width: 700px) {
+@media (max-width: 768px) {
+  .matches-table {
+  width: calc(100% - 20px);
+  max-width: calc(100% - 20px);
+  margin: 15px auto;
+  font-size: 11px;
+  table-layout: fixed;
+}
+
+.matches-table th,
+.matches-table td {
+  padding: 8px 3px;
+}
+
+.matches-table th:nth-child(1),
+.matches-table td:nth-child(1),
+.matches-table th:nth-child(5),
+.matches-table td:nth-child(5) {
+  display: none;
+}
+
+.matches-table th:nth-child(2),
+.matches-table td:nth-child(2),
+.matches-table th:nth-child(3),
+.matches-table td:nth-child(3) {
+  width: 25%;
+}
+
+.matches-table th:nth-child(4),
+.matches-table td:nth-child(4) {
+  width: 15%;
+}
+
+.matches-table th:nth-child(6),
+.matches-table td:nth-child(6) {
+  width: 18%;
+}
+
+.matches-table td:nth-child(2)::before,
+.matches-table td:nth-child(3)::before {
+  font-size: 8px;
+  margin-bottom: 2px;
+}
+
+.matches-table .match-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 5px;
+}
+
+.matches-table .match-actions button {
+  width: 100%;
+  min-width: 70px;
+  padding: 6px 4px;
+  font-size: 10px;
+  white-space: nowrap;
+  overflow: visible;
+  text-overflow: clip;
+}
   body {
     padding: 20px;
   }
@@ -1467,39 +1592,6 @@ nav a.active {
     font-size: 13px;
   }
 
-  .matches-table {
-    width: calc(100% - 20px);
-    margin: 20px auto;
-    font-size: 14px;
-  }
-
-  .matches-table th,
-  .matches-table td {
-    padding: 10px 6px;
-  }
-
-  .matches-table th:nth-child(1),
-  .matches-table td:nth-child(1) {
-    display: none;
-  }
-
-  .matches-table th:nth-child(5),
-  .matches-table td:nth-child(5) {
-    display: none;
-  }
-
-  .matches-table .match-actions {
-    flex-direction: column;
-    gap: 4px;
-  }
-
-  .matches-table .match-actions button {
-    width: 100%;
-    padding: 6px 8px;
-    font-size: 12px;
-  }
-}
-
 /* Kleine mobiele schermen */
 
 @media (max-width: 600px) {
@@ -1553,4 +1645,5 @@ nav a.active {
   .last-five-opponent {
     max-width: 55px;
   }
+} 
 }
