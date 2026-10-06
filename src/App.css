@@ -288,6 +288,83 @@ nav a.active {
   line-height: 1.4;
 }
 
+ .home-page-info {
+  max-width: 900px;
+  margin: 20px auto 0;
+}
+
+.home-page-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+.home-page-stat {
+  padding: 18px;
+  background: #1f2937;
+  color: white;
+  border: 1px solid #374151;
+  border-radius: 14px;
+}
+
+.home-page-stat span,
+.home-page-panel-label {
+  color: #9ca3af;
+  font-size: 13px;
+}
+
+.home-page-stat strong {
+  display: block;
+  margin-top: 6px;
+  font-size: 26px;
+}
+
+.home-page-bottom {
+  display: grid;
+  grid-template-columns: 1fr 1.5fr;
+  gap: 16px;
+  margin-top: 16px;
+}
+
+.home-page-panel {
+  padding: 20px;
+  background: #1f2937;
+  color: white;
+  border: 1px solid #374151;
+  border-radius: 14px;
+  text-align: left;
+}
+
+.home-page-panel h2 {
+  margin: 10px 0 4px;
+  font-size: 20px;
+}
+
+.home-page-panel p {
+  margin: 0;
+  color: #9ca3af;
+  font-size: 14px;
+}
+
+@media (max-width: 768px) {
+  .home-page-header {
+    margin: 30px auto;
+    padding: 35px 20px;
+  }
+
+  .home-page-links,
+  .home-page-stats,
+  .home-page-bottom {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (min-width: 769px) {
+  .home-page-links {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
 /* Dashboard */
 .dashboard {
   width: 100%;
