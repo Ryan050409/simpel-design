@@ -438,13 +438,15 @@ nav a.active {
 .home-page-match-list {
   display: flex;
   flex-direction: column;
+  height: 215px;
+  overflow: hidden;
 }
 
 .home-page-match {
   display: flex;
   align-items: center;
   gap: 12px;
-  padding: 12px 0;
+  padding: 8px 0;
   border-top: 1px solid #374151;
 }
 
@@ -453,13 +455,17 @@ nav a.active {
   padding-top: 0;
 }
 
+.home-page-match-info span {
+  margin-top: 2px;
+}
+
 .home-page-result {
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  width: 30px;
-  height: 30px;
+  width: 28px;
+  height: 28px;
   border-radius: 7px;
   color: white;
   font-size: 12px;
