@@ -2164,6 +2164,11 @@ body textarea::placeholder {
 }
 
 
+.dashboard-header p,
+.dashboard-section-header span {
+  color: #111827;
+}
+
 /* Dashboard en Spelers - zwarte subtitel */
 .dashboard-page-header p,
 .players-page-header p {
