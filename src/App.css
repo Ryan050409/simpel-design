@@ -2164,8 +2164,7 @@ body textarea::placeholder {
 }
 
 
-.dashboard-header p,
-.dashboard-section-header span {
+.home-page-section-title p {
   color: #111827;
 }
 
