@@ -70,11 +70,9 @@ function MatchesPage({ matches, setMatches, team, teams }: MatchesPageProps) {
     matchView === "favorite"
       ? matches.filter((match) => match.home === team || match.away === team)
       : matches;
-      const sortedMatches = [...visibleMatches].sort(
-    (a, b) =>
-        new Date(b.date).getTime() -
-        new Date(a.date).getTime()
-);
+  const sortedMatches = [...visibleMatches].sort(
+    (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
+  );
   function deleteMatch(id: number) {
     const match = matches.find((match) => match.id === id);
 
@@ -108,7 +106,7 @@ function MatchesPage({ matches, setMatches, team, teams }: MatchesPageProps) {
       <div className="matches-page-header">
         <div>
           <h1>⚽ Wedstrijden</h1>
-          <h2>{team}</h2>
+          <p>Bekijk en beheer de wedstrijden van {team}.</p>
         </div>
 
         <NavLink className="add-player-button" to="/instellingen">
@@ -175,7 +173,11 @@ function MatchesPage({ matches, setMatches, team, teams }: MatchesPageProps) {
                       Bewerken
                     </button>
 
-                    <button type="button" onClick={() => deleteMatch(match.id)}>
+                    <button
+                      type="button"
+                      className="delete-button"
+                      onClick={() => deleteMatch(match.id)}
+                    >
                       Verwijderen
                     </button>
                   </td>

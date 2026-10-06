@@ -308,6 +308,28 @@ nav a.active {
   margin: 0 auto 18px;
   text-align: left;
 }
+.matches-page {
+  width: 100%;
+}
+
+.matches-page-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  max-width: 1100px;
+  margin: 0 auto 18px;
+  text-align: left;
+}
+
+.matches-page-header h1 {
+  margin: 0 0 6px;
+}
+
+.matches-page-header p {
+  margin: 0;
+  color: #6b7280;
+}
 
 .players-page-header h1 {
   margin: 0 0 6px;
@@ -879,7 +901,36 @@ nav a.active {
 }
 
 /* Wedstrijden tabel */
+ .match-filter {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+  max-width: 1100px;
+  margin: -8px auto 18px;
+}
 
+.match-filter label {
+  color: #9ca3af;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.match-filter select {
+  padding: 8px 10px;
+  border: 1px solid #374151;
+  border-radius: 8px;
+  background: #1f2937;
+  color: white;
+  font-size: 13px;
+  cursor: pointer;
+  outline: none;
+}
+
+.match-filter select:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.15);
+}
 .matches-table {
   width: 100%;
   max-width: 1100px;
@@ -921,7 +972,13 @@ nav a.active {
 .matches-table .match-actions button {
   margin: 0;
 }
+.matches-table .match-actions .delete-button {
+  background: #dc2626;
+}
 
+.matches-table .match-actions .delete-button:hover {
+  background: #b91c1c;
+}
 .match-row-win {
   background: #dcfce7;
 }
@@ -945,7 +1002,33 @@ nav a.active {
 .match-row-loss:hover {
   background: #e78d8d;
 }
+.result-win,
+.result-draw,
+.result-loss {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 30px;
+  padding: 5px 9px;
+  border-radius: 7px;
+  font-size: 12px;
+  font-weight: 700;
+}
 
+.result-win {
+  background: #22c55e;
+  color: white;
+}
+
+.result-draw {
+  background: #f97316;
+  color: white;
+}
+
+.result-loss {
+  background: #dc2626;
+  color: white;
+}
 .match-row-normal {
   background: white;
 }
@@ -1252,7 +1335,14 @@ nav a.active {
   .match-form input {
     width: 100%;
   }
+    .match-filter {
+    justify-content: center;
+    margin: 0 auto 15px;
+  }
 
+  .match-filter select {
+    min-width: 0;
+  }
   .stats-grid {
     grid-template-columns: repeat(2, 1fr);
   }
@@ -1344,7 +1434,9 @@ nav a.active {
     padding: 0 16px 16px;
   }
 
-  .players-page-header {
+  @media (max-width: 700px) {
+  .players-page-header,
+  .matches-page-header {
     flex-direction: column;
     align-items: stretch;
     text-align: center;
@@ -1353,7 +1445,7 @@ nav a.active {
   .add-player-button {
     text-align: center;
   }
-
+}
   .last-five-section {
     padding: 18px;
   }
