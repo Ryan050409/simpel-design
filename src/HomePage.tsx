@@ -13,7 +13,7 @@ function HomePage({ matches, playerList, team }: HomePageProps) {
   );
 
   const latestMatch = sortedMatches[0];
-  const recentMatches = sortedMatches.slice(0, 3);
+  const recentMatches = sortedMatches.slice(0, 5);
 
   const teamMatches = matches.filter(
     (match) => match.home === team || match.away === team,
