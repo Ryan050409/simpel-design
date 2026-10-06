@@ -220,10 +220,18 @@ nav a.active {
 }
 
 /* Dashboard */
-.dashboard-page-header {
+.dashboard {
   width: 100%;
-  max-width: 1000px;
-  margin: 0 auto;
+}
+
+.dashboard-page-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  max-width: 1100px;
+  margin: 0 auto 18px;
+  text-align: left;
 }
 
 .dashboard-stats-section {
@@ -285,8 +293,9 @@ nav a.active {
 .stats-grid {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 12px;
-  margin: 0;
+  gap: 10px;
+  max-width: 1000px;
+  margin: 0 auto;
 }
 
 .stat-card {
@@ -356,7 +365,8 @@ nav a.active {
 
 .players-page-header,
 .matches-page-header,
-.dashboard-page-header {
+.dashboard-page-header,
+.settings-page-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -367,12 +377,16 @@ nav a.active {
 }
 
 .players-page-header h1,
-.matches-page-header h1 {
+.matches-page-header h1,
+.dashboard-page-header h1,
+.settings-page-header h1 {
   margin: 0 0 6px;
 }
 
 .players-page-header p,
-.matches-page-header p {
+.matches-page-header p,
+.dashboard-page-header p,
+.settings-page-header p {
   margin: 0;
   color: #6b7280;
 }
@@ -681,17 +695,10 @@ nav a.active {
 /* Instellingen */
 
 .settings-page {
-  width: min(900px, calc(100% - 40px));
+  width: 100%;
   margin: 0 auto;
-  padding: 20px 0 50px;
+  padding: 0 0 50px;
   text-align: left;
-}
-
-.settings-page h1 {
-  margin: 0 0 8px;
-  color: #1f2937;
-  font-size: 34px;
-  font-weight: 700;
 }
 
 .settings-page::before {
@@ -1494,7 +1501,8 @@ nav a.active {
 
   .matches-page-header,
   .players-page-header,
-  .dashboard-page-header {
+  .dashboard-page-header,
+  .settings-page-header {
     flex-direction: column;
     align-items: stretch;
     text-align: center;
@@ -1567,10 +1575,6 @@ nav a.active {
   .settings-page {
     width: calc(100% - 30px);
     padding: 10px 0 35px;
-  }
-
-  .settings-page h1 {
-    font-size: 28px;
   }
 
   .settings-list {
@@ -1671,10 +1675,6 @@ nav a.active {
 
   .settings-page {
     width: calc(100% - 20px);
-  }
-
-  .settings-page h1 {
-    font-size: 25px;
   }
 
   .setting-row {

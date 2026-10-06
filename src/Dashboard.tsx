@@ -139,14 +139,16 @@ function Dashboard({ matches, playerList, team }: DashboardProps) {
     );
   }
 
-  return (
+ return (
+  <div className="dashboard">
     <div className="dashboard-page-header">
-    <div>
+      <div>
         <h1>⚽ Dashboard</h1>
         <p>Bekijk het overzicht van {team}.</p>
+      </div>
     </div>
 
-      <div className="stats-grid">
+    <div className="stats-grid">
         <div className="stat-card">
           <h3>Wedstrijden</h3>
           <p>{playedMatches.length}</p>
