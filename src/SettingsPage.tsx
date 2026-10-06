@@ -175,7 +175,7 @@ function deleteTeam(id: number) {
         } else {
             setTeam("");
             window.alert(
-                "Je hebt geen teams meer. Voeg eerst een nieuw team toe voordat je spelers of wedstrijden toevoegt."
+                "Je hebt geen teams meer. Voeg eerst een nieuw team toe voordat je een favoriet team kunt kiezen."
             );
         }
     }
