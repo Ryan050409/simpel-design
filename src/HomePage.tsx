@@ -13,11 +13,14 @@ function HomePage({ matches, playerList, team }: HomePageProps) {
   );
 
   const latestMatch = sortedMatches[0];
-  const recentMatches = sortedMatches.slice(0, 5);
 
   const teamMatches = matches.filter(
     (match) => match.home === team || match.away === team,
   );
+
+  const recentMatches = [...teamMatches]
+    .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+    .slice(0, 5);
 
   const wins = teamMatches.filter((match) => {
     const teamGoals = match.home === team ? match.homeGoals : match.awayGoals;
