@@ -1396,23 +1396,23 @@ nav a.active {
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  gap: 10px;
+  gap: 8px;
   max-width: 1100px;
-  margin: -4px auto 16px;
+  margin: -8px auto 18px;
 }
 
 .match-filter label {
-  color: #111827;
+  color: #ffffff;
   font-size: 13px;
   font-weight: 600;
 }
 
 .match-filter select {
-  padding: 9px 12px;
-  border: 1px solid #d1d5db;
+  padding: 8px 10px;
+  border: 1px solid #374151;
   border-radius: 8px;
-  background: #ffffff;
-  color: #111827;
+  background: #1f2937;
+  color: white;
   font-size: 13px;
   cursor: pointer;
   outline: none;
@@ -1420,20 +1420,18 @@ nav a.active {
 
 .match-filter select:focus {
   border-color: #2563eb;
-  box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.12);
+  box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.15);
 }
 
 .matches-table {
   width: 100%;
   max-width: 1100px;
-  margin: 20px auto 30px;
-  border-collapse: separate;
-  border-spacing: 0;
-  background: #ffffff;
-  border: 1px solid #e5e7eb;
-  border-radius: 14px;
+  margin: 30px auto;
+  border-collapse: collapse;
+  background: white;
+  border-radius: 12px;
   overflow: hidden;
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 }
 
 .matches-table th,
@@ -1443,41 +1441,13 @@ nav a.active {
   border-bottom: 1px solid #e5e7eb;
   vertical-align: middle;
 }
-
-.matches-table th {
-  background: #f8fafc;
-  color: #111827;
-  font-size: 12px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.03em;
-}
-
-.matches-table tbody tr:last-child td {
-  border-bottom: none;
-}
-
-.matches-table tbody tr {
-  transition: background 0.15s ease;
-}
-
-.matches-table tbody tr:hover {
-  filter: brightness(0.98);
-}
-
-.matches-table tbody td {
-  color: #111827;
-  font-size: 14px;
-}
-
 .matches-table tbody td[colspan="6"] {
   padding: 35px 20px;
-  color: #111827;
+  color: #ffffff;
   font-size: 14px;
   font-weight: 500;
   text-align: center;
 }
-
 .matches-table th:first-child,
 .matches-table td:first-child {
   width: 120px;
@@ -1485,14 +1455,28 @@ nav a.active {
 
 .matches-table th:nth-child(2),
 .matches-table td:nth-child(2),
-.matches-table th:nth-child(3),
 .matches-table td:nth-child(3) {
   font-weight: 600;
 }
 
-.matches-table td:nth-child(2)::before,
+.matches-table td:nth-child(2)::before {
+  content: "Thuis";
+  display: block;
+  margin-bottom: 3px;
+  color: #ffffff;
+  font-size: 10px;
+  font-weight: 500;
+  text-transform: uppercase;
+}
+
 .matches-table td:nth-child(3)::before {
-  display: none;
+  content: "Uit";
+  display: block;
+  margin-bottom: 3px;
+  color: #ffffff;
+  font-size: 10px;
+  font-weight: 500;
+  text-transform: uppercase;
 }
 
 .matches-table th:nth-child(3),
@@ -1503,7 +1487,6 @@ nav a.active {
 .matches-table th:nth-child(4),
 .matches-table td:nth-child(4) {
   width: 110px;
-  font-weight: 700;
 }
 
 .matches-table th:nth-child(5),
@@ -1514,10 +1497,12 @@ nav a.active {
 .matches-table th:last-child,
 .matches-table td:last-child {
   width: 210px;
+  border-bottom: none;
 }
 
 .matches-table td:last-child {
-  padding: 12px 16px;
+  padding: 14px 16px;
+  border-bottom: none;
   vertical-align: middle;
 }
 
@@ -1525,18 +1510,17 @@ nav a.active {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
+  gap: 10px;
   width: 100%;
-  margin: 0;
+  margin: 8px 0 0;
 }
-
 .matches-table .match-actions button {
   flex: 0 0 auto;
-  min-width: 88px;
+  min-width: 90px;
   margin: 0;
-  padding: 8px 11px;
+  padding: 8px 12px;
   border-radius: 7px;
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 600;
   white-space: nowrap;
 }
@@ -1550,27 +1534,27 @@ nav a.active {
 }
 
 .match-row-win {
-  background: #f0fdf4;
+  background: #dcfce7;
 }
 
 .match-row-draw {
-  background: #fffaf0;
+  background: #fef3c7;
 }
 
 .match-row-loss {
-  background: #fff5f5;
+  background: #fee2e2;
 }
 
 .match-row-win:hover {
-  background: #e7f8ed;
+  background: #a7dfba;
 }
 
 .match-row-draw:hover {
-  background: #fff3d6;
+  background: #f7db6c;
 }
 
 .match-row-loss:hover {
-  background: #ffeaea;
+  background: #e78d8d;
 }
 
 .result-win,
@@ -1579,24 +1563,26 @@ nav a.active {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-width: 32px;
-  padding: 6px 9px;
+  min-width: 30px;
+  padding: 5px 9px;
   border-radius: 7px;
-  color: #ffffff;
   font-size: 12px;
   font-weight: 700;
 }
 
 .result-win {
   background: #22c55e;
+  color: white;
 }
 
 .result-draw {
   background: #f97316;
+  color: white;
 }
 
 .result-loss {
   background: #dc2626;
+  color: white;
 }
 
 /* Laatste vijf wedstrijden */
