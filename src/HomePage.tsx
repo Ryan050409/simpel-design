@@ -32,6 +32,12 @@ function HomePage({ matches, playerList, team }: HomePageProps) {
       </div>
 
       <div className="home-page-links">
+        <Link to="/dashboard" className="home-page-card">
+          <span>📊</span>
+          <h2>Dashboard</h2>
+          <p>Bekijk je belangrijkste statistieken.</p>
+        </Link>
+
         <Link to="/wedstrijden" className="home-page-card">
           <span>⚽</span>
           <h2>Wedstrijden</h2>
@@ -42,12 +48,6 @@ function HomePage({ matches, playerList, team }: HomePageProps) {
           <span>👥</span>
           <h2>Spelers</h2>
           <p>Bekijk en beheer je spelers.</p>
-        </Link>
-
-        <Link to="/dashboard" className="home-page-card">
-          <span>📊</span>
-          <h2>Dashboard</h2>
-          <p>Bekijk je belangrijkste statistieken.</p>
         </Link>
 
         <Link to="/instellingen" className="home-page-card">
@@ -77,7 +77,6 @@ function HomePage({ matches, playerList, team }: HomePageProps) {
 
         <div className="home-page-bottom">
           <div className="home-page-panel">
-
             <span className="home-page-panel-label">⭐ Favoriete team</span>
             <h2>{team}</h2>
           </div>
@@ -96,7 +95,6 @@ function HomePage({ matches, playerList, team }: HomePageProps) {
               <p>Nog geen wedstrijden.</p>
             )}
           </div>
-
         </div>
       </div>
     </div>
