@@ -760,7 +760,7 @@ nav a.active {
 
 .settings-page h1 {
   margin: 0 0 8px;
-  color: #08060d;
+  color: #1f2937;
   font-size: 34px;
   font-weight: 700;
 }
@@ -778,11 +778,27 @@ nav a.active {
   flex-direction: column;
   overflow: hidden;
   background: #1f2937;
-  border: 2px solid #2563eb;
+  border: 1px solid #374151;
   border-radius: 16px;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
 }
+.setting-row select {
+  flex-shrink: 0;
+  min-width: 190px;
+  padding: 11px 13px;
+  border: 1px solid #374151;
+  border-radius: 8px;
+  background: #111827;
+  color: white;
+  font-size: 14px;
+  outline: none;
+  cursor: pointer;
+}
 
+.setting-row select:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+}
 .setting-row {
   display: flex;
   align-items: center;
@@ -831,7 +847,32 @@ nav a.active {
     transform 0.2s ease,
     box-shadow 0.2s ease;
 }
+.setting-row .setting-action {
+  flex-shrink: 0;
+  min-width: 190px;
+  margin: 0;
+  padding: 12px 18px;
+  border: 1px solid #2563eb;
+  border-radius: 8px;
+  background: #2563eb;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    background 0.2s ease,
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
 
+.setting-row .setting-action:hover {
+  background: #153b8d;
+  transform: translateY(-1px);
+  box-shadow: 0 5px 15px rgba(37, 99, 235, 0.3);
+}
+
+.setting-row .setting-action:active {
+  transform: translateY(0);
+}
 .setting-row button:hover {
   background: #153b8d;
   transform: translateY(-1px);
@@ -847,7 +888,10 @@ nav a.active {
     width: calc(100% - 30px);
     padding: 10px 0 35px;
   }
-
+.setting-row select {
+  width: 100%;
+  min-width: 0;
+}
   .settings-page h1 {
     font-size: 28px;
   }
@@ -897,15 +941,19 @@ nav a.active {
   gap: 8px;
   flex-shrink: 0;
   width: 420px;
+  padding: 4px;
+  border-radius: 10px;
+  background: #111827;
+  border: 1px solid #374151;
 }
 
 .team-setting-form input {
   width: 100%;
   margin: 0;
   padding: 11px 13px;
-  border: 1px solid #374151;
-  border-radius: 8px;
-  background: #111827;
+  border: none;
+  border-radius: 7px;
+  background: transparent;
   color: white;
   outline: none;
 }
@@ -915,6 +963,7 @@ nav a.active {
 }
 
 .team-setting-form input:focus {
+  box-shadow: 0 0 0 1px #2563eb;
   border-color: #2563eb;
 }
 
@@ -931,7 +980,7 @@ nav a.active {
   margin-top: 24px;
   padding: 22px;
   background: #1f2937;
-  border: 2px solid #2563eb;
+  border: 1px solid #374151;
   border-radius: 16px;
 }
 
@@ -943,10 +992,32 @@ nav a.active {
 .team-item {
   display: flex;
   align-items: center;
-  padding: 13px 15px;
+  justify-content: space-between;
+  gap: 15px;
+  padding: 14px 15px;
   border-top: 1px solid #374151;
   color: white;
   font-weight: 600;
+}
+
+.team-item span {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.team-item button {
+  flex-shrink: 0;
+  margin: 0;
+  padding: 8px 12px;
+  background: #dc2626;
+  border-radius: 7px;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.team-item button:hover {
+  background: #b91c1c;
 }
 
 @media (max-width: 700px) {
@@ -966,14 +1037,14 @@ nav a.active {
 
 .faq-section h2 {
   margin: 0 0 16px;
-  color: #08060d;
+  color: #1f2937;
   font-size: 24px;
 }
 
 .faq-list {
   overflow: hidden;
   background: #1f2937;
-  border: 2px solid #2563eb;
+  border: 1px solid #374151;
   border-radius: 16px;
 }
 

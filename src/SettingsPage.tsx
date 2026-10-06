@@ -268,6 +268,7 @@ function deleteTeam(id: number) {
 
                     <button
                         type="button"
+                        className="setting-action"
                         onClick={openPlayerPopup}
                     >
                         + Speler toevoegen
@@ -286,6 +287,7 @@ function deleteTeam(id: number) {
 
                     <button
                         type="button"
+                        className="setting-action"
                         onClick={openMatchPopup}
                     >
                         + Wedstrijd toevoegen
