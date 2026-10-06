@@ -2164,6 +2164,12 @@ body textarea::placeholder {
 }
 
 
+/* Dashboard en Spelers - zwarte subtitel */
+.dashboard-page-header p,
+.players-page-header p {
+  color: #111827;
+}
+
 /* Wedstrijden pagina - zwarte tekst */
 .matches-page,
 .matches-page h1,
