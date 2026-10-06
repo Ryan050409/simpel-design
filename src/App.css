@@ -419,20 +419,40 @@ nav a.active {
 
 .home-page-panel-heading {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   justify-content: space-between;
   gap: 15px;
-  margin-bottom: 15px;
+  min-height: 43px;
+  margin-bottom: 12px;
+  padding-bottom: 11px;
+  border-bottom: 1px solid #374151;
+}
+
+.home-page-panel-heading > div {
+  min-width: 0;
+}
+
+.home-page-panel-heading .home-page-panel-label {
+  display: block;
+  margin-bottom: 3px;
+  color: #60a5fa;
+  font-size: 10px;
+  letter-spacing: 0.08em;
 }
 
 .home-page-panel-heading h2 {
-  margin: 6px 0 0;
-  font-size: 18px;
+  margin: 0;
+  font-size: 19px;
+  line-height: 1.2;
 }
 
 .home-page-panel-heading a {
   flex-shrink: 0;
-  margin-top: 4px;
+  margin-top: 0;
+  padding: 6px 9px;
+  border-radius: 7px;
+  background: #111827;
+  border: 1px solid #374151;
 }
 
 .home-page-match-list {
