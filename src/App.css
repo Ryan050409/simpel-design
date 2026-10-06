@@ -368,10 +368,8 @@ nav a.active {
   position: relative;
   width: 100%;
   overflow: hidden;
-  background:
-    linear-gradient(#1f2937, #1f2937) padding-box,
-    linear-gradient(135deg, #2563eb, #153b8d, #2563eb) border-box;
-  border: 3px solid transparent;
+  background: #1f2937;
+  border: 1px solid #374151;
   border-radius: 18px;
   padding: 20px;
   margin: 0;
@@ -379,11 +377,13 @@ nav a.active {
   text-align: left;
   transition:
     transform 0.2s ease,
-    box-shadow 0.2s ease;
+    box-shadow 0.2s ease,
+    border-color 0.2s ease;
 }
 
 .player-card:hover {
   transform: translateY(-3px);
+  border-color: #2563eb;
   box-shadow: 0 10px 24px rgba(0, 0, 0, 0.22);
 }
 
@@ -439,14 +439,17 @@ nav a.active {
 }
 
 .player-position {
-  display: inline-block;
-  margin-top: 16px;
-  padding: 6px 12px;
-  border-radius: 20px;
-  background: #153b8d;
-  color: white;
-  font-size: 13px;
-  font-weight: bold;
+  display: inline-flex;
+  align-items: center;
+  margin-top: 14px;
+  padding: 6px 11px;
+  border-radius: 8px;
+  background: #111827;
+  border: 1px solid #374151;
+  color: #60a5fa;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1;
 }
 
 .player-stats {
