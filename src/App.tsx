@@ -7,6 +7,7 @@ import PlayersPage from "./PlayersPage.tsx";
 import Dashboard from "./Dashboard.tsx";
 import MatchesPage from "./MatchesPage.tsx";
 import SettingsPage from "./SettingsPage.tsx";
+import HomePage from "./HomePage.tsx";
 
 import type { Player, Match, Team } from "./types.ts";
 
@@ -193,18 +194,22 @@ function App() {
   return (
     <BrowserRouter>
       <nav className="nav">
-        <NavLink to="/">Dashboard</NavLink>
+        <NavLink to="/">🏠 Home</NavLink>
 
-        <NavLink to="/wedstrijden">Wedstrijden</NavLink>
+        <NavLink to="/dashboard">📊 Dashboard</NavLink>
 
-        <NavLink to="/spelers">Spelers</NavLink>
+        <NavLink to="/wedstrijden">⚽ Wedstrijden</NavLink>
 
-        <NavLink to="/instellingen">Instellingen</NavLink>
+        <NavLink to="/spelers">👥 Spelers</NavLink>
+
+        <NavLink to="/instellingen">⚙️ Instellingen</NavLink>
       </nav>
 
       <Routes>
+        <Route path="/" element={<HomePage />} />
+
         <Route
-          path="/"
+          path="/dashboard"
           element={
             <Dashboard matches={matches} playerList={playerList} team={team} />
           }
