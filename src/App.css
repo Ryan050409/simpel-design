@@ -2150,3 +2150,15 @@ nav a.active {
     }
   }
 }
+
+/* Alle tekst op de website wit */
+body,
+body * {
+  color: #ffffff;
+}
+
+body input::placeholder,
+body textarea::placeholder {
+  color: #ffffff;
+  opacity: 0.8;
+}
