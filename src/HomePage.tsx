@@ -189,7 +189,7 @@ function HomePage({ matches, playerList, team }: HomePageProps) {
             <span className="home-page-panel-label">🏆 TOPSCORER</span>
             {topScorer ? (
               <>
-                <h2>{topScorer.name}</h2>
+                <h2>{topScorer.firstname} {topScorer.lastname}</h2>
                 <div className="home-page-top-player-stats">
                   <strong>{topScorer.goals}</strong>
                   <span>doelpunten</span>
