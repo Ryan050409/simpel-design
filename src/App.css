@@ -1512,8 +1512,20 @@ nav a.active {
   }
 
   .stats-grid {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
+  .dashboard {
+  max-width: 100%;
+}
+
+.dashboard > h1 {
+  font-size: 28px;
+}
+
+.dashboard > h2 {
+  font-size: 17px;
+  margin-bottom: 20px;
+}
 
   .player-card {
     margin-left: 0;
@@ -1652,8 +1664,8 @@ nav a.active {
 
 @media (max-width: 450px) {
   .stats-grid {
-    grid-template-columns: 1fr;
-  }
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
 
   .settings-page {
     width: calc(100% - 20px);
