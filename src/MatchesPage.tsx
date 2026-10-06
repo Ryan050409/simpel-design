@@ -128,76 +128,76 @@ function MatchesPage({ matches, setMatches, team, teams }: MatchesPageProps) {
           <option value="all">Alle teams</option>
         </select>
       </div>
-          <div className="matches-table-wrapper">
-      <table className="matches-table">
-        <thead>
-          <tr>
-            <th>Datum</th>
-            <th>Thuis</th>
-            <th>Uit</th>
-            <th>Uitslag</th>
-            <th>Resultaat</th>
-            <th>Acties</th>
-          </tr>
-        </thead>
-
-        <tbody>
-          {visibleMatches.length === 0 ? (
+      <div className="matches-table-wrapper">
+        <table className="matches-table">
+          <thead>
             <tr>
-              <td colSpan={6}>Geen wedstrijden gevonden.</td>
+              <th>Datum</th>
+              <th>Thuis</th>
+              <th>Uit</th>
+              <th>Uitslag</th>
+              <th>Resultaat</th>
+              <th>Acties</th>
             </tr>
-          ) : (
-            sortedMatches.map((match) => {
-              const result = getMatchResult(match, team);
+          </thead>
 
-              return (
-                <tr key={match.id} className={getRowClass(result)}>
-                  <td>{new Date(match.date).toLocaleDateString("nl-NL")}</td>
+          <tbody>
+            {visibleMatches.length === 0 ? (
+              <tr>
+                <td colSpan={6}>Geen wedstrijden gevonden.</td>
+              </tr>
+            ) : (
+              sortedMatches.map((match) => {
+                const result = getMatchResult(match, team);
 
-                  <td>{match.home}</td>
+                return (
+                  <tr key={match.id} className={getRowClass(result)}>
+                    <td>{new Date(match.date).toLocaleDateString("nl-NL")}</td>
 
-                  <td>{match.away}</td>
+                    <td>{match.home}</td>
 
-                  <td>
-                    {match.homeGoals} - {match.awayGoals}
-                  </td>
+                    <td>{match.away}</td>
 
-                  <td>
-                    <span className={getResultClass(result)}>
-                      {result ?? "-"}
-                    </span>
-                  </td>
+                    <td>
+                      {match.homeGoals} - {match.awayGoals}
+                    </td>
 
-                  <td className="match-actions">
-                    <button type="button" onClick={() => editMatch(match)}>
-                      Bewerken
-                    </button>
+                    <td>
+                      <span className={getResultClass(result)}>
+                        {result ?? "-"}
+                      </span>
+                    </td>
 
-                    <button
-                      type="button"
-                      className="delete-button"
-                      onClick={() => deleteMatch(match.id)}
-                    >
-                      Verwijderen
-                    </button>
-                  </td>
-                </tr>
-              );
-            })
-          )}
-        </tbody>
-      </table>
+                    <td className="match-actions">
+                      <button type="button" onClick={() => editMatch(match)}>
+                        Bewerken
+                      </button>
 
-      {editingMatch && (
-        <MatchForm
-          editingMatch={editingMatch}
-          setEditingMatch={setEditingMatch}
-          setMatches={setMatches}
-          closeModal={closeModal}
-          teams={teams}
-        />
-      )}
-    </div>
+                      <button
+                        type="button"
+                        className="delete-button"
+                        onClick={() => deleteMatch(match.id)}
+                      >
+                        Verwijderen
+                      </button>
+                    </td>
+                  </tr>
+                );
+              })
+            )}
+          </tbody>
+        </table>
+
+        {editingMatch && (
+          <MatchForm
+            editingMatch={editingMatch}
+            setEditingMatch={setEditingMatch}
+            setMatches={setMatches}
+            closeModal={closeModal}
+            teams={teams}
+          />
+        )}
+      </div>
     </div>
   );
 }

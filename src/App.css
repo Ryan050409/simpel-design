@@ -701,14 +701,6 @@ nav a.active {
   text-align: left;
 }
 
-.settings-page::before {
-  content: "Beheer je voetbaltracker";
-  display: block;
-  margin-bottom: 30px;
-  color: #9ca3af;
-  font-size: 15px;
-}
-
 .settings-list {
   display: flex;
   flex-direction: column;
@@ -1386,64 +1378,64 @@ nav a.active {
 
 @media (max-width: 768px) {
   .matches-table {
-  width: calc(100% - 20px);
-  max-width: calc(100% - 20px);
-  margin: 15px auto;
-  font-size: 11px;
-  table-layout: fixed;
-}
+    width: calc(100% - 20px);
+    max-width: calc(100% - 20px);
+    margin: 15px auto;
+    font-size: 11px;
+    table-layout: fixed;
+  }
 
-.matches-table th,
-.matches-table td {
-  padding: 8px 3px;
-}
+  .matches-table th,
+  .matches-table td {
+    padding: 8px 3px;
+  }
 
-.matches-table th:nth-child(1),
-.matches-table td:nth-child(1),
-.matches-table th:nth-child(5),
-.matches-table td:nth-child(5) {
-  display: none;
-}
+  .matches-table th:nth-child(1),
+  .matches-table td:nth-child(1),
+  .matches-table th:nth-child(5),
+  .matches-table td:nth-child(5) {
+    display: none;
+  }
 
-.matches-table th:nth-child(2),
-.matches-table td:nth-child(2),
-.matches-table th:nth-child(3),
-.matches-table td:nth-child(3) {
-  width: 25%;
-}
+  .matches-table th:nth-child(2),
+  .matches-table td:nth-child(2),
+  .matches-table th:nth-child(3),
+  .matches-table td:nth-child(3) {
+    width: 25%;
+  }
 
-.matches-table th:nth-child(4),
-.matches-table td:nth-child(4) {
-  width: 15%;
-}
+  .matches-table th:nth-child(4),
+  .matches-table td:nth-child(4) {
+    width: 15%;
+  }
 
-.matches-table th:nth-child(6),
-.matches-table td:nth-child(6) {
-  width: 18%;
-}
+  .matches-table th:nth-child(6),
+  .matches-table td:nth-child(6) {
+    width: 18%;
+  }
 
-.matches-table td:nth-child(2)::before,
-.matches-table td:nth-child(3)::before {
-  font-size: 8px;
-  margin-bottom: 2px;
-}
+  .matches-table td:nth-child(2)::before,
+  .matches-table td:nth-child(3)::before {
+    font-size: 8px;
+    margin-bottom: 2px;
+  }
 
-.matches-table .match-actions {
-  display: flex;
-  flex-direction: column;
-  align-items: stretch;
-  gap: 5px;
-}
+  .matches-table .match-actions {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 5px;
+  }
 
-.matches-table .match-actions button {
-  width: 100%;
-  min-width: 70px;
-  padding: 6px 4px;
-  font-size: 10px;
-  white-space: nowrap;
-  overflow: visible;
-  text-overflow: clip;
-}
+  .matches-table .match-actions button {
+    width: 100%;
+    min-width: 70px;
+    padding: 6px 4px;
+    font-size: 10px;
+    white-space: nowrap;
+    overflow: visible;
+    text-overflow: clip;
+  }
   body {
     padding: 20px;
   }
@@ -1525,17 +1517,17 @@ nav a.active {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
   .dashboard {
-  max-width: 100%;
-}
+    max-width: 100%;
+  }
 
-.dashboard > h1 {
-  font-size: 28px;
-}
+  .dashboard > h1 {
+    font-size: 28px;
+  }
 
-.dashboard > h2 {
-  font-size: 17px;
-  margin-bottom: 20px;
-}
+  .dashboard > h2 {
+    font-size: 17px;
+    margin-bottom: 20px;
+  }
 
   .player-card {
     margin-left: 0;
@@ -1573,9 +1565,9 @@ nav a.active {
   }
 
   .settings-page {
-    width: calc(100% - 30px);
-    padding: 10px 0 35px;
-  }
+  width: 100%;
+  padding: 0 0 35px;
+}
 
   .settings-list {
     border-radius: 14px;
@@ -1655,54 +1647,50 @@ nav a.active {
     font-size: 13px;
   }
 
-/* Kleine mobiele schermen */
+  /* Kleine mobiele schermen */
 
-@media (max-width: 600px) {
-  .players {
-    grid-template-columns: 1fr;
-    gap: 15px;
+  @media (max-width: 600px) {
+    .players {
+      grid-template-columns: 1fr;
+      gap: 15px;
+    }
+
+    .player-card {
+      padding: 18px;
+    }
   }
 
-  .player-card {
-    padding: 18px;
-  }
-}
+  @media (max-width: 450px) {
+    .stats-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
 
-@media (max-width: 450px) {
-  .stats-grid {
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-}
+    .setting-row {
+      padding: 17px;
+    }
 
-  .settings-page {
-    width: calc(100% - 20px);
-  }
+    .setting-row strong {
+      font-size: 17px;
+    }
 
-  .setting-row {
-    padding: 17px;
-  }
+    .setting-row small {
+      font-size: 13px;
+    }
 
-  .setting-row strong {
-    font-size: 17px;
-  }
+    .last-five-chart {
+      gap: 4px;
+    }
 
-  .setting-row small {
-    font-size: 13px;
-  }
+    .last-five-bar-container {
+      width: 30px;
+    }
 
-  .last-five-chart {
-    gap: 4px;
-  }
+    .last-five-result {
+      font-size: 16px;
+    }
 
-  .last-five-bar-container {
-    width: 30px;
+    .last-five-opponent {
+      max-width: 55px;
+    }
   }
-
-  .last-five-result {
-    font-size: 16px;
-  }
-
-  .last-five-opponent {
-    max-width: 55px;
-  }
-} 
 }

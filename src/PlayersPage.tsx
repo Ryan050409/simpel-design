@@ -53,7 +53,7 @@ function PlayersPage({
         <div className="players-page">
             <div className="players-page-header">
                 <div>
-                    <h1>⚽ Spelers</h1>
+                    <h1>👥 Spelers</h1>
                     <p>
                         Bekijk en beheer je spelers.
                     </p>
