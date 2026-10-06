@@ -248,6 +248,46 @@ nav a.active {
   line-height: 1.5;
 }
 
+.home-page-links {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.home-page-card {
+  display: block;
+  padding: 24px 18px;
+  background: #1f2937;
+  color: #fff;
+  border: 1px solid #374151;
+  border-radius: 14px;
+  text-decoration: none;
+  transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.home-page-card:hover {
+  transform: translateY(-2px);
+  border-color: #2563eb;
+}
+
+.home-page-card span {
+  font-size: 28px;
+}
+
+.home-page-card h2 {
+  margin: 10px 0 6px;
+  font-size: 20px;
+}
+
+.home-page-card p {
+  margin: 0;
+  color: #9ca3af;
+  font-size: 14px;
+  line-height: 1.4;
+}
+
 /* Dashboard */
 .dashboard {
   width: 100%;
