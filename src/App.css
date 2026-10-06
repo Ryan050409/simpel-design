@@ -2162,3 +2162,52 @@ body textarea::placeholder {
   color: #ffffff;
   opacity: 0.8;
 }
+
+
+/* Wedstrijden pagina - zwarte tekst */
+.matches-page,
+.matches-page h1,
+.matches-page h2,
+.matches-page h3,
+.matches-page p,
+.matches-page label,
+.matches-page th,
+.matches-page td,
+.matches-page select,
+.matches-page option {
+  color: #111827;
+}
+
+.matches-page .matches-page-header p {
+  color: #111827;
+}
+
+.matches-page .match-filter label {
+  color: #111827;
+}
+
+.matches-page .match-filter select {
+  color: #111827;
+  background: #ffffff;
+}
+
+.matches-page .matches-table {
+  color: #111827;
+}
+
+.matches-page .matches-table th,
+.matches-page .matches-table td,
+.matches-page .matches-table td::before {
+  color: #111827;
+}
+
+.matches-page .matches-table .match-actions button,
+.matches-page .add-player-button {
+  color: #ffffff;
+}
+
+.matches-page .result-win,
+.matches-page .result-draw,
+.matches-page .result-loss {
+  color: #ffffff;
+}
