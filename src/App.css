@@ -2229,10 +2229,28 @@ body textarea::placeholder {
   color: #ffffff;
 }
 
-/* Instellingen - teksten bij spelers en wedstrijden zwart */
-.settings-page .setting-row:nth-child(3) strong,
-.settings-page .setting-row:nth-child(3) small,
-.settings-page .setting-row:nth-child(4) strong,
-.settings-page .setting-row:nth-child(4) small {
+
+/* Formulieren en pop-ups - invulteksten zwart */
+.player-form input,
+.player-form select,
+.player-form textarea,
+.player-form label,
+.match-form input,
+.match-form select,
+.match-form textarea,
+.match-form label {
+  color: #111827;
+}
+
+.player-form input::placeholder,
+.player-form textarea::placeholder,
+.match-form input::placeholder,
+.match-form textarea::placeholder {
+  color: #111827;
+  opacity: 0.7;
+}
+
+.player-form option,
+.match-form option {
   color: #111827;
 }
