@@ -336,7 +336,7 @@ nav a.active {
 
 .home-page-section-title p {
   margin: 0;
-  color: #d1d5db;
+  color: #ffffff;
   font-size: 13px;
 }
 
@@ -354,7 +354,7 @@ nav a.active {
 .home-page-panel-heading a:hover,
 .home-page-panel a:hover,
 .home-page-latest a:hover {
-  color: #93c5fd;
+  color: #ffffff;
 }
 
 .home-page-stats {
@@ -396,7 +396,7 @@ nav a.active {
 .home-page-stat small {
   display: block;
   margin-top: 4px;
-  color: #d1d5db;
+  color: #ffffff;
   font-size: 11px;
 }
 
@@ -495,7 +495,7 @@ nav a.active {
 .home-page-match-info span {
   display: block;
   margin-top: 3px;
-  color: #9ca3af;
+  color: #ffffff;
   font-size: 11px;
 }
 
@@ -543,7 +543,7 @@ nav a.active {
 .home-page-empty,
 .home-page-empty-small {
   text-align: center;
-  color: #9ca3af;
+  color: #ffffff;
 }
 
 .home-page-empty {
