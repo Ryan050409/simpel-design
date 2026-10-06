@@ -254,7 +254,7 @@ nav a.active {
 
 .home-page-links {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 14px;
   margin-bottom: 14px;
 }
@@ -382,7 +382,10 @@ nav a.active {
     font-size: 26px;
   }
 
-  .home-page-links,
+  .home-page-links {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
   .home-page-stats,
   .home-page-bottom {
     grid-template-columns: 1fr;
