@@ -2230,27 +2230,33 @@ body textarea::placeholder {
 }
 
 
-/* Formulieren en pop-ups - invulteksten zwart */
-.player-form input,
-.player-form select,
-.player-form textarea,
-.player-form label,
-.match-form input,
-.match-form select,
-.match-form textarea,
-.match-form label {
-  color: #111827;
+/* Inputvelden in speler- en wedstrijdpop-ups */
+.modal .form-grid input,
+.modal .form-grid select,
+.modal .form-grid textarea {
+  background: #ffffff;
+  color: #111827 !important;
+  border: 1px solid #d1d5db;
 }
 
-.player-form input::placeholder,
-.player-form textarea::placeholder,
-.match-form input::placeholder,
-.match-form textarea::placeholder {
-  color: #111827;
+.modal .form-grid input::placeholder,
+.modal .form-grid textarea::placeholder {
+  color: #111827 !important;
   opacity: 0.7;
 }
 
-.player-form option,
-.match-form option {
-  color: #111827;
+.modal .form-field label {
+  color: #111827 !important;
+}
+
+.modal .form-grid option {
+  color: #111827 !important;
+  background: #ffffff;
+}
+
+.modal .form-grid input:focus,
+.modal .form-grid select:focus,
+.modal .form-grid textarea:focus {
+  color: #111827 !important;
+  background: #ffffff;
 }
