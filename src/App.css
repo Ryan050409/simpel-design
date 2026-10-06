@@ -985,25 +985,14 @@ nav a.active {
 
 .matches-table th:last-child,
 .matches-table td:last-child {
-  width: 190px;
-}
-
-.matches-table th {
-  background: #1f2937;
-  color: white;
-  font-weight: 600;
-}
-
-.matches-table td {
-  color: #1f2937;
-}
-.matches-table td:nth-child(4) {
-  font-size: 16px;
-  font-weight: 700;
-  white-space: nowrap;
-}
-.matches-table tbody tr:last-child td {
+  width: 210px;
   border-bottom: none;
+}
+
+.matches-table td:last-child {
+  padding: 14px 16px;
+  border-bottom: none;
+  vertical-align: middle;
 }
 
 .matches-table .match-actions {
@@ -1012,12 +1001,13 @@ nav a.active {
   justify-content: center;
   gap: 10px;
   width: 100%;
-  margin-top: 0;
+  margin: 8px 0 0;
 }
-
 .matches-table .match-actions button {
-  padding: 8px 14px;
-  min-width: 85px;
+  flex: 0 0 auto;
+  min-width: 90px;
+  margin: 0;
+  padding: 8px 12px;
   border-radius: 7px;
   font-size: 13px;
   font-weight: 600;
