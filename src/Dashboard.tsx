@@ -71,12 +71,14 @@ function Dashboard({ matches, playerList, team }: DashboardProps) {
       : null;
 
   const lastFiveMatches = [...playedMatches]
-    .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+    .sort(
+      (a, b) =>
+        new Date(b.date).getTime() - new Date(a.date).getTime(),
+    )
     .slice(0, 5);
 
   const lastFiveData = lastFiveMatches.map((match) => {
     const teamGoals = getTeamGoals(match);
-
     const opponentGoals = getOpponentGoals(match);
 
     let result: "W" | "G" | "V";
@@ -113,7 +115,11 @@ function Dashboard({ matches, playerList, team }: DashboardProps) {
 
   const highestGoalDifference =
     lastFiveData.length > 0
-      ? Math.max(...lastFiveData.map((item) => Math.abs(item.goalDifference)))
+      ? Math.max(
+          ...lastFiveData.map((item) =>
+            Math.abs(item.goalDifference),
+          ),
+        )
       : 1;
 
   function getResultClass(result: "W" | "G" | "V") {
@@ -139,16 +145,16 @@ function Dashboard({ matches, playerList, team }: DashboardProps) {
     );
   }
 
- return (
-  <div className="dashboard">
-    <div className="dashboard-page-header">
-      <div>
-        <h1>⚽ Dashboard</h1>
-        <p>Bekijk het overzicht van {team}.</p>
+  return (
+    <div className="dashboard">
+      <div className="dashboard-page-header">
+        <div>
+          <h1>⚽ Dashboard</h1>
+          <p>Bekijk het overzicht van {team}.</p>
+        </div>
       </div>
-    </div>
 
-    <div className="stats-grid">
+      <div className="stats-grid">
         <div className="stat-card">
           <h3>Wedstrijden</h3>
           <p>{playedMatches.length}</p>
@@ -205,12 +211,14 @@ function Dashboard({ matches, playerList, team }: DashboardProps) {
         </p>
 
         <p>
-          <strong>📊 Doelsaldo:</strong> {goalDifference > 0 ? "+" : ""}
+          <strong>📊 Doelsaldo:</strong>{" "}
+          {goalDifference > 0 ? "+" : ""}
           {goalDifference}
         </p>
 
         <p>
-          <strong>📈 Gemiddeld goals per wedstrijd:</strong> {averageGoals}
+          <strong>📈 Gemiddeld goals per wedstrijd:</strong>{" "}
+          {averageGoals}
         </p>
       </div>
 
@@ -275,7 +283,10 @@ function Dashboard({ matches, playerList, team }: DashboardProps) {
           <>
             <div className="last-five-chart">
               {lastFiveData.map((item) => (
-                <div className="last-five-column" key={item.match.id}>
+                <div
+                  className="last-five-column"
+                  key={item.match.id}
+                >
                   <div className="last-five-value">
                     {item.goalDifference > 0 ? "+" : ""}
                     {item.goalDifference}
@@ -283,23 +294,33 @@ function Dashboard({ matches, playerList, team }: DashboardProps) {
 
                   <div className="last-five-bar-container">
                     <div
-                      className={`last-five-bar ${getResultClass(item.result)}`}
+                      className={`last-five-bar ${getResultClass(
+                        item.result,
+                      )}`}
                       style={{
-                        height: `${getBarHeight(item.goalDifference)}%`,
+                        height: `${getBarHeight(
+                          item.goalDifference,
+                        )}%`,
                       }}
                     ></div>
                   </div>
 
-                  <strong className="last-five-result">{item.result}</strong>
+                  <strong className="last-five-result">
+                    {item.result}
+                  </strong>
 
-                  <span className="last-five-opponent">vs {item.opponent}</span>
+                  <span className="last-five-opponent">
+                    vs {item.opponent}
+                  </span>
 
                   <span className="last-five-score">
                     {item.teamGoals} - {item.opponentGoals}
                   </span>
 
                   <span className="last-five-date">
-                    {new Date(item.match.date).toLocaleDateString("nl-NL")}
+                    {new Date(
+                      item.match.date,
+                    ).toLocaleDateString("nl-NL")}
                   </span>
                 </div>
               ))}
@@ -320,7 +341,9 @@ function Dashboard({ matches, playerList, team }: DashboardProps) {
             </div>
           </>
         ) : (
-          <p className="last-five-empty">Nog geen wedstrijden gespeeld.</p>
+          <p className="last-five-empty">
+            Nog geen wedstrijden gespeeld.
+          </p>
         )}
       </div>
     </div>
