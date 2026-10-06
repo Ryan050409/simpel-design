@@ -194,18 +194,22 @@ function App() {
   return (
     <BrowserRouter>
       <nav className="nav">
-        <NavLink to="/">Dashboard</NavLink>
+        <NavLink to="/">🏠 Home</NavLink>
 
-        <NavLink to="/wedstrijden">Wedstrijden</NavLink>
+        <NavLink to="/dashboard">📊 Dashboard</NavLink>
 
-        <NavLink to="/spelers">Spelers</NavLink>
+        <NavLink to="/wedstrijden">⚽ Wedstrijden</NavLink>
 
-        <NavLink to="/instellingen">Instellingen</NavLink>
+        <NavLink to="/spelers">👥 Spelers</NavLink>
+
+        <NavLink to="/instellingen">⚙️ Instellingen</NavLink>
       </nav>
 
       <Routes>
+        <Route path="/" element={<HomePage />} />
+
         <Route
-          path="/"
+          path="/dashboard"
           element={
             <Dashboard matches={matches} playerList={playerList} team={team} />
           }
