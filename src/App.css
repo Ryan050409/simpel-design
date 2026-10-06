@@ -2228,3 +2228,11 @@ body textarea::placeholder {
 .matches-page .result-loss {
   color: #ffffff;
 }
+
+/* Instellingen - teksten bij spelers en wedstrijden zwart */
+.settings-page .setting-row:nth-child(3) strong,
+.settings-page .setting-row:nth-child(3) small,
+.settings-page .setting-row:nth-child(4) strong,
+.settings-page .setting-row:nth-child(4) small {
+  color: #111827;
+}
