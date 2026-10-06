@@ -49,6 +49,12 @@ function HomePage({ matches, playerList, team }: HomePageProps) {
           <h2>Dashboard</h2>
           <p>Bekijk je belangrijkste statistieken.</p>
         </Link>
+
+        <Link to="/instellingen" className="home-page-card">
+          <span>⚙️</span>
+          <h2>Instellingen</h2>
+          <p>Beheer je team en andere instellingen.</p>
+        </Link>
       </div>
 
       <div className="home-page-info">
@@ -91,14 +97,6 @@ function HomePage({ matches, playerList, team }: HomePageProps) {
             )}
           </div>
 
-          <Link to="/instellingen" className="home-page-panel home-page-settings">
-            <span className="home-page-panel-icon">⚙️</span>
-            <div>
-              <span className="home-page-panel-label">Instellingen</span>
-              <h2>Beheer je team</h2>
-              <p>Pas je favoriete team en andere instellingen aan.</p>
-            </div>
-          </Link>
         </div>
       </div>
     </div>
