@@ -224,7 +224,7 @@ nav a.active {
 .home-page-header p {
   margin: 0;
   max-width: 700px;
-  color: #9ca3af;
+  color: #f3f4f6;
   font-size: 15px;
   line-height: 1.5;
 }
@@ -310,7 +310,7 @@ nav a.active {
 
 .home-page-card p {
   margin: 0;
-  color: #9ca3af;
+  color: #f3f4f6;
   font-size: 12px;
   line-height: 1.4;
 }
@@ -336,7 +336,7 @@ nav a.active {
 
 .home-page-section-title p {
   margin: 0;
-  color: #6b7280;
+  color: #d1d5db;
   font-size: 13px;
 }
 
@@ -381,7 +381,7 @@ nav a.active {
 
 .home-page-stat span,
 .home-page-panel-label {
-  color: #9ca3af;
+  color: #f3f4f6;
   font-size: 11px;
   font-weight: 700;
   letter-spacing: 0.03em;
@@ -396,7 +396,7 @@ nav a.active {
 .home-page-stat small {
   display: block;
   margin-top: 4px;
-  color: #6b7280;
+  color: #d1d5db;
   font-size: 11px;
 }
 
@@ -519,7 +519,7 @@ nav a.active {
 .home-page-team-panel p,
 .home-page-top-player p {
   margin: 0 0 14px;
-  color: #9ca3af;
+  color: #f3f4f6;
   font-size: 13px;
   line-height: 1.5;
 }
@@ -536,7 +536,7 @@ nav a.active {
 }
 
 .home-page-top-player-stats span {
-  color: #9ca3af;
+  color: #f3f4f6;
   font-size: 12px;
 }
 
@@ -581,7 +581,7 @@ nav a.active {
 
 .home-page-latest p {
   margin: 0;
-  color: #9ca3af;
+  color: #f3f4f6;
   font-size: 12px;
 }
 
