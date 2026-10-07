@@ -3,8 +3,8 @@ import type { Dispatch, SetStateAction } from "react";
 import type { Player, Team } from "./types.ts";
 
 type PlayerFormProps = {
-  editingPlayer: Player | null;
-  setEditingPlayer: Dispatch<SetStateAction<Player | null>>;
+  editingPlayer?: Player | null;
+  setEditingPlayer?: Dispatch<SetStateAction<Player | null>>;
   setPlayerList: Dispatch<SetStateAction<Player[]>>;
   closeModal: () => void;
   teams: Team[];
@@ -132,6 +132,7 @@ function PlayerForm({
       setWarning("Vul alle verplichte velden in!");
       return;
     }
+
     const numericValues = [
       newPlayerNumber,
       newPlayerGoals,
@@ -156,10 +157,12 @@ function PlayerForm({
       setWarning("Getallen kunnen niet negatief zijn!");
       return;
     }
-      if (Number(newPlayerRating) > 10) {
-        setWarning("De rating kan maximaal 10 zijn!");
-        return;
-      }
+
+    if (Number(newPlayerRating) > 10) {
+      setWarning("De rating kan maximaal 10 zijn!");
+      return;
+    }
+
     const newPlayer: Player = {
       id: editingPlayer ? editingPlayer.id : Date.now(),
 
@@ -200,7 +203,7 @@ function PlayerForm({
       setPlayerList((currentPlayers) => [...currentPlayers, newPlayer]);
     }
 
-    setEditingPlayer(null);
+    setEditingPlayer?.(null);
     closeModal();
   }
 
@@ -212,7 +215,11 @@ function PlayerForm({
   return (
     <div className="modal-overlay">
       <div className="modal">
-        <button className="modal-close" onClick={closeModal}>
+        <button
+          className="modal-close"
+          type="button"
+          onClick={closeModal}
+        >
           ×
         </button>
 
@@ -262,7 +269,11 @@ function PlayerForm({
               </datalist>
             </div>
 
-            <button className="save-player-button" onClick={goToNextStep}>
+            <button
+              type="button"
+              className="save-player-button"
+              onClick={goToNextStep}
+            >
               Doorgaan
             </button>
           </>
@@ -319,7 +330,9 @@ function PlayerForm({
                 <input
                   type="number"
                   value={newPlayerMinutesPlayed}
-                  onChange={(e) => setNewPlayerMinutesPlayed(e.target.value)}
+                  onChange={(e) =>
+                    setNewPlayerMinutesPlayed(e.target.value)
+                  }
                 />
               </div>
 
@@ -337,7 +350,9 @@ function PlayerForm({
                 <input
                   type="number"
                   value={newPlayerInterceptions}
-                  onChange={(e) => setNewPlayerInterceptions(e.target.value)}
+                  onChange={(e) =>
+                    setNewPlayerInterceptions(e.target.value)
+                  }
                 />
               </div>
 
@@ -391,7 +406,9 @@ function PlayerForm({
                 <input
                   type="number"
                   value={newPlayerOneVsOneSaves}
-                  onChange={(e) => setNewPlayerOneVsOneSaves(e.target.value)}
+                  onChange={(e) =>
+                    setNewPlayerOneVsOneSaves(e.target.value)
+                  }
                 />
               </div>
 
@@ -400,7 +417,9 @@ function PlayerForm({
                 <input
                   type="number"
                   value={newPlayerCleanSheets}
-                  onChange={(e) => setNewPlayerCleanSheets(e.target.value)}
+                  onChange={(e) =>
+                    setNewPlayerCleanSheets(e.target.value)
+                  }
                 />
               </div>
 
@@ -409,7 +428,9 @@ function PlayerForm({
                 <input
                   type="number"
                   value={newPlayerPenaltySaves}
-                  onChange={(e) => setNewPlayerPenaltySaves(e.target.value)}
+                  onChange={(e) =>
+                    setNewPlayerPenaltySaves(e.target.value)
+                  }
                 />
               </div>
 
@@ -418,7 +439,9 @@ function PlayerForm({
                 <input
                   type="number"
                   value={newPlayerGoalsConceded}
-                  onChange={(e) => setNewPlayerGoalsConceded(e.target.value)}
+                  onChange={(e) =>
+                    setNewPlayerGoalsConceded(e.target.value)
+                  }
                 />
               </div>
 
@@ -433,11 +456,19 @@ function PlayerForm({
               </div>
             </div>
 
-            <button className="save-player-button" onClick={goBack}>
+            <button
+              type="button"
+              className="save-player-button"
+              onClick={goBack}
+            >
               Terug
             </button>
 
-            <button className="save-player-button" onClick={savePlayer}>
+            <button
+              type="button"
+              className="save-player-button"
+              onClick={savePlayer}
+            >
               {editingPlayer ? "Wijzigingen opslaan" : "Speler opslaan"}
             </button>
           </>

@@ -26,17 +26,10 @@ function SettingsPage({
   setTeam,
 }: SettingsPageProps) {
   const [showPlayerPopup, setShowPlayerPopup] = useState(false);
-
-  const [editingPlayer, setEditingPlayer] = useState<Player | null>(null);
-
   const [showMatchPopup, setShowMatchPopup] = useState(false);
 
-  const [editingMatch, setEditingMatch] = useState<Match | null>(null);
-
   const [newTeam, setNewTeam] = useState("");
-
   const [teamWarning, setTeamWarning] = useState("");
-
   const [openQuestion, setOpenQuestion] = useState<number | null>(null);
 
   const faqs = [
@@ -73,22 +66,18 @@ function SettingsPage({
   ];
 
   function openPlayerPopup() {
-    setEditingPlayer(null);
     setShowPlayerPopup(true);
   }
 
   function closePlayerPopup() {
-    setEditingPlayer(null);
     setShowPlayerPopup(false);
   }
 
   function openMatchPopup() {
-    setEditingMatch(null);
     setShowMatchPopup(true);
   }
 
   function closeMatchPopup() {
-    setEditingMatch(null);
     setShowMatchPopup(false);
   }
 
@@ -173,6 +162,7 @@ function SettingsPage({
       <div className="settings-page-header">
         <h1>⚙️ Instellingen</h1>
       </div>
+
       <div className="settings-list">
         <div className="setting-row">
           <div>
@@ -279,8 +269,6 @@ function SettingsPage({
 
       {showPlayerPopup && (
         <PlayerForm
-          editingPlayer={editingPlayer}
-          setEditingPlayer={setEditingPlayer}
           setPlayerList={setPlayerList}
           closeModal={closePlayerPopup}
           teams={teams}
@@ -289,8 +277,6 @@ function SettingsPage({
 
       {showMatchPopup && (
         <MatchForm
-          editingMatch={editingMatch}
-          setEditingMatch={setEditingMatch}
           setMatches={setMatches}
           closeModal={closeMatchPopup}
           teams={teams}
@@ -311,7 +297,6 @@ function SettingsPage({
                 }
               >
                 <span>{faq.question}</span>
-
                 <span>{openQuestion === index ? "−" : "+"}</span>
               </button>
 

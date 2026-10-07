@@ -34,7 +34,11 @@ function HomePage({ matches, playerList, team }: HomePageProps) {
 
   const losses = teamMatches.length - wins - draws;
 
-  const topScorer = [...playerList].sort((a, b) => b.goals - a.goals)[0];
+  const teamPlayers = playerList.filter((player) => player.team === team);
+
+const topScorer = [...teamPlayers].sort(
+  (a, b) => b.goals - a.goals,
+)[0];
 
   return (
     <div className="home-page">
@@ -102,7 +106,7 @@ function HomePage({ matches, playerList, team }: HomePageProps) {
       <div className="home-page-stats">
         <div className="home-page-stat">
           <span>Wedstrijden</span>
-          <strong>{matches.length}</strong>
+          <strong>{teamMatches.length}</strong>
           <small>totaal gespeeld</small>
         </div>
 
