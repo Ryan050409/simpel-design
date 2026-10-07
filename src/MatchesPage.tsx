@@ -142,7 +142,7 @@ function MatchesPage({ matches, setMatches, team, teams }: MatchesPageProps) {
           </thead>
 
           <tbody>
-            {visibleMatches.length === 0 ? (
+            {sortedMatches.length === 0 ? (
               <tr>
                 <td colSpan={6}>Geen wedstrijden gevonden.</td>
               </tr>

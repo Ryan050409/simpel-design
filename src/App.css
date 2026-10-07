@@ -380,10 +380,6 @@ nav a.active {
   padding-top: 5px;
 }
 
-.home-page-match-info span {
-  margin-top: 2px;
-}
-
 .home-page-result {
   display: flex;
   align-items: center;
@@ -425,6 +421,7 @@ nav a.active {
 
 .home-page-match-info span {
   display: block;
+  margin-top: 2px;
   margin-top: 3px;
   color: #ffffff;
   font-size: 11px;
@@ -1631,25 +1628,6 @@ nav a.active {
 
   button {
     min-height: 44px;
-  }
-
-  .match-card {
-    width: 100%;
-    margin: 15px 0;
-    padding: 15px;
-  }
-
-  .match-card h2 {
-    font-size: 18px;
-    word-break: break-word;
-  }
-
-  .match-form {
-    width: 100%;
-  }
-
-  .match-form input {
-    width: 100%;
   }
 
   .matches-page-header,

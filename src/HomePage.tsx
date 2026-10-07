@@ -24,7 +24,8 @@ function HomePage({ matches, playerList, team }: HomePageProps) {
 
   const wins = teamMatches.filter((match) => {
     const teamGoals = match.home === team ? match.homeGoals : match.awayGoals;
-    const opponentGoals = match.home === team ? match.awayGoals : match.homeGoals;
+    const opponentGoals =
+      match.home === team ? match.awayGoals : match.homeGoals;
     return teamGoals > opponentGoals;
   }).length;
 
@@ -36,9 +37,7 @@ function HomePage({ matches, playerList, team }: HomePageProps) {
 
   const teamPlayers = playerList.filter((player) => player.team === team);
 
-const topScorer = [...teamPlayers].sort(
-  (a, b) => b.goals - a.goals,
-)[0];
+  const topScorer = [...teamPlayers].sort((a, b) => b.goals - a.goals)[0];
 
   return (
     <div className="home-page">
@@ -143,7 +142,9 @@ const topScorer = [...teamPlayers].sort(
             <div className="home-page-match-list">
               {recentMatches.map((match) => {
                 const teamIsHome = match.home === team;
-                const teamGoals = teamIsHome ? match.homeGoals : match.awayGoals;
+                const teamGoals = teamIsHome
+                  ? match.homeGoals
+                  : match.awayGoals;
                 const opponentGoals = teamIsHome
                   ? match.awayGoals
                   : match.homeGoals;
@@ -157,11 +158,15 @@ const topScorer = [...teamPlayers].sort(
 
                 return (
                   <div className="home-page-match" key={match.id}>
-                    <div className={`home-page-result result-${result.toLowerCase()}`}>
+                    <div
+                      className={`home-page-result result-${result.toLowerCase()}`}
+                    >
                       {result}
                     </div>
                     <div className="home-page-match-info">
-                      <strong>{team} - {opponent}</strong>
+                      <strong>
+                        {team} - {opponent}
+                      </strong>
                       <span>{match.date}</span>
                     </div>
                     <strong className="home-page-match-score">
@@ -196,7 +201,9 @@ const topScorer = [...teamPlayers].sort(
             <span className="home-page-panel-label">🏆 TOPSCORER</span>
             {topScorer ? (
               <>
-                <h2>{topScorer.firstname} {topScorer.lastname}</h2>
+                <h2>
+                  {topScorer.firstname} {topScorer.lastname}
+                </h2>
                 <div className="home-page-top-player-stats">
                   <strong>{topScorer.goals}</strong>
                   <span>doelpunten</span>
