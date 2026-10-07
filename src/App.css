@@ -421,7 +421,6 @@ nav a.active {
 
 .home-page-match-info span {
   display: block;
-  margin-top: 2px;
   margin-top: 3px;
   color: #ffffff;
   font-size: 11px;
@@ -1594,10 +1593,6 @@ nav a.active {
     text-overflow: clip;
   }
 
-  body {
-    padding: 20px;
-  }
-
   h1 {
     font-size: 28px;
   }
@@ -1785,8 +1780,8 @@ nav a.active {
 
 /* Alle tekst op de website wit */
 body,
-body * {
-  color: #ffffff;
+body h1 * {
+  color: #111827;
 }
 
 body input::placeholder,
