@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { NavLink } from "react-router-dom";
 import type { Dispatch, SetStateAction } from "react";
 import PlayerForm from "./PlayerForm.tsx";
 import type { Player, Team } from "./types.ts";
@@ -12,6 +11,7 @@ type PlayersPageProps = {
 
 function PlayersPage({ playerList, setPlayerList, teams }: PlayersPageProps) {
   const [editingPlayer, setEditingPlayer] = useState<Player | null>(null);
+  const [showPlayerPopup, setShowPlayerPopup] = useState(false);
   const [selectedPlayer, setSelectedPlayer] = useState<Player | null>(null);
   const [searchTerm, setSearchTerm] = useState("");
   const filteredPlayers = playerList.filter((player) =>
@@ -51,9 +51,13 @@ function PlayersPage({ playerList, setPlayerList, teams }: PlayersPageProps) {
           <p>Bekijk en beheer je spelers.</p>
         </div>
 
-        <NavLink className="add-player-button" to="/instellingen">
-          ⚙️ Speler toevoegen
-        </NavLink>
+<button
+  type="button"
+  className="add-button"
+  onClick={() => setShowPlayerPopup(true)}
+>
+  + Speler toevoegen
+</button>
       </div>
       <div className="player-search">
         <input
@@ -280,6 +284,13 @@ function PlayersPage({ playerList, setPlayerList, teams }: PlayersPageProps) {
           setEditingPlayer={setEditingPlayer}
           setPlayerList={setPlayerList}
           closeModal={() => setEditingPlayer(null)}
+          teams={teams}
+        />
+      )}
+      {showPlayerPopup && (
+        <PlayerForm
+          setPlayerList={setPlayerList}
+          closeModal={() => setShowPlayerPopup(false)}
           teams={teams}
         />
       )}

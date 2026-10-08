@@ -774,7 +774,7 @@ nav a.active {
   width: 100%;
 }
 
-.add-player-button {
+.add-button {
   flex-shrink: 0;
   padding: 11px 16px;
   border-radius: 8px;
@@ -787,7 +787,7 @@ nav a.active {
     transform 0.2s ease;
 }
 
-.add-player-button:hover {
+.add-button:hover {
   background: #1d4ed8;
   transform: translateY(-1px);
 }
@@ -1687,7 +1687,7 @@ nav a.active {
     text-align: center;
   }
 
-  .add-player-button {
+  .add-button {
     text-align: center;
   }
 
@@ -1892,7 +1892,7 @@ body textarea::placeholder {
 }
 
 .matches-page .matches-table .match-actions button,
-.matches-page .add-player-button {
+.matches-page .add-button {
   color: #ffffff;
 }
 

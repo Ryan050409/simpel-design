@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { NavLink } from "react-router-dom";
 import type { Dispatch, SetStateAction } from "react";
 import MatchForm from "./MatchForm.tsx";
 import type { Match, Team } from "./types.ts";
@@ -65,6 +64,7 @@ function getRowClass(result: string | null) {
 
 function MatchesPage({ matches, setMatches, team, teams }: MatchesPageProps) {
   const [editingMatch, setEditingMatch] = useState<Match | null>(null);
+  const [showMatchPopup, setShowMatchPopup] = useState(false);
   const [matchView, setMatchView] = useState<"favorite" | "all">("favorite");
   const visibleMatches =
     matchView === "favorite"
@@ -109,11 +109,14 @@ function MatchesPage({ matches, setMatches, team, teams }: MatchesPageProps) {
           <p>Bekijk en beheer de wedstrijden van {team}.</p>
         </div>
 
-        <NavLink className="add-player-button" to="/instellingen">
-          ⚙️ Wedstrijd toevoegen
-        </NavLink>
       </div>
-
+      <button 
+      type= "button" 
+      className="add-button"
+      onClick={() => setShowMatchPopup(true)}
+      >
+        + Wedstrijd toevoegen
+      </button>
       <div className="match-filter">
         <label htmlFor="match-view">Toon wedstrijden:</label>
 
@@ -197,6 +200,13 @@ function MatchesPage({ matches, setMatches, team, teams }: MatchesPageProps) {
             teams={teams}
           />
         )}
+        {showMatchPopup && (
+  <MatchForm
+    setMatches={setMatches}
+    closeModal={() => setShowMatchPopup(false)}
+    teams={teams}
+  />
+)}
       </div>
     </div>
   );
