@@ -187,7 +187,8 @@ function MatchesPage({
                       </span>
                     </td>
 
-                    <td className="match-actions">
+                    <td>
+                      <div className="match-actions">
                       <button type="button" onClick={() => editMatch(match)}>
                         Bewerken
                       </button>
@@ -199,6 +200,7 @@ function MatchesPage({
                       >
                         Verwijderen
                       </button>
+                      </div>
                     </td>
                   </tr>
                 );
