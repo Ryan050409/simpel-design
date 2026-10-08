@@ -8,12 +8,6 @@ type HomePageProps = {
 };
 
 function HomePage({ matches, playerList, team }: HomePageProps) {
-  const sortedMatches = [...matches].sort(
-    (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
-  );
-
-  const latestMatch = sortedMatches[0];
-
   const teamMatches = matches.filter(
     (match) => match.home === team || match.away === team,
   );
@@ -39,16 +33,21 @@ function HomePage({ matches, playerList, team }: HomePageProps) {
 
   const topScorer = [...teamPlayers].sort((a, b) => b.goals - a.goals)[0];
 
+  const averageRating = 
+  teamPlayers.length > 0
+    ? (
+      teamPlayers.reduce((total, player) => total + player.rating, 0) / 
+      teamPlayers.length
+    ).toFixed(1)
+    : null;
+
   return (
     <div className="home-page">
       <div className="home-page-header">
         <div>
           <span className="home-page-welcome-label">OVERZICHT</span>
           <h1>🏠 Welkom bij Voetbaltracker</h1>
-          <p>
-            Alles wat je nodig hebt om je team, wedstrijden en spelers snel te
-            bekijken.
-          </p>
+          <p>Bekijk de prestaties en laatste wedstrijden van {team}.</p>
         </div>
         <div className="home-page-team-badge">
           <span>⭐</span>
@@ -56,50 +55,11 @@ function HomePage({ matches, playerList, team }: HomePageProps) {
         </div>
       </div>
 
-      <div className="home-page-links">
-        <Link to="/dashboard" className="home-page-card">
-          <span>📊</span>
-          <div>
-            <h2>Dashboard</h2>
-            <p>Bekijk je belangrijkste statistieken.</p>
-          </div>
-          <strong className="home-page-card-arrow">→</strong>
-        </Link>
-
-        <Link to="/wedstrijden" className="home-page-card">
-          <span>⚽</span>
-          <div>
-            <h2>Wedstrijden</h2>
-            <p>Bekijk en beheer je wedstrijden.</p>
-          </div>
-          <strong className="home-page-card-arrow">→</strong>
-        </Link>
-
-        <Link to="/spelers" className="home-page-card">
-          <span>👥</span>
-          <div>
-            <h2>Spelers</h2>
-            <p>Bekijk en beheer je spelers.</p>
-          </div>
-          <strong className="home-page-card-arrow">→</strong>
-        </Link>
-
-        <Link to="/instellingen" className="home-page-card">
-          <span>⚙️</span>
-          <div>
-            <h2>Instellingen</h2>
-            <p>Beheer je team en voorkeuren.</p>
-          </div>
-          <strong className="home-page-card-arrow">→</strong>
-        </Link>
-      </div>
-
       <div className="home-page-section-title">
         <div>
           <h2>Jouw overzicht</h2>
-          <p>Een snelle samenvatting van je team.</p>
+          <p>Een korte samenvatting van je team.</p>
         </div>
-        <Link to="/dashboard">Alles bekijken →</Link>
       </div>
 
       <div className="home-page-stats">
@@ -127,7 +87,27 @@ function HomePage({ matches, playerList, team }: HomePageProps) {
           <small>verloren wedstrijden</small>
         </div>
       </div>
+      <div className="home-page-player-summary">
+        <div> 
+          <span className="home-page-panel-label">👥 SPELERS</span>
+          <h2> TeamSelectie</h2>
+          <p> 
+            {teamPlayers.length} {teamPlayers.length === 1 ? "speler" : "spelers"} {" "}
+            . Gemiddelde rating: {averageRating}
+          </p>
+        </div>
 
+        {topScorer &&( 
+          <div>
+            <strong>
+              {topScorer.firstname} {topScorer.lastname}
+              </strong>
+              <span>{topScorer.goals} doelpunten</span>
+          </div>
+        )}
+
+        <Link  to ="/spelers">Alle spelers →</Link>
+        </div>
       <div className="home-page-content-grid">
         <div className="home-page-panel">
           <div className="home-page-panel-heading">
@@ -208,7 +188,6 @@ function HomePage({ matches, playerList, team }: HomePageProps) {
                   <strong>{topScorer.goals}</strong>
                   <span>doelpunten</span>
                 </div>
-                <Link to="/spelers">Alle spelers →</Link>
               </>
             ) : (
               <div className="home-page-empty-small">
@@ -218,29 +197,6 @@ function HomePage({ matches, playerList, team }: HomePageProps) {
             )}
           </div>
         </div>
-      </div>
-
-      <div className="home-page-latest">
-        <div>
-          <span className="home-page-panel-label">LAATSTE ACTIVITEIT</span>
-          {latestMatch ? (
-            <>
-              <h2>
-                {latestMatch.home} {latestMatch.homeGoals} -{" "}
-                {latestMatch.awayGoals} {latestMatch.away}
-              </h2>
-              <p>Laatste geregistreerde wedstrijd · {latestMatch.date}</p>
-            </>
-          ) : (
-            <>
-              <h2>Klaar om te beginnen?</h2>
-              <p>Voeg een wedstrijd of speler toe om je overzicht te vullen.</p>
-            </>
-          )}
-        </div>
-        <Link to={latestMatch ? "/wedstrijden" : "/spelers"}>
-          {latestMatch ? "Wedstrijden beheren →" : "Aan de slag →"}
-        </Link>
       </div>
     </div>
   );
