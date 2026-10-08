@@ -73,119 +73,149 @@ function PlayersPage({ playerList, setPlayerList, teams }: PlayersPageProps) {
           onChange={(e) => setSearchTerm(e.target.value)}
         />
       </div>
-      <div className="players">
-        {filteredPlayers.length === 0 && <p>Geen spelers gevonden.</p>}
-        {filteredPlayers.map((player) => (
-          <div
-            className="player-card"
-            key={player.id}
-            onClick={() => setSelectedPlayer(player)}
-          >
-            <div className="player-card-header">
-              <div>
-                <div className="player-fullname-row">
-                  <h2>
-                    {player.firstname} {player.lastname}
-                  </h2>
+      <div className="players-by-team">
+  {filteredPlayers.length === 0 && <p>Geen spelers gevonden.</p>}
 
-                  <span className="player-number">#{player.number}</span>
+  {teams
+    .slice()
+    .sort((a, b) => a.name.localeCompare(b.name))
+    .map((team) => {
+      const teamPlayers = filteredPlayers.filter(
+        (player) => player.team === team.name,
+      );
+
+      if (teamPlayers.length === 0) {
+        return null;
+      }
+
+      return (
+        <section className="players-team-section" key={team.id}>
+          <div className="players-team-header">
+            <h2>{team.name}</h2>
+            <span>
+              {teamPlayers.length}{" "}
+              {teamPlayers.length === 1 ? "speler" : "spelers"}
+            </span>
+          </div>
+
+          <div className="players">
+            {teamPlayers.map((player) => (
+              <div
+                className="player-card"
+                key={player.id}
+                onClick={() => setSelectedPlayer(player)}
+              >
+                <div className="player-card-header">
+                  <div>
+                    <div className="player-fullname-row">
+                      <h2>
+                        {player.firstname} {player.lastname}
+                      </h2>
+
+                      <span className="player-number">
+                        #{player.number}
+                      </span>
+                    </div>
+
+                    <p className="player-team">{player.team}</p>
+                  </div>
+
+                  <div className="player-rating">
+                    <span>RATING</span>
+
+                    <strong className={getRatingClass(player.rating)}>
+                      {player.rating}
+                    </strong>
+                  </div>
                 </div>
 
-                <p className="player-team">{player.team}</p>
+                <div className="player-position">{player.position}</div>
+
+                <div className="player-stats">
+                  {(player.position === "Aanvaller" ||
+                    player.position === "Middenvelder") && (
+                    <>
+                      <div className="player-stat">
+                        <strong>{player.goals}</strong>
+                        <span>Goals</span>
+                      </div>
+
+                      <div className="player-stat">
+                        <strong>{player.assists}</strong>
+                        <span>Assists</span>
+                      </div>
+                    </>
+                  )}
+
+                  {player.position === "Verdediger" && (
+                    <>
+                      <div className="player-stat">
+                        <strong>{player.tackles ?? 0}</strong>
+                        <span>Tackles</span>
+                      </div>
+
+                      <div className="player-stat">
+                        <strong>{player.interceptions ?? 0}</strong>
+                        <span>Interceptions</span>
+                      </div>
+                    </>
+                  )}
+
+                  {player.position === "Keeper" && (
+                    <>
+                      <div className="player-stat">
+                        <strong>{player.saves ?? 0}</strong>
+                        <span>Reddingen</span>
+                      </div>
+
+                      <div className="player-stat">
+                        <strong>{player.oneVSOneSaves ?? 0}</strong>
+                        <span>1-op-1 reddingen</span>
+                      </div>
+                    </>
+                  )}
+
+                  <div className="player-stat">
+                    <strong>{player.matches}</strong>
+                    <span>Wedstrijden</span>
+                  </div>
+
+                  <div className="player-stat">
+                    <strong>{player.minutesplayed}</strong>
+                    <span>Minuten</span>
+                  </div>
+                </div>
+
+                <div className="player-actions">
+                  <button
+                    type="button"
+                    className="edit-button"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      editPlayer(player);
+                    }}
+                  >
+                    Bewerken
+                  </button>
+
+                  <button
+                    type="button"
+                    className="delete-button"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      deletePlayer(player.id);
+                    }}
+                  >
+                    Verwijderen
+                  </button>
+                </div>
               </div>
-
-              <div className="player-rating">
-                <span>RATING</span>
-
-                <strong className={getRatingClass(player.rating)}>
-                  {player.rating}
-                </strong>
-              </div>
-            </div>
-
-            <div className="player-position">{player.position}</div>
-
-            <div className="player-stats">
-              {(player.position === "Aanvaller" ||
-                player.position === "Middenvelder") && (
-                <>
-                  <div className="player-stat">
-                    <strong>{player.goals}</strong>
-                    <span>Goals</span>
-                  </div>
-
-                  <div className="player-stat">
-                    <strong>{player.assists}</strong>
-                    <span>Assists</span>
-                  </div>
-                </>
-              )}
-
-              {player.position === "Verdediger" && (
-                <>
-                  <div className="player-stat">
-                    <strong>{player.tackles ?? 0}</strong>
-                    <span>Tackles</span>
-                  </div>
-
-                  <div className="player-stat">
-                    <strong>{player.interceptions ?? 0}</strong>
-                    <span>Interceptions</span>
-                  </div>
-                </>
-              )}
-
-              {player.position === "Keeper" && (
-                <>
-                  <div className="player-stat">
-                    <strong>{player.saves ?? 0}</strong>
-                    <span>Reddingen</span>
-                  </div>
-
-                  <div className="player-stat">
-                    <strong>{player.oneVSOneSaves ?? 0}</strong>
-                    <span>1-op-1 reddingen</span>
-                  </div>
-                </>
-              )}
-
-              <div className="player-stat">
-                <strong>{player.matches}</strong>
-                <span>Wedstrijden</span>
-              </div>
-
-              <div className="player-stat">
-                <strong>{player.minutesplayed}</strong>
-                <span>Minuten</span>
-              </div>
-            </div>
-
-            <div className="player-actions">
-              <button
-                type="button"
-                className="edit-button"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  editPlayer(player);
-                }}
-              >
-                Bewerken
-              </button>
-
-              <button
-                type="button"
-                className="delete-button"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  deletePlayer(player.id);
-                }}
-              >
-                Verwijderen
-              </button>
-            </div>
+            ))}
           </div>
-        ))}
-      </div>
+        </section>
+      );
+    })}
+</div>
       {selectedPlayer && (
         <div className="modal-overlay" onClick={() => setSelectedPlayer(null)}>
           <div className="modal" onClick={(e) => e.stopPropagation()}>
