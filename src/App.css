@@ -2,53 +2,137 @@
   box-sizing: border-box;
 }
 
-/* Thema */
+/* =========================================================
+   Thema
+   ========================================================= */
 
 .app {
-  --page-background: #111827;
-  --card-background: #1f2937;
-  --secondary-background: #111827;
-  --input-background: #111827;
-  --border-color: #374151;
-  --text-color: #ffffff;
-  --muted-text-color: #d1d5db;
-  --table-background: #1f2937;
-  --table-text-color: #ffffff;
+  /* Achtergronden */
+  --page-background: #0f172a;
+  --card-background: #1e293b;
+  --secondary-background: #172033;
+  --input-background: #0f172a;
+
+  /* Randen */
+  --border-color: #334155;
+  --border-color-hover: #475569;
+
+  /* Tekst */
+  --text-color: #f8fafc;
+  --muted-text-color: #94a3b8;
+
+  /* Accent */
+  --accent: #3b82f6;
+  --accent-hover: #2563eb;
+  --accent-soft: rgba(59, 130, 246, 0.12);
+
+  /* Status */
+  --success: #22c55e;
+  --success-soft: #dcfce7;
+
+  --warning: #f59e0b;
+  --warning-soft: #fef3c7;
+
+  --danger: #ef4444;
+  --danger-hover: #dc2626;
+  --danger-soft: #fee2e2;
+
+  /* Tabellen */
+  --table-background: var(--card-background);
+  --table-text-color: var(--text-color);
+
+  /* Vormgeving */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+
+  --shadow-card:
+    0 4px 16px rgba(0, 0, 0, 0.12);
+
+  --shadow-card-hover:
+    0 10px 28px rgba(0, 0, 0, 0.18);
+
+  --shadow-modal:
+    0 24px 60px rgba(0, 0, 0, 0.45);
 
   min-height: 100vh;
+
   background: var(--page-background);
   color: var(--text-color);
+
   transition:
     background 0.2s ease,
     color 0.2s ease;
 }
 
 .app.light {
-  --page-background: #f3f4f6;
+  --page-background: #f1f5f9;
   --card-background: #ffffff;
-  --secondary-background: #e5e7eb;
+  --secondary-background: #f8fafc;
   --input-background: #ffffff;
-  --border-color: #d1d5db;
-  --text-color: #111827;
-  --muted-text-color: #4b5563;
+
+  --border-color: #e2e8f0;
+  --border-color-hover: #cbd5e1;
+
+  --text-color: #0f172a;
+  --muted-text-color: #64748b;
+
+  --accent: #2563eb;
+  --accent-hover: #1d4ed8;
+  --accent-soft: rgba(37, 99, 235, 0.08);
+
+  --success: #16a34a;
+  --success-soft: #dcfce7;
+
+  --warning: #d97706;
+  --warning-soft: #fef3c7;
+
+  --danger: #dc2626;
+  --danger-hover: #b91c1c;
+  --danger-soft: #fee2e2;
+
   --table-background: #ffffff;
-  --table-text-color: #111827;
+  --table-text-color: #0f172a;
+
+  --shadow-card:
+    0 4px 16px rgba(15, 23, 42, 0.06);
+
+  --shadow-card-hover:
+    0 10px 28px rgba(15, 23, 42, 0.10);
+
+  --shadow-modal:
+    0 24px 60px rgba(15, 23, 42, 0.20);
 }
 
-/* Basis */
+/* =========================================================
+   Basis
+   ========================================================= */
+
+html {
+  background: #0f172a;
+}
 
 body {
   margin: 0;
   padding: 20px;
-  background: #111827;
-  color: #ffffff;
-  font-family: Arial, sans-serif;
+
+  background: #0f172a;
+  color: #f8fafc;
+
+  font-family:
+    Arial,
+    Helvetica,
+    sans-serif;
+
   text-align: center;
   overflow-x: hidden;
+
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
 }
 
 body:has(.app.light) {
-  background: #f3f4f6;
+  background: #f1f5f9;
 }
 
 #root {
@@ -57,16 +141,32 @@ body:has(.app.light) {
   margin: 0 auto;
 }
 
+/* =========================================================
+   Typografie
+   ========================================================= */
+
+h1,
+h2,
+h3,
+p {
+  margin-top: 0;
+}
+
 h1 {
-  margin: 0 0 12px;
+  margin-bottom: 12px;
+
   color: var(--text-color);
+
   font-size: 32px;
   line-height: 1.2;
+  font-weight: 700;
 }
 
 h2 {
   margin: 24px 0 12px;
+
   color: var(--text-color);
+
   line-height: 1.25;
 }
 
@@ -75,29 +175,62 @@ h2.favoriet {
   font-size: 36px;
 }
 
+/* =========================================================
+   Algemene controls
+   ========================================================= */
+
 button {
   margin: 0;
   padding: 10px 15px;
-  border: none;
-  border-radius: 6px;
-  background: #2563eb;
-  color: white;
+
+  background: var(--accent);
+  color: #ffffff;
+
+  border: 1px solid var(--accent);
+  border-radius: var(--radius-sm);
+
   cursor: pointer;
   font-family: inherit;
+  font-weight: 600;
+
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
 }
 
 button:hover {
-  background: #1d4ed8;
+  background: var(--accent-hover);
+  border-color: var(--accent-hover);
 }
 
-input {
+button:active {
+  transform: translateY(1px);
+}
+
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+a:focus-visible {
+  outline: 3px solid var(--accent-soft);
+  outline-offset: 2px;
+}
+
+input,
+select,
+textarea {
   max-width: 100%;
-  margin: 0;
+
   padding: 10px;
-  border: 1px solid var(--border-color);
-  border-radius: 6px;
+
   background: var(--input-background);
   color: var(--text-color);
+
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+
   font-family: inherit;
 }
 
@@ -106,6 +239,22 @@ textarea::placeholder {
   color: var(--muted-text-color);
 }
 
+/* =========================================================
+   Algemene card-basis
+   ========================================================= */
+
+.stat-card,
+.home-page-stat,
+.home-page-panel,
+.home-page-player-summary,
+.player-card,
+.settings-list,
+.teams-list,
+.data-settings,
+.faq-list,
+.dashboard-extra {
+  box-shadow: var(--shadow-card);
+}
 /* Navigatie */
 
 .nav {
@@ -1667,15 +1816,12 @@ textarea::placeholder {
 .matches-table th:last-child,
 .matches-table td:last-child {
   width: 210px;
-  border-bottom: none;
 }
 
 .matches-table td:last-child {
   padding: 14px 16px;
-  border-bottom: none;
   vertical-align: middle;
 }
-
 .matches-table .match-actions {
   display: flex;
   align-items: center;
