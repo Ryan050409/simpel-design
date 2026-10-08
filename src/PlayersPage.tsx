@@ -42,7 +42,13 @@ function PlayersPage({ playerList, setPlayerList, teams }: PlayersPageProps) {
   function editPlayer(player: Player) {
     setEditingPlayer(player);
   }
-
+  function getRatingClass(rating: number) {
+  if (rating >= 9) return "rating-excellent";
+  if (rating >= 8) return "rating-very-good";
+  if (rating >= 7) return "rating-good";
+  if (rating >= 6) return "rating-average";
+  return "rating-low";
+}
   return (
     <div className="players-page">
       <div className="players-page-header">
@@ -91,7 +97,9 @@ function PlayersPage({ playerList, setPlayerList, teams }: PlayersPageProps) {
               <div className="player-rating">
                 <span>RATING</span>
 
-                <strong>{player.rating}</strong>
+                <strong className={getRatingClass(player.rating)}>
+                  {player.rating}
+                </strong>
               </div>
             </div>
 

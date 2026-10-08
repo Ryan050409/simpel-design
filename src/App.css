@@ -807,6 +807,7 @@ nav a.active {
     transform 0.2s ease,
     box-shadow 0.2s ease,
     border-color 0.2s ease;
+    cursor:pointer;
 }
 
 .player-card:hover {
@@ -867,11 +868,30 @@ nav a.active {
   font-weight: bold;
 }
 
-.player-rating strong {
-  font-size: 23px;
-  color: #facc15;
+.rating-low {
+  color: #ef4444;
+  font-size: 15px;
 }
 
+.rating-average {
+  color: #f97316;
+  font-size: 17px;
+}
+
+.rating-good {
+  color: #facc15;
+  font-size: 19px;
+}
+
+.rating-very-good {
+  color: #22c55e;
+  font-size: 21px;
+}
+
+.rating-excellent {
+  color: #16a34a;
+  font-size: 23px;
+}
 .player-position {
   display: inline-flex;
   align-items: center;
