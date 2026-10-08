@@ -33,13 +33,13 @@ function HomePage({ matches, playerList, team }: HomePageProps) {
 
   const topScorer = [...teamPlayers].sort((a, b) => b.goals - a.goals)[0];
 
-  const averageRating = 
-  teamPlayers.length > 0
-    ? (
-      teamPlayers.reduce((total, player) => total + player.rating, 0) / 
-      teamPlayers.length
-    ).toFixed(1)
-    : null;
+  const averageRating =
+    teamPlayers.length > 0
+      ? (
+          teamPlayers.reduce((total, player) => total + player.rating, 0) /
+          teamPlayers.length
+        ).toFixed(1)
+      : null;
 
   return (
     <div className="home-page">
@@ -53,14 +53,12 @@ function HomePage({ matches, playerList, team }: HomePageProps) {
           <strong>{team}</strong>
         </div>
       </div>
-
       <div className="home-page-section-title">
         <div>
           <h2>Jouw overzicht</h2>
           <p>Een korte samenvatting van je team.</p>
         </div>
       </div>
-
       <div className="home-page-stats">
         <div className="home-page-stat">
           <span>Wedstrijden</span>
@@ -87,26 +85,40 @@ function HomePage({ matches, playerList, team }: HomePageProps) {
         </div>
       </div>
       <div className="home-page-player-summary">
-        <div> 
-          <span className="home-page-panel-label">👥 SPELERS</span>
-          <h2> TeamSelectie</h2>
-          <p> 
-            {teamPlayers.length} {teamPlayers.length === 1 ? "speler" : "spelers"} {" "}
-            . Gemiddelde rating: {averageRating}
-          </p>
+        <div className="home-page-player-summary-header">
+          <div>
+            <span className="home-page-panel-label">👥 TEAMSELECTIE</span>
+          </div>
+
+          <Link to="/spelers">Alle spelers →</Link>
         </div>
 
-        {topScorer &&( 
+        <div className="home-page-player-summary-stats">
           <div>
-            <strong>
-              {topScorer.firstname} {topScorer.lastname}
+            <strong>{teamPlayers.length}</strong>
+            <span>{teamPlayers.length === 1 ? "speler" : "spelers"}</span>
+          </div>
+
+          <div>
+            <strong>{averageRating ?? "-"}</strong>
+            <span>gemiddelde rating</span>
+          </div>
+        </div>
+
+        {topScorer && (
+          <div className="home-page-player-summary-topscorer">
+            <span>🏆 Topscorer</span>
+
+            <div>
+              <strong>
+                {topScorer.firstname} {topScorer.lastname}
               </strong>
+
               <span>{topScorer.goals} doelpunten</span>
+            </div>
           </div>
         )}
-
-        <Link  to ="/spelers">Alle spelers →</Link>
-        </div>
+      </div>
       <div className="home-page-content-grid">
         <div className="home-page-panel">
           <div className="home-page-panel-heading">

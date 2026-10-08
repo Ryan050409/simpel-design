@@ -59,6 +59,8 @@ body:has(.app.light) {
   margin: 0 auto;
 }
 
+/* Algemene elementen */
+
 button {
   background: #2563eb;
   color: white;
@@ -570,48 +572,74 @@ nav a.active {
 .home-page-latest a {
   flex-shrink: 0;
 }
-
 .home-page-player-summary {
+  padding: 20px;
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  background: var(--card-background);
+}
+
+.home-page-player-summary-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 24px;
-  margin-top: 24px;
-  padding: 24px;
-  background: var(--card-background);
-  border: 1px solid var(--border-color);
-  border-radius: 14px;
+  gap: 16px;
+  margin-bottom: 18px;
 }
-
-.home-page-player-summary h2 {
-  margin: 6px 0;
-  color: var(--text-color);
-}
-
-.home-page-player-summary p {
+.home-page-player-summary-header .home-page-panel-label {
   margin: 0;
-  color: var(--muted-text-color);
 }
-
-.home-page-player-summary > div:nth-child(2) {
+.home-page-player-summary-header a {
+  color: #2563eb;
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: none;
+}
+.home-page-player-summary-header a:hover {
+  text-decoration: underline;
+}
+.home-page-player-summary-stats {
+  display: flex;
+  gap: 40px;
+  margin-bottom: 18px;
+}
+.home-page-player-summary-stats > div {
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 3px;
 }
-
-.home-page-player-summary > div:nth-child(2) strong {
+.home-page-player-summary-stats strong {
   color: var(--text-color);
-  font-size: 18px;
+  font-size: 24px;
 }
-
-.home-page-player-summary > div:nth-child(2) span {
+.home-page-player-summary-stats span {
   color: var(--muted-text-color);
+  font-size: 13px;
+}
+.home-page-player-summary-topscorer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding-top: 14px;
+  border-top: 1px solid var(--border-color);
+}
+.home-page-player-summary-topscorer > span {
+  color: var(--muted-text-color);
+  font-size: 13px;
+}
+.home-page-player-summary-topscorer > div {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.home-page-player-summary-topscorer strong {
+  color: var(--text-color);
   font-size: 14px;
 }
-
-.home-page-player-summary a {
-  color: #60a5fa;
-  white-space: nowrap;
+.home-page-player-summary-topscorer div span {
+  color: var(--muted-text-color);
+  font-size: 13px;
 }
 
 /* Dashboard */
@@ -628,6 +656,17 @@ nav a.active {
   max-width: 1100px;
   margin: 0 auto 18px;
   text-align: left;
+}
+
+.dashboard-page-header h1,
+.settings-page-header h1 {
+  margin: 0 0 6px;
+}
+
+.dashboard-page-header p,
+.settings-page-header p {
+  margin: 0;
+  color: var(--muted-text-color);
 }
 
 .stats-grid {
@@ -690,15 +729,6 @@ nav a.active {
 
 /* Spelers */
 
-.players {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 16px;
-  width: 100%;
-  max-width: 1100px;
-  margin: 30px auto;
-}
-
 .players-page {
   width: 100%;
   max-width: 1100px;
@@ -716,44 +746,18 @@ nav a.active {
   text-align: left;
 }
 
-.players-page-header h1,
-.matches-page-header h1,
-.dashboard-page-header h1,
-.settings-page-header h1 {
+.players-page-header h1 {
   margin: 0 0 6px;
 }
 
-.players-page-header .add-button {
-  flex-shrink: 0;
-  margin-left: auto;
-}
-
-.players-page-header p,
-.matches-page-header p,
-.dashboard-page-header p,
-.settings-page-header p {
+.players-page-header p {
   margin: 0;
   color: var(--muted-text-color);
 }
 
-.matches-page {
-  width: 100%;
-}
-
-.matches-page-actions {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  gap: 8px;
-}
-
-.matches-page-actions .add-button {
-  margin: 0;
-}
-
-.matches-page-actions .match-filter {
-  margin: 0;
-  justify-content: flex-end;
+.players-page-header .add-button {
+  flex-shrink: 0;
+  margin: 0 0 0 auto;
 }
 
 .add-button {
@@ -772,6 +776,57 @@ nav a.active {
 .add-button:hover {
   background: #1d4ed8;
   transform: translateY(-1px);
+}
+
+/* Spelers zoeken */
+
+.player-search {
+  width: 100%;
+  margin: 0 0 20px;
+  text-align: right;
+}
+
+.player-search input {
+  width: 100%;
+  max-width: 420px;
+  margin: 0;
+  padding: 12px 15px;
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  background: var(--input-background);
+  color: var(--text-color);
+  font-size: 14px;
+  outline: none;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.player-search input::placeholder {
+  color: var(--muted-text-color);
+}
+
+.player-search input:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+}
+
+.player-search + p {
+  margin: 0 0 24px;
+  padding: 14px 16px;
+  border-radius: 10px;
+  background: var(--card-background);
+  color: var(--text-color);
+  text-align: center;
+  font-size: 15px;
+}
+
+.players {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+  width: 100%;
+  margin: 30px auto;
 }
 
 /* Spelerkaart */
@@ -897,7 +952,7 @@ nav a.active {
   font-weight: 700;
 }
 
-/* Statistieken */
+/* Spelerstatistieken */
 
 .player-stats {
   display: grid;
@@ -933,7 +988,7 @@ nav a.active {
   white-space: nowrap;
 }
 
-/* Actieknoppen */
+/* Speleracties */
 
 .player-actions {
   display: flex;
@@ -966,6 +1021,20 @@ nav a.active {
 .player-actions .delete-button:hover {
   background: #b91c1c;
 }
+
+.players > p {
+  grid-column: 1 / -1;
+  width: 100%;
+  margin: 0;
+  padding: 16px;
+  border-radius: 10px;
+  background: var(--card-background);
+  color: var(--text-color);
+  text-align: center;
+  font-size: 15px;
+  border: 1px solid var(--border-color);
+}
+
 /* Modal */
 
 .modal-overlay {
@@ -1279,6 +1348,62 @@ nav a.active {
   background: #b91c1c;
 }
 
+.favorite-team-setting {
+  width: 100%;
+  padding: 20px;
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  background: var(--card-background);
+}
+
+.favorite-team-setting-header {
+  margin-bottom: 16px;
+}
+
+.favorite-team-setting-header strong {
+  display: block;
+  margin-bottom: 5px;
+  color: var(--text-color);
+  font-size: 16px;
+}
+
+.favorite-team-setting-header small {
+  display: block;
+  color: var(--muted-text-color);
+  font-size: 13px;
+}
+
+.favorite-team-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.favorite-team-option {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 9px 14px;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  background: var(--input-background);
+  color: var(--text-color);
+  font-size: 14px;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.favorite-team-option:hover {
+  border-color: #2563eb;
+}
+
+.favorite-team-option.selected {
+  border-color: #2563eb;
+  background: #2563eb;
+  color: #ffffff;
+  font-weight: 600;
+}
+
 /* FAQ */
 
 .faq-section {
@@ -1343,27 +1468,64 @@ nav a.active {
 
 /* Wedstrijden */
 
-.match-filter {
+.matches-page {
+  width: 100%;
+}
+
+.matches-page-header {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: start;
+  gap: 20px;
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto 18px;
+  text-align: left;
+}
+
+.matches-page-header h1 {
+  margin: 0 0 6px;
+}
+
+.matches-page-header p {
+  margin: 0;
+  color: var(--muted-text-color);
+}
+
+.matches-page-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+.matches-page-actions .add-button {
+  margin: 0;
+}
+
+.matches-page-actions .match-filter {
   display: flex;
   align-items: center;
   justify-content: flex-end;
   gap: 8px;
-  max-width: 1100px;
-  margin: -8px auto 18px;
+  margin: 0;
 }
 
+/* Wedstrijdfilter */
+
 .match-filter label {
-  color: var(--table-text-color);
+  color: var(--text-color);
   font-size: 13px;
   font-weight: 600;
 }
 
 .match-filter select {
   padding: 8px 10px;
-  border: 1px solid #d1d5db;
+  border: 1px solid var(--border-color);
   border-radius: 8px;
-  background: white;
-  color: #111827;
+  background: var(--input-background);
+  color: var(--text-color);
   font-size: 13px;
   cursor: pointer;
   outline: none;
@@ -1373,6 +1535,8 @@ nav a.active {
   border-color: #2563eb;
   box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.15);
 }
+
+/* Wedstrijdtabel */
 
 .matches-table {
   width: 100%;
@@ -1405,19 +1569,6 @@ nav a.active {
 .matches-table th:first-child,
 .matches-table td:first-child {
   width: 120px;
-}
-.matches-page-header h1 {
-  margin: 0;
-}
-
-.matches-page-header p {
-  margin: 0;
-  color: var(--muted-text-color);
-}
-
-.matches-page-header .add-button {
-  order: -1;
-  margin: 0;
 }
 
 .matches-table th:nth-child(2),
@@ -1501,6 +1652,8 @@ nav a.active {
   background: #b91c1c;
 }
 
+/* Wedstrijdresultaten */
+
 .match-row-win {
   background: #dcfce7;
 }
@@ -1551,87 +1704,6 @@ nav a.active {
 .result-loss {
   background: #dc2626;
   color: white;
-}
-.matches-page-header {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 20px;
-  max-width: 1100px;
-  margin: 0 auto 18px;
-  text-align: left;
-}
-
-.matches-page-actions {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  gap: 8px;
-  flex-shrink: 0;
-}
-
-.matches-page-actions .add-button {
-  margin: 0;
-}
-
-.matches-page-actions .match-filter {
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  gap: 8px;
-  margin: 0;
-}
-
-/* Spelers zoeken */
-
-.player-search {
-  width: 100%;
-  margin: 0 0 20px;
-  text-align: right;
-}
-
-.player-search input {
-  width: 100%;
-  max-width: 420px;
-  padding: 12px 15px;
-  border: 1px solid var(--border-color);
-  border-radius: 10px;
-  background: var(--input-background);
-  color: var(--text-color);
-  font-size: 14px;
-  outline: none;
-}
-
-.player-search input::placeholder {
-  color: var(--muted-text-color);
-}
-
-.player-search input:focus {
-  border-color: #2563eb;
-  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
-}
-
-.player-search + p {
-  margin: 0 0 24px;
-  padding: 14px 16px;
-  border-radius: 10px;
-  background: var(--card-background);
-  color: var(--text-color);
-  text-align: center;
-  font-size: 15px;
-}
-
-.players > p {
-  grid-column: 1 / -1;
-  width: 100%;
-  margin: 0;
-  padding: 16px;
-  border-radius: 10px;
-  background: var(--card-background);
-  color: var(--text-color);
-  text-align: center;
-  font-size: 15px;
-  border: 1px solid var(--border-color);
 }
 
 /* Mobiele / tablet layouts */
@@ -1730,6 +1802,8 @@ nav a.active {
     border-top: 1px solid var(--border-color);
   }
 
+  /* Wedstrijdtabel mobiel */
+
   .matches-table {
     width: calc(100% - 20px);
     max-width: calc(100% - 20px);
@@ -1790,6 +1864,8 @@ nav a.active {
     text-overflow: clip;
   }
 
+  /* Algemene mobiele elementen */
+
   h1 {
     font-size: 28px;
   }
@@ -1822,12 +1898,32 @@ nav a.active {
     min-height: 44px;
   }
 
+  /* Paginaheaders mobiel */
+
   .matches-page-header,
   .players-page-header,
   .dashboard-page-header,
   .settings-page-header {
+    display: flex;
     flex-direction: column;
     align-items: stretch;
+    text-align: center;
+  }
+
+  .players-page-header .add-button {
+    margin: 0;
+  }
+
+  .matches-page-actions {
+    align-items: stretch;
+    width: 100%;
+  }
+
+  .matches-page-actions .match-filter {
+    justify-content: center;
+  }
+
+  .player-search {
     text-align: center;
   }
 
@@ -1843,6 +1939,8 @@ nav a.active {
   .match-filter select {
     min-width: 0;
   }
+
+  /* Dashboard mobiel */
 
   .stats-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -1861,11 +1959,15 @@ nav a.active {
     margin-bottom: 20px;
   }
 
+  /* Spelers mobiel */
+
   .player-card {
     margin-left: 0;
     margin-right: 0;
     padding: 15px;
   }
+
+  /* Modal mobiel */
 
   .modal-overlay {
     padding: 15px;
@@ -1895,6 +1997,8 @@ nav a.active {
     grid-template-columns: repeat(2, 1fr);
     gap: 10px;
   }
+
+  /* Instellingen mobiel */
 
   .settings-page {
     width: 100%;
@@ -1994,15 +2098,11 @@ nav a.active {
   }
 }
 
-/* Thema-specifieke instellingen */
+/* Thema-specifieke formulierinstellingen */
 
 .app.light .modal .form-grid input,
 .app.light .modal .form-grid select,
-.app.light .modal .form-grid textarea {
-  background: #ffffff;
-  color: #111827;
-}
-
+.app.light .modal .form-grid textarea,
 .app.dark .modal .form-grid input,
 .app.dark .modal .form-grid select,
 .app.dark .modal .form-grid textarea {

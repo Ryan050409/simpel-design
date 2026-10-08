@@ -161,26 +161,36 @@ function SettingsPage({
       </div>
 
       <div className="settings-list">
-        <div className="setting-row">
-          <div>
-            <strong>Favoriete team</strong>
+<div className="favorite-team-setting">
+  <div className="favorite-team-setting-header">
+    <div>
+      <strong>⭐ Favoriete team</strong>
 
-            <small>
-              Kies het team waarvoor je de statistieken wilt bekijken.
-            </small>
-          </div>
+      <small>
+        Kies het team waarvoor je de statistieken wilt bekijken.
+      </small>
+    </div>
+  </div>
 
-          <select
-            value={team}
-            onChange={(event) => setTeam(event.target.value)}
-          >
-            {teams.map((teamOption) => (
-              <option key={teamOption.id} value={teamOption.name}>
-                {teamOption.name}
-              </option>
-            ))}
-          </select>
-        </div>
+  <div className="favorite-team-options">
+    {teams.map((teamOption) => (
+      <button
+        key={teamOption.id}
+        type="button"
+        className={
+          teamOption.name === team
+            ? "favorite-team-option selected"
+            : "favorite-team-option"
+        }
+        onClick={() => setTeam(teamOption.name)}
+      >
+        {teamOption.name}
+        {teamOption.name === team && <span>✓</span>}
+      </button>
+    ))}
+  </div>
+</div>
+
 
         <div className="setting-row">
           <div>
