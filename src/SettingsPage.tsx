@@ -2,15 +2,18 @@ import { useState } from "react";
 import type { Dispatch, SetStateAction } from "react";
 import type { Player, Match, Team } from "./types.ts";
 
-type SettingsPageProps = {
+export type SettingsPageProps = {
+  setMatches: Dispatch<SetStateAction<Match[]>>;
+  setPlayerList: Dispatch<SetStateAction<Player[]>>;
   teams: Team[];
   setTeams: Dispatch<SetStateAction<Team[]>>;
   team: string;
   setTeam: Dispatch<SetStateAction<string>>;
   players: Player[];
   matches: Match[];
+  theme: "dark" | "light";
+  setTheme: Dispatch<SetStateAction<"dark" | "light">>;
 };
-
 function SettingsPage({
   players,
   matches,
@@ -18,6 +21,8 @@ function SettingsPage({
   setTeams,
   team,
   setTeam,
+  theme,
+  setTheme
 }: SettingsPageProps) {
   const [newTeam, setNewTeam] = useState("");
   const [teamWarning, setTeamWarning] = useState("");
@@ -131,6 +136,25 @@ function SettingsPage({
       }
     }
   }
+  function exportData() {
+    const data = {
+      players,
+      matches,
+      teams,
+      favoriteTeam: team,
+    };
+
+    const json = JSON.stringify(data, null, 2);
+    const blob = new Blob([json], { type: "application/json" });
+    const url = URL.createObjectURL(blob);
+
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = "voetbaltracker-backup.json";
+    link.click();
+
+    URL.revokeObjectURL(url);
+  }
 
   return (
     <div className="settings-page">
@@ -193,6 +217,25 @@ function SettingsPage({
             )}
           </div>
         </div>
+        <div className="setting-row">
+  <div>
+    <strong>Thema</strong>
+
+    <small>
+      Kies tussen een licht of donker thema.
+    </small>
+  </div>
+
+  <select
+    value={theme}
+    onChange={(event) =>
+      setTheme(event.target.value as "dark" | "light")
+    }
+  >
+    <option value="dark">Donker</option>
+    <option value="light">Licht</option>
+  </select>
+</div>
       </div>
 
       <div className="teams-list">
@@ -207,30 +250,38 @@ function SettingsPage({
             </button>
           </div>
         ))}
+      </div>
+      <div className="data-settings">
+        <h2>Gegevens</h2>
 
-        <div className="faq-section">
-          <h2>❓Veelgestelde vragen</h2>
+        <p>Maak een back-up van je spelers, wedstrijden en teams.</p>
 
-          <div className="faq-list">
-            {faqs.map((faq, index) => (
-              <div className="faq-item" key={faq.question}>
-                <button
-                  type="button"
-                  className="faq-question"
-                  onClick={() =>
-                    setOpenQuestion(openQuestion === index ? null : index)
-                  }
-                >
-                  <span>{faq.question}</span>
-                  <span>{openQuestion === index ? "−" : "+"}</span>
-                </button>
+        <button type="button" onClick={exportData}>
+          Gegevens exporteren
+        </button>
+      </div>
+      <div className="faq-section">
+        <h2>❓Veelgestelde vragen</h2>
 
-                {openQuestion === index && (
-                  <div className="faq-answer">{faq.answer}</div>
-                )}
-              </div>
-            ))}
-          </div>
+        <div className="faq-list">
+          {faqs.map((faq, index) => (
+            <div className="faq-item" key={faq.question}>
+              <button
+                type="button"
+                className="faq-question"
+                onClick={() =>
+                  setOpenQuestion(openQuestion === index ? null : index)
+                }
+              >
+                <span>{faq.question}</span>
+                <span>{openQuestion === index ? "−" : "+"}</span>
+              </button>
+
+              {openQuestion === index && (
+                <div className="faq-answer">{faq.answer}</div>
+              )}
+            </div>
+          ))}
         </div>
       </div>
     </div>

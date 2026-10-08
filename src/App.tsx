@@ -15,10 +15,10 @@ function App() {
   const [team, setTeam] = useState(() => {
     return localStorage.getItem("favoriteTeam") || "Feyenoord";
   });
-
+const [theme, setTheme] = useState<"dark" | "light">("dark");
   const [playerList, setPlayerList] = useState<Player[]>(() => {
     const savedPlayers = localStorage.getItem("players");
-
+      
     if (!savedPlayers) {
       return players;
     }
@@ -193,6 +193,7 @@ function App() {
 
   return (
     <BrowserRouter>
+    <div className={`app ${theme}`}>
       <nav className="nav">
         <NavLink to="/">🏠 Home</NavLink>
 
@@ -255,10 +256,13 @@ function App() {
               setTeam={setTeam}
               players={playerList}
               matches={matches}
+              theme={theme}
+              setTheme={setTheme}
             />
           }
         />
       </Routes>
+      </div>
     </BrowserRouter>
   );
 }
