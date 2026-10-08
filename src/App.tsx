@@ -175,6 +175,54 @@ const [theme, setTheme] = useState<"dark" | "light">(() => {
             id: 6,
             name: "FC Utrecht",
           },
+          {
+            id: 7,
+            name: "ADO ",
+          },
+          {
+            id: 8,
+            name: "PSV",
+          },
+          {
+            id: 9,
+            name: "Feyenoord",
+          },
+          {
+            id: 10,
+            name: "AZ",
+          },
+          {
+            id: 11,
+            name: "FC Twente",
+          },
+          {
+            id: 12,
+            name:   "FC Utrecht",
+          },
+          {
+            id: 13,
+            name: "Ajax",
+          },
+          {
+            id: 14,
+            name: "PSV",
+          },
+          {
+            id: 15,
+            name: "Feyenoord",
+          },
+          {
+            id: 16,
+            name: "AZ",
+          },
+          {
+            id: 17,
+            name: "FC Twente",
+          },
+          {
+            id: 18,
+            name: "FC Utrecht",
+          },
         ];
   });
 
