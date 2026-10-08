@@ -84,11 +84,7 @@ function MatchForm({
   return (
     <div className="modal-overlay">
       <div className="modal">
-        <button
-          className="modal-close"
-          type="button"
-          onClick={closeModal}
-        >
+        <button className="modal-close" type="button" onClick={closeModal}>
           ×
         </button>
 
@@ -99,49 +95,68 @@ function MatchForm({
         {warning && <p className="warning">{warning}</p>}
 
         <div className="form-grid">
-          <input
-            list="match-teams"
-            type="text"
-            placeholder="Thuisteam"
-            value={home}
-            onChange={(e) => setHome(e.target.value)}
-          />
+          <div className="form-field">
+            <label htmlFor="match-home">Thuisteam</label>
+            <select
+              id="match-home"
+              value={home}
+              onChange={(e) => setHome(e.target.value)}
+            >
+              <option value="">Kies thuisteam</option>
+              {teams.map((team) => (
+                <option key={team.id} value={team.name}>
+                  {team.name}
+                </option>
+              ))}
+            </select>
+          </div>
 
-          <input
-            list="match-teams"
-            type="text"
-            placeholder="Uitteam"
-            value={away}
-            onChange={(e) => setAway(e.target.value)}
-          />
+          <div className="form-field">
+            <label htmlFor="match-away">Uitteam</label>
+            <select
+              id="match-away"
+              value={home}
+              onChange={(e) => setAway(e.target.value)}
+            >
+              <option value="">Kies uitteam</option>
+              {teams.map((team) => (
+                <option key={team.id} value={team.name}>
+                  {team.name}
+                </option>
+              ))}
+            </select>
+          </div>
+          <div className="form-field">
+            <label htmlFor="match-home-goals">Goals thuis</label>
+            <input
+              id="match-home-goals"
+              type="number"
+              min="0"
+              value={homeGoals}
+              onChange={(e) => setHomeGoals(e.target.value)}
+            />
+          </div>
 
-          <datalist id="match-teams">
-            {teams.map((team) => (
-              <option key={team.id} value={team.name} />
-            ))}
-          </datalist>
+          <div className="form-field">
+            <label htmlFor="match-away-goals">Goals uit</label>
+            <input
+              id="match-away-goals"
+              type="number"
+              min="0"
+              value={awayGoals}
+              onChange={(e) => setAwayGoals(e.target.value)}
+            />
+          </div>
 
-          <input
-            type="number"
-            min="0"
-            placeholder="Goals thuis"
-            value={homeGoals}
-            onChange={(e) => setHomeGoals(e.target.value)}
-          />
-
-          <input
-            type="number"
-            min="0"
-            placeholder="Goals uit"
-            value={awayGoals}
-            onChange={(e) => setAwayGoals(e.target.value)}
-          />
-
-          <input
-            type="date"
-            value={date}
-            onChange={(e) => setDate(e.target.value)}
-          />
+          <div className="form-field">
+            <label htmlFor="match-date">Datum</label>
+            <input
+              id="match-date"
+              type="date"
+              value={date}
+              onChange={(e) => setDate(e.target.value)}
+            />
+          </div>
         </div>
 
         <button

@@ -215,11 +215,7 @@ function PlayerForm({
   return (
     <div className="modal-overlay">
       <div className="modal">
-        <button
-          className="modal-close"
-          type="button"
-          onClick={closeModal}
-        >
+        <button className="modal-close" type="button" onClick={closeModal}>
           ×
         </button>
 
@@ -232,41 +228,56 @@ function PlayerForm({
         {formStep === 1 && (
           <>
             <div className="form-grid">
-              <input
-                type="text"
-                placeholder="Voornaam speler"
-                value={newPlayerFirstName}
-                onChange={(e) => setNewPlayerFirstName(e.target.value)}
-              />
+              <h3 className="form-section-title">Algemeen</h3>
 
-              <input
-                type="text"
-                placeholder="Achternaam speler"
-                value={newPlayerLastName}
-                onChange={(e) => setNewPlayerLastName(e.target.value)}
-              />
+              <div className="form-field">
+                <label htmlFor="player-firstname">Voornaam</label>
+                <input
+                  id="player-firstname"
+                  type="text"
+                  placeholder="Voornaam speler"
+                  value={newPlayerFirstName}
+                  onChange={(e) => setNewPlayerFirstName(e.target.value)}
+                />
+              </div>
 
-              <input
-                type="number"
-                placeholder="Rugnummer"
-                value={newPlayerNumber}
-                onChange={(e) => setNewPlayerNumber(e.target.value)}
-              />
+              <div className="form-field">
+                <label htmlFor="player-lastname">Achternaam</label>
+                <input
+                  id="player-lastname"
+                  type="text"
+                  placeholder="Achternaam speler"
+                  value={newPlayerLastName}
+                  onChange={(e) => setNewPlayerLastName(e.target.value)}
+                />
+              </div>
 
-              <input
-                list="player-positions"
-                type="text"
-                placeholder="Positie"
-                value={newPlayerPosition}
-                onChange={(e) => setNewPlayerPosition(e.target.value)}
-              />
+              <div className="form-field">
+                <label htmlFor="player-number">Rugnummer</label>
+                <input
+                  id="player-number"
+                  type="number"
+                  min="0"
+                  placeholder="Rugnummer"
+                  value={newPlayerNumber}
+                  onChange={(e) => setNewPlayerNumber(e.target.value)}
+                />
+              </div>
 
-              <datalist id="player-positions">
-                <option value="Keeper" />
-                <option value="Verdediger" />
-                <option value="Middenvelder" />
-                <option value="Aanvaller" />
-              </datalist>
+              <div className="form-field">
+                <label htmlFor="player-position">Positie</label>
+                <select
+                  id="player-position"
+                  value={newPlayerPosition}
+                  onChange={(e) => setNewPlayerPosition(e.target.value)}
+                >
+                  <option value="">Kies positie</option>
+                  <option value="Keeper">Keeper</option>
+                  <option value="Verdediger">Verdediger</option>
+                  <option value="Middenvelder">Middenvelder</option>
+                  <option value="Aanvaller">Aanvaller</option>
+                </select>
+              </div>
             </div>
 
             <button
@@ -282,173 +293,204 @@ function PlayerForm({
         {formStep === 2 && (
           <>
             <div className="form-grid">
+              <h3 className="form-section-title">Algemeen</h3>
+
               <div className="form-field">
-                <label>Team</label>
-                <input
-                  list="player-teams"
-                  type="text"
+                <label htmlFor="player-team">Team</label>
+                <select
+                  id="player-team"
                   value={newPlayerTeam}
                   onChange={(e) => setNewPlayerTeam(e.target.value)}
-                />
-
-                <datalist id="player-teams">
+                >
+                  <option value="">Kies een team</option>
                   {teams.map((team) => (
-                    <option key={team.id} value={team.name} />
+                    <option key={team.id} value={team.name}>
+                      {team.name}
+                    </option>
                   ))}
-                </datalist>
+                </select>
               </div>
 
               <div className="form-field">
-                <label>Goals</label>
+                <label htmlFor="player-matches">Wedstrijden</label>
                 <input
+                  id="player-matches"
                   type="number"
-                  value={newPlayerGoals}
-                  onChange={(e) => setNewPlayerGoals(e.target.value)}
-                />
-              </div>
-
-              <div className="form-field">
-                <label>Assists</label>
-                <input
-                  type="number"
-                  value={newPlayerAssists}
-                  onChange={(e) => setNewPlayerAssists(e.target.value)}
-                />
-              </div>
-
-              <div className="form-field">
-                <label>Wedstrijden</label>
-                <input
-                  type="number"
+                  min="0"
                   value={newPlayerMatches}
                   onChange={(e) => setNewPlayerMatches(e.target.value)}
                 />
               </div>
 
               <div className="form-field">
-                <label>Minuten gespeeld</label>
+                <label htmlFor="player-minutes">Minuten gespeeld</label>
                 <input
+                  id="player-minutes"
                   type="number"
+                  min="0"
                   value={newPlayerMinutesPlayed}
-                  onChange={(e) =>
-                    setNewPlayerMinutesPlayed(e.target.value)
-                  }
+                  onChange={(e) => setNewPlayerMinutesPlayed(e.target.value)}
+                />
+              </div>
+
+              <h3 className="form-section-title">Aanvallend</h3>
+
+              <div className="form-field">
+                <label htmlFor="player-goals">Goals</label>
+                <input
+                  id="player-goals"
+                  type="number"
+                  min="0"
+                  value={newPlayerGoals}
+                  onChange={(e) => setNewPlayerGoals(e.target.value)}
                 />
               </div>
 
               <div className="form-field">
-                <label>Tackles</label>
+                <label htmlFor="player-assists">Assists</label>
                 <input
+                  id="player-assists"
                   type="number"
+                  min="0"
+                  value={newPlayerAssists}
+                  onChange={(e) => setNewPlayerAssists(e.target.value)}
+                />
+              </div>
+
+              <h3 className="form-section-title">Verdedigend</h3>
+
+              <div className="form-field">
+                <label htmlFor="player-tackles">Tackles</label>
+                <input
+                  id="player-tackles"
+                  type="number"
+                  min="0"
                   value={newPlayerTackle}
                   onChange={(e) => setNewPlayerTackle(e.target.value)}
                 />
               </div>
 
               <div className="form-field">
-                <label>Interceptions</label>
+                <label htmlFor="player-interceptions">Interceptions</label>
                 <input
+                  id="player-interceptions"
                   type="number"
+                  min="0"
                   value={newPlayerInterceptions}
-                  onChange={(e) =>
-                    setNewPlayerInterceptions(e.target.value)
-                  }
+                  onChange={(e) => setNewPlayerInterceptions(e.target.value)}
                 />
               </div>
 
               <div className="form-field">
-                <label>Blocks</label>
+                <label htmlFor="player-blocks">Blocks</label>
                 <input
+                  id="player-blocks"
                   type="number"
+                  min="0"
                   value={newPlayerBlocks}
                   onChange={(e) => setNewPlayerBlocks(e.target.value)}
                 />
               </div>
 
               <div className="form-field">
-                <label>Clearances</label>
+                <label htmlFor="player-clearances">Clearances</label>
                 <input
+                  id="player-clearances"
                   type="number"
+                  min="0"
                   value={newPlayerClearances}
                   onChange={(e) => setNewPlayerClearances(e.target.value)}
                 />
               </div>
 
               <div className="form-field">
-                <label>Gewonnen duels</label>
+                <label htmlFor="player-duels">Gewonnen duels</label>
                 <input
+                  id="player-duels"
                   type="number"
+                  min="0"
                   value={newPlayerDuelsWon}
                   onChange={(e) => setNewPlayerDuelsWon(e.target.value)}
                 />
               </div>
 
               <div className="form-field">
-                <label>Overtredingen</label>
+                <label htmlFor="player-fouls">Overtredingen</label>
                 <input
+                  id="player-fouls"
                   type="number"
+                  min="0"
                   value={newPlayerFouls}
                   onChange={(e) => setNewPlayerFouls(e.target.value)}
                 />
               </div>
 
+              <h3 className="form-section-title">Keepers</h3>
+
               <div className="form-field">
-                <label>Reddingen</label>
+                <label htmlFor="player-saves">Reddingen</label>
                 <input
+                  id="player-saves"
                   type="number"
+                  min="0"
                   value={newPlayerSaves}
                   onChange={(e) => setNewPlayerSaves(e.target.value)}
                 />
               </div>
 
               <div className="form-field">
-                <label>1-op-1 reddingen</label>
+                <label htmlFor="player-one-v-one-saves">1-op-1 reddingen</label>
                 <input
+                  id="player-one-v-one-saves"
                   type="number"
+                  min="0"
                   value={newPlayerOneVsOneSaves}
-                  onChange={(e) =>
-                    setNewPlayerOneVsOneSaves(e.target.value)
-                  }
+                  onChange={(e) => setNewPlayerOneVsOneSaves(e.target.value)}
                 />
               </div>
 
               <div className="form-field">
-                <label>Clean Sheets</label>
+                <label htmlFor="player-clean-sheets">Clean Sheets</label>
                 <input
+                  id="player-clean-sheets"
                   type="number"
+                  min="0"
                   value={newPlayerCleanSheets}
-                  onChange={(e) =>
-                    setNewPlayerCleanSheets(e.target.value)
-                  }
+                  onChange={(e) => setNewPlayerCleanSheets(e.target.value)}
                 />
               </div>
 
               <div className="form-field">
-                <label>Penalty's gehouden</label>
+                <label htmlFor="player-penalty-saves">Penalty's gehouden</label>
                 <input
+                  id="player-penalty-saves"
                   type="number"
+                  min="0"
                   value={newPlayerPenaltySaves}
-                  onChange={(e) =>
-                    setNewPlayerPenaltySaves(e.target.value)
-                  }
+                  onChange={(e) => setNewPlayerPenaltySaves(e.target.value)}
                 />
               </div>
 
               <div className="form-field">
-                <label>Tegengoals</label>
+                <label htmlFor="player-goals-conceded">Tegengoals</label>
                 <input
+                  id="player-goals-conceded"
                   type="number"
+                  min="0"
                   value={newPlayerGoalsConceded}
-                  onChange={(e) =>
-                    setNewPlayerGoalsConceded(e.target.value)
-                  }
+                  onChange={(e) => setNewPlayerGoalsConceded(e.target.value)}
                 />
               </div>
 
+              <h3 className="form-section-title">Beoordeling</h3>
+
               <div className="form-field">
-                <label>Rating</label>
+                <label htmlFor="player-rating">Rating</label>
                 <input
+                  id="player-rating"
                   type="number"
+                  min="0"
+                  max="10"
                   step="0.1"
                   value={newPlayerRating}
                   onChange={(e) => setNewPlayerRating(e.target.value)}
@@ -456,21 +498,23 @@ function PlayerForm({
               </div>
             </div>
 
-            <button
-              type="button"
-              className="save-player-button"
-              onClick={goBack}
-            >
-              Terug
-            </button>
+            <div className="form-actions">
+              <button
+                type="button"
+                className="back-player-button"
+                onClick={goBack}
+              >
+                Terug
+              </button>
 
-            <button
-              type="button"
-              className="save-player-button"
-              onClick={savePlayer}
-            >
-              {editingPlayer ? "Wijzigingen opslaan" : "Speler opslaan"}
-            </button>
+              <button
+                type="button"
+                className="save-player-button"
+                onClick={savePlayer}
+              >
+                {editingPlayer ? "Wijzigingen opslaan" : "Speler opslaan"}
+              </button>
+            </div>
           </>
         )}
       </div>
