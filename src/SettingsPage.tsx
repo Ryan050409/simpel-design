@@ -1,12 +1,8 @@
 import { useState } from "react";
 import type { Dispatch, SetStateAction } from "react";
-import PlayerForm from "./PlayerForm.tsx";
-import MatchForm from "./MatchForm.tsx";
 import type { Player, Match, Team } from "./types.ts";
 
 type SettingsPageProps = {
-  setMatches: Dispatch<SetStateAction<Match[]>>;
-  setPlayerList: Dispatch<SetStateAction<Player[]>>;
   teams: Team[];
   setTeams: Dispatch<SetStateAction<Team[]>>;
   team: string;
@@ -16,8 +12,6 @@ type SettingsPageProps = {
 };
 
 function SettingsPage({
-  setMatches,
-  setPlayerList,
   players,
   matches,
   teams,
@@ -25,9 +19,6 @@ function SettingsPage({
   team,
   setTeam,
 }: SettingsPageProps) {
-  const [showPlayerPopup, setShowPlayerPopup] = useState(false);
-  const [showMatchPopup, setShowMatchPopup] = useState(false);
-
   const [newTeam, setNewTeam] = useState("");
   const [teamWarning, setTeamWarning] = useState("");
   const [openQuestion, setOpenQuestion] = useState<number | null>(null);
@@ -36,7 +27,7 @@ function SettingsPage({
     {
       question: "Hoe voeg ik een speler toe?",
       answer:
-        "Ga naar Instellingen en klik bij Spelers op '+ Speler toevoegen'. Vul de gegevens in en sla de speler op.",
+        "Ga naar Spelers en klik op '+ Speler toevoegen'. Vul de gegevens in en sla de speler op.",
     },
     {
       question: "Hoe voeg ik een team toe?",
@@ -64,22 +55,6 @@ function SettingsPage({
         "Ja. Bij het toevoegen van spelers en wedstrijden kun je een bestaand team kiezen of zelf een teamnaam invoeren.",
     },
   ];
-
-  function openPlayerPopup() {
-    setShowPlayerPopup(true);
-  }
-
-  function closePlayerPopup() {
-    setShowPlayerPopup(false);
-  }
-
-  function openMatchPopup() {
-    setShowMatchPopup(true);
-  }
-
-  function closeMatchPopup() {
-    setShowMatchPopup(false);
-  }
 
   function addTeam() {
     const teamName = newTeam.trim();
@@ -209,7 +184,6 @@ function SettingsPage({
                 }
               }}
             />
-
             <button type="button" onClick={addTeam}>
               + Team toevoegen
             </button>
@@ -218,38 +192,6 @@ function SettingsPage({
               <small className="team-warning">{teamWarning}</small>
             )}
           </div>
-        </div>
-
-        <div className="setting-row">
-          <div>
-            <strong>Spelers</strong>
-
-            <small>Voeg een nieuwe speler toe aan je voetbaltracker.</small>
-          </div>
-
-          <button
-            type="button"
-            className="setting-action"
-            onClick={openPlayerPopup}
-          >
-            + Speler toevoegen
-          </button>
-        </div>
-
-        <div className="setting-row">
-          <div>
-            <strong>Wedstrijden</strong>
-
-            <small>Voeg een nieuwe wedstrijd toe aan je voetbaltracker.</small>
-          </div>
-
-          <button
-            type="button"
-            className="setting-action"
-            onClick={openMatchPopup}
-          >
-            + Wedstrijd toevoegen
-          </button>
         </div>
       </div>
 
@@ -265,46 +207,30 @@ function SettingsPage({
             </button>
           </div>
         ))}
-      </div>
 
-      {showPlayerPopup && (
-        <PlayerForm
-          setPlayerList={setPlayerList}
-          closeModal={closePlayerPopup}
-          teams={teams}
-        />
-      )}
+        <div className="faq-section">
+          <h2>❓Veelgestelde vragen</h2>
 
-      {showMatchPopup && (
-        <MatchForm
-          setMatches={setMatches}
-          closeModal={closeMatchPopup}
-          teams={teams}
-        />
-      )}
+          <div className="faq-list">
+            {faqs.map((faq, index) => (
+              <div className="faq-item" key={faq.question}>
+                <button
+                  type="button"
+                  className="faq-question"
+                  onClick={() =>
+                    setOpenQuestion(openQuestion === index ? null : index)
+                  }
+                >
+                  <span>{faq.question}</span>
+                  <span>{openQuestion === index ? "−" : "+"}</span>
+                </button>
 
-      <div className="faq-section">
-        <h2>❓Veelgestelde vragen</h2>
-
-        <div className="faq-list">
-          {faqs.map((faq, index) => (
-            <div className="faq-item" key={faq.question}>
-              <button
-                type="button"
-                className="faq-question"
-                onClick={() =>
-                  setOpenQuestion(openQuestion === index ? null : index)
-                }
-              >
-                <span>{faq.question}</span>
-                <span>{openQuestion === index ? "−" : "+"}</span>
-              </button>
-
-              {openQuestion === index && (
-                <div className="faq-answer">{faq.answer}</div>
-              )}
-            </div>
-          ))}
+                {openQuestion === index && (
+                  <div className="faq-answer">{faq.answer}</div>
+                )}
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </div>
