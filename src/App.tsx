@@ -15,7 +15,10 @@ function App() {
   const [team, setTeam] = useState(() => {
     return localStorage.getItem("favoriteTeam") || "Feyenoord";
   });
-const [theme, setTheme] = useState<"dark" | "light">("dark");
+const [theme, setTheme] = useState<"dark" | "light">(() => {
+    const savedTheme = localStorage.getItem("theme");
+    return savedTheme === "light" ? "light" : "dark";
+  });
   const [playerList, setPlayerList] = useState<Player[]>(() => {
     const savedPlayers = localStorage.getItem("players");
       
@@ -190,6 +193,9 @@ const [theme, setTheme] = useState<"dark" | "light">("dark");
   useEffect(() => {
     localStorage.setItem("teams", JSON.stringify(teams));
   }, [teams]);
+  useEffect(() => {
+    localStorage.setItem("theme", theme);
+  }, [theme]);
 
   return (
     <BrowserRouter>

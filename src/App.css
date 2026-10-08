@@ -692,21 +692,40 @@ nav a.active {
 
 .players {
   display: grid;
-  grid-template-columns: repeat(3, 335px);
-  justify-content: center;
-  gap: 24px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+  width: 100%;
   max-width: 1100px;
   margin: 30px auto;
 }
 
 .players-page {
   width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+  text-align: left;
 }
+
+.players-page-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 20px;
+  width: 100%;
+  margin: 0 auto 8px;
+  text-align: left;
+}
+
 .players-page-header h1,
 .matches-page-header h1,
 .dashboard-page-header h1,
 .settings-page-header h1 {
   margin: 0 0 6px;
+}
+
+.players-page-header .add-button {
+  flex-shrink: 0;
+  margin-left: auto;
 }
 
 .players-page-header p,
@@ -720,11 +739,12 @@ nav a.active {
 .matches-page {
   width: 100%;
 }
+
 .matches-page-actions {
   display: flex;
   flex-direction: column;
   align-items: flex-end;
-  gap: 6px;
+  gap: 8px;
 }
 
 .matches-page-actions .add-button {
@@ -735,10 +755,11 @@ nav a.active {
   margin: 0;
   justify-content: flex-end;
 }
+
 .add-button {
   flex-shrink: 0;
   padding: 11px 16px;
-  border-radius: 8px;
+  border-radius: 9px;
   background: #2563eb;
   color: white;
   text-decoration: none;
@@ -753,55 +774,59 @@ nav a.active {
   transform: translateY(-1px);
 }
 
+/* Spelerkaart */
+
 .player-card {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
   position: relative;
-  width: 100%;
   overflow: hidden;
-  background: var(--card-background);
-  border: 1px solid var(--border-color);
-  border-radius: 18px;
   padding: 20px;
   margin: 0;
+  background: var(--card-background);
+  border: 1px solid var(--border-color);
+  border-radius: 14px;
   color: var(--text-color);
   text-align: left;
+  cursor: pointer;
   transition:
     transform 0.2s ease,
     box-shadow 0.2s ease,
     border-color 0.2s ease;
-  cursor: pointer;
 }
 
 .player-card:hover {
   transform: translateY(-3px);
   border-color: #2563eb;
-  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.22);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.2);
 }
 
 .player-card-header {
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
-  gap: 15px;
+  gap: 14px;
 }
 
 .player-fullname-row {
   display: flex;
   align-items: center;
-  gap: 10px;
-  font-size: 22px;
+  flex-wrap: wrap;
+  gap: 8px;
 }
 
 .player-card h2 {
   margin: 0;
-  font-size: 23px;
-  line-height: 1.2;
   color: var(--text-color);
+  font-size: 21px;
+  line-height: 1.2;
 }
 
 .player-number {
   color: var(--muted-text-color);
-  font-size: 14px;
-  font-weight: bold;
+  font-size: 13px;
+  font-weight: 700;
 }
 
 .player-team {
@@ -810,23 +835,26 @@ nav a.active {
   font-size: 13px;
 }
 
+/* Rating */
+
 .player-rating {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  min-width: 58px;
+  width: 58px;
   height: 58px;
   background: var(--secondary-background);
   border: 1px solid var(--border-color);
-  border-radius: 12px;
+  border-radius: 11px;
 }
 
 .player-rating span {
-  font-size: 9px;
   color: var(--muted-text-color);
-  font-weight: bold;
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
 }
 
 .rating-low {
@@ -854,57 +882,73 @@ nav a.active {
   font-size: 23px;
 }
 
+/* Positie */
+
 .player-position {
   display: inline-flex;
-  align-items: center;
+  align-self: flex-start;
   margin-top: 14px;
-  padding: 6px 11px;
-  border-radius: 8px;
+  padding: 6px 10px;
   background: var(--secondary-background);
   border: 1px solid var(--border-color);
+  border-radius: 7px;
   color: #60a5fa;
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 700;
-  line-height: 1;
 }
+
+/* Statistieken */
 
 .player-stats {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 10px;
-  margin-top: 20px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+  margin-top: 18px;
 }
 
 .player-stat,
 .player-stats div {
+  min-width: 0;
+  padding: 11px 8px;
   background: var(--secondary-background);
-  border-radius: 10px;
-  padding: 12px;
+  border: 1px solid var(--border-color);
+  border-radius: 9px;
   text-align: center;
 }
 
 .player-stats strong {
   display: block;
-  font-size: 22px;
   color: var(--text-color);
+  font-size: 20px;
+  line-height: 1.1;
 }
 
 .player-stats span {
   display: block;
-  margin-top: 3px;
+  margin-top: 4px;
+  overflow: hidden;
   color: var(--muted-text-color);
-  font-size: 11px;
+  font-size: 10px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
+
+/* Actieknoppen */
 
 .player-actions {
   display: flex;
   gap: 8px;
-  margin-top: 18px;
+  margin-top: auto;
+  padding-top: 16px;
 }
 
 .player-actions button {
   flex: 1;
   margin: 0;
+  padding: 9px 10px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 600;
 }
 
 .player-actions .edit-button {
@@ -922,7 +966,6 @@ nav a.active {
 .player-actions .delete-button:hover {
   background: #b91c1c;
 }
-
 /* Modal */
 
 .modal-overlay {
@@ -1543,25 +1586,20 @@ nav a.active {
 
 .player-search {
   width: 100%;
-  max-width: 1100px;
-  margin: 0 auto 20px;
-  text-align: left;
+  margin: 0 0 20px;
+  text-align: right;
 }
 
 .player-search input {
   width: 100%;
-  max-width: 400px;
-  margin: 0;
-  padding: 12px 16px;
+  max-width: 420px;
+  padding: 12px 15px;
   border: 1px solid var(--border-color);
   border-radius: 10px;
-  background-color: var(--input-background);
+  background: var(--input-background);
   color: var(--text-color);
-  font-size: 15px;
+  font-size: 14px;
   outline: none;
-  transition:
-    border-color 0.2s ease,
-    box-shadow 0.2s ease;
 }
 
 .player-search input::placeholder {

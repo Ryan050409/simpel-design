@@ -199,7 +199,7 @@ function PlayersPage({ playerList, setPlayerList, teams }: PlayersPageProps) {
             <h2>
               {selectedPlayer.firstname} {selectedPlayer.lastname}
             </h2>
-
+            <p>{selectedPlayer.team}</p>
             <p>{selectedPlayer.position}</p>
 
             <div className="player-stats">

@@ -45,7 +45,6 @@ function HomePage({ matches, playerList, team }: HomePageProps) {
     <div className="home-page">
       <div className="home-page-header">
         <div>
-          <span className="home-page-welcome-label">OVERZICHT</span>
           <h1>🏠 Welkom bij Voetbaltracker</h1>
           <p>Bekijk de prestaties en laatste wedstrijden van {team}.</p>
         </div>
