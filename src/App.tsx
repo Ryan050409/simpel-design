@@ -248,8 +248,6 @@ const [theme, setTheme] = useState<"dark" | "light">("dark");
           path="/instellingen"
           element={
             <SettingsPage
-              setMatches={setMatches}
-              setPlayerList={setPlayerList}
               setTeams={setTeams}
               teams={teams}
               team={team}

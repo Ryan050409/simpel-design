@@ -2,9 +2,7 @@ import { useState } from "react";
 import type { Dispatch, SetStateAction } from "react";
 import type { Player, Match, Team } from "./types.ts";
 
-export type SettingsPageProps = {
-  setMatches: Dispatch<SetStateAction<Match[]>>;
-  setPlayerList: Dispatch<SetStateAction<Player[]>>;
+type SettingsPageProps = {
   teams: Team[];
   setTeams: Dispatch<SetStateAction<Team[]>>;
   team: string;

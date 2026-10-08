@@ -16,8 +16,8 @@ function getMatchResult(match: Match, team: string) {
   }
 
   const teamGoals = match.home === team ? match.homeGoals : match.awayGoals;
-
-  const opponentGoals = match.home === team ? match.awayGoals : match.homeGoals;
+  const opponentGoals =
+    match.home === team ? match.awayGoals : match.homeGoals;
 
   if (teamGoals > opponentGoals) {
     return "W";
@@ -62,17 +62,25 @@ function getRowClass(result: string | null) {
   return undefined;
 }
 
-function MatchesPage({ matches, setMatches, team, teams }: MatchesPageProps) {
+function MatchesPage({
+  matches,
+  setMatches,
+  team,
+  teams,
+}: MatchesPageProps) {
   const [editingMatch, setEditingMatch] = useState<Match | null>(null);
   const [showMatchPopup, setShowMatchPopup] = useState(false);
   const [matchView, setMatchView] = useState<"favorite" | "all">("favorite");
+
   const visibleMatches =
     matchView === "favorite"
       ? matches.filter((match) => match.home === team || match.away === team)
       : matches;
+
   const sortedMatches = [...visibleMatches].sort(
     (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
   );
+
   function deleteMatch(id: number) {
     const match = matches.find((match) => match.id === id);
 
@@ -81,7 +89,9 @@ function MatchesPage({ matches, setMatches, team, teams }: MatchesPageProps) {
     }
 
     const confirmed = window.confirm(
-      `Weet je zeker dat je de wedstrijd tegen ${match.home === team ? match.away : match.home} op ${match.date} wilt verwijderen?`,
+      `Weet je zeker dat je de wedstrijd tegen ${
+        match.home === team ? match.away : match.home
+      } op ${match.date} wilt verwijderen?`,
     );
 
     if (!confirmed) {
@@ -109,28 +119,32 @@ function MatchesPage({ matches, setMatches, team, teams }: MatchesPageProps) {
           <p>Bekijk en beheer de wedstrijden van {team}.</p>
         </div>
 
-      </div>
-      <button 
-      type= "button" 
-      className="add-button"
-      onClick={() => setShowMatchPopup(true)}
-      >
-        + Wedstrijd toevoegen
-      </button>
-      <div className="match-filter">
-        <label htmlFor="match-view">Toon wedstrijden:</label>
+        <div className="matches-page-actions">
+          <button
+            type="button"
+            className="add-button"
+            onClick={() => setShowMatchPopup(true)}
+          >
+            + Wedstrijd toevoegen
+          </button>
 
-        <select
-          id="match-view"
-          value={matchView}
-          onChange={(event) =>
-            setMatchView(event.target.value as "favorite" | "all")
-          }
-        >
-          <option value="favorite">Favoriete team</option>
-          <option value="all">Alle teams</option>
-        </select>
+          <div className="match-filter">
+            <label htmlFor="match-view">Toon wedstrijden:</label>
+
+            <select
+              id="match-view"
+              value={matchView}
+              onChange={(event) =>
+                setMatchView(event.target.value as "favorite" | "all")
+              }
+            >
+              <option value="favorite">Favoriete team</option>
+              <option value="all">Alle teams</option>
+            </select>
+          </div>
+        </div>
       </div>
+
       <div className="matches-table-wrapper">
         <table className="matches-table">
           <thead>
@@ -155,7 +169,9 @@ function MatchesPage({ matches, setMatches, team, teams }: MatchesPageProps) {
 
                 return (
                   <tr key={match.id} className={getRowClass(result)}>
-                    <td>{new Date(match.date).toLocaleDateString("nl-NL")}</td>
+                    <td>
+                      {new Date(match.date).toLocaleDateString("nl-NL")}
+                    </td>
 
                     <td>{match.home}</td>
 
@@ -200,13 +216,14 @@ function MatchesPage({ matches, setMatches, team, teams }: MatchesPageProps) {
             teams={teams}
           />
         )}
+
         {showMatchPopup && (
-  <MatchForm
-    setMatches={setMatches}
-    closeModal={() => setShowMatchPopup(false)}
-    teams={teams}
-  />
-)}
+          <MatchForm
+            setMatches={setMatches}
+            closeModal={() => setShowMatchPopup(false)}
+            teams={teams}
+          />
+        )}
       </div>
     </div>
   );
