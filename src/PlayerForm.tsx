@@ -65,8 +65,8 @@ function PlayerForm({
     editingPlayer ? String(editingPlayer.blocks ?? "") : "",
   );
 
-  const [newPlayerClearences, setNewPlayerClearences] = useState(
-    editingPlayer ? String(editingPlayer.clearences ?? "") : "",
+  const [newPlayerClearances, setNewPlayerClearances] = useState(
+    editingPlayer ? String(editingPlayer.clearances ?? "") : "",
   );
 
   const [newPlayerDuelsWon, setNewPlayerDuelsWon] = useState(
@@ -142,7 +142,7 @@ function PlayerForm({
       newPlayerTackle,
       newPlayerInterceptions,
       newPlayerBlocks,
-      newPlayerClearences,
+      newPlayerClearances,
       newPlayerDuelsWon,
       newPlayerFouls,
       newPlayerCleanSheets,
@@ -180,7 +180,7 @@ function PlayerForm({
       tackles: Number(newPlayerTackle),
       interceptions: Number(newPlayerInterceptions),
       blocks: Number(newPlayerBlocks),
-      clearences: Number(newPlayerClearences),
+      clearances: Number(newPlayerClearances),
       duelsWon: Number(newPlayerDuelsWon),
       fouls: Number(newPlayerFouls),
 
@@ -366,11 +366,11 @@ function PlayerForm({
               </div>
 
               <div className="form-field">
-                <label>Clearences</label>
+                <label>Clearances</label>
                 <input
                   type="number"
-                  value={newPlayerClearences}
-                  onChange={(e) => setNewPlayerClearences(e.target.value)}
+                  value={newPlayerClearances}
+                  onChange={(e) => setNewPlayerClearances(e.target.value)}
                 />
               </div>
 

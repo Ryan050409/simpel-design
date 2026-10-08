@@ -269,8 +269,8 @@ function PlayersPage({ playerList, setPlayerList, teams }: PlayersPageProps) {
               </div>
 
               <div className="player-stat">
-                <strong>{selectedPlayer.clearences ?? 0}</strong>
-                <span>Clearences</span>
+                <strong>{selectedPlayer.clearances ?? 0}</strong>
+                <span>Clearances</span>
               </div>
 
               <div className="player-stat">

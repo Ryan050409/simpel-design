@@ -243,7 +243,7 @@ const lastname = lastNames[playerIndex];
       let tackles = 0;
       let interceptions = 0;
       let blocks = 0;
-      let clearences = 0;
+      let clearances = 0;
       let duelsWon = 0;
       let fouls = 0;
       let rating = 6.5;
@@ -253,7 +253,7 @@ const lastname = lastNames[playerIndex];
         tackles = 4 + teamIndex % 5;
         interceptions = 3 + teamIndex % 4;
         blocks = 2 + teamIndex % 3;
-        clearences = 8 + teamIndex % 7;
+        clearances = 8 + teamIndex % 7;
         duelsWon = 5 + teamIndex % 6;
         fouls = 1 + teamIndex % 3;
       }
@@ -264,7 +264,7 @@ const lastname = lastNames[playerIndex];
         tackles = 15 + ((teamIndex * 2 + i) % 16);
         interceptions = 10 + ((teamIndex + i * 3) % 18);
         blocks = 4 + ((teamIndex + i) % 8);
-        clearences = 15 + ((teamIndex * 2 + i) % 25);
+        clearances = 15 + ((teamIndex * 2 + i) % 25);
         duelsWon = 20 + ((teamIndex + i * 2) % 25);
         fouls = 3 + ((teamIndex + i) % 7);
         rating = 6.7 + ((teamIndex + i) % 12) / 10;
@@ -276,7 +276,7 @@ const lastname = lastNames[playerIndex];
         tackles = 12 + ((teamIndex + i) % 18);
         interceptions = 8 + ((teamIndex * 2 + i) % 15);
         blocks = 2 + ((teamIndex + i) % 6);
-        clearences = 5 + ((teamIndex + i) % 10);
+        clearances = 5 + ((teamIndex + i) % 10);
         duelsWon = 20 + ((teamIndex * 2 + i) % 30);
         fouls = 4 + ((teamIndex + i) % 8);
         rating = 6.9 + ((teamIndex + i) % 12) / 10;
@@ -288,7 +288,7 @@ const lastname = lastNames[playerIndex];
         tackles = 5 + ((teamIndex + i) % 10);
         interceptions = 2 + ((teamIndex + i) % 7);
         blocks = 1 + ((teamIndex + i) % 4);
-        clearences = 2 + ((teamIndex + i) % 6);
+        clearances = 2 + ((teamIndex + i) % 6);
         duelsWon = 15 + ((teamIndex * 2 + i) % 25);
         fouls = 2 + ((teamIndex + i) % 6);
         rating = 7.0 + ((teamIndex + i) % 12) / 10;
@@ -320,7 +320,7 @@ const lastname = lastNames[playerIndex];
         tackles,
         interceptions,
         blocks,
-        clearences,
+        clearances,
         duelsWon,
         fouls,
         ...(positions[i] === "Keeper"

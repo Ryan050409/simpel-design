@@ -15,7 +15,7 @@ export type Player = {
     tackles: number; 
     interceptions:number;
     blocks: number;
-    clearences: number;
+    clearances: number;
     duelsWon: number;
     fouls: number;
 
