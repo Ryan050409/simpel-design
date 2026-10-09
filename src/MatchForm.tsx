@@ -115,7 +115,7 @@ function MatchForm({
             <label htmlFor="match-away">Uitteam</label>
             <select
               id="match-away"
-              value={home}
+              value={away}
               onChange={(e) => setAway(e.target.value)}
             >
               <option value="">Kies uitteam</option>

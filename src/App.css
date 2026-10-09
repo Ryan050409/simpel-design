@@ -2558,10 +2558,8 @@ textarea::placeholder {
   }
 }
 
-/* Wedstrijdtabel op kleinere schermen */
-
-@media (max-width: 700px) {
-  .matches-table {
+@media (max-width: 700px) { 
+    .matches-table {
     width: 100%;
     table-layout: fixed;
   }
@@ -2582,14 +2580,46 @@ textarea::placeholder {
     padding: 5px 6px;
     font-size: 0.65rem;
   }
+}
 
-  .matches-page-header {
-    flex-direction: column;
-    align-items: stretch;
-    gap: 10px;
+@media (max-width: 400px) {
+  .matches-table {
+    width: 100%;
+    font-size: 10px;
   }
 
-  .matches-page-header button {
-    width: 100%;
+  .matches-table th,
+  .matches-table td {
+    padding: 5px 2px;
+    overflow-wrap: anywhere;
+  }
+
+  .matches-table th:nth-child(2),
+  .matches-table td:nth-child(2),
+  .matches-table th:nth-child(3),
+  .matches-table td:nth-child(3) {
+    width: 27%;
+  }
+
+  .matches-table th:nth-child(4),
+  .matches-table td:nth-child(4) {
+    width: 15%;
+  }
+
+  .matches-table th:nth-child(6),
+  .matches-table td:nth-child(6) {
+    width: 31%;
+  }
+
+  .matches-table .match-actions {
+    gap: 3px;
+  }
+
+  .matches-table .match-actions button {
+    min-width: 0;
+    padding: 5px 2px;
+    font-size: 9px;
+    white-space: normal;
+    overflow-wrap: anywhere;
   }
 }
