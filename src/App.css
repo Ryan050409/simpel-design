@@ -166,11 +166,6 @@ h2 {
   line-height: 1.25;
 }
 
-h2.favoriet {
-  margin-top: 10px;
-  font-size: 36px;
-}
-
 /* =========================================================
    Algemene controls
    ========================================================= */
@@ -295,8 +290,9 @@ textarea::placeholder {
 
 .home-page {
   width: 100%;
-  max-width: 1100px;
+  max-width: 1280px;
   margin: 0 auto;
+  padding: 0 12px;
   text-align: left;
 }
 
@@ -305,7 +301,7 @@ textarea::placeholder {
   align-items: center;
   justify-content: space-between;
   gap: 25px;
-  max-width: 1100px;
+  max-width: none;
   margin: 0 auto 18px;
   padding: 24px 26px;
   background: var(--card-background);
@@ -328,14 +324,6 @@ textarea::placeholder {
   font-size: 15px;
   line-height: 1.5;
 }
-
-.home-page-welcome-label {
-  color: #60a5fa;
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-}
-
 .home-page-team-badge {
   display: flex;
   align-items: center;
@@ -355,73 +343,6 @@ textarea::placeholder {
 .home-page-team-badge strong {
   font-size: 14px;
 }
-
-.home-page-links {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 14px;
-  margin-bottom: 28px;
-}
-
-.home-page-card {
-  display: flex;
-  align-items: center;
-  gap: 13px;
-  min-height: 105px;
-  padding: 18px;
-  background: var(--card-background);
-  color: var(--text-color);
-  border: 1px solid var(--border-color);
-  border-radius: 14px;
-  text-decoration: none;
-  transition:
-    transform 0.2s ease,
-    border-color 0.2s ease,
-    box-shadow 0.2s ease;
-}
-
-.home-page-card:hover {
-  transform: translateY(-2px);
-  border-color: #2563eb;
-  box-shadow: 0 7px 18px rgba(0, 0, 0, 0.15);
-}
-
-.home-page-card > span {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-  width: 42px;
-  height: 42px;
-  border-radius: 10px;
-  background: var(--secondary-background);
-  font-size: 21px;
-}
-
-.home-page-card div {
-  min-width: 0;
-  flex: 1;
-}
-
-.home-page-card h2 {
-  margin: 0 0 5px;
-  color: var(--text-color);
-  font-size: 18px;
-}
-
-.home-page-card p {
-  margin: 0;
-  color: var(--muted-text-color);
-  font-size: 12px;
-  line-height: 1.4;
-}
-
-.home-page-card-arrow {
-  flex-shrink: 0;
-  color: #60a5fa;
-  font-size: 20px;
-}
-
 .home-page-section-title {
   display: flex;
   align-items: flex-end;
@@ -1985,11 +1906,6 @@ textarea::placeholder {
   .players {
     grid-template-columns: repeat(2, 1fr);
   }
-
-  .home-page-links {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
   .home-page-stats {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
@@ -2015,32 +1931,33 @@ textarea::placeholder {
   .home-page-team-badge {
     width: 100%;
   }
-
-  .home-page-links {
-    grid-template-columns: 1fr;
-    gap: 10px;
-    margin-bottom: 24px;
-  }
-
-  .home-page-card {
-    min-height: 88px;
-  }
-
   .home-page-section-title {
     align-items: flex-start;
     flex-direction: column;
     gap: 5px;
   }
-
   .home-page-stats {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 10px;
   }
 
-  .home-page-panel,
-  .home-page-stat {
+  .home-page-panel {
     padding: 17px;
   }
+
+  .home-page-stat {
+    min-width: 0;
+    padding: 14px;
+  }
+
+  .home-page-stat strong {
+    font-size: 23px;
+  }
+
+  .home-page-stat small {
+    line-height: 1.4;
+  }
+
 
   .home-page-player-summary-stats {
     gap: 25px;
@@ -2126,11 +2043,6 @@ textarea::placeholder {
   h2 {
     font-size: 22px;
   }
-
-  h2.favoriet {
-    font-size: 30px;
-  }
-
   .nav {
     width: 100%;
     flex-direction: column;
@@ -2324,11 +2236,6 @@ textarea::placeholder {
   .home-page-stat strong {
     font-size: 22px;
   }
-
-  .home-page-card {
-    padding: 15px;
-  }
-
   .stats-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
@@ -2558,17 +2465,5 @@ textarea::placeholder {
 
   .matches-page-header button {
     width: 100%;
-  }
-
-  .matches-filters {
-    flex-direction: column;
-    align-items: stretch;
-    gap: 8px;
-  }
-
-  .matches-filters select,
-  .matches-filters input {
-    width: 100%;
-    box-sizing: border-box;
   }
 }
