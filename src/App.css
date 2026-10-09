@@ -46,17 +46,11 @@
   --radius-md: 12px;
   --radius-lg: 16px;
 
-  --shadow-card:
-    0 4px 16px rgba(0, 0, 0, 0.12);
-
-  --shadow-card-hover:
-    0 10px 28px rgba(0, 0, 0, 0.18);
-
-  --shadow-modal:
-    0 24px 60px rgba(0, 0, 0, 0.45);
+  --shadow-card: 0 4px 16px rgba(0, 0, 0, 0.12);
+  --shadow-card-hover: 0 10px 28px rgba(0, 0, 0, 0.18);
+  --shadow-modal: 0 24px 60px rgba(0, 0, 0, 0.45);
 
   min-height: 100vh;
-
   background: var(--page-background);
   color: var(--text-color);
 
@@ -94,14 +88,9 @@
   --table-background: #ffffff;
   --table-text-color: #0f172a;
 
-  --shadow-card:
-    0 4px 16px rgba(15, 23, 42, 0.06);
-
-  --shadow-card-hover:
-    0 10px 28px rgba(15, 23, 42, 0.10);
-
-  --shadow-modal:
-    0 24px 60px rgba(15, 23, 42, 0.20);
+  --shadow-card: 0 4px 16px rgba(15, 23, 42, 0.06);
+  --shadow-card-hover: 0 10px 28px rgba(15, 23, 42, 0.10);
+  --shadow-modal: 0 24px 60px rgba(15, 23, 42, 0.20);
 }
 
 /* =========================================================
@@ -115,11 +104,7 @@ body {
   background: #0f172a;
   color: #f8fafc;
 
-  font-family:
-    Arial,
-    Helvetica,
-    sans-serif;
-
+  font-family: Arial, Helvetica, sans-serif;
   text-align: center;
   overflow-x: hidden;
 
@@ -150,9 +135,7 @@ p {
 
 h1 {
   margin-bottom: 12px;
-
   color: var(--text-color);
-
   font-size: 32px;
   line-height: 1.2;
   font-weight: 700;
@@ -160,9 +143,7 @@ h1 {
 
 h2 {
   margin: 24px 0 12px;
-
   color: var(--text-color);
-
   line-height: 1.25;
 }
 
@@ -213,7 +194,6 @@ input,
 select,
 textarea {
   max-width: 100%;
-
   padding: 10px;
 
   background: var(--input-background);
@@ -246,17 +226,22 @@ textarea::placeholder {
 .dashboard-extra {
   box-shadow: var(--shadow-card);
 }
-/* Navigatie */
+
+/* =========================================================
+   Navigatie
+   ========================================================= */
 
 .nav {
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 6px;
+
   width: fit-content;
   max-width: 100%;
   margin: 0 auto 30px;
   padding: 6px;
+
   background: var(--card-background);
   border: 1px solid var(--border-color);
   border-radius: 12px;
@@ -265,9 +250,11 @@ textarea::placeholder {
 .nav a {
   padding: 10px 16px;
   border-radius: 8px;
+
   color: var(--text-color);
   text-decoration: none;
   font-weight: 600;
+
   transition:
     background 0.2s ease,
     color 0.2s ease,
@@ -286,7 +273,9 @@ textarea::placeholder {
   box-shadow: 0 3px 10px rgba(37, 99, 235, 0.3);
 }
 
-/* Home */
+/* =========================================================
+   Home
+   ========================================================= */
 
 .home-page {
   width: 100%;
@@ -301,9 +290,11 @@ textarea::placeholder {
   align-items: center;
   justify-content: space-between;
   gap: 25px;
+
   max-width: none;
   margin: 0 auto 18px;
   padding: 24px 26px;
+
   background: var(--card-background);
   color: var(--text-color);
   border: 1px solid var(--border-color);
@@ -320,16 +311,20 @@ textarea::placeholder {
 .home-page-header p {
   max-width: 700px;
   margin: 0;
+
   color: var(--muted-text-color);
   font-size: 15px;
   line-height: 1.5;
 }
+
 .home-page-team-badge {
   display: flex;
   align-items: center;
   gap: 8px;
   flex-shrink: 0;
+
   padding: 11px 15px;
+
   background: var(--secondary-background);
   border: 1px solid var(--border-color);
   border-radius: 10px;
@@ -343,6 +338,7 @@ textarea::placeholder {
 .home-page-team-badge strong {
   font-size: 14px;
 }
+
 .home-page-section-title {
   display: flex;
   align-items: flex-end;
@@ -386,10 +382,12 @@ textarea::placeholder {
 
 .home-page-stat {
   padding: 17px 18px;
+
   background: var(--card-background);
   color: var(--text-color);
   border: 1px solid var(--border-color);
   border-radius: 14px;
+
   transition:
     transform 0.2s ease,
     border-color 0.2s ease;
@@ -431,6 +429,7 @@ textarea::placeholder {
 .home-page-panel {
   min-width: 0;
   padding: 20px;
+
   background: var(--card-background);
   color: var(--text-color);
   border: 1px solid var(--border-color);
@@ -443,9 +442,11 @@ textarea::placeholder {
   align-items: center;
   justify-content: space-between;
   gap: 15px;
+
   min-height: 43px;
   margin-bottom: 12px;
   padding-bottom: 11px;
+
   border-bottom: 1px solid var(--border-color);
 }
 
@@ -456,6 +457,7 @@ textarea::placeholder {
 .home-page-panel-heading .home-page-panel-label {
   display: block;
   margin-bottom: 3px;
+
   color: #60a5fa;
   font-size: 10px;
   letter-spacing: 0.08em;
@@ -472,6 +474,7 @@ textarea::placeholder {
   flex-shrink: 0;
   margin-top: 0;
   padding: 6px 9px;
+
   background: var(--secondary-background);
   border: 1px solid var(--border-color);
   border-radius: 7px;
@@ -488,6 +491,7 @@ textarea::placeholder {
   display: flex;
   align-items: center;
   gap: 12px;
+
   min-height: 0;
   padding: 5px 0;
   border-top: 1px solid var(--border-color);
@@ -503,8 +507,10 @@ textarea::placeholder {
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
+
   width: 28px;
   height: 28px;
+
   border-radius: 7px;
   color: white;
   font-size: 12px;
@@ -531,6 +537,7 @@ textarea::placeholder {
 .home-page-match-info strong {
   display: block;
   overflow: hidden;
+
   color: var(--text-color);
   font-size: 13px;
   text-overflow: ellipsis;
@@ -540,6 +547,7 @@ textarea::placeholder {
 .home-page-match-info span {
   display: block;
   margin-top: 3px;
+
   color: var(--muted-text-color);
   font-size: 11px;
 }
@@ -566,6 +574,7 @@ textarea::placeholder {
 .home-page-team-panel p,
 .home-page-top-player p {
   margin: 0 0 14px;
+
   color: var(--muted-text-color);
   font-size: 13px;
   line-height: 1.5;
@@ -608,8 +617,9 @@ textarea::placeholder {
 }
 
 .home-page-player-summary {
-  padding: 20px;
   margin-top: 18px;
+  padding: 20px;
+
   background: var(--card-background);
   border: 1px solid var(--border-color);
   border-radius: 12px;
@@ -622,6 +632,7 @@ textarea::placeholder {
   gap: 16px;
   margin-bottom: 15px;
 }
+
 .home-page-player-summary-header a {
   color: #2563eb;
   font-size: 13px;
@@ -660,6 +671,7 @@ textarea::placeholder {
   align-items: center;
   justify-content: space-between;
   gap: 16px;
+
   padding-top: 14px;
   border-top: 1px solid var(--border-color);
 }
@@ -685,7 +697,9 @@ textarea::placeholder {
   font-size: 13px;
 }
 
-/* Dashboard */
+/* =========================================================
+   Dashboard
+   ========================================================= */
 
 .dashboard {
   width: 100%;
@@ -720,6 +734,7 @@ textarea::placeholder {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 10px;
+
   max-width: 1000px;
   margin: 0 auto;
 }
@@ -727,11 +742,12 @@ textarea::placeholder {
 .stat-card {
   min-width: 0;
   padding: 16px;
+
   background: var(--card-background);
   color: var(--text-color);
   border: 1px solid var(--border-color);
   border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+
   transition:
     transform 0.2s ease,
     border-color 0.2s ease,
@@ -762,10 +778,12 @@ textarea::placeholder {
   max-width: 900px;
   margin: 24px auto;
   padding: 22px;
+
   background: var(--card-background);
   color: var(--text-color);
   border: 1px solid var(--border-color);
   border-radius: 14px;
+
   box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
 }
 
@@ -774,7 +792,9 @@ textarea::placeholder {
   font-size: 21px;
 }
 
-/* Spelers */
+/* =========================================================
+   Spelers
+   ========================================================= */
 
 .players-page {
   width: 100%;
@@ -788,6 +808,7 @@ textarea::placeholder {
   align-items: flex-start;
   justify-content: space-between;
   gap: 20px;
+
   width: 100%;
   margin: 0 auto 8px;
   text-align: left;
@@ -809,12 +830,15 @@ textarea::placeholder {
 .add-button {
   flex-shrink: 0;
   padding: 11px 16px;
+
   border-radius: 9px;
   background: #2563eb;
   color: white;
+
   text-align: center;
   text-decoration: none;
   font-weight: 600;
+
   transition:
     background 0.2s ease,
     transform 0.2s ease;
@@ -840,6 +864,7 @@ textarea::placeholder {
   align-items: center;
   justify-content: space-between;
   gap: 15px;
+
   margin-bottom: 16px;
   padding-bottom: 10px;
   border-bottom: 1px solid var(--border-color);
@@ -873,12 +898,15 @@ textarea::placeholder {
   width: 100%;
   max-width: 420px;
   padding: 12px 15px;
+
   background: var(--input-background);
   color: var(--text-color);
   border: 1px solid var(--border-color);
   border-radius: 10px;
+
   outline: none;
   font-size: 14px;
+
   transition:
     border-color 0.2s ease,
     box-shadow 0.2s ease;
@@ -896,9 +924,11 @@ textarea::placeholder {
 .player-search + p {
   margin: 0 0 24px;
   padding: 14px 16px;
+
   background: var(--card-background);
   color: var(--text-color);
   border-radius: 10px;
+
   text-align: center;
   font-size: 15px;
 }
@@ -907,6 +937,7 @@ textarea::placeholder {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 16px;
+
   width: 100%;
   margin: 30px auto;
 }
@@ -917,16 +948,20 @@ textarea::placeholder {
   display: flex;
   position: relative;
   flex-direction: column;
+
   min-width: 0;
   overflow: hidden;
   margin: 0;
   padding: 20px;
+
   background: var(--card-background);
   color: var(--text-color);
   border: 1px solid var(--border-color);
   border-radius: 14px;
+
   text-align: left;
   cursor: pointer;
+
   transition:
     transform 0.2s ease,
     box-shadow 0.2s ease,
@@ -980,8 +1015,10 @@ textarea::placeholder {
   justify-content: center;
   flex-direction: column;
   flex-shrink: 0;
+
   width: 58px;
   height: 58px;
+
   background: var(--secondary-background);
   border: 1px solid var(--border-color);
   border-radius: 11px;
@@ -1026,9 +1063,11 @@ textarea::placeholder {
   align-self: flex-start;
   margin-top: 14px;
   padding: 6px 10px;
+
   background: var(--secondary-background);
   border: 1px solid var(--border-color);
   border-radius: 7px;
+
   color: #60a5fa;
   font-size: 11px;
   font-weight: 700;
@@ -1046,9 +1085,11 @@ textarea::placeholder {
 .player-stat {
   min-width: 0;
   padding: 11px 8px;
+
   background: var(--secondary-background);
   border: 1px solid var(--border-color);
   border-radius: 9px;
+
   text-align: center;
 }
 
@@ -1063,8 +1104,10 @@ textarea::placeholder {
   display: block;
   overflow: hidden;
   margin-top: 4px;
+
   color: var(--muted-text-color);
   font-size: 10px;
+
   text-overflow: ellipsis;
   white-space: nowrap;
 }
@@ -1107,22 +1150,28 @@ textarea::placeholder {
   width: 100%;
   margin: 0;
   padding: 16px;
+
   background: var(--card-background);
   color: var(--text-color);
   border: 1px solid var(--border-color);
   border-radius: 10px;
+
   text-align: center;
   font-size: 15px;
 }
 
-/* Modal */
+/* =========================================================
+   Modals
+   ========================================================= */
 
 .modal-overlay {
   position: fixed;
   inset: 0;
+
   display: flex;
   align-items: center;
   justify-content: center;
+
   padding: 30px;
   background: rgba(0, 0, 0, 0.75);
   backdrop-filter: blur(6px);
@@ -1135,14 +1184,17 @@ textarea::placeholder {
   max-height: 90vh;
   overflow-y: auto;
   padding: 36px;
+
   background: linear-gradient(
     145deg,
     var(--card-background),
     var(--secondary-background)
   );
+
   color: var(--text-color);
   border: 2px solid #2563eb;
   border-radius: 20px;
+
   box-shadow:
     0 25px 60px rgba(0, 0, 0, 0.55),
     0 0 35px rgba(37, 99, 235, 0.15);
@@ -1156,10 +1208,13 @@ textarea::placeholder {
 
 .modal .player-stat {
   padding: 18px 12px;
+
   background: var(--secondary-background);
   border: 1px solid var(--border-color);
   border-radius: 14px;
+
   text-align: center;
+
   transition:
     transform 0.2s ease,
     border-color 0.2s ease,
@@ -1195,19 +1250,24 @@ textarea::placeholder {
   position: absolute;
   top: 18px;
   right: 18px;
+
   display: flex;
   align-items: center;
   justify-content: center;
+
   width: 42px;
   height: 42px;
   padding: 0;
+
   background: #2563eb;
   color: white;
   border: none;
   border-radius: 10px;
+
   cursor: pointer;
   font-size: 27px;
   line-height: 1;
+
   transition:
     background 0.2s ease,
     transform 0.2s ease;
@@ -1218,11 +1278,15 @@ textarea::placeholder {
   transform: scale(1.1);
 }
 
-/* Formulieren */
+/* =========================================================
+   Formulieren
+   ========================================================= */
+
 .form-section-title {
   grid-column: 1 / -1;
   margin: 18px 0 2px;
   padding-bottom: 8px;
+
   border-bottom: 1px solid var(--border-color);
   color: var(--text-color);
   font-size: 1rem;
@@ -1240,9 +1304,15 @@ textarea::placeholder {
 
 .form-field label {
   color: var(--text-color);
-  font-size: 0.9rem;
-  font-weight: 600;
+  font-size: 14px;
+  font-weight: bold;
 }
+
+.form-field input,
+.form-grid input {
+  width: 100%;
+}
+
 .form-actions {
   display: flex;
   justify-content: flex-end;
@@ -1256,6 +1326,7 @@ textarea::placeholder {
   min-width: 0;
   margin: 0;
   padding: 8px 14px;
+
   font-size: 0.9rem;
   line-height: 1.2;
   border-radius: 6px;
@@ -1275,7 +1346,9 @@ textarea::placeholder {
 
 .save-player-button {
   margin: 0;
+  margin-top: 16px;
 }
+
 .warning {
   margin: 10px 0 15px;
   color: #ef4444;
@@ -1288,31 +1361,9 @@ textarea::placeholder {
   gap: 12px;
 }
 
-.form-field {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
-
-.form-field label {
-  color: var(--text-color);
-  font-size: 14px;
-  font-weight: bold;
-}
-
-.form-field input {
-  width: 100%;
-}
-
-.form-grid input {
-  width: 100%;
-}
-
-.save-player-button {
-  margin-top: 16px;
-}
-
-/* Instellingen */
+/* =========================================================
+   Instellingen
+   ========================================================= */
 
 .settings-page {
   width: 100%;
@@ -1325,9 +1376,11 @@ textarea::placeholder {
   display: flex;
   flex-direction: column;
   overflow: hidden;
+
   background: var(--card-background);
   border: 1px solid var(--border-color);
   border-radius: 16px;
+
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
 }
 
@@ -1336,6 +1389,7 @@ textarea::placeholder {
   align-items: center;
   justify-content: space-between;
   gap: 30px;
+
   padding: 24px;
   border-bottom: 1px solid var(--border-color);
 }
@@ -1359,6 +1413,7 @@ textarea::placeholder {
 .setting-row small {
   display: block;
   max-width: 500px;
+
   color: var(--muted-text-color);
   font-size: 14px;
   line-height: 1.5;
@@ -1368,11 +1423,13 @@ textarea::placeholder {
   flex-shrink: 0;
   min-width: 190px;
   padding: 12px 18px;
+
   background: #2563eb;
   color: white;
   border: 1px solid #2563eb;
   border-radius: 8px;
   font-weight: 600;
+
   transition:
     background 0.2s ease,
     transform 0.2s ease,
@@ -1393,10 +1450,12 @@ textarea::placeholder {
   flex-shrink: 0;
   min-width: 190px;
   padding: 11px 13px;
+
   background: var(--input-background);
   color: var(--text-color);
   border: 1px solid var(--border-color);
   border-radius: 8px;
+
   outline: none;
   cursor: pointer;
   font-size: 14px;
@@ -1412,8 +1471,10 @@ textarea::placeholder {
   grid-template-columns: minmax(180px, 1fr) auto;
   gap: 8px;
   flex-shrink: 0;
+
   width: 420px;
   padding: 4px;
+
   background: var(--input-background);
   border: 1px solid var(--border-color);
   border-radius: 10px;
@@ -1423,6 +1484,7 @@ textarea::placeholder {
   width: 100%;
   margin: 0;
   padding: 11px 13px;
+
   background: transparent;
   color: var(--text-color);
   border: none;
@@ -1450,6 +1512,7 @@ textarea::placeholder {
 .teams-list {
   margin-top: 24px;
   padding: 22px;
+
   background: var(--card-background);
   border: 1px solid var(--border-color);
   border-radius: 16px;
@@ -1465,6 +1528,7 @@ textarea::placeholder {
   align-items: center;
   justify-content: space-between;
   gap: 15px;
+
   padding: 14px 15px;
   color: var(--text-color);
   border-top: 1px solid var(--border-color);
@@ -1480,6 +1544,7 @@ textarea::placeholder {
 .team-item button {
   flex-shrink: 0;
   padding: 8px 12px;
+
   background: #dc2626;
   border-radius: 7px;
   font-size: 13px;
@@ -1493,6 +1558,7 @@ textarea::placeholder {
 .favorite-team-setting {
   width: 100%;
   padding: 20px;
+
   background: var(--card-background);
   border: 1px solid var(--border-color);
   border-radius: 12px;
@@ -1526,12 +1592,15 @@ textarea::placeholder {
   align-items: center;
   gap: 7px;
   padding: 9px 14px;
+
   background: var(--input-background);
   color: var(--text-color);
   border: 1px solid var(--border-color);
   border-radius: 8px;
+
   cursor: pointer;
   font-size: 14px;
+
   transition:
     background 0.2s ease,
     border-color 0.2s ease,
@@ -1554,6 +1623,7 @@ textarea::placeholder {
 .data-settings {
   margin-top: 24px;
   padding: 22px;
+
   background: var(--card-background);
   color: var(--text-color);
   border: 1px solid var(--border-color);
@@ -1577,7 +1647,9 @@ textarea::placeholder {
   margin: 0;
 }
 
-/* FAQ */
+/* =========================================================
+   FAQ
+   ========================================================= */
 
 .faq-section {
   margin-top: 30px;
@@ -1591,6 +1663,7 @@ textarea::placeholder {
 
 .faq-list {
   overflow: hidden;
+
   background: var(--card-background);
   border: 1px solid var(--border-color);
   border-radius: 16px;
@@ -1609,13 +1682,16 @@ textarea::placeholder {
   align-items: center;
   justify-content: space-between;
   gap: 20px;
+
   width: 100%;
   margin: 0;
   padding: 18px 20px;
+
   background: transparent;
   color: var(--text-color);
   border: none;
   border-radius: 0;
+
   text-align: left;
   font-size: 16px;
   font-weight: 600;
@@ -1639,7 +1715,9 @@ textarea::placeholder {
   line-height: 1.6;
 }
 
-/* Wedstrijden */
+/* =========================================================
+   Wedstrijden
+   ========================================================= */
 
 .matches-page {
   width: 100%;
@@ -1650,9 +1728,11 @@ textarea::placeholder {
   grid-template-columns: 1fr auto;
   align-items: start;
   gap: 20px;
+
   width: 100%;
   max-width: 1100px;
   margin: 0 auto 18px;
+
   text-align: left;
 }
 
@@ -1695,10 +1775,12 @@ textarea::placeholder {
 
 .match-filter select {
   padding: 8px 10px;
+
   background: var(--input-background);
   color: var(--text-color);
   border: 1px solid var(--border-color);
   border-radius: 8px;
+
   outline: none;
   cursor: pointer;
   font-size: 13px;
@@ -1715,19 +1797,24 @@ textarea::placeholder {
   width: 100%;
   max-width: 1100px;
   margin: 30px auto;
+
   background: var(--table-background);
   color: black;
+
   border-collapse: collapse;
   border-radius: 12px;
   overflow: hidden;
+
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 }
 
 .matches-table th,
 .matches-table td {
   padding: 14px 16px;
+
   color: var(--table-text-color);
   border-bottom: 1px solid var(--border-color);
+
   text-align: center;
   vertical-align: middle;
 }
@@ -1755,6 +1842,7 @@ textarea::placeholder {
   content: "Thuis";
   display: block;
   margin-bottom: 3px;
+
   color: var(--table-text-color);
   font-size: 10px;
   font-weight: 500;
@@ -1765,6 +1853,7 @@ textarea::placeholder {
   content: "Uit";
   display: block;
   margin-bottom: 3px;
+
   color: var(--table-text-color);
   font-size: 10px;
   font-weight: 500;
@@ -1795,11 +1884,13 @@ textarea::placeholder {
   padding: 14px 16px;
   vertical-align: middle;
 }
+
 .matches-table .match-actions {
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 10px;
+
   width: 100%;
   margin: 0;
 }
@@ -1808,6 +1899,7 @@ textarea::placeholder {
   flex: 0 0 auto;
   min-width: 90px;
   padding: 8px 12px;
+
   border-radius: 7px;
   font-size: 13px;
   font-weight: 600;
@@ -1869,8 +1961,10 @@ textarea::placeholder {
   display: inline-flex;
   align-items: center;
   justify-content: center;
+
   min-width: 30px;
   padding: 5px 9px;
+
   border-radius: 7px;
   font-size: 12px;
   font-weight: 700;
@@ -1891,7 +1985,9 @@ textarea::placeholder {
   color: white;
 }
 
-/* Tablet */
+/* =========================================================
+   Tablet
+   ========================================================= */
 
 @media (min-width: 701px) and (max-width: 900px) {
   .modal {
@@ -1900,12 +1996,11 @@ textarea::placeholder {
   }
 }
 
-/* Tablet / kleinere schermen */
-
 @media (max-width: 900px) {
   .players {
     grid-template-columns: repeat(2, 1fr);
   }
+
   .home-page-stats {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
@@ -1915,7 +2010,9 @@ textarea::placeholder {
   }
 }
 
-/* Mobiel */
+/* =========================================================
+   Mobiel
+   ========================================================= */
 
 @media (max-width: 768px) {
   .home-page-header {
@@ -1931,11 +2028,13 @@ textarea::placeholder {
   .home-page-team-badge {
     width: 100%;
   }
+
   .home-page-section-title {
     align-items: flex-start;
     flex-direction: column;
     gap: 5px;
   }
+
   .home-page-stats {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 10px;
@@ -1958,7 +2057,6 @@ textarea::placeholder {
     line-height: 1.4;
   }
 
-
   .home-page-player-summary-stats {
     gap: 25px;
   }
@@ -1979,6 +2077,7 @@ textarea::placeholder {
     width: calc(100% - 20px);
     max-width: calc(100% - 20px);
     margin: 15px auto;
+
     table-layout: fixed;
     font-size: 11px;
   }
@@ -2028,6 +2127,7 @@ textarea::placeholder {
     width: 100%;
     min-width: 70px;
     padding: 6px 4px;
+
     overflow: visible;
     font-size: 10px;
     white-space: nowrap;
@@ -2043,6 +2143,7 @@ textarea::placeholder {
   h2 {
     font-size: 22px;
   }
+
   .nav {
     width: 100%;
     flex-direction: column;
@@ -2224,6 +2325,8 @@ textarea::placeholder {
   }
 }
 
+/* Extra kleine telefoons */
+
 @media (max-width: 450px) {
   .home-page-stats {
     grid-template-columns: 1fr 1fr;
@@ -2236,6 +2339,7 @@ textarea::placeholder {
   .home-page-stat strong {
     font-size: 22px;
   }
+
   .stats-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
@@ -2262,7 +2366,9 @@ textarea::placeholder {
   }
 }
 
-/* Formuliervelden in modals */
+/* =========================================================
+   Formuliervelden in modals
+   ========================================================= */
 
 .modal .form-grid input,
 .modal .form-grid select,
@@ -2285,13 +2391,20 @@ textarea::placeholder {
   background: #ffffff;
   color: #111827;
 }
+
+/* =========================================================
+   Spelerdetails
+   ========================================================= */
+
 .player-details-header {
   display: grid;
   grid-template-columns: 1fr auto;
   align-items: center;
   gap: 24px;
+
   padding-right: 35px;
   padding-bottom: 20px;
+
   border-bottom: 1px solid var(--border-color);
   margin-bottom: 20px;
 }
@@ -2315,8 +2428,10 @@ textarea::placeholder {
 .player-details-number {
   padding: 4px 8px;
   border-radius: 6px;
+
   background: var(--secondary-background);
   color: var(--muted-text-color);
+
   font-size: 0.85rem;
   font-weight: 600;
 }
@@ -2330,8 +2445,10 @@ textarea::placeholder {
   display: inline-block;
   padding: 4px 9px;
   border-radius: 6px;
+
   background: var(--secondary-background);
   color: var(--text-color);
+
   font-size: 0.8rem;
   font-weight: 600;
 }
@@ -2362,6 +2479,7 @@ textarea::placeholder {
 .player-details-section h3 {
   margin: 0 0 10px;
   padding-bottom: 7px;
+
   border-bottom: 1px solid var(--border-color);
   color: var(--text-color);
   font-size: 0.95rem;
@@ -2378,6 +2496,8 @@ textarea::placeholder {
   box-sizing: border-box;
 }
 
+/* Spelerdetails op kleine schermen */
+
 @media (max-width: 600px) {
   .player-details-header {
     grid-template-columns: 1fr;
@@ -2392,6 +2512,9 @@ textarea::placeholder {
     grid-template-columns: repeat(2, 1fr);
   }
 }
+
+/* Spelerspagina en formulieren op mobiel */
+
 @media (max-width: 700px) {
   .players-page-header {
     flex-direction: column;
@@ -2434,6 +2557,9 @@ textarea::placeholder {
     grid-template-columns: repeat(2, 1fr);
   }
 }
+
+/* Wedstrijdtabel op kleinere schermen */
+
 @media (max-width: 700px) {
   .matches-table {
     width: 100%;
