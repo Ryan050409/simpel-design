@@ -74,8 +74,8 @@ function Dashboard({ matches, playerList, team }: DashboardProps) {
     <div className="dashboard">
       <div className="dashboard-page-header">
         <div>
-          <h1>📊 Dashboard</h1>
-          <p>Bekijk het overzicht van {team}.</p>
+          <h1>📊 Statistieken</h1>
+          <p>Bekijk de uitgebreide statistieken van {team}.</p>
         </div>
       </div>
 
@@ -124,26 +124,76 @@ function Dashboard({ matches, playerList, team }: DashboardProps) {
         </div>
       </div>
 
-      <div className="dashboard-extra">
-        <h2>Teamstatistieken</h2>
+      
+<div className="dashboard-extra">
+  <div className="team-stats-heading">
+    <div>
+      <span className="team-stats-eyebrow">TEAMANALYSE</span>
+      <h2>Teamstatistieken</h2>
+      <p>De aanvallende en verdedigende prestaties van {team}.</p>
+    </div>
+    <span className="team-stats-ball">⚽</span>
+  </div>
 
-        <p>
-          <strong>⚽ Goals voor:</strong> {goalsFor}
-        </p>
+  <div className="team-stats-overview">
+    <div className="team-stat-block goals-for">
+      <span>DOELPUNTEN VOOR</span>
+      <strong>{goalsFor}</strong>
+      <small>Gescoord</small>
+    </div>
 
-        <p>
-          <strong>🥅 Goals tegen:</strong> {goalsAgainst}
-        </p>
+    <div className="team-stat-block goals-against">
+      <span>DOELPUNTEN TEGEN</span>
+      <strong>{goalsAgainst}</strong>
+      <small>Tegendoelpunten</small>
+    </div>
 
-        <p>
-          <strong>📊 Doelsaldo:</strong> {goalDifference > 0 ? "+" : ""}
-          {goalDifference}
-        </p>
+    <div className="team-stat-block goal-difference">
+      <span>DOELSALDO</span>
+      <strong>
+        {goalDifference > 0 ? "+" : ""}
+        {goalDifference}
+      </strong>
+      <small>
+        {goalDifference > 0
+          ? "Positief doelsaldo"
+          : goalDifference < 0
+            ? "Negatief doelsaldo"
+            : "Neutraal doelsaldo"}
+      </small>
+    </div>
+  </div>
 
-        <p>
-          <strong>📈 Gemiddeld goals per wedstrijd:</strong> {averageGoals}
-        </p>
-      </div>
+  <div className="goals-comparison">
+    <div className="goals-comparison-label">
+      <span>Gescoord</span>
+      <strong>{goalsFor}</strong>
+    </div>
+
+    <div className="goals-bar">
+      <div
+        className="goals-bar-for"
+        style={{
+          width: `${(goalsFor / Math.max(goalsFor, goalsAgainst, 1)) * 100}%`,
+        }}
+      />
+    </div>
+
+    <div className="goals-comparison-label">
+      <span>Tegendoelpunten</span>
+      <strong>{goalsAgainst}</strong>
+    </div>
+
+    <div className="goals-bar">
+      <div
+        className="goals-bar-against"
+        style={{
+          width: `${(goalsAgainst / Math.max(goalsFor, goalsAgainst, 1)) * 100}%`,
+        }}
+      />
+    </div>
+  </div>
+</div>
 
       <div className="dashboard-extra">
         <h2>Spelersstatistieken</h2>
@@ -175,7 +225,6 @@ function Dashboard({ matches, playerList, team }: DashboardProps) {
           <p>Er zijn nog geen spelers voor {team}.</p>
         )}
       </div>
-
     </div>
   );
 }
