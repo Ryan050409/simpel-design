@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import type { Dispatch, SetStateAction } from "react";
 import MatchForm from "./MatchForm.tsx";
@@ -15,8 +16,10 @@ function getMatchResult(match: Match, team: string) {
     return null;
   }
 
-  const teamGoals = match.home === team ? match.homeGoals : match.awayGoals;
-  const opponentGoals = match.home === team ? match.awayGoals : match.homeGoals;
+  const teamGoals =
+    match.home === team ? match.homeGoals : match.awayGoals;
+  const opponentGoals =
+    match.home === team ? match.awayGoals : match.homeGoals;
 
   if (teamGoals > opponentGoals) {
     return "W";
@@ -61,7 +64,12 @@ function getRowClass(result: string | null) {
   return undefined;
 }
 
-function MatchesPage({ matches, setMatches, team, teams }: MatchesPageProps) {
+function MatchesPage({
+  matches,
+  setMatches,
+  team,
+  teams,
+}: MatchesPageProps) {
   const [editingMatch, setEditingMatch] = useState<Match | null>(null);
   const [showMatchPopup, setShowMatchPopup] = useState(false);
   const [matchView, setMatchView] = useState<"favorite" | "all">("favorite");
@@ -69,15 +77,17 @@ function MatchesPage({ matches, setMatches, team, teams }: MatchesPageProps) {
 
   const visibleMatches =
     matchView === "favorite"
-      ? matches.filter((match) => match.home === team || match.away === team)
+      ? matches.filter(
+          (match) => match.home === team || match.away === team,
+        )
       : matches;
 
-  const sortedMatches = [...visibleMatches].sort((a, b) => { 
+  const sortedMatches = [...visibleMatches].sort((a, b) => {
     const dateA = new Date(a.date).getTime();
     const dateB = new Date(b.date).getTime();
 
     return sortOrder === "newest" ? dateB - dateA : dateA - dateB;
-});
+  });
 
   function deleteMatch(id: number) {
     const match = matches.find((match) => match.id === id);
@@ -133,26 +143,31 @@ function MatchesPage({ matches, setMatches, team, teams }: MatchesPageProps) {
               id="match-view"
               value={matchView}
               onChange={(event) =>
-                setMatchView(event.target.value as "favorite" | "all")
+                setMatchView(
+                  event.target.value as "favorite" | "all",
+                )
               }
             >
               <option value="favorite">Favoriete team</option>
               <option value="all">Alle teams</option>
             </select>
           </div>
-          <div className="match-filter"> 
-            <label htmlFor="match-sort"> Sorteer op datum:</label>
 
-            <select 
-             id="match-sort"
-             value={sortOrder}
-             onChange={(event) => 
-              setSortOrder(event.target.value as "newest" | "oldest")
-             }
-             >
-              <option value="newest"> Nieuwste eerst</option>
-              <option value="oldest"> Oudste eerst</option>
-             </select>
+          <div className="match-filter">
+            <label htmlFor="match-sort">Sorteer op datum:</label>
+
+            <select
+              id="match-sort"
+              value={sortOrder}
+              onChange={(event) =>
+                setSortOrder(
+                  event.target.value as "newest" | "oldest",
+                )
+              }
+            >
+              <option value="newest">Nieuwste eerst</option>
+              <option value="oldest">Oudste eerst</option>
+            </select>
           </div>
         </div>
       </div>
@@ -178,14 +193,51 @@ function MatchesPage({ matches, setMatches, team, teams }: MatchesPageProps) {
             ) : (
               sortedMatches.map((match) => {
                 const result = getMatchResult(match, team);
+                const homeIsFavorite = match.home === team;
+                const awayIsFavorite = match.away === team;
 
                 return (
-                  <tr key={match.id} className={getRowClass(result)}>
-                    <td>{new Date(match.date).toLocaleDateString("nl-NL")}</td>
+                  <tr
+                    key={match.id}
+                    className={getRowClass(result)}
+                  >
+                    <td>
+                      {new Date(match.date).toLocaleDateString("nl-NL")}
+                    </td>
 
-                    <td>{match.home}</td>
+                    <td
+                      className={
+                        homeIsFavorite ? "favorite-team-name" : ""
+                      }
+                    >
+                      {homeIsFavorite && (
+                        <span
+                          className="favorite-indicator"
+                          aria-label="Favoriet team"
+                          title="Favoriet team"
+                        >
+                          ★{" "}
+                        </span>
+                      )}
+                      {match.home}
+                    </td>
 
-                    <td>{match.away}</td>
+                    <td
+                      className={
+                        awayIsFavorite ? "favorite-team-name" : ""
+                      }
+                    >
+                      {awayIsFavorite && (
+                        <span
+                          className="favorite-indicator"
+                          aria-label="Favoriet team"
+                          title="Favoriet team"
+                        >
+                          ★{" "}
+                        </span>
+                      )}
+                      {match.away}
+                    </td>
 
                     <td>
                       {match.homeGoals} - {match.awayGoals}
@@ -199,7 +251,10 @@ function MatchesPage({ matches, setMatches, team, teams }: MatchesPageProps) {
 
                     <td>
                       <div className="match-actions">
-                        <button type="button" onClick={() => editMatch(match)}>
+                        <button
+                          type="button"
+                          onClick={() => editMatch(match)}
+                        >
                           Bewerken
                         </button>
 
