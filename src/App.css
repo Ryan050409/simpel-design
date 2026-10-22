@@ -93,52 +93,6 @@
   --shadow-modal: 0 24px 60px rgba(15, 23, 42, 0.20);
 }
 
-/* Winnaar duidelijk herkenbaar */
-
-.matches-table .winning-team {
-  font-weight: 700;
-  border-left: 3px solid #16a34a;
-}
-
-.matches-table .winner-indicator {
-  color: #16a34a;
-  font-size: 14px;
-}
-
-.matches-table .winning-score {
-  display: inline-block;
-  padding: 3px 7px;
-  border: 2px solid #16a34a;
-  border-radius: 6px;
-  font-weight: 800;
-}
-
-/* Zichtbaar in donkere modus */
-.app:not(.light) .matches-table .winning-team {
-  border-left-color: #4ade80;
-}
-
-.app:not(.light) .matches-table .winner-indicator {
-  color: #4ade80;
-}
-
-.app:not(.light) .matches-table .winning-score {
-  border-color: #4ade80;
-  color: #ffffff;
-}
-
-/* Houd de markering compact op mobiel */
-@media (max-width: 900px) {
-  .matches-table .winning-score {
-    padding: 2px 4px;
-    border-width: 1px;
-  }
-
-  .matches-table .winning-team {
-    border-left-width: 2px;
-  }
-}
-
 /* =========================================================
    Basis
    ========================================================= */
@@ -1966,7 +1920,7 @@ textarea::placeholder {
   margin: 30px auto;
 
   background: var(--table-background);
-  color: black;
+  color: var(--table-text-color);
 
   border-collapse: collapse;
   border-radius: 12px;
@@ -2855,95 +2809,7 @@ textarea::placeholder {
   }
 }
 
-/* ========================================
-   Wedstrijdtabel - visuele afwerking
-   ======================================== */
-
-/* 1. Datum zoveel mogelijk op één regel houden */
-.matches-table th:nth-child(1),
-.matches-table td:nth-child(1) {
-  white-space: nowrap;
-  min-width: 105px;
-}
-
-/* 2. Winnende ploeg duidelijk, maar subtiel markeren */
-.matches-table .winning-team {
-  font-weight: 700;
-  border-left: 3px solid #16a34a;
-}
-
-.matches-table .winner-indicator {
-  color: #16a34a;
-  font-size: 14px;
-  font-weight: 800;
-}
-
-/* Winnende score */
-.matches-table .winning-score {
-  display: inline-block;
-  padding: 3px 7px;
-  border: 2px solid #16a34a;
-  border-radius: 6px;
-  font-weight: 800;
-  white-space: nowrap;
-}
-
-/* Winnaarsmarkering in donkere modus */
-.app:not(.light) .matches-table .winning-team {
-  border-left-color: #4ade80;
-}
-
-.app:not(.light) .matches-table .winner-indicator {
-  color: #4ade80;
-}
-
-.app:not(.light) .matches-table .winning-score {
-  border-color: #4ade80;
-  color: var(--table-text-color);
-}
-
-/* 3. Verwijderen minder dominant maken */
-.matches-table .delete-button {
-  background: #dc2626;
-  color: #ffffff;
-  border: 1px solid #b91c1c;
-  transition: background 0.2s ease;
-}
-
-.matches-table .delete-button:hover {
-  background: #b91c1c;
-}
-
-/* Donkere modus: duidelijke rode knop */
-.app:not(.light) .matches-table .delete-button {
-  background: #b91c1c;
-  border-color: #f87171;
-  color: #ffffff;
-}
-
-.app:not(.light) .matches-table .delete-button:hover {
-  background: #991b1b;
-}
-
-/* Mobiele weergave */
-@media (max-width: 900px) {
-  .matches-table th:nth-child(1),
-  .matches-table td:nth-child(1) {
-    min-width: 0;
-    white-space: normal;
-  }
-
-  .matches-table .winning-score {
-    padding: 2px 4px;
-    border-width: 1px;
-  }
-
-  .matches-table .winning-team {
-    border-left-width: 2px;
-  }
-}
-
-/* Favoriete team altijd herkenbaar */
+/* Favoriete team altijd herkenbaar, onafhankelijk van W/G/V */
 .matches-table .favorite-team-name {
   color: #15803d;
   font-weight: 700;
