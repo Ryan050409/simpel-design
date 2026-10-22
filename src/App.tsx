@@ -1,3 +1,4 @@
+
 import { useEffect, useRef, useState } from "react";
 import {
   BrowserRouter,
@@ -178,34 +179,12 @@ function App() {
     return localStorage.getItem("favoriteTeam") || "Feyenoord";
   });
 
-  const [showTeamMenu, setShowTeamMenu] = useState(false);
-  const favoriteMenuRef = useRef<HTMLDivElement>(null);
-
-  // Nieuw: state en ref voor het profielmenu.
   const [showProfileMenu, setShowProfileMenu] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(() => {
-  return localStorage.getItem("demoLoggedIn") === "true";
-});
+    return localStorage.getItem("demoLoggedIn") === "true";
+  });
+
   const profileMenuRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    if (!showTeamMenu) return;
-
-    function handleOutsideClick(event: MouseEvent) {
-      if (
-        favoriteMenuRef.current &&
-        !favoriteMenuRef.current.contains(event.target as Node)
-      ) {
-        setShowTeamMenu(false);
-      }
-    }
-
-    document.addEventListener("mousedown", handleOutsideClick);
-
-    return () => {
-      document.removeEventListener("mousedown", handleOutsideClick);
-    };
-  }, [showTeamMenu]);
 
   const [theme, setTheme] = useState<"dark" | "light">(() => {
     const savedTheme = localStorage.getItem("theme");
@@ -278,9 +257,30 @@ function App() {
   useEffect(() => {
     localStorage.setItem("theme", theme);
   }, [theme]);
-  useEffect(()=> { 
+
+  useEffect(() => {
     localStorage.setItem("demoLoggedIn", String(isLoggedIn));
   }, [isLoggedIn]);
+
+  useEffect(() => {
+    if (!showProfileMenu) return;
+
+    function handleOutsideClick(event: MouseEvent) {
+      if (
+        profileMenuRef.current &&
+        !profileMenuRef.current.contains(event.target as Node)
+      ) {
+        setShowProfileMenu(false);
+      }
+    }
+
+    document.addEventListener("mousedown", handleOutsideClick);
+
+    return () => {
+      document.removeEventListener("mousedown", handleOutsideClick);
+    };
+  }, [showProfileMenu]);
+
   return (
     <BrowserRouter>
       <div className={`app ${theme}`}>
@@ -295,48 +295,9 @@ function App() {
 
           <NavLink to="/instellingen">⚙️ Instellingen</NavLink>
 
-          {DEMO_USER.role === "admin" && <NavLink to="/admin">Admin</NavLink>}
-
-          <div className="favorite-menu" ref={favoriteMenuRef}>
-            <button
-              type="button"
-              className="favorite-menu-trigger"
-              aria-label={`Favoriete club: ${team}`}
-              aria-expanded={showTeamMenu}
-              aria-haspopup="true"
-              onClick={() => setShowTeamMenu((open) => !open)}
-            >
-              <span aria-hidden="true">★</span>
-              <span className="favorite-menu-current">{team}</span>
-              <span className="favorite-menu-chevron" aria-hidden="true">
-                {showTeamMenu ? "▴" : "▾"}
-              </span>
-            </button>
-
-            {showTeamMenu && (
-              <div className="favorite-menu-dropdown">
-                <p>Kies je favoriete club</p>
-
-                {teams.map((club) => (
-                  <button
-                    type="button"
-                    key={club.id}
-                    className={`favorite-menu-option ${
-                      team === club.name ? "selected" : ""
-                    }`}
-                    aria-pressed={team === club.name}
-                    onClick={() => {
-                      setTeam(club.name);
-                      setShowTeamMenu(false);
-                    }}
-                  >
-                    <span>{club.name}</span>
-                    {team === club.name && <span aria-hidden="true">★</span>}
-                  </button>
-                ))}
-              </div>
-            )}
-          </div>
+          {isLoggedIn && DEMO_USER.role === "admin" && (
+            <NavLink to="/admin">Admin</NavLink>
+          )}
 
           <div className="profile-menu" ref={profileMenuRef}>
             <button
@@ -354,44 +315,44 @@ function App() {
               <div className="profile-menu-dropdown">
                 <h3>Profiel en instellingen</h3>
 
-                
-<div className="profile-menu-section">
-  <strong>Profiel</strong>
+                <div className="profile-menu-section">
+                  <strong>Profiel</strong>
 
-  {isLoggedIn ? (
-    <>
-      <span>{DEMO_USER.displayName}</span>
-      <small>Rol: {DEMO_USER.role}</small>
+                  {isLoggedIn ? (
+                    <>
+                      <span>{DEMO_USER.displayName}</span>
+                      <small>Rol: {DEMO_USER.role}</small>
 
-      <button
-        type="button"
-        onClick={() => {
-          setIsLoggedIn(false);
-          setShowProfileMenu(false);
-        }}
-      >
-        Uitloggen
-      </button>
-    </>
-  ) : (
-    <>
-      <span>Je bent niet ingelogd.</span>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setIsLoggedIn(false);
+                          setShowProfileMenu(false);
+                        }}
+                      >
+                        Uitloggen
+                      </button>
+                    </>
+                  ) : (
+                    <>
+                      <span>Je bent niet ingelogd.</span>
 
-      <button
-        type="button"
-        onClick={() => {
-          setIsLoggedIn(true);
-          setShowProfileMenu(false);
-        }}
-      >
-        Inloggen als demo-admin
-      </button>
-    </>
-  )}
-</div>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setIsLoggedIn(true);
+                          setShowProfileMenu(false);
+                        }}
+                      >
+                        Inloggen als demo-admin
+                      </button>
+                    </>
+                  )}
+                </div>
 
                 <div className="profile-menu-section">
                   <label htmlFor="profile-theme">Thema</label>
+
                   <select
                     id="profile-theme"
                     value={theme}
@@ -413,7 +374,10 @@ function App() {
                       key={club.id}
                       className="profile-team-option"
                       aria-pressed={team === club.name}
-                      onClick={() => setTeam(club.name)}
+                      onClick={() => {
+                        setTeam(club.name);
+                        setShowProfileMenu(false);
+                      }}
                     >
                       {club.name}
                       {team === club.name ? " ★" : ""}
@@ -421,7 +385,7 @@ function App() {
                   ))}
                 </div>
 
-                {DEMO_USER.role === "admin" && (
+                {isLoggedIn && DEMO_USER.role === "admin" && (
                   <NavLink
                     to="/admin"
                     onClick={() => setShowProfileMenu(false)}
@@ -438,7 +402,11 @@ function App() {
           <Route
             path="/"
             element={
-              <HomePage matches={matches} playerList={playerList} team={team} />
+              <HomePage
+                matches={matches}
+                playerList={playerList}
+                team={team}
+              />
             }
           />
 
@@ -492,7 +460,16 @@ function App() {
             }
           />
 
-          <Route path="/admin" element={<AdminPage role={DEMO_USER.role} />} />
+          <Route
+            path="/admin"
+            element={
+              isLoggedIn && DEMO_USER.role === "admin" ? (
+                <AdminPage role={DEMO_USER.role} />
+              ) : (
+                <Navigate to="/" replace />
+              )
+            }
+          />
         </Routes>
       </div>
     </BrowserRouter>
