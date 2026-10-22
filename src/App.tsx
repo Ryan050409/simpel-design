@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { BrowserRouter, Routes, Route, NavLink } from "react-router-dom";
 
 import "./App.css";
@@ -175,7 +175,26 @@ function App() {
   const [team, setTeam] = useState(() => {
     return localStorage.getItem("favoriteTeam") || "Feyenoord";
   });
+const [showTeamMenu, setShowTeamMenu] = useState(false);
+const favoriteMenuRef= useRef<HTMLDivElement>(null);
+useEffect(() => {
+  if (!showTeamMenu) return;
 
+  function handleOutsideClick(event: MouseEvent) {
+    if (
+      favoriteMenuRef.current &&
+      !favoriteMenuRef.current.contains(event.target as Node)
+    ) {
+      setShowTeamMenu(false);
+    }
+  }
+
+  document.addEventListener("mousedown", handleOutsideClick);
+
+  return () => {
+    document.removeEventListener("mousedown", handleOutsideClick);
+  };
+}, [showTeamMenu]);
   const [theme, setTheme] = useState<"dark" | "light">(() => {
     const savedTheme = localStorage.getItem("theme");
     return savedTheme === "light" ? "light" : "dark";
@@ -251,17 +270,62 @@ function App() {
   return (
     <BrowserRouter>
       <div className={`app ${theme}`}>
-        <nav className="nav">
-          <NavLink to="/">🏠 Home</NavLink>
+        
 
-          <NavLink to="/dashboard">📊 Statistieken</NavLink>
+<nav className="nav">
+  <NavLink to="/">🏠 Home</NavLink>
 
-          <NavLink to="/wedstrijden">⚽ Wedstrijden</NavLink>
+  <NavLink to="/dashboard">📊 Statistieken</NavLink>
 
-          <NavLink to="/spelers">👥 Spelers</NavLink>
+  <NavLink to="/wedstrijden">⚽ Wedstrijden</NavLink>
 
-          <NavLink to="/instellingen">⚙️ Instellingen</NavLink>
-        </nav>
+  <NavLink to="/spelers">👥 Spelers</NavLink>
+
+  <NavLink to="/instellingen">⚙️ Instellingen</NavLink>
+
+  <div className="favorite-menu" ref={favoriteMenuRef}>
+    <button
+      type="button"
+      className="favorite-menu-trigger"
+      aria-label={`Favoriete club: ${team}`}
+      aria-expanded={showTeamMenu}
+      aria-haspopup="true"
+      onClick={() => setShowTeamMenu((open) => !open)}
+    >
+      <span aria-hidden="true">★</span>
+      <span className="favorite-menu-current">{team}</span>
+      <span className="favorite-menu-chevron" aria-hidden="true">
+        {showTeamMenu ? "▴" : "▾"}
+      </span>
+    </button>
+
+    {showTeamMenu && (
+      <div className="favorite-menu-dropdown">
+        <p>Kies je favoriete club</p>
+
+        {teams.map((club) => (
+          <button
+            type="button"
+            key={club.id}
+            className={`favorite-menu-option ${
+              team === club.name ? "selected" : ""
+            }`}
+            aria-pressed={team === club.name}
+            onClick={() => {
+              setTeam(club.name);
+              setShowTeamMenu(false);
+            }}
+          >
+            <span>{club.name}</span>
+            {team === club.name && <span aria-hidden="true">★</span>}
+          </button>
+        ))}
+      </div>
+    )}
+  </div>
+</nav>
+
+
 
         <Routes>
           <Route
