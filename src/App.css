@@ -2919,3 +2919,25 @@ textarea::placeholder {
     width: min(280px, calc(100vw - 40px));
   }
 }
+
+/* Toegankelijkheid: duidelijke toetsenbordfocus op de wedstrijdpagina */
+.matches-page button:focus-visible,
+.matches-page select:focus-visible,
+.matches-page input:focus-visible,
+.matches-page textarea:focus-visible {
+  outline: 3px solid #2563eb;
+  outline-offset: 3px;
+}
+
+/* Wedstrijdscore duidelijker leesbaar maken */
+.matches-page .match-score {
+  display: inline-block;
+  min-width: 3.5rem;
+  padding: 5px 8px;
+  border-radius: 6px;
+  font-size: 1rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  text-align: center;
+  white-space: nowrap;
+}

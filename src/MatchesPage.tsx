@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import type { Dispatch, SetStateAction } from "react";
 import MatchForm from "./MatchForm.tsx";
@@ -16,10 +15,8 @@ function getMatchResult(match: Match, team: string) {
     return null;
   }
 
-  const teamGoals =
-    match.home === team ? match.homeGoals : match.awayGoals;
-  const opponentGoals =
-    match.home === team ? match.awayGoals : match.homeGoals;
+  const teamGoals = match.home === team ? match.homeGoals : match.awayGoals;
+  const opponentGoals = match.home === team ? match.awayGoals : match.homeGoals;
 
   if (teamGoals > opponentGoals) {
     return "W";
@@ -64,12 +61,7 @@ function getRowClass(result: string | null) {
   return undefined;
 }
 
-function MatchesPage({
-  matches,
-  setMatches,
-  team,
-  teams,
-}: MatchesPageProps) {
+function MatchesPage({ matches, setMatches, team, teams }: MatchesPageProps) {
   const [editingMatch, setEditingMatch] = useState<Match | null>(null);
   const [showMatchPopup, setShowMatchPopup] = useState(false);
   const [matchView, setMatchView] = useState<"favorite" | "all">("favorite");
@@ -77,9 +69,7 @@ function MatchesPage({
 
   const visibleMatches =
     matchView === "favorite"
-      ? matches.filter(
-          (match) => match.home === team || match.away === team,
-        )
+      ? matches.filter((match) => match.home === team || match.away === team)
       : matches;
 
   const sortedMatches = [...visibleMatches].sort((a, b) => {
@@ -88,28 +78,6 @@ function MatchesPage({
 
     return sortOrder === "newest" ? dateB - dateA : dateA - dateB;
   });
-
-  function deleteMatch(id: number) {
-    const match = matches.find((match) => match.id === id);
-
-    if (!match) {
-      return;
-    }
-
-    const confirmed = window.confirm(
-      `Weet je zeker dat je de wedstrijd tegen ${
-        match.home === team ? match.away : match.home
-      } op ${match.date} wilt verwijderen?`,
-    );
-
-    if (!confirmed) {
-      return;
-    }
-
-    setMatches((currentMatches) =>
-      currentMatches.filter((match) => match.id !== id),
-    );
-  }
 
   function editMatch(match: Match) {
     setEditingMatch(match);
@@ -143,9 +111,7 @@ function MatchesPage({
               id="match-view"
               value={matchView}
               onChange={(event) =>
-                setMatchView(
-                  event.target.value as "favorite" | "all",
-                )
+                setMatchView(event.target.value as "favorite" | "all")
               }
             >
               <option value="favorite">Favoriete team</option>
@@ -160,9 +126,7 @@ function MatchesPage({
               id="match-sort"
               value={sortOrder}
               onChange={(event) =>
-                setSortOrder(
-                  event.target.value as "newest" | "oldest",
-                )
+                setSortOrder(event.target.value as "newest" | "oldest")
               }
             >
               <option value="newest">Nieuwste eerst</option>
@@ -197,19 +161,10 @@ function MatchesPage({
                 const awayIsFavorite = match.away === team;
 
                 return (
-                  <tr
-                    key={match.id}
-                    className={getRowClass(result)}
-                  >
-                    <td>
-                      {new Date(match.date).toLocaleDateString("nl-NL")}
-                    </td>
+                  <tr key={match.id} className={getRowClass(result)}>
+                    <td>{new Date(match.date).toLocaleDateString("nl-NL")}</td>
 
-                    <td
-                      className={
-                        homeIsFavorite ? "favorite-team-name" : ""
-                      }
-                    >
+                    <td className={homeIsFavorite ? "favorite-team-name" : ""}>
                       {homeIsFavorite && (
                         <span
                           className="favorite-indicator"
@@ -222,11 +177,7 @@ function MatchesPage({
                       {match.home}
                     </td>
 
-                    <td
-                      className={
-                        awayIsFavorite ? "favorite-team-name" : ""
-                      }
-                    >
+                    <td className={awayIsFavorite ? "favorite-team-name" : ""}>
                       {awayIsFavorite && (
                         <span
                           className="favorite-indicator"
@@ -240,30 +191,41 @@ function MatchesPage({
                     </td>
 
                     <td>
-                      {match.homeGoals} - {match.awayGoals}
+                      <span className="match-score">
+                        {match.homeGoals} - {match.awayGoals}
+                      </span>
                     </td>
 
                     <td>
-                      <span className={getResultClass(result)}>
+                      <span
+                        className={getResultClass(result)}
+                        aria-label={
+                          result === "W"
+                            ? "Winst"
+                            : result === "G"
+                              ? "Gelijkspel"
+                              : result === "V"
+                                ? "Verlies"
+                                : "Geen resultaat"
+                        }
+                        title={
+                          result === "W"
+                            ? "Winst"
+                            : result === "G"
+                              ? "Gelijkspel"
+                              : result === "V"
+                                ? "Verlies"
+                                : "Geen resultaat"
+                        }
+                      >
                         {result ?? "-"}
                       </span>
                     </td>
 
                     <td>
                       <div className="match-actions">
-                        <button
-                          type="button"
-                          onClick={() => editMatch(match)}
-                        >
+                        <button type="button" onClick={() => editMatch(match)}>
                           Bewerken
-                        </button>
-
-                        <button
-                          type="button"
-                          className="delete-button"
-                          onClick={() => deleteMatch(match.id)}
-                        >
-                          Verwijderen
                         </button>
                       </div>
                     </td>
