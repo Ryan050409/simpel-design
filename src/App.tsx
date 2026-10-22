@@ -8,6 +8,9 @@ import MatchesPage from "./MatchesPage.tsx";
 import SettingsPage from "./SettingsPage.tsx";
 import HomePage from "./HomePage";
 
+import AdminPage from "./AdminPage";
+import { DEMO_USER } from "./demoUser";
+
 import type { Player, Match, Team } from "./types.ts";
 
 /*
@@ -37,13 +40,9 @@ const seedTeams: Team[] = [
   { id: 18, name: "Willem II" },
 ];
 
-const firstNames = [
-  "Lucas"
-];
+const firstNames = ["Lucas"];
 
-const lastNames = [
-  "Jansen"
-];
+const lastNames = ["Jansen"];
 
 const positions = [
   "Keeper",
@@ -60,8 +59,8 @@ function createSeedPlayers(): Player[] {
     for (let i = 0; i < 5; i++) {
       const playerIndex = teamIndex * 5 + i;
 
-const firstname = firstNames[playerIndex];
-const lastname = lastNames[playerIndex];
+      const firstname = firstNames[playerIndex];
+      const lastname = lastNames[playerIndex];
 
       const matches = 10 + ((teamIndex * 3 + i * 2) % 17);
 
@@ -77,12 +76,12 @@ const lastname = lastNames[playerIndex];
 
       if (positions[i] === "Keeper") {
         rating = 6.8 + ((teamIndex + i) % 12) / 10;
-        tackles = 4 + teamIndex % 5;
-        interceptions = 3 + teamIndex % 4;
-        blocks = 2 + teamIndex % 3;
-        clearances = 8 + teamIndex % 7;
-        duelsWon = 5 + teamIndex % 6;
-        fouls = 1 + teamIndex % 3;
+        tackles = 4 + (teamIndex % 5);
+        interceptions = 3 + (teamIndex % 4);
+        blocks = 2 + (teamIndex % 3);
+        clearances = 8 + (teamIndex % 7);
+        duelsWon = 5 + (teamIndex % 6);
+        fouls = 1 + (teamIndex % 3);
       }
 
       if (positions[i] === "Verdediger") {
@@ -121,7 +120,7 @@ const lastname = lastNames[playerIndex];
         rating = 7.0 + ((teamIndex + i) % 12) / 10;
       }
 
-      const minutesplayed = matches * 60 + ((teamIndex + i) * 13);
+      const minutesplayed = matches * 60 + (teamIndex + i) * 13;
 
       players.push({
         id: 1000 + team.id * 10 + i,
@@ -130,15 +129,15 @@ const lastname = lastNames[playerIndex];
         team: team.name,
         position: positions[i],
         number:
-  positions[i] === "Keeper"
-    ? 1
-    : positions[i] === "Verdediger"
-      ? i === 1
-        ? 2
-        : 4
-      : positions[i] === "Middenvelder"
-        ? 8
-        : 9,
+          positions[i] === "Keeper"
+            ? 1
+            : positions[i] === "Verdediger"
+              ? i === 1
+                ? 2
+                : 4
+              : positions[i] === "Middenvelder"
+                ? 8
+                : 9,
         goals,
         assists,
         matches,
@@ -168,33 +167,32 @@ const lastname = lastNames[playerIndex];
 
 const seedPlayers = createSeedPlayers();
 
-const seedMatches: Match[] = [
-];
+const seedMatches: Match[] = [];
 
 function App() {
   const [team, setTeam] = useState(() => {
     return localStorage.getItem("favoriteTeam") || "Feyenoord";
   });
-const [showTeamMenu, setShowTeamMenu] = useState(false);
-const favoriteMenuRef= useRef<HTMLDivElement>(null);
-useEffect(() => {
-  if (!showTeamMenu) return;
+  const [showTeamMenu, setShowTeamMenu] = useState(false);
+  const favoriteMenuRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    if (!showTeamMenu) return;
 
-  function handleOutsideClick(event: MouseEvent) {
-    if (
-      favoriteMenuRef.current &&
-      !favoriteMenuRef.current.contains(event.target as Node)
-    ) {
-      setShowTeamMenu(false);
+    function handleOutsideClick(event: MouseEvent) {
+      if (
+        favoriteMenuRef.current &&
+        !favoriteMenuRef.current.contains(event.target as Node)
+      ) {
+        setShowTeamMenu(false);
+      }
     }
-  }
 
-  document.addEventListener("mousedown", handleOutsideClick);
+    document.addEventListener("mousedown", handleOutsideClick);
 
-  return () => {
-    document.removeEventListener("mousedown", handleOutsideClick);
-  };
-}, [showTeamMenu]);
+    return () => {
+      document.removeEventListener("mousedown", handleOutsideClick);
+    };
+  }, [showTeamMenu]);
   const [theme, setTheme] = useState<"dark" | "light">(() => {
     const savedTheme = localStorage.getItem("theme");
     return savedTheme === "light" ? "light" : "dark";
@@ -270,72 +268,71 @@ useEffect(() => {
   return (
     <BrowserRouter>
       <div className={`app ${theme}`}>
-        
+        <nav className="nav">
+          <NavLink to="/">🏠 Home</NavLink>
 
-<nav className="nav">
-  <NavLink to="/">🏠 Home</NavLink>
+          <NavLink to="/dashboard">📊 Statistieken</NavLink>
 
-  <NavLink to="/dashboard">📊 Statistieken</NavLink>
+          <NavLink to="/wedstrijden">⚽ Wedstrijden</NavLink>
 
-  <NavLink to="/wedstrijden">⚽ Wedstrijden</NavLink>
+          <NavLink to="/spelers">👥 Spelers</NavLink>
 
-  <NavLink to="/spelers">👥 Spelers</NavLink>
-
-  <NavLink to="/instellingen">⚙️ Instellingen</NavLink>
-
-  <div className="favorite-menu" ref={favoriteMenuRef}>
-    <button
-      type="button"
-      className="favorite-menu-trigger"
-      aria-label={`Favoriete club: ${team}`}
-      aria-expanded={showTeamMenu}
-      aria-haspopup="true"
-      onClick={() => setShowTeamMenu((open) => !open)}
-    >
-      <span aria-hidden="true">★</span>
-      <span className="favorite-menu-current">{team}</span>
-      <span className="favorite-menu-chevron" aria-hidden="true">
-        {showTeamMenu ? "▴" : "▾"}
-      </span>
-    </button>
-
-    {showTeamMenu && (
-      <div className="favorite-menu-dropdown">
-        <p>Kies je favoriete club</p>
-
-        {teams.map((club) => (
-          <button
-            type="button"
-            key={club.id}
-            className={`favorite-menu-option ${
-              team === club.name ? "selected" : ""
-            }`}
-            aria-pressed={team === club.name}
-            onClick={() => {
-              setTeam(club.name);
-              setShowTeamMenu(false);
-            }}
-          >
-            <span>{club.name}</span>
-            {team === club.name && <span aria-hidden="true">★</span>}
-          </button>
-        ))}
-      </div>
-    )}
-  </div>
-</nav>
+          <NavLink to="/instellingen">⚙️ Instellingen</NavLink>
+          
+{DEMO_USER.role === "admin" && (
+  <NavLink to="/admin">
+    Admin
+  </NavLink>
+)}
 
 
+          <div className="favorite-menu" ref={favoriteMenuRef}>
+            <button
+              type="button"
+              className="favorite-menu-trigger"
+              aria-label={`Favoriete club: ${team}`}
+              aria-expanded={showTeamMenu}
+              aria-haspopup="true"
+              onClick={() => setShowTeamMenu((open) => !open)}
+            >
+              <span aria-hidden="true">★</span>
+              <span className="favorite-menu-current">{team}</span>
+              <span className="favorite-menu-chevron" aria-hidden="true">
+                {showTeamMenu ? "▴" : "▾"}
+              </span>
+            </button>
+
+            {showTeamMenu && (
+              <div className="favorite-menu-dropdown">
+                <p>Kies je favoriete club</p>
+
+                {teams.map((club) => (
+                  <button
+                    type="button"
+                    key={club.id}
+                    className={`favorite-menu-option ${
+                      team === club.name ? "selected" : ""
+                    }`}
+                    aria-pressed={team === club.name}
+                    onClick={() => {
+                      setTeam(club.name);
+                      setShowTeamMenu(false);
+                    }}
+                  >
+                    <span>{club.name}</span>
+                    {team === club.name && <span aria-hidden="true">★</span>}
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
+        </nav>
 
         <Routes>
           <Route
             path="/"
             element={
-              <HomePage
-                matches={matches}
-                playerList={playerList}
-                team={team}
-              />
+              <HomePage matches={matches} playerList={playerList} team={team} />
             }
           />
 
@@ -387,6 +384,10 @@ useEffect(() => {
                 setTheme={setTheme}
               />
             }
+          />
+          <Route 
+          path="/admin"
+          element={<AdminPage role={DEMO_USER.role} />}
           />
         </Routes>
       </div>
