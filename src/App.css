@@ -2037,43 +2037,17 @@ textarea::placeholder {
 
 /* Wedstrijdresultaten */
 
-.match-row-win {
-  background: #dcfce7;
-}
 
-.match-row-draw {
-  background: #fef3c7;
-}
-
+.match-row-win,
+.match-row-draw,
 .match-row-loss {
-  background: #fee2e2;
+  background: var(--card-background);
 }
 
-.match-row-win:hover {
-  background: #a7dfba;
-}
-
-.match-row-draw:hover {
-  background: #f7db6c;
-}
-
+.match-row-win:hover,
+.match-row-draw:hover,
 .match-row-loss:hover {
-  background: #e78d8d;
-}
-
-.matches-table .match-row-win td,
-.matches-table .match-row-draw td,
-.matches-table .match-row-loss td {
-  color: #111827;
-}
-
-.matches-table .match-row-win td:nth-child(2)::before,
-.matches-table .match-row-win td:nth-child(3)::before,
-.matches-table .match-row-draw td:nth-child(2)::before,
-.matches-table .match-row-draw td:nth-child(3)::before,
-.matches-table .match-row-loss td:nth-child(2)::before,
-.matches-table .match-row-loss td:nth-child(3)::before {
-  color: #374151;
+  background: var(--secondary-background);
 }
 
 .result-win,
@@ -2721,44 +2695,113 @@ textarea::placeholder {
   }
 }
 
-@media (max-width: 400px) {
+/* Mobiele wedstrijdkaarten */
+@media (max-width: 600px) {
   .matches-table {
+    display: block;
     width: 100%;
+    margin: 20px auto;
+    border-collapse: separate;
+    border-spacing: 0;
+    background: transparent;
+    box-shadow: none;
+    overflow: visible;
+  }
+
+  .matches-table thead {
+    display: none;
+  }
+
+  .matches-table tbody {
+    display: grid;
+    gap: 12px;
+    width: 100%;
+  }
+
+  .matches-table tbody tr {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 10px;
+    padding: 12px;
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    overflow: hidden;
+    background: var(--card-background);
+  }
+
+  .matches-table tbody td {
+    width: auto !important;
+    min-width: 0;
+    padding: 5px 2px;
+    border: 0;
+    font-size: 12px;
+    overflow-wrap: normal;
+    word-break: normal;
+  }
+
+  /* Datum bovenaan de kaart */
+  .matches-table tbody td:first-child {
+    grid-column: 1 / -1;
+    padding-bottom: 8px;
+    color: var(--muted-text-color);
+    text-align: left;
+    font-size: 11px;
+  }
+
+  /* Thuisclub en uitclub */
+  .matches-table tbody td:nth-child(2),
+  .matches-table tbody td:nth-child(3) {
+    text-align: center;
+    font-weight: 600;
+  }
+
+  .matches-table tbody td:nth-child(2)::before,
+  .matches-table tbody td:nth-child(3)::before {
+    display: block;
+    margin-bottom: 5px;
     font-size: 10px;
   }
 
-  .matches-table th,
-  .matches-table td {
-    padding: 5px 2px;
-    overflow-wrap: anywhere;
+  /* Uitslag */
+  .matches-table tbody td:nth-child(4) {
+    text-align: center;
+    font-size: 14px;
+    font-weight: 700;
+    white-space: nowrap;
   }
 
-  .matches-table th:nth-child(2),
-  .matches-table td:nth-child(2),
-  .matches-table th:nth-child(3),
-  .matches-table td:nth-child(3) {
-    width: 27%;
+  /* Resultaatindicator */
+  .matches-table tbody td:nth-child(5) {
+    grid-column: 1 / -1;
+    text-align: left;
   }
 
-  .matches-table th:nth-child(4),
-  .matches-table td:nth-child(4) {
-    width: 15%;
-  }
-
-  .matches-table th:nth-child(6),
-  .matches-table td:nth-child(6) {
-    width: 31%;
+  /* Actieknoppen onderaan */
+  .matches-table tbody td:last-child {
+    grid-column: 1 / -1;
+    padding-top: 8px;
   }
 
   .matches-table .match-actions {
-    gap: 3px;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
   }
 
   .matches-table .match-actions button {
+    width: 100%;
     min-width: 0;
-    padding: 5px 2px;
-    font-size: 9px;
+    min-height: 38px;
+    padding: 8px;
+    font-size: 12px;
     white-space: normal;
-    overflow-wrap: anywhere;
+    overflow-wrap: normal;
+  }
+
+  .matches-table tbody td[colspan="6"] {
+    display: block;
+    grid-column: 1 / -1;
+    padding: 20px 12px;
   }
 }

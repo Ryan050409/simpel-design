@@ -151,7 +151,7 @@ function MatchesPage({ matches, setMatches, team, teams }: MatchesPageProps) {
              }
              >
               <option value="newest"> Nieuwste eerst</option>
-              <option value="oldest"> Oudtste eerst</option>
+              <option value="oldest"> Oudste eerst</option>
              </select>
           </div>
         </div>
