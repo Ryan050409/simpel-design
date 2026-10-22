@@ -16,8 +16,7 @@ function getMatchResult(match: Match, team: string) {
   }
 
   const teamGoals = match.home === team ? match.homeGoals : match.awayGoals;
-  const opponentGoals =
-    match.home === team ? match.awayGoals : match.homeGoals;
+  const opponentGoals = match.home === team ? match.awayGoals : match.homeGoals;
 
   if (teamGoals > opponentGoals) {
     return "W";
@@ -62,24 +61,23 @@ function getRowClass(result: string | null) {
   return undefined;
 }
 
-function MatchesPage({
-  matches,
-  setMatches,
-  team,
-  teams,
-}: MatchesPageProps) {
+function MatchesPage({ matches, setMatches, team, teams }: MatchesPageProps) {
   const [editingMatch, setEditingMatch] = useState<Match | null>(null);
   const [showMatchPopup, setShowMatchPopup] = useState(false);
   const [matchView, setMatchView] = useState<"favorite" | "all">("favorite");
+  const [sortOrder, setSortOrder] = useState<"newest" | "oldest">("newest");
 
   const visibleMatches =
     matchView === "favorite"
       ? matches.filter((match) => match.home === team || match.away === team)
       : matches;
 
-  const sortedMatches = [...visibleMatches].sort(
-    (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
-  );
+  const sortedMatches = [...visibleMatches].sort((a, b) => { 
+    const dateA = new Date(a.date).getTime();
+    const dateB = new Date(b.date).getTime();
+
+    return sortOrder === "newest" ? dateB - dateA : dateA - dateB;
+});
 
   function deleteMatch(id: number) {
     const match = matches.find((match) => match.id === id);
@@ -142,6 +140,20 @@ function MatchesPage({
               <option value="all">Alle teams</option>
             </select>
           </div>
+          <div className="match-filter"> 
+            <label htmlFor="match-sort"> Sorteer op datum:</label>
+
+            <select 
+             id="match-sort"
+             value={sortOrder}
+             onChange={(event) => 
+              setSortOrder(event.target.value as "newest" | "oldest")
+             }
+             >
+              <option value="newest"> Nieuwste eerst</option>
+              <option value="oldest"> Oudtste eerst</option>
+             </select>
+          </div>
         </div>
       </div>
 
@@ -169,9 +181,7 @@ function MatchesPage({
 
                 return (
                   <tr key={match.id} className={getRowClass(result)}>
-                    <td>
-                      {new Date(match.date).toLocaleDateString("nl-NL")}
-                    </td>
+                    <td>{new Date(match.date).toLocaleDateString("nl-NL")}</td>
 
                     <td>{match.home}</td>
 
@@ -189,17 +199,17 @@ function MatchesPage({
 
                     <td>
                       <div className="match-actions">
-                      <button type="button" onClick={() => editMatch(match)}>
-                        Bewerken
-                      </button>
+                        <button type="button" onClick={() => editMatch(match)}>
+                          Bewerken
+                        </button>
 
-                      <button
-                        type="button"
-                        className="delete-button"
-                        onClick={() => deleteMatch(match.id)}
-                      >
-                        Verwijderen
-                      </button>
+                        <button
+                          type="button"
+                          className="delete-button"
+                          onClick={() => deleteMatch(match.id)}
+                        >
+                          Verwijderen
+                        </button>
                       </div>
                     </td>
                   </tr>

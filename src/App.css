@@ -1864,11 +1864,12 @@ textarea::placeholder {
   color: var(--muted-text-color);
 }
 
+
 .matches-page-actions {
   display: flex;
   align-items: flex-end;
   flex-direction: column;
-  gap: 6px;
+  gap: 12px;
   flex-shrink: 0;
 }
 
@@ -1878,9 +1879,10 @@ textarea::placeholder {
 
 .matches-page-actions .match-filter {
   display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  gap: 8px;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 5px;
+  min-width: 190px;
   margin: 0;
 }
 
@@ -2298,14 +2300,32 @@ textarea::placeholder {
     margin: 0;
   }
 
-  .matches-page-actions {
-    align-items: stretch;
-    width: 100%;
-  }
+  
+.matches-page-header {
+  grid-template-columns: 1fr;
+}
 
-  .matches-page-actions .match-filter {
-    justify-content: center;
-  }
+.matches-page-actions {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-items: end;
+  gap: 12px;
+}
+
+.matches-page-actions .add-button {
+  grid-column: 1 / -1;
+  justify-self: start;
+}
+
+.matches-page-actions .match-filter {
+  min-width: 0;
+  width: 100%;
+}
+
+.match-filter select {
+  width: 100%;
+}
 
   .player-search {
     text-align: center;
