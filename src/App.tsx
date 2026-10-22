@@ -1,3 +1,4 @@
+
 import { useEffect, useRef, useState } from "react";
 import { BrowserRouter, Routes, Route, NavLink } from "react-router-dom";
 
@@ -41,7 +42,6 @@ const seedTeams: Team[] = [
 ];
 
 const firstNames = ["Lucas"];
-
 const lastNames = ["Jansen"];
 
 const positions = [
@@ -166,15 +166,20 @@ function createSeedPlayers(): Player[] {
 }
 
 const seedPlayers = createSeedPlayers();
-
 const seedMatches: Match[] = [];
 
 function App() {
   const [team, setTeam] = useState(() => {
     return localStorage.getItem("favoriteTeam") || "Feyenoord";
   });
+
   const [showTeamMenu, setShowTeamMenu] = useState(false);
   const favoriteMenuRef = useRef<HTMLDivElement>(null);
+
+  // Nieuw: state en ref voor het profielmenu.
+  const [showProfileMenu, setShowProfileMenu] = useState(false);
+  const profileMenuRef = useRef<HTMLDivElement>(null);
+
   useEffect(() => {
     if (!showTeamMenu) return;
 
@@ -193,6 +198,7 @@ function App() {
       document.removeEventListener("mousedown", handleOutsideClick);
     };
   }, [showTeamMenu]);
+
   const [theme, setTheme] = useState<"dark" | "light">(() => {
     const savedTheme = localStorage.getItem("theme");
     return savedTheme === "light" ? "light" : "dark";
@@ -278,13 +284,10 @@ function App() {
           <NavLink to="/spelers">👥 Spelers</NavLink>
 
           <NavLink to="/instellingen">⚙️ Instellingen</NavLink>
-          
-{DEMO_USER.role === "admin" && (
-  <NavLink to="/admin">
-    Admin
-  </NavLink>
-)}
 
+          {DEMO_USER.role === "admin" && (
+            <NavLink to="/admin">Admin</NavLink>
+          )}
 
           <div className="favorite-menu" ref={favoriteMenuRef}>
             <button
@@ -320,9 +323,76 @@ function App() {
                     }}
                   >
                     <span>{club.name}</span>
-                    {team === club.name && <span aria-hidden="true">★</span>}
+                    {team === club.name && (
+                      <span aria-hidden="true">★</span>
+                    )}
                   </button>
                 ))}
+              </div>
+            )}
+          </div>
+
+          <div className="profile-menu" ref={profileMenuRef}>
+            <button
+              type="button"
+              className="profile-menu-trigger"
+              aria-label="Profiel en instellingen"
+              aria-expanded={showProfileMenu}
+              aria-haspopup="true"
+              onClick={() => setShowProfileMenu((open) => !open)}
+            >
+              ⚙️
+            </button>
+
+            {showProfileMenu && (
+              <div className="profile-menu-dropdown">
+                <h3>Profiel en instellingen</h3>
+
+                <div className="profile-menu-section">
+                  <strong>Demo-gebruiker</strong>
+                  <span>{DEMO_USER.displayName}</span>
+                  <small>Rol: {DEMO_USER.role}</small>
+                </div>
+
+                <div className="profile-menu-section">
+                  <label htmlFor="profile-theme">Thema</label>
+                  <select
+                    id="profile-theme"
+                    value={theme}
+                    onChange={(event) =>
+                      setTheme(event.target.value as "dark" | "light")
+                    }
+                  >
+                    <option value="dark">Donker</option>
+                    <option value="light">Licht</option>
+                  </select>
+                </div>
+
+                <div className="profile-menu-section">
+                  <strong>Favoriete club</strong>
+
+                  {teams.map((club) => (
+                    <button
+                      type="button"
+                      key={club.id}
+                      className="profile-team-option"
+                      aria-pressed={team === club.name}
+                      onClick={() => setTeam(club.name)}
+                    >
+                      {club.name}
+                      {team === club.name ? " ★" : ""}
+                    </button>
+                  ))}
+                </div>
+
+                {DEMO_USER.role === "admin" && (
+                  <NavLink
+                    to="/admin"
+                    onClick={() => setShowProfileMenu(false)}
+                  >
+                    Adminpagina
+                  </NavLink>
+                )}
               </div>
             )}
           </div>
@@ -332,7 +402,11 @@ function App() {
           <Route
             path="/"
             element={
-              <HomePage matches={matches} playerList={playerList} team={team} />
+              <HomePage
+                matches={matches}
+                playerList={playerList}
+                team={team}
+              />
             }
           />
 
@@ -385,9 +459,10 @@ function App() {
               />
             }
           />
-          <Route 
-          path="/admin"
-          element={<AdminPage role={DEMO_USER.role} />}
+
+          <Route
+            path="/admin"
+            element={<AdminPage role={DEMO_USER.role} />}
           />
         </Routes>
       </div>
