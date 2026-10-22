@@ -1,6 +1,11 @@
-
 import { useEffect, useRef, useState } from "react";
-import { BrowserRouter, Routes, Route, NavLink } from "react-router-dom";
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+  NavLink,
+  Navigate,
+} from "react-router-dom";
 
 import "./App.css";
 import PlayersPage from "./PlayersPage.tsx";
@@ -178,6 +183,9 @@ function App() {
 
   // Nieuw: state en ref voor het profielmenu.
   const [showProfileMenu, setShowProfileMenu] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(() => {
+  return localStorage.getItem("demoLoggedIn") === "true";
+});
   const profileMenuRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -270,7 +278,9 @@ function App() {
   useEffect(() => {
     localStorage.setItem("theme", theme);
   }, [theme]);
-
+  useEffect(()=> { 
+    localStorage.setItem("demoLoggedIn", String(isLoggedIn));
+  }, [isLoggedIn]);
   return (
     <BrowserRouter>
       <div className={`app ${theme}`}>
@@ -285,9 +295,7 @@ function App() {
 
           <NavLink to="/instellingen">⚙️ Instellingen</NavLink>
 
-          {DEMO_USER.role === "admin" && (
-            <NavLink to="/admin">Admin</NavLink>
-          )}
+          {DEMO_USER.role === "admin" && <NavLink to="/admin">Admin</NavLink>}
 
           <div className="favorite-menu" ref={favoriteMenuRef}>
             <button
@@ -323,9 +331,7 @@ function App() {
                     }}
                   >
                     <span>{club.name}</span>
-                    {team === club.name && (
-                      <span aria-hidden="true">★</span>
-                    )}
+                    {team === club.name && <span aria-hidden="true">★</span>}
                   </button>
                 ))}
               </div>
@@ -348,11 +354,41 @@ function App() {
               <div className="profile-menu-dropdown">
                 <h3>Profiel en instellingen</h3>
 
-                <div className="profile-menu-section">
-                  <strong>Demo-gebruiker</strong>
-                  <span>{DEMO_USER.displayName}</span>
-                  <small>Rol: {DEMO_USER.role}</small>
-                </div>
+                
+<div className="profile-menu-section">
+  <strong>Profiel</strong>
+
+  {isLoggedIn ? (
+    <>
+      <span>{DEMO_USER.displayName}</span>
+      <small>Rol: {DEMO_USER.role}</small>
+
+      <button
+        type="button"
+        onClick={() => {
+          setIsLoggedIn(false);
+          setShowProfileMenu(false);
+        }}
+      >
+        Uitloggen
+      </button>
+    </>
+  ) : (
+    <>
+      <span>Je bent niet ingelogd.</span>
+
+      <button
+        type="button"
+        onClick={() => {
+          setIsLoggedIn(true);
+          setShowProfileMenu(false);
+        }}
+      >
+        Inloggen als demo-admin
+      </button>
+    </>
+  )}
+</div>
 
                 <div className="profile-menu-section">
                   <label htmlFor="profile-theme">Thema</label>
@@ -402,11 +438,7 @@ function App() {
           <Route
             path="/"
             element={
-              <HomePage
-                matches={matches}
-                playerList={playerList}
-                team={team}
-              />
+              <HomePage matches={matches} playerList={playerList} team={team} />
             }
           />
 
@@ -460,10 +492,7 @@ function App() {
             }
           />
 
-          <Route
-            path="/admin"
-            element={<AdminPage role={DEMO_USER.role} />}
-          />
+          <Route path="/admin" element={<AdminPage role={DEMO_USER.role} />} />
         </Routes>
       </div>
     </BrowserRouter>
