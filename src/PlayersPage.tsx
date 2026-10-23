@@ -100,19 +100,15 @@ function PlayersPage({ playerList, setPlayerList, teams }: PlayersPageProps) {
 
                 <div className="players">
                   {teamPlayers.map((player) => (
-                    <div
-                      className="player-card"
-                      key={player.id}
-                      onClick={() => setSelectedPlayer(player)}
-                    >
+                    <div className="player-card player-card-v2" key={player.id}>
                       <div className="player-card-header">
                         <div>
                           <div className="player-fullname-row">
-                            <h2>
+                            <h2 className="player-name-v2">
                               {player.firstname} {player.lastname}
                             </h2>
 
-                            <span className="player-number">
+                            <span className="player-number player-number-v2">
                               #{player.number}
                             </span>
                           </div>
@@ -127,6 +123,15 @@ function PlayersPage({ playerList, setPlayerList, teams }: PlayersPageProps) {
                             {player.rating}
                           </strong>
                         </div>
+                        <button
+                          type="button"
+                          className="player-info-button"
+                          aria-label={`Bekijk details van ${player.firstname} ${player.lastname}`}
+                          title="Bekijk spelerdetails"
+                          onClick={() => setSelectedPlayer(player)}
+                        >
+                          i
+                        </button>
                       </div>
 
                       <div className="player-position">{player.position}</div>

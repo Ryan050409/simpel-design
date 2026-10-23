@@ -171,7 +171,7 @@ function MatchesPage({ matches, setMatches, team, teams }: MatchesPageProps) {
                           aria-label="Favoriet team"
                           title="Favoriet team"
                         >
-                          ★{" "}
+                          {" "}
                         </span>
                       )}
                       {match.home}
@@ -184,7 +184,7 @@ function MatchesPage({ matches, setMatches, team, teams }: MatchesPageProps) {
                           aria-label="Favoriet team"
                           title="Favoriet team"
                         >
-                          ★{" "}
+                          {" "}
                         </span>
                       )}
                       {match.away}
