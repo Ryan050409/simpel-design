@@ -1,3 +1,4 @@
+
 import type { Player, Match } from "./types.ts";
 
 type DashboardProps = {
@@ -53,7 +54,9 @@ function Dashboard({ matches, playerList, team }: DashboardProps) {
       ? (goalsFor / playedMatches.length).toFixed(2)
       : "0.00";
 
-  const teamPlayers = playerList.filter((player) => player.team === team);
+  const teamPlayers = playerList.filter(
+    (player) => player.team === team,
+  );
 
   const topScorer =
     teamPlayers.length > 0
@@ -70,162 +73,346 @@ function Dashboard({ matches, playerList, team }: DashboardProps) {
       ? [...teamPlayers].sort((a, b) => b.rating - a.rating)[0]
       : null;
 
+  const maxGoals = Math.max(goalsFor, goalsAgainst, 1);
+
+  const statCards = [
+    {
+      label: "Wedstrijden",
+      value: playedMatches.length,
+      icon: "⚽",
+      detail: "Gespeeld",
+      style: "matches",
+    },
+    {
+      label: "Gewonnen",
+      value: wins,
+      icon: "✓",
+      detail: "Overwinningen",
+      style: "wins",
+    },
+    {
+      label: "Gelijk",
+      value: draws,
+      icon: "＝",
+      detail: "Gelijkspel",
+      style: "draws",
+    },
+    {
+      label: "Verloren",
+      value: losses,
+      icon: "↘",
+      detail: "Nederlagen",
+      style: "losses",
+    },
+    {
+      label: "Punten",
+      value: points,
+      icon: "🏆",
+      detail: "3 punten per winst",
+      style: "points",
+    },
+    {
+      label: "Doelsaldo",
+      value: `${goalDifference > 0 ? "+" : ""}${goalDifference}`,
+      icon: "📊",
+      detail: "Goals voor − tegen",
+      style: "difference",
+    },
+    {
+      label: "Winstpercentage",
+      value: `${winPercentage}%`,
+      icon: "🎯",
+      detail: "Gewonnen wedstrijden",
+      style: "percentage",
+    },
+    {
+      label: "Gem. goals",
+      value: averageGoals,
+      icon: "🥅",
+      detail: "Per wedstrijd",
+      style: "average",
+    },
+  ];
+
   return (
-    <div className="dashboard">
-      <div className="dashboard-page-header">
-        <div>
-          <h1>📊 Statistieken</h1>
-          <p>Bekijk de uitgebreide statistieken van {team}.</p>
-        </div>
-      </div>
-
-      <div className="stats-grid">
-        <div className="stat-card">
-          <h3>Wedstrijden</h3>
-          <p>{playedMatches.length}</p>
-        </div>
-
-        <div className="stat-card">
-          <h3>Gewonnen</h3>
-          <p>{wins}</p>
-        </div>
-
-        <div className="stat-card">
-          <h3>Gelijk</h3>
-          <p>{draws}</p>
-        </div>
-
-        <div className="stat-card">
-          <h3>Verloren</h3>
-          <p>{losses}</p>
-        </div>
-
-        <div className="stat-card">
-          <h3>Punten</h3>
-          <p>{points}</p>
-        </div>
-
-        <div className="stat-card">
-          <h3>Doelsaldo</h3>
+    <main className="dashboard">
+      <header className="dashboard-hero">
+        <div className="dashboard-hero-content">
+          <span className="dashboard-eyebrow">
+            SEIZOENSOVERZICHT
+          </span>
+          <h1>Dashboard</h1>
           <p>
-            {goalDifference > 0 ? "+" : ""}
-            {goalDifference}
+            Bekijk de prestaties en statistieken van{" "}
+            <strong>{team}</strong>.
           </p>
         </div>
 
-        <div className="stat-card">
-          <h3>Winstpercentage</h3>
-          <p>{winPercentage}%</p>
+        <div className="dashboard-team-badge">
+          <span aria-hidden="true">⚽</span>
+          <div>
+            <small>Geselecteerde club</small>
+            <strong>{team}</strong>
+          </div>
+        </div>
+      </header>
+
+      <section
+        className="dashboard-section"
+        aria-labelledby="overview-heading"
+      >
+        <div className="dashboard-section-heading">
+          <div>
+            <span className="dashboard-eyebrow">
+              IN ÉÉN OOGOPSLAG
+            </span>
+            <h2 id="overview-heading">Wedstrijdresultaten</h2>
+          </div>
+          <span className="dashboard-section-count">
+            {playedMatches.length}{" "}
+            {playedMatches.length === 1
+              ? "wedstrijd"
+              : "wedstrijden"}
+          </span>
         </div>
 
-        <div className="stat-card">
-          <h3>Gem. goals</h3>
-          <p>{averageGoals}</p>
+        <div className="stats-grid dashboard-stats-grid">
+          {statCards.map((stat) => (
+            <article
+              className={`stat-card dashboard-stat-card stat-${stat.style}`}
+              key={stat.style}
+            >
+              <div className="dashboard-stat-top">
+                <span className="dashboard-stat-icon" aria-hidden="true">
+                  {stat.icon}
+                </span>
+                <span className="dashboard-stat-label">
+                  {stat.label}
+                </span>
+              </div>
+
+              <p className="dashboard-stat-value">{stat.value}</p>
+              <span className="dashboard-stat-detail">
+                {stat.detail}
+              </span>
+            </article>
+          ))}
         </div>
-      </div>
 
-      
-<div className="dashboard-extra">
-  <div className="team-stats-heading">
-    <div>
-      <span className="team-stats-eyebrow">TEAMANALYSE</span>
-      <h2>Teamstatistieken</h2>
-      <p>De aanvallende en verdedigende prestaties van {team}.</p>
-    </div>
-    <span className="team-stats-ball">⚽</span>
-  </div>
+        {playedMatches.length === 0 && (
+          <p className="dashboard-empty-note">
+            Er zijn nog geen wedstrijden voor {team}. De
+            statistieken worden bijgewerkt zodra er wedstrijden
+            beschikbaar zijn.
+          </p>
+        )}
+      </section>
 
-  <div className="team-stats-overview">
-    <div className="team-stat-block goals-for">
-      <span>DOELPUNTEN VOOR</span>
-      <strong>{goalsFor}</strong>
-      <small>Gescoord</small>
-    </div>
+      <section
+        className="dashboard-panel"
+        aria-labelledby="team-analysis-heading"
+      >
+        <div className="dashboard-section-heading">
+          <div>
+            <span className="dashboard-eyebrow">
+              PRESTATIES
+            </span>
+            <h2 id="team-analysis-heading">Teamanalyse</h2>
+            <p>
+              De aanvallende en verdedigende prestaties van {team}.
+            </p>
+          </div>
+          <span className="dashboard-panel-icon" aria-hidden="true">
+            ⚽
+          </span>
+        </div>
 
-    <div className="team-stat-block goals-against">
-      <span>DOELPUNTEN TEGEN</span>
-      <strong>{goalsAgainst}</strong>
-      <small>Tegendoelpunten</small>
-    </div>
+        <div className="team-stats-overview">
+          <article className="team-stat-block goals-for">
+            <span>DOELPUNTEN VOOR</span>
+            <strong>{goalsFor}</strong>
+            <small>Gescoord</small>
+          </article>
 
-    <div className="team-stat-block goal-difference">
-      <span>DOELSALDO</span>
-      <strong>
-        {goalDifference > 0 ? "+" : ""}
-        {goalDifference}
-      </strong>
-      <small>
-        {goalDifference > 0
-          ? "Positief doelsaldo"
-          : goalDifference < 0
-            ? "Negatief doelsaldo"
-            : "Neutraal doelsaldo"}
-      </small>
-    </div>
-  </div>
+          <article className="team-stat-block goals-against">
+            <span>DOELPUNTEN TEGEN</span>
+            <strong>{goalsAgainst}</strong>
+            <small>Tegendoelpunten</small>
+          </article>
 
-  <div className="goals-comparison">
-    <div className="goals-comparison-label">
-      <span>Gescoord</span>
-      <strong>{goalsFor}</strong>
-    </div>
+          <article className="team-stat-block goal-difference">
+            <span>DOELSALDO</span>
+            <strong>
+              {goalDifference > 0 ? "+" : ""}
+              {goalDifference}
+            </strong>
+            <small>
+              {goalDifference > 0
+                ? "Positief doelsaldo"
+                : goalDifference < 0
+                  ? "Negatief doelsaldo"
+                  : "Neutraal doelsaldo"}
+            </small>
+          </article>
+        </div>
 
-    <div className="goals-bar">
-      <div
-        className="goals-bar-for"
-        style={{
-          width: `${(goalsFor / Math.max(goalsFor, goalsAgainst, 1)) * 100}%`,
-        }}
-      />
-    </div>
+        <div className="goals-comparison">
+          <div className="goals-comparison-heading">
+            <h3>Doelpunten vergelijken</h3>
+            <span>
+              {playedMatches.length}{" "}
+              {playedMatches.length === 1
+                ? "wedstrijd"
+                : "wedstrijden"}
+            </span>
+          </div>
 
-    <div className="goals-comparison-label">
-      <span>Tegendoelpunten</span>
-      <strong>{goalsAgainst}</strong>
-    </div>
+          <div className="goals-comparison-item">
+            <div className="goals-comparison-label">
+              <span>Gescoord</span>
+              <strong>{goalsFor}</strong>
+            </div>
+            <div
+              className="goals-bar"
+              role="img"
+              aria-label={`${goalsFor} doelpunten voor`}
+            >
+              <div
+                className="goals-bar-for"
+                style={{
+                  width: `${(goalsFor / maxGoals) * 100}%`,
+                }}
+              />
+            </div>
+          </div>
 
-    <div className="goals-bar">
-      <div
-        className="goals-bar-against"
-        style={{
-          width: `${(goalsAgainst / Math.max(goalsFor, goalsAgainst, 1)) * 100}%`,
-        }}
-      />
-    </div>
-  </div>
-</div>
+          <div className="goals-comparison-item">
+            <div className="goals-comparison-label">
+              <span>Tegendoelpunten</span>
+              <strong>{goalsAgainst}</strong>
+            </div>
+            <div
+              className="goals-bar"
+              role="img"
+              aria-label={`${goalsAgainst} doelpunten tegen`}
+            >
+              <div
+                className="goals-bar-against"
+                style={{
+                  width: `${(goalsAgainst / maxGoals) * 100}%`,
+                }}
+              />
+            </div>
+          </div>
 
-      <div className="dashboard-extra">
-        <h2>Spelersstatistieken</h2>
+          {playedMatches.length === 0 && (
+            <p className="dashboard-empty-note">
+              Er zijn nog geen gegevens om te vergelijken.
+            </p>
+          )}
+        </div>
+      </section>
+
+      <section
+        className="dashboard-panel"
+        aria-labelledby="players-heading"
+      >
+        <div className="dashboard-section-heading">
+          <div>
+            <span className="dashboard-eyebrow">
+              UITBLINKERS
+            </span>
+            <h2 id="players-heading">Spelers in de spotlight</h2>
+            <p>
+              De opvallendste spelers van {team}, op basis van de
+              geregistreerde statistieken.
+            </p>
+          </div>
+          <span className="dashboard-panel-icon" aria-hidden="true">
+            🏅
+          </span>
+        </div>
 
         {teamPlayers.length > 0 ? (
-          <>
-            <p>
-              <strong>🥇 Topscorer:</strong>{" "}
-              {topScorer
-                ? `${topScorer.firstname} ${topScorer.lastname} (${topScorer.goals} goals)`
-                : "Nog geen gegevens"}
-            </p>
+          <div className="dashboard-player-grid">
+            <article className="dashboard-player-card player-scorer">
+              <span
+                className="dashboard-player-icon"
+                aria-hidden="true"
+              >
+                ⚽
+              </span>
+              <span className="dashboard-player-label">
+                TOPSCORER
+              </span>
+              <h3>
+                {topScorer
+                  ? `${topScorer.firstname} ${topScorer.lastname}`
+                  : "Nog geen gegevens"}
+              </h3>
+              <p>
+                <strong>{topScorer?.goals ?? 0}</strong>{" "}
+                {(topScorer?.goals ?? 0) === 1
+                  ? "doelpunt"
+                  : "doelpunten"}
+              </p>
+            </article>
 
-            <p>
-              <strong>🎯 Meeste assists:</strong>{" "}
-              {topAssistPlayer
-                ? `${topAssistPlayer.firstname} ${topAssistPlayer.lastname} (${topAssistPlayer.assists} assists)`
-                : "Nog geen gegevens"}
-            </p>
+            <article className="dashboard-player-card player-assists">
+              <span
+                className="dashboard-player-icon"
+                aria-hidden="true"
+              >
+                🎯
+              </span>
+              <span className="dashboard-player-label">
+                MEESTE ASSISTS
+              </span>
+              <h3>
+                {topAssistPlayer
+                  ? `${topAssistPlayer.firstname} ${topAssistPlayer.lastname}`
+                  : "Nog geen gegevens"}
+              </h3>
+              <p>
+                <strong>{topAssistPlayer?.assists ?? 0}</strong>{" "}
+                {(topAssistPlayer?.assists ?? 0) === 1
+                  ? "assist"
+                  : "assists"}
+              </p>
+            </article>
 
-            <p>
-              <strong>⭐ Hoogste rating:</strong>{" "}
-              {highestRatedPlayer
-                ? `${highestRatedPlayer.firstname} ${highestRatedPlayer.lastname} (${highestRatedPlayer.rating})`
-                : "Nog geen gegevens"}
-            </p>
-          </>
+            <article className="dashboard-player-card player-rating">
+              <span
+                className="dashboard-player-icon"
+                aria-hidden="true"
+              >
+                ⭐
+              </span>
+              <span className="dashboard-player-label">
+                HOOGSTE RATING
+              </span>
+              <h3>
+                {highestRatedPlayer
+                  ? `${highestRatedPlayer.firstname} ${highestRatedPlayer.lastname}`
+                  : "Nog geen gegevens"}
+              </h3>
+              <p>
+                Rating:{" "}
+                <strong>{highestRatedPlayer?.rating ?? 0}</strong>
+              </p>
+            </article>
+          </div>
         ) : (
-          <p>Er zijn nog geen spelers voor {team}.</p>
+          <div className="dashboard-empty-state">
+            <span aria-hidden="true">👥</span>
+            <h3>Nog geen spelers beschikbaar</h3>
+            <p>
+              Er zijn nog geen spelers geregistreerd voor {team}.
+            </p>
+          </div>
         )}
-      </div>
-    </div>
+      </section>
+    </main>
   );
 }
 
