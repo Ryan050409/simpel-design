@@ -381,7 +381,7 @@ function Dashboard({ matches, playerList, team }: DashboardProps) {
               </p>
             </article>
 
-            <article className="dashboard-player-card player-rating">
+            <article className="dashboard-player-card dashboard-player-rating">
               <span
                 className="dashboard-player-icon"
                 aria-hidden="true"
