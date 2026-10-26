@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import type { Dispatch, SetStateAction, FormEvent } from "react";
 
@@ -7,6 +6,7 @@ import { ROLE_PERMISSIONS, canAccessAdminPage } from "./permissions";
 
 import type { Player, Match, Team } from "./types";
 import PlayerForm from "./PlayerForm";
+import MatchForm from "./MatchForm";
 
 type AdminPageProps = {
   role: UserRole;
@@ -36,12 +36,15 @@ export default function AdminPage({
   playerList,
   setPlayerList,
   matches,
+  setMatches,
   teams,
   setTeams,
 }: AdminPageProps) {
   const [selectedTeam, setSelectedTeam] = useState<string | null>(null);
   const [showPlayerForm, setShowPlayerForm] = useState(false);
   const [editingPlayer, setEditingPlayer] = useState<Player | null>(null);
+  const [showMatchForm, setShowMatchForm] = useState(false);
+  const [editingMatch, setEditingMatch] = useState<Match | null>(null);
   const [playerSearch, setPlayerSearch] = useState("");
   const [teamSearch, setTeamSearch] = useState("");
   const [showTeamForm, setShowTeamForm] = useState(false);
@@ -68,9 +71,6 @@ export default function AdminPage({
   const filteredTeams = sortedTeams.filter((team) =>
     team.name.toLowerCase().includes(teamSearch.trim().toLowerCase()),
   );
-
-  const selectedTeamData =
-    teams.find((team) => team.name === selectedTeam) ?? null;
 
   const teamPlayers = selectedTeam
     ? playerList
@@ -203,7 +203,20 @@ export default function AdminPage({
     setShowPlayerForm(false);
     setEditingPlayer(null);
   }
+  function openAddMatchForm() {
+    setEditingMatch(null);
+    setShowMatchForm(true);
+  }
 
+  function openEditMatchForm(match: Match) {
+    setEditingMatch(match);
+    setShowMatchForm(true);
+  }
+
+  function closeMatchForm() {
+    setShowMatchForm(false);
+    setEditingMatch(null);
+  }
   return (
     <main className="admin-page">
       <header className="admin-page-header">
@@ -230,9 +243,7 @@ export default function AdminPage({
             <div className="admin-stat-content">
               <span className="admin-stat-label">Spelers</span>
               <strong>{playersCount}</strong>
-              <span className="admin-stat-description">
-                In de tracker
-              </span>
+              <span className="admin-stat-description">In de tracker</span>
             </div>
           </article>
 
@@ -265,16 +276,11 @@ export default function AdminPage({
       </section>
 
       {!selectedTeam ? (
-        <section
-          className="admin-panel"
-          aria-labelledby="admin-teams-title"
-        >
+        <section className="admin-panel" aria-labelledby="admin-teams-title">
           <div className="admin-panel-heading">
             <div>
               <h2 id="admin-teams-title">Teams beheren</h2>
-              <p>
-                Kies een club om de spelers te bekijken en te beheren.
-              </p>
+              <p>Kies een club om de spelers te bekijken en te beheren.</p>
             </div>
 
             <button
@@ -368,10 +374,7 @@ export default function AdminPage({
                         </span>
                       </span>
 
-                      <span
-                        className="admin-team-arrow"
-                        aria-hidden="true"
-                      >
+                      <span className="admin-team-arrow" aria-hidden="true">
                         →
                       </span>
                     </button>
@@ -421,9 +424,10 @@ export default function AdminPage({
               <p className="admin-eyebrow">TEAMBEHEER</p>
               <h2 id="admin-team-players-title">{selectedTeam}</h2>
               <p>
-                {playerList.filter(
-                  (player) => player.team === selectedTeam,
-                ).length}{" "}
+                {
+                  playerList.filter((player) => player.team === selectedTeam)
+                    .length
+                }{" "}
                 spelers gekoppeld aan dit team.
               </p>
             </div>
@@ -509,13 +513,8 @@ export default function AdminPage({
                   : "Voeg de eerste speler aan deze club toe."}
               </p>
 
-              {!playerList.some(
-                (player) => player.team === selectedTeam,
-              ) && (
-                <button
-                  type="button"
-                  onClick={openAddPlayerForm}
-                >
+              {!playerList.some((player) => player.team === selectedTeam) && (
+                <button type="button" onClick={openAddPlayerForm}>
                   Speler toevoegen
                 </button>
               )}
@@ -523,6 +522,65 @@ export default function AdminPage({
           )}
         </section>
       )}
+
+      <section className="admin-panel" aria-labelledby="admin-matches-title">
+        <div className="admin-panel-heading">
+          <div>
+            <h2 id="admin-matches-title">Wedstrijden beheren</h2>
+            <p>Voeg wedstrijden toe of bewerk bestaande uitslagen.</p>
+          </div>
+
+          <button
+            type="button"
+            className="admin-primary-button"
+            onClick={openAddMatchForm}
+          >
+            + Wedstrijd toevoegen
+          </button>
+        </div>
+
+        {matches.length > 0 ? (
+          <div className="admin-player-list">
+            {matches.map((match) => (
+              <article className="admin-player-row" key={match.id}>
+                <div className="admin-player-info">
+                  <strong>
+                    {match.home} {match.homeGoals} – {match.awayGoals}{" "}
+                    {match.away}
+                  </strong>
+
+                  <div className="admin-player-meta">
+                    <span>{match.date}</span>
+                  </div>
+                </div>
+
+                <div className="admin-player-actions">
+                  <button
+                    type="button"
+                    className="admin-edit-button"
+                    onClick={() => openEditMatchForm(match)}
+                    aria-label={`Bewerk ${match.home} tegen ${match.away}`}
+                  >
+                    Bewerken
+                  </button>
+                </div>
+              </article>
+            ))}
+          </div>
+        ) : (
+          <div className="admin-empty-state">
+            <strong>Nog geen wedstrijden</strong>
+            <p>Er zijn nog geen wedstrijden om te beheren.</p>
+            <button
+              type="button"
+              className="admin-primary-button"
+              onClick={openAddMatchForm}
+            >
+              Eerste wedstrijd toevoegen
+            </button>
+          </div>
+        )}
+      </section>
 
       <section
         className="admin-panel admin-permissions-panel"
@@ -561,6 +619,16 @@ export default function AdminPage({
           setEditingPlayer={setEditingPlayer}
           setPlayerList={setPlayerList}
           closeModal={closePlayerForm}
+          teams={teams}
+        />
+      )}
+
+      {showMatchForm && (
+        <MatchForm
+          editingMatch={editingMatch}
+          setEditingMatch={setEditingMatch}
+          setMatches={setMatches}
+          closeModal={closeMatchForm}
           teams={teams}
         />
       )}
