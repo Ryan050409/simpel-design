@@ -2,7 +2,11 @@ import { useState } from "react";
 import type { Dispatch, SetStateAction, FormEvent } from "react";
 
 import type { UserRole, Permission } from "./permissions";
-import { ROLE_PERMISSIONS, canAccessAdminPage } from "./permissions";
+import {
+  ROLE_PERMISSIONS,
+  hasPermission,
+  canAccessAdminPage,
+} from "./permissions";
 
 import type { Player, Match, Team } from "./types";
 import PlayerForm from "./PlayerForm";
@@ -30,6 +34,13 @@ const PERMISSION_LABELS: Record<Permission, string> = {
   "users.manage": "Gebruikers en rechten beheren",
 };
 
+const allPermissions: Permission[] = [
+  "players.manage",
+  "matches.manage",
+  "teams.manage",
+  "users.manage",
+];
+
 export default function AdminPage({
   role,
   playersCount,
@@ -43,8 +54,7 @@ export default function AdminPage({
   setTeams,
 }: AdminPageProps) {
   const [selectedTeam, setSelectedTeam] = useState<string | null>(null);
-  const [activeTeamSection, setActiveTeamSection] =
-    useState<TeamSection>(null);
+  const [activeTeamSection, setActiveTeamSection] = useState<TeamSection>(null);
 
   const [showPlayerForm, setShowPlayerForm] = useState(false);
   const [editingPlayer, setEditingPlayer] = useState<Player | null>(null);
@@ -60,6 +70,11 @@ export default function AdminPage({
   const [teamError, setTeamError] = useState("");
 
   const permissions = ROLE_PERMISSIONS[role];
+
+  const canManagePlayers = hasPermission(role, "players.manage");
+  const canManageMatches = hasPermission(role, "matches.manage");
+  const canManageTeams = hasPermission(role, "teams.manage");
+  const canManageUsers = hasPermission(role, "users.manage");
 
   if (!canAccessAdminPage(role)) {
     return (
@@ -104,8 +119,7 @@ export default function AdminPage({
   const teamMatches = selectedTeam
     ? matches
         .filter(
-          (match) =>
-            match.home === selectedTeam || match.away === selectedTeam,
+          (match) => match.home === selectedTeam || match.away === selectedTeam,
         )
         .filter((match) => {
           const search = matchSearch.trim().toLowerCase();
@@ -117,18 +131,19 @@ export default function AdminPage({
             `${match.homeGoals}-${match.awayGoals}`.includes(search)
           );
         })
-        .sort(
-          (a, b) =>
-            new Date(b.date).getTime() - new Date(a.date).getTime(),
-        )
+        .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
     : [];
 
   function openAddPlayerForm() {
+    if (!canManagePlayers) return;
+
     setEditingPlayer(null);
     setShowPlayerForm(true);
   }
 
   function openEditPlayerForm(player: Player) {
+    if (!canManagePlayers) return;
+
     setEditingPlayer(player);
     setShowPlayerForm(true);
   }
@@ -139,6 +154,8 @@ export default function AdminPage({
   }
 
   function deletePlayer(player: Player) {
+    if (!canManagePlayers) return;
+
     const confirmed = window.confirm(
       `Weet je zeker dat je ${player.firstname} ${player.lastname} wilt verwijderen?`,
     );
@@ -151,11 +168,13 @@ export default function AdminPage({
   }
 
   function openAddMatchForm() {
+    if (!canManageMatches) return;
     setEditingMatch(null);
     setShowMatchForm(true);
   }
 
   function openEditMatchForm(match: Match) {
+    if (!canManageMatches) return;
     setEditingMatch(match);
     setShowMatchForm(true);
   }
@@ -166,6 +185,7 @@ export default function AdminPage({
   }
 
   function deleteMatch(match: Match) {
+    if (!canManageMatches) return;
     const confirmed = window.confirm(
       `Weet je zeker dat je de wedstrijd ${match.home} ${match.homeGoals} - ${match.awayGoals} ${match.away} wilt verwijderen?`,
     );
@@ -179,7 +199,7 @@ export default function AdminPage({
 
   function addTeam(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-
+    if (!canManageTeams) return;
     const name = newTeamName.trim();
 
     if (!name) {
@@ -197,9 +217,7 @@ export default function AdminPage({
     }
 
     const newId =
-      teams.length > 0
-        ? Math.max(...teams.map((team) => team.id)) + 1
-        : 1;
+      teams.length > 0 ? Math.max(...teams.map((team) => team.id)) + 1 : 1;
 
     setTeams((currentTeams) => [...currentTeams, { id: newId, name }]);
     setNewTeamName("");
@@ -209,6 +227,7 @@ export default function AdminPage({
   }
 
   function deleteTeam(team: Team) {
+    if (!canManageTeams) return;
     const playersInTeam = playerList.filter(
       (player) => player.team === team.name,
     );
@@ -349,16 +368,18 @@ export default function AdminPage({
               <p>Kies een club om de spelers en wedstrijden te beheren.</p>
             </div>
 
-            <button
-              type="button"
-              className="admin-primary-button"
-              onClick={() => {
-                setTeamError("");
-                setShowTeamForm((current) => !current);
-              }}
-            >
-              {showTeamForm ? "Annuleren" : "+ Team toevoegen"}
-            </button>
+            {canManageTeams && (
+              <button
+                type="button"
+                className="admin-primary-button"
+                onClick={() => {
+                  setTeamError("");
+                  setShowTeamForm((current) => !current);
+                }}
+              >
+                {showTeamForm ? "Annuleren" : "+ Team toevoegen"}
+              </button>
+            )}
           </div>
 
           {showTeamForm && (
@@ -450,14 +471,16 @@ export default function AdminPage({
                       </span>
                     </button>
 
-                    <button
-                      type="button"
-                      className="admin-team-delete"
-                      onClick={() => deleteTeam(team)}
-                      aria-label={`Verwijder team ${team.name}`}
-                    >
-                      Verwijderen
-                    </button>
+                    {canManageTeams && (
+                      <button
+                        type="button"
+                        className="admin-team-delete"
+                        onClick={() => deleteTeam(team)}
+                        aria-label={`Verwijder team ${team.name}`}
+                      >
+                        Verwijderen
+                      </button>
+                    )}
                   </article>
                 );
               })}
@@ -494,16 +517,11 @@ export default function AdminPage({
             <div className="admin-team-header">
               <span className="admin-team-eyebrow">TEAMBEHEER</span>
 
-              <h2
-                id="admin-selected-team-title"
-                className="admin-team-title"
-              >
+              <h2 id="admin-selected-team-title" className="admin-team-title">
                 <select
                   className="admin-team-dropdown"
                   value={selectedTeam}
-                  onChange={(event) =>
-                    changeSelectedTeam(event.target.value)
-                  }
+                  onChange={(event) => changeSelectedTeam(event.target.value)}
                   aria-label="Kies een team om te beheren"
                 >
                   {sortedTeams.map((team) => (
@@ -566,13 +584,15 @@ export default function AdminPage({
                   <p>Voeg spelers toe, bewerk hun gegevens of verwijder ze.</p>
                 </div>
 
-                <button
-                  type="button"
-                  className="admin-primary-button"
-                  onClick={openAddPlayerForm}
-                >
-                  + Speler toevoegen
-                </button>
+                {canManagePlayers && (
+                  <button
+                    type="button"
+                    className="admin-primary-button"
+                    onClick={openAddPlayerForm}
+                  >
+                    + Speler toevoegen
+                  </button>
+                )}
               </div>
 
               <div className="admin-player-toolbar">
@@ -610,23 +630,27 @@ export default function AdminPage({
                       </div>
 
                       <div className="admin-player-actions">
-                        <button
-                          type="button"
-                          className="admin-edit-button"
-                          onClick={() => openEditPlayerForm(player)}
-                          aria-label={`Bewerk ${player.firstname} ${player.lastname}`}
-                        >
-                          Bewerken
-                        </button>
+                        {canManagePlayers && (
+                          <button
+                            type="button"
+                            className="admin-edit-button"
+                            onClick={() => openEditPlayerForm(player)}
+                            aria-label={`Bewerk ${player.firstname} ${player.lastname}`}
+                          >
+                            Bewerken
+                          </button>
+                        )}
 
-                        <button
-                          type="button"
-                          className="admin-delete-button"
-                          onClick={() => deletePlayer(player)}
-                          aria-label={`Verwijder ${player.firstname} ${player.lastname}`}
-                        >
-                          Verwijderen
-                        </button>
+                        {canManagePlayers && (
+                          <button
+                            type="button"
+                            className="admin-delete-button"
+                            onClick={() => deletePlayer(player)}
+                            aria-label={`Verwijder ${player.firstname} ${player.lastname}`}
+                          >
+                            Verwijderen
+                          </button>
+                        )}
                       </div>
                     </article>
                   ))}
@@ -637,31 +661,28 @@ export default function AdminPage({
                     👥
                   </span>
                   <strong>
-                    {playerList.some(
-                      (player) => player.team === selectedTeam,
-                    )
+                    {playerList.some((player) => player.team === selectedTeam)
                       ? "Geen spelers gevonden"
                       : "Nog geen spelers bij dit team"}
                   </strong>
                   <p>
-                    {playerList.some(
-                      (player) => player.team === selectedTeam,
-                    )
+                    {playerList.some((player) => player.team === selectedTeam)
                       ? "Probeer een andere zoekterm."
                       : "Voeg de eerste speler aan deze club toe."}
                   </p>
 
-                  {!playerList.some(
-                    (player) => player.team === selectedTeam,
-                  ) && (
-                    <button
-                      type="button"
-                      className="admin-primary-button"
-                      onClick={openAddPlayerForm}
-                    >
-                      Speler toevoegen
-                    </button>
-                  )}
+                  {canManagePlayers &&
+                    !playerList.some(
+                      (player) => player.team === selectedTeam,
+                    ) && (
+                      <button
+                        type="button"
+                        className="admin-primary-button"
+                        onClick={openAddPlayerForm}
+                      >
+                        Speler toevoegen
+                      </button>
+                    )}
                 </div>
               )}
             </>
@@ -789,38 +810,20 @@ export default function AdminPage({
         </section>
       )}
 
-      <section
-        className="admin-panel admin-permissions-panel"
-        aria-labelledby="admin-permissions-title"
-      >
-        <div className="admin-panel-heading">
-          <div>
-            <h2 id="admin-permissions-title">Beheerrechten</h2>
-            <p>Rechten die bij jouw huidige rol horen.</p>
-          </div>
+      <ul className="admin-permissions-list">
+        {allPermissions.map((permission) => (
+          <li key={permission}>
+            <span className="admin-permission-check" aria-hidden="true">
+              {hasPermission(role, permission) ? "✓" : "—"}
+            </span>
+            {PERMISSION_LABELS[permission]}
+            {" — "}
+            {hasPermission(role, permission) ? "Toegestaan" : "Geen toegang"}
+          </li>
+        ))}
+      </ul>
 
-          <span className="admin-permission-count">
-            {permissions.length} rechten
-          </span>
-        </div>
-
-        {permissions.length > 0 ? (
-          <ul className="admin-permissions-list">
-            {permissions.map((permission) => (
-              <li key={permission}>
-                <span className="admin-permission-check" aria-hidden="true">
-                  ✓
-                </span>
-                {PERMISSION_LABELS[permission]}
-              </li>
-            ))}
-          </ul>
-        ) : (
-          <p>Deze gebruiker heeft geen beheerrechten.</p>
-        )}
-      </section>
-
-      {showPlayerForm && (
+      {canManagePlayers && showPlayerForm && (
         <PlayerForm
           editingPlayer={editingPlayer}
           setEditingPlayer={setEditingPlayer}
@@ -830,7 +833,7 @@ export default function AdminPage({
         />
       )}
 
-      {showMatchForm && (
+      {canManageMatches && showMatchForm && (
         <MatchForm
           editingMatch={editingMatch}
           setEditingMatch={setEditingMatch}

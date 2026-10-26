@@ -419,7 +419,7 @@ function App() {
           <Route
             path="/wedstrijden"
             element={
-              <MatchesPage matches={matches} team={team} teams={teams} />
+              <MatchesPage matches={matches} team={team} />
             }
           />
 

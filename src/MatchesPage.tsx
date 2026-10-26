@@ -1,5 +1,5 @@
 import { useState } from "react";
-import type { Match, Team } from "./types.ts";
+import type { Match } from "./types.ts";
 
 type MatchesPageProps = {
   matches: Match[];
