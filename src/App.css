@@ -1672,55 +1672,6 @@ textarea::placeholder {
   text-overflow: ellipsis;
   white-space: nowrap;
 }
-
-/* Speleracties */
-
-.player-actions {
-  display: flex;
-  gap: 8px;
-  margin-top: auto;
-  padding-top: 16px;
-}
-
-.player-actions button {
-  flex: 1;
-  padding: 9px 10px;
-  border-radius: 8px;
-  font-size: 12px;
-  font-weight: 600;
-}
-
-.player-actions .edit-button {
-  background: #2563eb;
-}
-
-.player-actions .delete-button {
-  background: #dc2626;
-}
-
-.player-actions .edit-button:hover {
-  background: #1d4ed8;
-}
-
-.player-actions .delete-button:hover {
-  background: #b91c1c;
-}
-
-.players > p {
-  grid-column: 1 / -1;
-  width: 100%;
-  margin: 0;
-  padding: 16px;
-
-  background: var(--card-background);
-  color: var(--text-color);
-  border: 1px solid var(--border-color);
-  border-radius: 10px;
-
-  text-align: center;
-  font-size: 15px;
-}
-
 /* =========================================================
    Modals
    ========================================================= */
@@ -2472,28 +2423,6 @@ textarea::placeholder {
   padding: 14px 16px;
   vertical-align: middle;
 }
-
-.matches-table .match-actions {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-
-  width: 100%;
-  margin: 0;
-}
-
-.matches-table .match-actions button {
-  flex: 0 0 auto;
-  min-width: 90px;
-  padding: 8px 12px;
-
-  border-radius: 7px;
-  font-size: 13px;
-  font-weight: 600;
-  white-space: nowrap;
-}
-
 /* Wedstrijdresultaten */
 
 
@@ -2675,24 +2604,6 @@ textarea::placeholder {
     margin-bottom: 2px;
     font-size: 8px;
   }
-
-  .matches-table .match-actions {
-    align-items: stretch;
-    flex-direction: column;
-    gap: 5px;
-  }
-
-  .matches-table .match-actions button {
-    width: 100%;
-    min-width: 70px;
-    padding: 6px 4px;
-
-    overflow: visible;
-    font-size: 10px;
-    white-space: nowrap;
-    text-overflow: clip;
-  }
-
   /* Algemene mobiele elementen */
 
   h1 {
@@ -3231,23 +3142,6 @@ textarea::placeholder {
     grid-column: 1 / -1;
     padding-top: 8px;
   }
-
-  .matches-table .match-actions {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 8px;
-  }
-
-  .matches-table .match-actions button {
-    width: 100%;
-    min-width: 0;
-    min-height: 38px;
-    padding: 8px;
-    font-size: 12px;
-    white-space: normal;
-    overflow-wrap: normal;
-  }
-
   .matches-table tbody td[colspan="6"] {
     display: block;
     grid-column: 1 / -1;
@@ -3535,20 +3429,6 @@ textarea::placeholder {
 
   .matches-table td:last-child {
     padding: 8px 4px;
-  }
-
-  .matches-table .match-actions {
-    flex-direction: column;
-    gap: 6px;
-  }
-
-  .matches-table .match-actions button {
-    box-sizing: border-box;
-    width: 100%;
-    min-width: 0;
-    padding: 7px 3px;
-    font-size: 11px;
-    white-space: normal;
   }
 }
 

@@ -137,7 +137,6 @@ function MatchesPage({ matches, setMatches, team, teams }: MatchesPageProps) {
               <th>Uit</th>
               <th>Uitslag</th>
               <th>Resultaat</th>
-              <th>Acties</th>
             </tr>
           </thead>
 
@@ -222,14 +221,6 @@ function MatchesPage({ matches, setMatches, team, teams }: MatchesPageProps) {
                           {result ? getResultLabel(result) : "-"}
                         </span>
                       </td>
-                    </td>
-
-                    <td>
-                      <div className="match-actions">
-                        <button type="button" onClick={() => editMatch(match)}>
-                          Bewerken
-                        </button>
-                      </div>
                     </td>
                   </tr>
                 );

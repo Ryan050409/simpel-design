@@ -190,30 +190,6 @@ function PlayersPage({ playerList, setPlayerList, teams }: PlayersPageProps) {
                           <span>Minuten</span>
                         </div>
                       </div>
-
-                      <div className="player-actions">
-                        <button
-                          type="button"
-                          className="edit-button"
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            editPlayer(player);
-                          }}
-                        >
-                          Bewerken
-                        </button>
-
-                        <button
-                          type="button"
-                          className="delete-button"
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            deletePlayer(player.id);
-                          }}
-                        >
-                          Verwijderen
-                        </button>
-                      </div>
                     </div>
                   ))}
                 </div>
