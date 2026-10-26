@@ -2324,21 +2324,25 @@ textarea::placeholder {
 
 .matches-table {
   width: 100%;
-  max-width: 1100px;
+  max-width: 960px;
   margin: 30px auto;
+  table-layout: fixed;
 
   background: var(--table-background);
-  color: black;
+  color: var(--table-text-color);
 
-  border-collapse: collapse;
+  border: 1px solid var(--border-color);
+  border-collapse: separate;
+  border-spacing: 0;
   border-radius: 12px;
   overflow: hidden;
 
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  box-shadow: var(--shadow-card);
 }
 
 .matches-table th,
 .matches-table td {
+  width: 20%;
   padding: 14px 16px;
 
   color: var(--table-text-color);
@@ -2353,12 +2357,39 @@ textarea::placeholder {
 .matches-table thead th {
   background: var(--secondary-background);
   color: var(--text-color);
-  font-size: 13px;
+  font-size: 11px;
   font-weight: 700;
+  letter-spacing: 0.04em;
   border-bottom: 2px solid var(--border-color);
+  text-transform: uppercase;
 }
 
-.matches-table tbody td[colspan="6"] {
+.matches-table tbody tr {
+  transition: background-color 0.16s ease;
+}
+
+.matches-table tbody tr:nth-child(even) td {
+  background: var(--secondary-background);
+}
+
+.matches-table tbody tr:hover td {
+  background: var(--accent-soft);
+}
+
+.matches-table tbody .match-row-win td:first-child {
+  box-shadow: inset 3px 0 #22c55e;
+}
+
+.matches-table tbody .match-row-draw td:first-child {
+  box-shadow: inset 3px 0 #f59e0b;
+}
+
+.matches-table tbody .match-row-loss td:first-child {
+  box-shadow: inset 3px 0 #ef4444;
+}
+
+.matches-table tbody td[colspan="5"] {
+  width: 100%;
   padding: 35px 20px;
   color: var(--table-text-color);
   font-size: 14px;
@@ -2368,7 +2399,8 @@ textarea::placeholder {
 
 .matches-table th:first-child,
 .matches-table td:first-child {
-  width: 120px;
+  min-width: 0;
+  white-space: nowrap;
 }
 
 .matches-table th:nth-child(2),
@@ -2379,7 +2411,7 @@ textarea::placeholder {
 
 .matches-table td:nth-child(2)::before {
   content: "Thuis";
-  display: block;
+  display: none;
   margin-bottom: 3px;
 
   color: var(--table-text-color);
@@ -2390,7 +2422,7 @@ textarea::placeholder {
 
 .matches-table td:nth-child(3)::before {
   content: "Uit";
-  display: block;
+  display: none;
   margin-bottom: 3px;
 
   color: var(--table-text-color);
@@ -2399,30 +2431,22 @@ textarea::placeholder {
   text-transform: uppercase;
 }
 
-.matches-table th:nth-child(3),
-.matches-table td:nth-child(3) {
-  min-width: 130px;
+.matches-table .match-score {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 58px;
+  padding: 5px 9px;
+  border: 1px solid var(--border-color);
+  border-radius: 7px;
+  background: var(--secondary-background);
+  color: var(--text-color);
+  font-size: 14px;
+  font-variant-numeric: tabular-nums;
+  font-weight: 800;
+  white-space: nowrap;
 }
 
-.matches-table th:nth-child(4),
-.matches-table td:nth-child(4) {
-  width: 110px;
-}
-
-.matches-table th:nth-child(5),
-.matches-table td:nth-child(5) {
-  width: 100px;
-}
-
-.matches-table th:last-child,
-.matches-table td:last-child {
-  width: 210px;
-}
-
-.matches-table td:last-child {
-  padding: 14px 16px;
-  vertical-align: middle;
-}
 /* Wedstrijdresultaten */
 
 
@@ -2445,13 +2469,14 @@ textarea::placeholder {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-width: 100px;
+  min-width: 90px;
   padding: 6px 10px;
   border-radius: 7px;
   font-size: 12px;
   font-weight: 700;
   white-space: nowrap;
   border: 1px solid var(--border-color);
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.08);
 }
 
 
@@ -2575,13 +2600,6 @@ textarea::placeholder {
     padding: 8px 3px;
   }
 
-  .matches-table th:nth-child(1),
-  .matches-table td:nth-child(1),
-  .matches-table th:nth-child(5),
-  .matches-table td:nth-child(5) {
-    display: none;
-  }
-
   .matches-table th:nth-child(2),
   .matches-table td:nth-child(2),
   .matches-table th:nth-child(3),
@@ -2594,13 +2612,9 @@ textarea::placeholder {
     width: 15%;
   }
 
-  .matches-table th:nth-child(6),
-  .matches-table td:nth-child(6) {
-    width: 18%;
-  }
-
   .matches-table td:nth-child(2)::before,
   .matches-table td:nth-child(3)::before {
+    display: block;
     margin-bottom: 2px;
     font-size: 8px;
   }
@@ -3008,14 +3022,6 @@ textarea::placeholder {
     box-sizing: border-box;
   }
 
-  .player-actions {
-    flex-direction: column;
-  }
-
-  .player-actions button {
-    width: 100%;
-  }
-
   .modal {
     width: 92vw;
     max-height: 90vh;
@@ -3032,7 +3038,7 @@ textarea::placeholder {
 }
 
 @media (max-width: 700px) {
-    .matches-table {
+  .matches-table {
     width: 100%;
     table-layout: fixed;
   }
@@ -3042,11 +3048,6 @@ textarea::placeholder {
     padding: 7px 4px;
     font-size: 0.7rem;
     white-space: normal;
-  }
-
-  .matches-table th:last-child,
-  .matches-table td:last-child {
-    width: auto;
   }
 
   .matches-table button {
@@ -3134,15 +3135,11 @@ textarea::placeholder {
   /* Resultaatindicator */
   .matches-table tbody td:nth-child(5) {
     grid-column: 1 / -1;
+    padding-top: 8px;
     text-align: left;
   }
 
-  /* Actieknoppen onderaan */
-  .matches-table tbody td:last-child {
-    grid-column: 1 / -1;
-    padding-top: 8px;
-  }
-  .matches-table tbody td[colspan="6"] {
+  .matches-table tbody td[colspan="5"] {
     display: block;
     grid-column: 1 / -1;
     padding: 20px 12px;
@@ -3158,55 +3155,6 @@ textarea::placeholder {
 .matches-table td:nth-child(1) {
   white-space: nowrap;
   min-width: 105px;
-}
-
-/* De basisstijl voor de winnaar staat bovenaan bij de wedstrijdresultaten. */
-.matches-table .winner-indicator {
-  font-weight: 800;
-}
-
-/* Houd de winnende score als één geheel bij elkaar. */
-.matches-table .winning-score {
-  white-space: nowrap;
-}
-
-/* In donkere modus blijft de score goed leesbaar. */
-.app:not(.light) .matches-table .winning-score {
-  color: var(--table-text-color);
-}
-
-/* 3. Verwijderen minder dominant maken */
-.matches-table .delete-button {
-  background: #dc2626;
-  color: #ffffff;
-  border: 1px solid #b91c1c;
-  transition: background 0.2s ease;
-}
-
-.matches-table .delete-button:hover {
-  background: #b91c1c;
-}
-
-/* Donkere modus: duidelijke rode knop */
-.app:not(.light) .matches-table .delete-button {
-  background: #b91c1c;
-  border-color: #f87171;
-  color: #ffffff;
-}
-
-.app:not(.light) .matches-table .delete-button:hover {
-  background: #991b1b;
-}
-
-/* Mobiele weergave */
-@media (max-width: 900px) {
-  .matches-table th:nth-child(1),
-  .matches-table td:nth-child(1) {
-    min-width: 0;
-    white-space: normal;
-  }
-
-  /* De compactere winnaarsmarkering is al ingesteld in de basisregels. */
 }
 
 /* Favoriete team altijd herkenbaar */
@@ -3420,15 +3368,6 @@ textarea::placeholder {
   .matches-table th:nth-child(5),
   .matches-table td:nth-child(5) {
     width: auto;
-  }
-
-  .matches-table th:last-child,
-  .matches-table td:last-child {
-    width: auto;
-  }
-
-  .matches-table td:last-child {
-    padding: 8px 4px;
   }
 }
 

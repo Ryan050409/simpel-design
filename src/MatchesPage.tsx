@@ -54,7 +54,6 @@ function getRowClass(result: string | null) {
 }
 
 function MatchesPage({ matches, setMatches, team, teams }: MatchesPageProps) {
-  const [editingMatch, setEditingMatch] = useState<Match | null>(null);
   const [showMatchPopup, setShowMatchPopup] = useState(false);
   const [matchView, setMatchView] = useState<"favorite" | "all">("favorite");
   const [sortOrder, setSortOrder] = useState<"newest" | "oldest">("newest");
@@ -70,14 +69,6 @@ function MatchesPage({ matches, setMatches, team, teams }: MatchesPageProps) {
 
     return sortOrder === "newest" ? dateB - dateA : dateA - dateB;
   });
-
-  function editMatch(match: Match) {
-    setEditingMatch(match);
-  }
-
-  function closeModal() {
-    setEditingMatch(null);
-  }
 
   return (
     <div className="matches-page">
@@ -143,7 +134,7 @@ function MatchesPage({ matches, setMatches, team, teams }: MatchesPageProps) {
           <tbody>
             {sortedMatches.length === 0 ? (
               <tr>
-                <td colSpan={6}>Geen wedstrijden gevonden.</td>
+                <td colSpan={5}>Geen wedstrijden gevonden.</td>
               </tr>
             ) : (
               sortedMatches.map((match) => {
@@ -204,23 +195,21 @@ function MatchesPage({ matches, setMatches, team, teams }: MatchesPageProps) {
                     </td>
 
                     <td>
-                      <td>
-                        <span
-                          className={
-                            result === "W"
-                              ? "result-win"
-                              : result === "G"
-                                ? "result-draw"
-                                : result === "V"
-                                  ? "result-loss"
-                                  : "match-result-text"
-                          }
-                          aria-label={getResultLabel(result)}
-                          title={getResultLabel(result)}
-                        >
-                          {result ? getResultLabel(result) : "-"}
-                        </span>
-                      </td>
+                      <span
+                        className={
+                          result === "W"
+                            ? "result-win"
+                            : result === "G"
+                              ? "result-draw"
+                              : result === "V"
+                                ? "result-loss"
+                                : "match-result-text"
+                        }
+                        aria-label={getResultLabel(result)}
+                        title={getResultLabel(result)}
+                      >
+                        {result ? getResultLabel(result) : "-"}
+                      </span>
                     </td>
                   </tr>
                 );
@@ -228,16 +217,6 @@ function MatchesPage({ matches, setMatches, team, teams }: MatchesPageProps) {
             )}
           </tbody>
         </table>
-
-        {editingMatch && (
-          <MatchForm
-            editingMatch={editingMatch}
-            setEditingMatch={setEditingMatch}
-            setMatches={setMatches}
-            closeModal={closeModal}
-            teams={teams}
-          />
-        )}
 
         {showMatchPopup && (
           <MatchForm

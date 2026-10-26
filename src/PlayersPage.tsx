@@ -10,7 +10,6 @@ type PlayersPageProps = {
 };
 
 function PlayersPage({ playerList, setPlayerList, teams }: PlayersPageProps) {
-  const [editingPlayer, setEditingPlayer] = useState<Player | null>(null);
   const [showPlayerPopup, setShowPlayerPopup] = useState(false);
   const [selectedPlayer, setSelectedPlayer] = useState<Player | null>(null);
   const [searchTerm, setSearchTerm] = useState("");
@@ -19,29 +18,7 @@ function PlayersPage({ playerList, setPlayerList, teams }: PlayersPageProps) {
       .toLowerCase()
       .includes(searchTerm.toLowerCase()),
   );
-  function deletePlayer(id: number) {
-    const playerToDelete = playerList.find((player) => player.id === id);
 
-    if (!playerToDelete) {
-      return;
-    }
-
-    const confirmed = window.confirm(
-      `Weet je zeker dat je ${playerToDelete.firstname} ${playerToDelete.lastname} wilt verwijderen?`,
-    );
-
-    if (!confirmed) {
-      return;
-    }
-
-    setPlayerList((currentPlayers) =>
-      currentPlayers.filter((player) => player.id !== id),
-    );
-  }
-
-  function editPlayer(player: Player) {
-    setEditingPlayer(player);
-  }
   function getRatingClass(rating: number) {
     if (rating >= 9) return "rating-excellent";
     if (rating >= 8) return "rating-very-good";
@@ -338,15 +315,6 @@ function PlayersPage({ playerList, setPlayerList, teams }: PlayersPageProps) {
             </div>
           </div>
         </div>
-      )}
-      {editingPlayer && (
-        <PlayerForm
-          editingPlayer={editingPlayer}
-          setEditingPlayer={setEditingPlayer}
-          setPlayerList={setPlayerList}
-          closeModal={() => setEditingPlayer(null)}
-          teams={teams}
-        />
       )}
       {showPlayerPopup && (
         <PlayerForm
