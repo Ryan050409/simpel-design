@@ -419,23 +419,13 @@ function App() {
           <Route
             path="/wedstrijden"
             element={
-              <MatchesPage
-                matches={matches}
-                setMatches={setMatches}
-                team={team}
-                teams={teams}
-              />
+              <MatchesPage matches={matches} team={team} teams={teams} />
             }
           />
 
           <Route
             path="/spelers"
-            element={
-              <PlayersPage
-                playerList={playerList}
-                teams={teams}
-              />
-            }
+            element={<PlayersPage playerList={playerList} teams={teams} />}
           />
 
           <Route

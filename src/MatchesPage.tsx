@@ -1,15 +1,10 @@
 import { useState } from "react";
-import type { Dispatch, SetStateAction } from "react";
-import MatchForm from "./MatchForm.tsx";
 import type { Match, Team } from "./types.ts";
 
 type MatchesPageProps = {
   matches: Match[];
-  setMatches: Dispatch<SetStateAction<Match[]>>;
   team: string;
-  teams: Team[];
 };
-
 function getMatchResult(match: Match, team: string) {
   if (match.home !== team && match.away !== team) {
     return null;
@@ -53,8 +48,7 @@ function getRowClass(result: string | null) {
   return undefined;
 }
 
-function MatchesPage({ matches, setMatches, team, teams }: MatchesPageProps) {
-  const [showMatchPopup, setShowMatchPopup] = useState(false);
+function MatchesPage({ matches, team }: MatchesPageProps) {
   const [matchView, setMatchView] = useState<"favorite" | "all">("favorite");
   const [sortOrder, setSortOrder] = useState<"newest" | "oldest">("newest");
 
@@ -79,14 +73,6 @@ function MatchesPage({ matches, setMatches, team, teams }: MatchesPageProps) {
         </div>
 
         <div className="matches-page-actions">
-          <button
-            type="button"
-            className="add-button"
-            onClick={() => setShowMatchPopup(true)}
-          >
-            + Wedstrijd toevoegen
-          </button>
-
           <div className="match-filter">
             <label htmlFor="match-view">Toon wedstrijden:</label>
 
@@ -217,14 +203,6 @@ function MatchesPage({ matches, setMatches, team, teams }: MatchesPageProps) {
             )}
           </tbody>
         </table>
-
-        {showMatchPopup && (
-          <MatchForm
-            setMatches={setMatches}
-            closeModal={() => setShowMatchPopup(false)}
-            teams={teams}
-          />
-        )}
       </div>
     </div>
   );
