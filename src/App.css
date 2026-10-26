@@ -122,6 +122,22 @@ body:has(.app.light) {
   margin: 0 auto;
 }
 
+.app {
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+.app button:not(.modal-close):not(.player-info-button) {
+  font-size: 15px;
+  padding: 12px 18px;
+}
+
+.app input,
+.app select,
+.app textarea {
+  font-size: 16px;
+  min-height: 44px;
+}
 /* =========================================================
    Typografie
    ========================================================= */
@@ -226,50 +242,83 @@ textarea::placeholder {
   box-shadow: var(--shadow-card);
 }
 
+
 /* =========================================================
    Navigatie
    ========================================================= */
-
 .nav {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 6px;
+  flex-wrap: wrap;
+  gap: 10px;
 
   width: fit-content;
   max-width: 100%;
-  margin: 0 auto 30px;
-  padding: 6px;
+  margin: 0 auto 36px;
+  padding: 10px;
 
   background: var(--card-background);
   border: 1px solid var(--border-color);
-  border-radius: 12px;
+  border-radius: 16px;
+  box-shadow: var(--shadow-card);
 }
 
 .nav a {
-  padding: 10px 16px;
-  border-radius: 8px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  min-height: 48px;
+  padding: 14px 22px;
+
+  border: 1px solid transparent;
+  border-radius: 11px;
 
   color: var(--text-color);
   text-decoration: none;
-  font-weight: 600;
+  font-size: 16px;
+  font-weight: 650;
+  white-space: nowrap;
 
   transition:
     background 0.2s ease,
     color 0.2s ease,
-    transform 0.2s ease;
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
 }
 
 .nav a:hover {
   background: var(--secondary-background);
   color: var(--text-color);
-  transform: translateY(-1px);
+  transform: translateY(-2px);
 }
 
 .nav a.active {
   background: #2563eb;
-  color: white;
-  box-shadow: 0 3px 10px rgba(37, 99, 235, 0.3);
+  color: #ffffff;
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+}
+
+.nav a:focus-visible {
+  outline: 3px solid #60a5fa;
+  outline-offset: 3px;
+}
+
+@media (max-width: 760px) {
+  .nav {
+    width: 100%;
+    gap: 7px;
+    padding: 8px;
+    margin-bottom: 26px;
+  }
+
+  .nav a {
+    flex: 1 1 40%;
+    min-height: 46px;
+    padding: 12px 14px;
+    font-size: 15px;
+  }
 }
 
 /* =========================================================
@@ -3312,14 +3361,14 @@ textarea::placeholder {
 }
 
 .profile-menu-trigger {
-  min-width: 42px;
-  min-height: 42px;
-  padding: 8px 12px;
+  min-width: 48px;
+  min-height: 48px;
+  padding: 10px 14px;
   background: var(--secondary-background);
   color: var(--text-color);
   border: 1px solid var(--border-color);
-  border-radius: 8px;
-  font-size: 18px;
+  border-radius: 10px;
+  font-size: 21px;
 }
 
 .profile-menu-trigger:hover {
