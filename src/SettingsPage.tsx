@@ -4,7 +4,6 @@ import type { Player, Match, Team } from "./types.ts";
 
 type SettingsPageProps = {
   teams: Team[];
-  setTeams: Dispatch<SetStateAction<Team[]>>;
   team: string;
   setTeam: Dispatch<SetStateAction<string>>;
   players: Player[];
@@ -12,30 +11,28 @@ type SettingsPageProps = {
   theme: "dark" | "light";
   setTheme: Dispatch<SetStateAction<"dark" | "light">>;
 };
+
 function SettingsPage({
   players,
   matches,
   teams,
-  setTeams,
   team,
   setTeam,
   theme,
-  setTheme
+  setTheme,
 }: SettingsPageProps) {
-  const [newTeam, setNewTeam] = useState("");
-  const [teamWarning, setTeamWarning] = useState("");
   const [openQuestion, setOpenQuestion] = useState<number | null>(null);
 
   const faqs = [
     {
       question: "Hoe voeg ik een speler toe?",
       answer:
-        "Ga naar Spelers en klik op '+ Speler toevoegen'. Vul de gegevens in en sla de speler op.",
+        "Ga naar de Adminpagina, kies een team en open Spelers beheren. Daar kun je spelers toevoegen, aanpassen en verwijderen.",
     },
     {
       question: "Hoe voeg ik een team toe?",
       answer:
-        "Ga naar Instellingen en gebruik het onderdeel Teams. Vul de naam van het team in en klik op '+ Team toevoegen'.",
+        "Ga naar de Adminpagina en open Teams beheren. Daar kun je teams toevoegen en verwijderen.",
     },
     {
       question: "Waar worden mijn gegevens opgeslagen?",
@@ -45,95 +42,20 @@ function SettingsPage({
     {
       question: "Kan ik een speler aanpassen?",
       answer:
-        "Ja. Ga naar Spelers en klik bij de gewenste speler op 'Bewerken'.",
+        "Ja. Ga naar de Adminpagina, kies het juiste team en open Spelers beheren.",
     },
     {
       question: "Kan ik een wedstrijd verwijderen?",
       answer:
-        "Ja. Ga naar Wedstrijden en klik bij de gewenste wedstrijd op 'Verwijderen'.",
+        "Ja. Ga naar de Adminpagina, kies het juiste team en open Wedstrijden beheren.",
     },
     {
       question: "Kan ik zelf een teamnaam typen?",
       answer:
-        "Ja. Bij het toevoegen van spelers en wedstrijden kun je een bestaand team kiezen of zelf een teamnaam invoeren.",
+        "Teams voeg je toe via Teams beheren op de Adminpagina. Bij het toevoegen van spelers en wedstrijden kun je een team selecteren uit de beschikbare teams.",
     },
   ];
 
-  function addTeam() {
-    const teamName = newTeam.trim();
-
-    if (teamName === "") {
-      setTeamWarning("Vul een teamnaam in.");
-      return;
-    }
-
-    const teamExists = teams.some(
-      (team) => team.name.toLowerCase() === teamName.toLowerCase(),
-    );
-
-    if (teamExists) {
-      setTeamWarning("Dit team bestaat al.");
-      return;
-    }
-
-    setTeams((currentTeams) => [
-      ...currentTeams,
-      {
-        id: Date.now(),
-        name: teamName,
-      },
-    ]);
-
-    setNewTeam("");
-    setTeamWarning("");
-  }
-
-  function deleteTeam(id: number) {
-    const teamToDelete = teams.find((team) => team.id === id);
-
-    if (!teamToDelete) {
-      return;
-    }
-
-    const teamIsUsedByPlayer = players.some(
-      (player) => player.team === teamToDelete.name,
-    );
-
-    const teamIsUsedInMatch = matches.some(
-      (match) =>
-        match.home === teamToDelete.name || match.away === teamToDelete.name,
-    );
-
-    if (teamIsUsedByPlayer || teamIsUsedInMatch) {
-      window.alert(
-        `Je kunt ${teamToDelete.name} niet verwijderen omdat dit team nog wordt gebruikt bij spelers of wedstrijden.`,
-      );
-      return;
-    }
-
-    const confirmed = window.confirm(
-      `Weet je zeker dat je ${teamToDelete.name} wilt verwijderen?`,
-    );
-
-    if (!confirmed) {
-      return;
-    }
-
-    const remainingTeams = teams.filter((team) => team.id !== id);
-
-    setTeams(remainingTeams);
-
-    if (teamToDelete.name === team) {
-      if (remainingTeams.length > 0) {
-        setTeam(remainingTeams[0].name);
-      } else {
-        setTeam("");
-        window.alert(
-          "Je hebt geen teams meer. Voeg eerst een nieuw team toe voordat je een favoriet team kunt kiezen.",
-        );
-      }
-    }
-  }
   function exportData() {
     const data = {
       players,
@@ -161,135 +83,95 @@ function SettingsPage({
       </div>
 
       <div className="settings-list">
-<div className="favorite-team-setting">
-  <div className="favorite-team-setting-header">
-    <div>
-      <strong>⭐ Favoriete team</strong>
+        <div className="favorite-team-setting">
+          <div className="favorite-team-setting-header">
+            <div>
+              <strong>⭐ Favoriete team</strong>
+              <small>
+                Kies het team waarvoor je de statistieken wilt bekijken.
+              </small>
+            </div>
+          </div>
 
-      <small>
-        Kies het team waarvoor je de statistieken wilt bekijken.
-      </small>
-    </div>
-  </div>
-
-  <div className="favorite-team-options">
-    {teams.map((teamOption) => (
-      <button
-        key={teamOption.id}
-        type="button"
-        className={
-          teamOption.name === team
-            ? "favorite-team-option selected"
-            : "favorite-team-option"
-        }
-        onClick={() => setTeam(teamOption.name)}
-      >
-        {teamOption.name}
-        {teamOption.name === team && <span>✓</span>}
-      </button>
-    ))}
-  </div>
-</div>
-
+          <div className="favorite-team-options">
+            {teams.map((teamOption) => (
+              <button
+                key={teamOption.id}
+                type="button"
+                className={
+                  teamOption.name === team
+                    ? "favorite-team-option selected"
+                    : "favorite-team-option"
+                }
+                onClick={() => setTeam(teamOption.name)}
+                aria-pressed={teamOption.name === team}
+              >
+                {teamOption.name}
+                {teamOption.name === team && <span>✓</span>}
+              </button>
+            ))}
+          </div>
+        </div>
 
         <div className="setting-row">
           <div>
-            <strong>Teams</strong>
-
-            <small>
-              Voeg teams toe die je in je voetbaltracker wilt gebruiken.
-            </small>
+            <strong>Thema</strong>
+            <small>Kies tussen een licht of donker thema.</small>
           </div>
 
-          <div className="team-setting-form">
-            <input
-              type="text"
-              placeholder="Nieuwe teamnaam"
-              value={newTeam}
-              onChange={(e) => {
-                setNewTeam(e.target.value);
-                setTeamWarning("");
-              }}
-              onKeyDown={(e) => {
-                if (e.key === "Enter") {
-                  addTeam();
-                }
-              }}
-            />
-            <button type="button" onClick={addTeam}>
-              + Team toevoegen
-            </button>
-
-            {teamWarning && (
-              <small className="team-warning">{teamWarning}</small>
-            )}
-          </div>
+          <select
+            aria-label="Kies een thema"
+            value={theme}
+            onChange={(event) =>
+              setTheme(event.target.value as "dark" | "light")
+            }
+          >
+            <option value="dark">Donker</option>
+            <option value="light">Licht</option>
+          </select>
         </div>
-        <div className="setting-row">
-  <div>
-    <strong>Thema</strong>
-
-    <small>
-      Kies tussen een licht of donker thema.
-    </small>
-  </div>
-
-  <select
-    value={theme}
-    onChange={(event) =>
-      setTheme(event.target.value as "dark" | "light")
-    }
-  >
-    <option value="dark">Donker</option>
-    <option value="light">Licht</option>
-  </select>
-</div>
       </div>
 
-      <div className="teams-list">
-        <h2>Teams</h2>
-
-        {teams.map((team) => (
-          <div className="team-item" key={team.id}>
-            <span>{team.name}</span>
-
-            <button type="button" onClick={() => deleteTeam(team.id)}>
-              Verwijderen
-            </button>
-          </div>
-        ))}
-      </div>
       <div className="data-settings">
         <h2>Gegevens</h2>
-
         <p>Maak een back-up van je spelers, wedstrijden en teams.</p>
 
         <button type="button" onClick={exportData}>
           Gegevens exporteren
         </button>
       </div>
+
       <div className="faq-section">
-        <h2>❓Veelgestelde vragen</h2>
+        <h2>❓ Veelgestelde vragen</h2>
 
         <div className="faq-list">
-          {faqs.map((faq, index) => (
-            <div className="faq-item" key={faq.question}>
-              <button
-                type="button"
-                className="faq-question"
-                onClick={() =>
-                  setOpenQuestion(openQuestion === index ? null : index)
-                }
-              >
-                <span>{faq.question}</span>
-                <span>{openQuestion === index ? "−" : "+"}</span>
-              </button>
+          {faqs.map((faq, index) => {
+            const isOpen = openQuestion === index;
+            const answerId = `faq-answer-${index}`;
 
-              {openQuestion === index && (
-                <div className="faq-answer">{faq.answer}</div>
-              )}
-            </div>
-          ))}
+            return (
+              <div className="faq-item" key={faq.question}>
+                <button
+                  type="button"
+                  className="faq-question"
+                  onClick={() =>
+                    setOpenQuestion(isOpen ? null : index)
+                  }
+                  aria-expanded={isOpen}
+                  aria-controls={answerId}
+                >
+                  <span>{faq.question}</span>
+                  <span aria-hidden="true">{isOpen ? "−" : "+"}</span>
+                </button>
+
+                {isOpen && (
+                  <div className="faq-answer" id={answerId}>
+                    {faq.answer}
+                  </div>
+                )}
+              </div>
+            );
+          })}
         </div>
       </div>
     </div>

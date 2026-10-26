@@ -295,7 +295,7 @@ function App() {
           <NavLink to="/instellingen">⚙️ Instellingen</NavLink>
 
           {isLoggedIn && DEMO_USER.role === "admin" && (
-            <NavLink to="/admin">Admin</NavLink>
+            <NavLink to="/admin">admin</NavLink>
           )}
 
           <div className="profile-menu" ref={profileMenuRef}>
@@ -433,7 +433,6 @@ function App() {
             element={
               <PlayersPage
                 playerList={playerList}
-                setPlayerList={setPlayerList}
                 teams={teams}
               />
             }
@@ -443,7 +442,6 @@ function App() {
             path="/instellingen"
             element={
               <SettingsPage
-                setTeams={setTeams}
                 teams={teams}
                 team={team}
                 setTeam={setTeam}

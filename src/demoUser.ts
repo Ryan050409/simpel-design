@@ -9,6 +9,6 @@ export type DemoUser = {
 
 export const DEMO_USER: DemoUser = {
   id: "demo-admin",
-  displayName: "Demo Admin",
+  displayName: "Demo admin",
   role: "admin",
 };

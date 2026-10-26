@@ -1,18 +1,15 @@
 import { useState } from "react";
-import type { Dispatch, SetStateAction } from "react";
-import PlayerForm from "./PlayerForm.tsx";
 import type { Player, Team } from "./types.ts";
 
 type PlayersPageProps = {
   playerList: Player[];
-  setPlayerList: Dispatch<SetStateAction<Player[]>>;
   teams: Team[];
 };
 
-function PlayersPage({ playerList, setPlayerList, teams }: PlayersPageProps) {
-  const [showPlayerPopup, setShowPlayerPopup] = useState(false);
+function PlayersPage({ playerList, teams }: PlayersPageProps) {
   const [selectedPlayer, setSelectedPlayer] = useState<Player | null>(null);
   const [searchTerm, setSearchTerm] = useState("");
+
   const filteredPlayers = playerList.filter((player) =>
     `${player.firstname} ${player.lastname}`
       .toLowerCase()
@@ -26,32 +23,31 @@ function PlayersPage({ playerList, setPlayerList, teams }: PlayersPageProps) {
     if (rating >= 6) return "rating-average";
     return "rating-low";
   }
+
   return (
     <div className="players-page">
       <div className="players-page-header">
         <div>
           <h1>👥 Spelers</h1>
-          <p>Bekijk en beheer je spelers.</p>
+          <p>Bekijk de spelers en hun statistieken.</p>
         </div>
-
-        <button
-          type="button"
-          className="add-button"
-          onClick={() => setShowPlayerPopup(true)}
-        >
-          + Speler toevoegen
-        </button>
       </div>
+
       <div className="player-search">
+        <label htmlFor="player-search-input">Zoek een speler</label>
         <input
-          type="text"
-          placeholder="Zoek een speler..."
+          id="player-search-input"
+          type="search"
+          placeholder="Zoek op voor- of achternaam..."
           value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
+          onChange={(event) => setSearchTerm(event.target.value)}
         />
       </div>
+
       <div className="players-by-team">
-        {filteredPlayers.length === 0 && <p>Geen spelers gevonden.</p>}
+        {filteredPlayers.length === 0 && (
+          <p role="status">Geen spelers gevonden.</p>
+        )}
 
         {teams
           .slice()
@@ -77,7 +73,10 @@ function PlayersPage({ playerList, setPlayerList, teams }: PlayersPageProps) {
 
                 <div className="players">
                   {teamPlayers.map((player) => (
-                    <div className="player-card player-card-v2" key={player.id}>
+                    <div
+                      className="player-card player-card-v2"
+                      key={player.id}
+                    >
                       <div className="player-card-header">
                         <div>
                           <div className="player-fullname-row">
@@ -95,11 +94,11 @@ function PlayersPage({ playerList, setPlayerList, teams }: PlayersPageProps) {
 
                         <div className="player-rating">
                           <span>RATING</span>
-
                           <strong className={getRatingClass(player.rating)}>
                             {player.rating}
                           </strong>
                         </div>
+
                         <button
                           type="button"
                           className="player-info-button"
@@ -111,7 +110,9 @@ function PlayersPage({ playerList, setPlayerList, teams }: PlayersPageProps) {
                         </button>
                       </div>
 
-                      <div className="player-position">{player.position}</div>
+                      <div className="player-position">
+                        {player.position}
+                      </div>
 
                       <div className="player-stats">
                         {(player.position === "Aanvaller" ||
@@ -174,15 +175,23 @@ function PlayersPage({ playerList, setPlayerList, teams }: PlayersPageProps) {
             );
           })}
       </div>
+
       {selectedPlayer && (
-        <div className="modal-overlay" onClick={() => setSelectedPlayer(null)}>
+        <div
+          className="modal-overlay"
+          onClick={() => setSelectedPlayer(null)}
+        >
           <div
             className="modal player-details-modal"
-            onClick={(e) => e.stopPropagation()}
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="player-details-title"
+            onClick={(event) => event.stopPropagation()}
           >
             <button
               className="modal-close"
               type="button"
+              aria-label="Sluit spelerdetails"
               onClick={() => setSelectedPlayer(null)}
             >
               ×
@@ -191,7 +200,7 @@ function PlayersPage({ playerList, setPlayerList, teams }: PlayersPageProps) {
             <div className="player-details-header">
               <div className="player-details-info">
                 <div className="player-details-name-row">
-                  <h2>
+                  <h2 id="player-details-title">
                     {selectedPlayer.firstname} {selectedPlayer.lastname}
                   </h2>
 
@@ -200,7 +209,9 @@ function PlayersPage({ playerList, setPlayerList, teams }: PlayersPageProps) {
                   </span>
                 </div>
 
-                <p className="player-details-team">{selectedPlayer.team}</p>
+                <p className="player-details-team">
+                  {selectedPlayer.team}
+                </p>
 
                 <span className="player-details-position">
                   {selectedPlayer.position}
@@ -315,13 +326,6 @@ function PlayersPage({ playerList, setPlayerList, teams }: PlayersPageProps) {
             </div>
           </div>
         </div>
-      )}
-      {showPlayerPopup && (
-        <PlayerForm
-          setPlayerList={setPlayerList}
-          closeModal={() => setShowPlayerPopup(false)}
-          teams={teams}
-        />
       )}
     </div>
   );
