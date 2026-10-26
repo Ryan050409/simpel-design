@@ -93,52 +93,6 @@
   --shadow-modal: 0 24px 60px rgba(15, 23, 42, 0.20);
 }
 
-/* Winnaar duidelijk herkenbaar */
-
-.matches-table .winning-team {
-  font-weight: 700;
-  border-left: 3px solid #16a34a;
-}
-
-.matches-table .winner-indicator {
-  color: #16a34a;
-  font-size: 14px;
-}
-
-.matches-table .winning-score {
-  display: inline-block;
-  padding: 3px 7px;
-  border: 2px solid #16a34a;
-  border-radius: 6px;
-  font-weight: 800;
-}
-
-/* Zichtbaar in donkere modus */
-.app:not(.light) .matches-table .winning-team {
-  border-left-color: #4ade80;
-}
-
-.app:not(.light) .matches-table .winner-indicator {
-  color: #4ade80;
-}
-
-.app:not(.light) .matches-table .winning-score {
-  border-color: #4ade80;
-  color: #ffffff;
-}
-
-/* Houd de markering compact op mobiel */
-@media (max-width: 900px) {
-  .matches-table .winning-score {
-    padding: 2px 4px;
-    border-width: 1px;
-  }
-
-  .matches-table .winning-team {
-    border-left-width: 2px;
-  }
-}
-
 /* =========================================================
    Basis
    ========================================================= */
@@ -316,125 +270,6 @@ textarea::placeholder {
   background: #2563eb;
   color: white;
   box-shadow: 0 3px 10px rgba(37, 99, 235, 0.3);
-}
-
-/* Compacte favoriete-clubkeuze */
-
-.favorite-menu {
-  position: relative;
-  flex-shrink: 0;
-}
-
-.favorite-menu-trigger {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 7px;
-  min-height: 40px;
-  padding: 8px 11px;
-  background: var(--secondary-background);
-  color: var(--text-color);
-  border: 1px solid var(--border-color);
-  border-radius: 8px;
-  font-size: 13px;
-  white-space: nowrap;
-}
-
-.favorite-menu-trigger > span:first-child {
-  color: #fbbf24;
-  font-size: 17px;
-}
-
-.favorite-menu-trigger:hover {
-  border-color: var(--accent);
-}
-
-.favorite-menu-current {
-  max-width: 130px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.favorite-menu-chevron {
-  color: var(--muted-text-color);
-  font-size: 11px;
-}
-
-.favorite-menu-dropdown {
-  position: absolute;
-  top: calc(100% + 8px);
-  right: 0;
-  z-index: 1000;
-  width: 230px;
-  max-height: 320px;
-  overflow-y: auto;
-  padding: 7px;
-  background: var(--card-background);
-  border: 1px solid var(--border-color);
-  border-radius: 12px;
-  box-shadow: var(--shadow-modal);
-  text-align: left;
-  animation: favorite-menu-in 0.15s ease-out;
-}
-
-.favorite-menu-dropdown p {
-  margin: 5px 8px 8px;
-  color: var(--muted-text-color);
-  font-size: 12px;
-}
-
-.favorite-menu-option {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 10px;
-  width: 100%;
-  min-height: 38px;
-  padding: 9px 10px;
-  background: transparent;
-  color: var(--text-color);
-  border: 0;
-  border-radius: 7px;
-  text-align: left;
-  font-size: 13px;
-}
-
-.favorite-menu-option:hover,
-.favorite-menu-option.selected {
-  background: var(--accent-soft);
-  color: var(--text-color);
-}
-
-.favorite-menu-option.selected > span:last-child {
-  color: #fbbf24;
-}
-
-@keyframes favorite-menu-in {
-  from {
-    opacity: 0;
-    transform: translateY(-4px);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@media (max-width: 768px) {
-  .favorite-menu {
-    width: 100%;
-  }
-
-  .favorite-menu-trigger {
-    width: 100%;
-  }
-
-  .favorite-menu-dropdown {
-    right: 0;
-    left: 0;
-    width: 100%;
-  }
 }
 
 /* =========================================================
@@ -873,21 +708,6 @@ textarea::placeholder {
 /* =========================================================
    Dashboard
    ========================================================= */
-
-.settings-page-header {
-  max-width: 1100px;
-  margin: 0 auto 18px;
-  text-align: left;
-}
-
-.settings-page-header h1 {
-  margin: 0 0 6px;
-}
-
-.settings-page-header p {
-  margin: 0;
-  color: var(--muted-text-color);
-}
 
 .stats-grid {
   display: grid;
@@ -2064,6 +1884,21 @@ textarea::placeholder {
   text-align: left;
 }
 
+.settings-page-header {
+  max-width: 1100px;
+  margin: 0 auto 18px;
+  text-align: left;
+}
+
+.settings-page-header h1 {
+  margin: 0 0 6px;
+}
+
+.settings-page-header p {
+  margin: 0;
+  color: var(--muted-text-color);
+}
+
 .settings-list {
   display: flex;
   flex-direction: column;
@@ -2608,14 +2443,6 @@ textarea::placeholder {
   font-size: 13px;
   font-weight: 600;
   white-space: nowrap;
-}
-
-.matches-table .match-actions .delete-button {
-  background: #dc2626;
-}
-
-.matches-table .match-actions .delete-button:hover {
-  background: #b91c1c;
 }
 
 /* Wedstrijdresultaten */
