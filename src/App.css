@@ -4530,10 +4530,10 @@ textarea::placeholder {
   padding: 8px 36px 8px 12px;
   border: 1px solid var(--border-color, #64748b);
   border-radius: 10px;
-  background: var(--card-bg, #ffffff);
+  background: var(--card-background, #ffffff);
   color: var(--text-color, #0f172a);
   font: inherit;
-  font-size: 1.5rem;
+  font-size: 1rem;
   font-weight: 700;
   cursor: pointer;
 }
@@ -4544,6 +4544,6 @@ textarea::placeholder {
 }
 
 .admin-team-dropdown option {
-  background: var(--card-bg, #ffffff);
-  color: var(--text-color, #0f172a);
+  background: var(--card-background, #ffffff);
+color: var(--text-color, #0f172a);
 }
