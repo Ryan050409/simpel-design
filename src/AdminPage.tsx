@@ -302,17 +302,42 @@ export default function AdminPage({
 
   return (
     <main className="admin-page">
-      <header className="admin-page-header">
-        <div>
-          <p className="admin-eyebrow">EREDIVISIE-VOETBALTRACKER</p>
-          <h1>Beheeromgeving</h1>
-          <p>
-            Beheer teams, spelers en wedstrijden op één overzichtelijke plek.
-          </p>
-        </div>
+      
+<header className="admin-page-header">
+  <div className="admin-header-content">
+    <div className="admin-header-title">
+      <span className="admin-header-icon" aria-hidden="true">
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="1.8"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          aria-hidden="true"
+        >
+          <path d="M12 3 20 6v5c0 5-3.4 8.5-8 10-4.6-1.5-8-5-8-10V6l8-3Z" />
+          <path d="m9 12 2 2 4-4" />
+        </svg>
+      </span>
 
-        <span className="admin-role-badge">Beheerder</span>
-      </header>
+      <div>
+        <p className="admin-eyebrow">EREDIVISIE-VOETBALTRACKER</p>
+        <h1>Beheercentrum</h1>
+      </div>
+    </div>
+
+    <p className="admin-header-description">
+      Beheer teams, spelers en wedstrijden op één overzichtelijke plek.
+    </p>
+  </div>
+
+  <span className="admin-role-badge">
+    <span aria-hidden="true">✓</span>
+    Beheerder
+  </span>
+</header>
+
 
       <section
         className="admin-overview"
@@ -382,7 +407,7 @@ export default function AdminPage({
             )}
           </div>
 
-          {showTeamForm && (
+          {canManageTeams && showTeamForm && (
             <form className="admin-team-form" onSubmit={addTeam}>
               <label htmlFor="admin-new-team-name">
                 Naam van het nieuwe team
@@ -697,14 +722,15 @@ export default function AdminPage({
                     Bekijk alle thuis- en uitwedstrijden van {selectedTeam}.
                   </p>
                 </div>
-
-                <button
-                  type="button"
-                  className="admin-primary-button"
-                  onClick={openAddMatchForm}
-                >
-                  + Wedstrijd toevoegen
-                </button>
+                {canManageMatches && (
+                  <button
+                    type="button"
+                    className="admin-primary-button"
+                    onClick={openAddMatchForm}
+                  >
+                    + Wedstrijd toevoegen
+                  </button>
+                )}
               </div>
 
               <div className="admin-player-toolbar">
@@ -745,23 +771,16 @@ export default function AdminPage({
                       </div>
 
                       <div className="admin-player-actions">
-                        <button
-                          type="button"
-                          className="admin-edit-button"
-                          onClick={() => openEditMatchForm(match)}
-                          aria-label={`Bewerk ${match.home} tegen ${match.away}`}
-                        >
-                          Bewerken
-                        </button>
-
-                        <button
-                          type="button"
-                          className="admin-delete-button"
-                          onClick={() => deleteMatch(match)}
-                          aria-label={`Verwijder ${match.home} tegen ${match.away}`}
-                        >
-                          Verwijderen
-                        </button>
+                        {canManageMatches && (
+                          <div className="admin-player-actions">
+                            <button onClick={() => openEditMatchForm(match)}>
+                              Bewerken
+                            </button>
+                            <button onClick={() => deleteMatch(match)}>
+                              Verwijderen
+                            </button>
+                          </div>
+                        )}
                       </div>
                     </article>
                   ))}

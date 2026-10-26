@@ -89,8 +89,8 @@
   --table-text-color: #0f172a;
 
   --shadow-card: 0 4px 16px rgba(15, 23, 42, 0.06);
-  --shadow-card-hover: 0 10px 28px rgba(15, 23, 42, 0.10);
-  --shadow-modal: 0 24px 60px rgba(15, 23, 42, 0.20);
+  --shadow-card-hover: 0 10px 28px rgba(15, 23, 42, 0.1);
+  --shadow-modal: 0 24px 60px rgba(15, 23, 42, 0.2);
 }
 
 /* =========================================================
@@ -241,7 +241,6 @@ textarea::placeholder {
 .faq-list {
   box-shadow: var(--shadow-card);
 }
-
 
 /* =========================================================
    Navigatie
@@ -1534,7 +1533,6 @@ textarea::placeholder {
   text-align: left;
 }
 
-
 .player-card-header {
   display: flex;
   align-items: flex-start;
@@ -2272,7 +2270,6 @@ textarea::placeholder {
   color: var(--muted-text-color);
 }
 
-
 .matches-page-actions {
   display: flex;
   align-items: flex-end;
@@ -2449,7 +2446,6 @@ textarea::placeholder {
 
 /* Wedstrijdresultaten */
 
-
 .match-row-win,
 .match-row-draw,
 .match-row-loss {
@@ -2461,7 +2457,6 @@ textarea::placeholder {
 .match-row-loss:hover {
   background: var(--secondary-background);
 }
-
 
 .result-win,
 .result-draw,
@@ -2478,7 +2473,6 @@ textarea::placeholder {
   border: 1px solid var(--border-color);
   box-shadow: 0 1px 2px rgba(15, 23, 42, 0.08);
 }
-
 
 .result-win {
   background: #dcfce7;
@@ -2497,7 +2491,6 @@ textarea::placeholder {
   color: #991b1b;
   border-color: #fca5a5;
 }
-
 
 /* =========================================================
    Tablet
@@ -2661,32 +2654,31 @@ textarea::placeholder {
     margin: 0;
   }
 
+  .matches-page-header {
+    grid-template-columns: 1fr;
+  }
 
-.matches-page-header {
-  grid-template-columns: 1fr;
-}
+  .matches-page-actions {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-items: end;
+    gap: 12px;
+  }
 
-.matches-page-actions {
-  width: 100%;
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  align-items: end;
-  gap: 12px;
-}
+  .matches-page-actions .add-button {
+    grid-column: 1 / -1;
+    justify-self: start;
+  }
 
-.matches-page-actions .add-button {
-  grid-column: 1 / -1;
-  justify-self: start;
-}
+  .matches-page-actions .match-filter {
+    min-width: 0;
+    width: 100%;
+  }
 
-.matches-page-actions .match-filter {
-  min-width: 0;
-  width: 100%;
-}
-
-.match-filter select {
-  width: 100%;
-}
+  .match-filter select {
+    width: 100%;
+  }
 
   .player-search {
     text-align: center;
@@ -3371,8 +3363,6 @@ textarea::placeholder {
   }
 }
 
-
-
 /* =========================================
    ADMINPAGINA — BASIS
 ========================================= */
@@ -3431,6 +3421,60 @@ textarea::placeholder {
   font-weight: 650;
 }
 
+.admin-header-content {
+  min-width: 0;
+}
+
+.admin-header-title {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.admin-header-icon {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 48px;
+  height: 48px;
+  border-radius: 14px;
+  background: var(--admin-accent-soft, #dbeafe);
+  color: var(--admin-accent, #2563eb);
+}
+
+.admin-header-icon svg {
+  width: 26px;
+  height: 26px;
+}
+
+.admin-header-title .admin-eyebrow {
+  margin: 0 0 4px;
+}
+
+.admin-header-title h1 {
+  margin: 0;
+}
+
+.admin-header-description {
+  margin: 12px 0 0;
+  line-height: 1.6;
+}
+
+.admin-role-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  flex-shrink: 0;
+  padding: 9px 14px;
+  border: 1px solid var(--admin-border, #bfdbfe);
+  border-radius: 999px;
+  background: var(--admin-accent-soft, #dbeafe);
+  color: var(--admin-accent, #1d4ed8);
+  font-size: 0.875rem;
+  font-weight: 700;
+}
+
 /* =========================================
    STATISTIEKEN
 ========================================= */
@@ -3447,29 +3491,89 @@ textarea::placeholder {
 .admin-stats-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 14px;
+  gap: 18px;
+  margin-top: 18px;
 }
 
 .admin-stat-card {
+  position: relative;
   display: flex;
   align-items: center;
-  gap: 14px;
+  gap: 16px;
   min-width: 0;
-  padding: 17px;
-  border: 1px solid var(--border, #e2e8f0);
-  border-radius: 14px;
-  background: var(--card, #fff);
+  padding: 22px;
+  overflow: hidden;
+  border: 1px solid var(--admin-border, #e2e8f0);
+  border-radius: 18px;
+  background: var(--admin-card, #ffffff);
+  box-shadow: 0 4px 14px rgb(15 23 42 / 5%);
+  transition:
+    transform 180ms ease,
+    box-shadow 180ms ease,
+    border-color 180ms ease;
+}
+
+.admin-stat-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 22px rgb(15 23 42 / 9%);
 }
 
 .admin-stat-icon {
   display: grid;
-  width: 44px;
-  height: 44px;
-  flex-shrink: 0;
   place-items: center;
-  border-radius: 12px;
-  background: var(--secondary, #f1f5f9);
-  font-size: 1.3rem;
+  flex-shrink: 0;
+  width: 52px;
+  height: 52px;
+  border-radius: 15px;
+  background: var(--admin-accent-soft, #dbeafe);
+  font-size: 1.6rem;
+}
+
+.admin-stat-content {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.admin-stat-label {
+  color: var(--admin-muted, #64748b);
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.admin-stat-content strong {
+  color: var(--admin-text, #0f172a);
+  font-size: 1.9rem;
+  line-height: 1.2;
+  font-variant-numeric: tabular-nums;
+}
+
+.admin-stat-description {
+  color: var(--admin-muted, #64748b);
+  font-size: 0.8rem;
+  line-height: 1.4;
+}
+
+@media (max-width: 700px) {
+  .admin-stats-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .admin-stat-card {
+    padding: 18px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .admin-stat-card {
+    transition: none;
+  }
+
+  .admin-stat-card:hover {
+    transform: none;
+  }
 }
 
 .admin-stat-content {
@@ -3688,8 +3792,7 @@ textarea::placeholder {
 
 .admin-team-card:hover {
   border-color: var(--accent, #2563eb);
-  box-shadow: 0 5px 16px rgb(15 23 42 / 7%);
-  transform: translateY(-2px);
+  box-shadow: 0 5px 16px rgb(15 23 42 / 8%);
 }
 
 .admin-team-select {
@@ -3698,7 +3801,7 @@ textarea::placeholder {
   gap: 11px;
   width: 100%;
   min-width: 0;
-  padding: 16px 14px 12px;
+  padding: 12px;
   border: 0;
   background: transparent;
   color: var(--text, #0f172a);
@@ -3914,7 +4017,7 @@ textarea::placeholder {
 .admin-permissions-list {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 12px;
+  gap: 8px 12px;
   margin: 0;
   padding: 0;
   list-style: none;
@@ -3922,10 +4025,15 @@ textarea::placeholder {
 
 .admin-permissions-list li {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   gap: 9px;
-  font-size: 0.88rem;
-  line-height: 1.5;
+  min-width: 0;
+  padding: 9px 10px;
+  border: 1px solid var(--border, #334155);
+  border-radius: 10px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  line-height: 1.4;
 }
 
 .admin-permission-check {
@@ -3935,8 +4043,6 @@ textarea::placeholder {
   flex-shrink: 0;
   place-items: center;
   border-radius: 50%;
-  background: var(--secondary, #f1f5f9);
-  color: var(--accent, #2563eb);
   font-weight: 750;
 }
 
@@ -4165,7 +4271,11 @@ textarea::placeholder {
   color: var(--text, #f8fafc) !important;
 }
 
-.app:not(.light) .admin-page .admin-team-card:hover .admin-team-card-content strong {
+.app:not(.light)
+  .admin-page
+  .admin-team-card:hover
+  .admin-team-card-content
+  strong {
   color: var(--text, #f8fafc) !important;
 }
 
@@ -4351,7 +4461,9 @@ textarea::placeholder {
   font: inherit;
   font-weight: 600;
   cursor: pointer;
-  transition: background-color 0.2s, border-color 0.2s;
+  transition:
+    background-color 0.2s,
+    border-color 0.2s;
 }
 
 .admin-section-button:hover {
@@ -4413,5 +4525,24 @@ textarea::placeholder {
 
 .admin-team-dropdown option {
   background: var(--card-background, #ffffff);
-color: var(--text-color, #0f172a);
+  color: var(--text-color, #0f172a);
+}
+
+/* Admin-statistieken in dark mode */
+.app:not(.light) .admin-stat-card .admin-stat-content strong,
+.app:not(.light) .admin-stat-card .admin-stat-label,
+.app:not(.light) .admin-stat-card .admin-stat-description {
+  color: #ffffff;
+}
+
+/* Checklist: alleen donkere modus */
+.app:not(.light) .admin-permissions-list li {
+  background: #1e293b;
+  border-color: #475569;
+  color: #f8fafc;
+}
+
+.app:not(.light) .admin-permission-check {
+  background: #166534;
+  color: #ffffff;
 }
