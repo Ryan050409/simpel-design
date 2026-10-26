@@ -14,6 +14,7 @@ type AdminPageProps = {
   playersCount: number;
   matchesCount: number;
   teamsCount: number;
+  team: string;
   playerList: Player[];
   setPlayerList: Dispatch<SetStateAction<Player[]>>;
   matches: Match[];
@@ -43,6 +44,7 @@ export default function AdminPage({
   playersCount,
   matchesCount,
   teamsCount,
+  team,
   playerList,
   setPlayerList,
   matches,
@@ -132,6 +134,28 @@ export default function AdminPage({
             new Date(b.date).getTime() - new Date(a.date).getTime(),
         )
     : [];
+
+  function exportData() {
+    const data = {
+      players: playerList,
+      matches,
+      teams,
+      favoriteTeam: team,
+    };
+
+    const json = JSON.stringify(data, null, 2);
+    const blob = new Blob([json], { type: "application/json" });
+    const url = URL.createObjectURL(blob);
+
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = "voetbaltracker-backup.json";
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+
+    URL.revokeObjectURL(url);
+  }
 
   function openAddPlayerForm() {
     if (!canManagePlayers) return;
@@ -342,7 +366,8 @@ export default function AdminPage({
         </div>
 
         <span className="admin-role-badge">
-          <span aria-hidden="true">✓</span> Beheerder
+          <span aria-hidden="true">✓</span>
+          {role === "admin" ? "Beheerder" : "Speler"}
         </span>
       </header>
 
@@ -389,6 +414,25 @@ export default function AdminPage({
               </span>
             </div>
           </article>
+        </div>
+      </section>
+
+      <section className="admin-panel admin-export-panel">
+        <div className="admin-panel-heading">
+          <div>
+            <h2>Gegevens exporteren</h2>
+            <p>
+              Download een back-up van je spelers, wedstrijden en teams.
+            </p>
+          </div>
+
+          <button
+            type="button"
+            className="admin-primary-button"
+            onClick={exportData}
+          >
+            Back-up downloaden
+          </button>
         </div>
       </section>
 
@@ -849,23 +893,38 @@ export default function AdminPage({
         </section>
       )}
 
-      <ul className="admin-permissions-list" aria-label="Overzicht van rechten">
-        {ALL_PERMISSIONS.map((permission) => {
-          const allowed = hasPermission(role, permission);
+      <section
+        className="admin-panel admin-permissions-panel"
+        aria-labelledby="admin-permissions-title"
+      >
+        <div className="admin-panel-heading">
+          <div>
+            <h2 id="admin-permissions-title">Toegangsrechten</h2>
+            <p>Overzicht van de rechten voor jouw huidige rol.</p>
+          </div>
+        </div>
 
-          return (
-            <li key={permission}>
-              <span className="admin-permission-check" aria-hidden="true">
-                {allowed ? "✓" : "—"}
-              </span>
-              <span>
-                {PERMISSION_LABELS[permission]} —{" "}
-                {allowed ? "Toegestaan" : "Geen toegang"}
-              </span>
-            </li>
-          );
-        })}
-      </ul>
+        <ul
+          className="admin-permissions-list"
+          aria-label="Overzicht van rechten"
+        >
+          {ALL_PERMISSIONS.map((permission) => {
+            const allowed = hasPermission(role, permission);
+
+            return (
+              <li key={permission}>
+                <span className="admin-permission-check" aria-hidden="true">
+                  {allowed ? "✓" : "—"}
+                </span>
+                <span>
+                  {PERMISSION_LABELS[permission]} —{" "}
+                  {allowed ? "Toegestaan" : "Geen toegang"}
+                </span>
+              </li>
+            );
+          })}
+        </ul>
+      </section>
 
       {canManagePlayers && showPlayerForm && (
         <PlayerForm

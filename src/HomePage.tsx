@@ -205,7 +205,6 @@ function HomePage({ matches, playerList, team }: HomePageProps) {
                 ? "Voeg je eerste wedstrijd toe om hier meer teaminformatie te zien."
                 : `${wins} gewonnen · ${draws} gelijk · ${losses} verloren`}
             </p>
-            <Link to="/instellingen">Team aanpassen →</Link>
           </div>
 
           <div className="home-page-panel home-page-top-player">

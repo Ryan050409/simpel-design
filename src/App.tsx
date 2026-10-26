@@ -13,6 +13,7 @@ import Dashboard from "./Dashboard.tsx";
 import MatchesPage from "./MatchesPage.tsx";
 import SettingsPage from "./SettingsPage.tsx";
 import HomePage from "./HomePage";
+import HelpPage from "./HelpPage";
 
 import AdminPage from "./AdminPage";
 import { DEMO_USER } from "./demoUser";
@@ -292,8 +293,6 @@ function App() {
 
           <NavLink to="/spelers">👥 Spelers</NavLink>
 
-          <NavLink to="/instellingen">⚙️ Instellingen</NavLink>
-
           {isLoggedIn && DEMO_USER.role === "admin" && (
             <NavLink to="/admin">admin</NavLink>
           )}
@@ -383,7 +382,9 @@ function App() {
                     </button>
                   ))}
                 </div>
-
+                <NavLink to="/help" onClick={() => setShowProfileMenu(false)}>
+                ❓ Hulp & veelgestelde vragen
+                </NavLink>
                 {isLoggedIn && DEMO_USER.role === "admin" && (
                   <NavLink
                     to="/admin"
@@ -418,29 +419,12 @@ function App() {
 
           <Route
             path="/wedstrijden"
-            element={
-              <MatchesPage matches={matches} team={team} />
-            }
+            element={<MatchesPage matches={matches} team={team} />}
           />
 
           <Route
             path="/spelers"
             element={<PlayersPage playerList={playerList} teams={teams} />}
-          />
-
-          <Route
-            path="/instellingen"
-            element={
-              <SettingsPage
-                teams={teams}
-                team={team}
-                setTeam={setTeam}
-                players={playerList}
-                matches={matches}
-                theme={theme}
-                setTheme={setTheme}
-              />
-            }
           />
 
           <Route
@@ -456,6 +440,7 @@ function App() {
                   setPlayerList={setPlayerList}
                   matches={matches}
                   setMatches={setMatches}
+                  team={team}
                   teams={teams}
                   setTeams={setTeams}
                 />
@@ -464,6 +449,7 @@ function App() {
               )
             }
           />
+          <Route path="/help" element={<HelpPage />} />
         </Routes>
       </div>
     </BrowserRouter>
