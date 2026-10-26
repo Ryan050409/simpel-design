@@ -151,8 +151,28 @@ function HomePage({ matches, playerList, team }: HomePageProps) {
                   <div className="home-page-match" key={match.id}>
                     <div
                       className={`home-page-result result-${result.toLowerCase()}`}
+                      aria-label={
+                        result === "W"
+                          ? "Gewonnen"
+                          : result === "G"
+                            ? "Gelijkspel"
+                            : "Verloren"
+                      }
+                      title={
+                        result === "W"
+                          ? "Gewonnen"
+                          : result === "G"
+                            ? "Gelijkspel"
+                            : "Verloren"
+                      }
                     >
-                      {result}
+                      <span className="home-page-result-text">
+                        {result === "W"
+                          ? "Gewonnen"
+                          : result === "G"
+                            ? "Gelijkspel"
+                            : "Verloren"}
+                      </span>
                     </div>
                     <div className="home-page-match-info">
                       <strong>

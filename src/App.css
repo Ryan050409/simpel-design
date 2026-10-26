@@ -667,32 +667,41 @@ textarea::placeholder {
 }
 
 .home-page-result {
-  display: flex;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
+  gap: 6px;
 
-  width: 28px;
-  height: 28px;
+  min-width: 28px;
+  min-height: 28px;
+  padding: 5px 8px;
 
+  border: 1px solid var(--border-color);
   border-radius: 7px;
-  color: white;
+  background: var(--secondary-background);
+  color: var(--text-color);
+
   font-size: 12px;
   font-weight: 700;
 }
 
+.home-page-result-text {
+  font-size: 11px;
+  font-weight: 600;
+}
+
 .home-page-result.result-w {
-  background: #22c55e;
+  border-left: 3px solid #16a34a;
 }
 
 .home-page-result.result-g {
-  background: #f97316;
+  border-left: 3px solid #d97706;
 }
 
 .home-page-result.result-v {
-  background: #dc2626;
+  border-left: 3px solid #dc2626;
 }
-
 .home-page-match-info {
   min-width: 0;
   flex: 1;
@@ -913,12 +922,8 @@ textarea::placeholder {
 .stat-card p {
   margin: 0;
   font-size: 27px;
-
-  background: var(--card-background);
-  color: var(--text-color);
-  border: 1px solid var(--border-color);
-
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
+  font-weight: bold;
+  line-height: 1.1;
 }
 
 /* =========================================
@@ -930,6 +935,7 @@ textarea::placeholder {
   display: flex;
   flex-direction: column;
   gap: 28px;
+  font-family: inherit;
 }
 
 .dashboard-hero,
@@ -1049,7 +1055,25 @@ textarea::placeholder {
   max-width: none;
   gap: 14px;
 }
+.dashboard-stat-card {
+  min-height: 150px;
+  padding: 18px;
+  border-radius: 16px;
+  transition:
+    border-color 0.2s ease,
+    transform 0.2s ease;
+}
 
+.dashboard-stat-card:hover {
+  transform: translateY(-3px);
+}
+
+.dashboard-stat-top {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 18px;
+}
 .dashboard-stat-icon {
   display: grid;
   place-items: center;
@@ -2489,6 +2513,16 @@ textarea::placeholder {
   vertical-align: middle;
 }
 
+/* Duidelijke kolomkoppen */
+
+.matches-table thead th {
+  background: var(--secondary-background);
+  color: var(--text-color);
+  font-size: 13px;
+  font-weight: 700;
+  border-bottom: 2px solid var(--border-color);
+}
+
 .matches-table tbody td[colspan="6"] {
   padding: 35px 20px;
   color: var(--table-text-color);
@@ -3533,4 +3567,91 @@ textarea::placeholder {
   font-variant-numeric: tabular-nums;
   text-align: center;
   white-space: nowrap;
+}
+
+/* Verbeterde weergave op smalle telefoons */
+@media (max-width: 480px) {
+  .matches-page {
+    min-width: 0;
+    width: 100%;
+  }
+
+  .matches-page-header {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 12px;
+    width: 100%;
+  }
+
+  .matches-page-actions {
+    align-items: stretch;
+    width: 100%;
+    min-width: 0;
+  }
+
+  .matches-page-actions .match-filter {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .matches-page-actions .match-filter select {
+    box-sizing: border-box;
+    width: 100%;
+    min-width: 0;
+  }
+
+  .matches-table {
+    width: 100%;
+    margin: 18px 0;
+    table-layout: fixed;
+    font-size: 12px;
+  }
+
+  .matches-table th,
+  .matches-table td {
+    padding: 8px 4px;
+    overflow-wrap: anywhere;
+  }
+
+  .matches-table th:first-child,
+  .matches-table td:first-child {
+    width: auto;
+  }
+
+  .matches-table th:nth-child(3),
+  .matches-table td:nth-child(3) {
+    min-width: 0;
+  }
+
+  .matches-table th:nth-child(4),
+  .matches-table td:nth-child(4) {
+    width: auto;
+  }
+
+  .matches-table th:nth-child(5),
+  .matches-table td:nth-child(5) {
+    width: auto;
+  }
+
+  .matches-table th:last-child,
+  .matches-table td:last-child {
+    width: auto;
+  }
+
+  .matches-table td:last-child {
+    padding: 8px 4px;
+  }
+
+  .matches-table .match-actions {
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .matches-table .match-actions button {
+    box-sizing: border-box;
+    width: 100%;
+    min-width: 0;
+    padding: 7px 3px;
+    font-size: 11px;
+    white-space: normal;
+  }
 }
