@@ -1,4 +1,3 @@
-
 import { useEffect, useRef, useState } from "react";
 import {
   BrowserRouter,
@@ -402,11 +401,7 @@ function App() {
           <Route
             path="/"
             element={
-              <HomePage
-                matches={matches}
-                playerList={playerList}
-                team={team}
-              />
+              <HomePage matches={matches} playerList={playerList} team={team} />
             }
           />
 
@@ -464,7 +459,12 @@ function App() {
             path="/admin"
             element={
               isLoggedIn && DEMO_USER.role === "admin" ? (
-                <AdminPage role={DEMO_USER.role} />
+                <AdminPage
+                  role={DEMO_USER.role}
+                  playersCount={playerList.length}
+                  matchesCount={matches.length}
+                  teamsCount={teams.length}
+                />
               ) : (
                 <Navigate to="/" replace />
               )
