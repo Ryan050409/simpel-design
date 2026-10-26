@@ -11,7 +11,6 @@ import "./App.css";
 import PlayersPage from "./PlayersPage.tsx";
 import Dashboard from "./Dashboard.tsx";
 import MatchesPage from "./MatchesPage.tsx";
-import SettingsPage from "./SettingsPage.tsx";
 import HomePage from "./HomePage";
 import HelpPage from "./HelpPage";
 
