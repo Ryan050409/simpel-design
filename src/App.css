@@ -4464,3 +4464,86 @@ textarea::placeholder {
 .app:not(.light) .admin-page .admin-panel-heading p {
   color: #cbd5e1;
 }
+/* Keuze tussen spelers en wedstrijden binnen teambeheer */
+.admin-team-section-switch {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin: 20px 0;
+}
+
+.admin-section-button {
+  flex: 1;
+  min-width: 150px;
+  padding: 14px 20px;
+  border: 1px solid var(--border, #cbd5e1);
+  border-radius: 12px;
+  background: var(--card, #ffffff);
+  color: var(--text, #0f172a);
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s, border-color 0.2s;
+}
+
+.admin-section-button:hover {
+  border-color: var(--accent, #2563eb);
+}
+
+.admin-section-button.active {
+  background: var(--accent, #2563eb);
+  border-color: var(--accent, #2563eb);
+  color: #ffffff;
+}
+
+.admin-section-button:focus-visible {
+  outline: 3px solid var(--accent, #2563eb);
+  outline-offset: 3px;
+}
+
+@media (max-width: 480px) {
+  .admin-team-section-switch {
+    flex-direction: column;
+  }
+
+  .admin-section-button {
+    width: 100%;
+  }
+}
+.admin-team-header {
+  margin-bottom: 20px;
+}
+
+.admin-team-eyebrow {
+  display: block;
+  font-size: 0.9rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
+.admin-team-title {
+  margin: 4px 0 8px;
+}
+
+.admin-team-dropdown {
+  max-width: 100%;
+  padding: 8px 36px 8px 12px;
+  border: 1px solid var(--border-color, #64748b);
+  border-radius: 10px;
+  background: var(--card-bg, #ffffff);
+  color: var(--text-color, #0f172a);
+  font: inherit;
+  font-size: 1.5rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.admin-team-dropdown:focus-visible {
+  outline: 3px solid #60a5fa;
+  outline-offset: 3px;
+}
+
+.admin-team-dropdown option {
+  background: var(--card-bg, #ffffff);
+  color: var(--text-color, #0f172a);
+}

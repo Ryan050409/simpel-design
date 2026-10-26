@@ -21,6 +21,8 @@ type AdminPageProps = {
   setTeams: Dispatch<SetStateAction<Team[]>>;
 };
 
+type TeamSection = "players" | "matches" | null;
+
 const PERMISSION_LABELS: Record<Permission, string> = {
   "players.manage": "Spelers beheren",
   "matches.manage": "Wedstrijden beheren",
@@ -41,11 +43,17 @@ export default function AdminPage({
   setTeams,
 }: AdminPageProps) {
   const [selectedTeam, setSelectedTeam] = useState<string | null>(null);
+  const [activeTeamSection, setActiveTeamSection] =
+    useState<TeamSection>(null);
+
   const [showPlayerForm, setShowPlayerForm] = useState(false);
   const [editingPlayer, setEditingPlayer] = useState<Player | null>(null);
+  const [playerSearch, setPlayerSearch] = useState("");
+
   const [showMatchForm, setShowMatchForm] = useState(false);
   const [editingMatch, setEditingMatch] = useState<Match | null>(null);
-  const [playerSearch, setPlayerSearch] = useState("");
+  const [matchSearch, setMatchSearch] = useState("");
+
   const [teamSearch, setTeamSearch] = useState("");
   const [showTeamForm, setShowTeamForm] = useState(false);
   const [newTeamName, setNewTeamName] = useState("");
@@ -93,6 +101,28 @@ export default function AdminPage({
         )
     : [];
 
+  const teamMatches = selectedTeam
+    ? matches
+        .filter(
+          (match) =>
+            match.home === selectedTeam || match.away === selectedTeam,
+        )
+        .filter((match) => {
+          const search = matchSearch.trim().toLowerCase();
+
+          return (
+            match.home.toLowerCase().includes(search) ||
+            match.away.toLowerCase().includes(search) ||
+            match.date.toLowerCase().includes(search) ||
+            `${match.homeGoals}-${match.awayGoals}`.includes(search)
+          );
+        })
+        .sort(
+          (a, b) =>
+            new Date(b.date).getTime() - new Date(a.date).getTime(),
+        )
+    : [];
+
   function openAddPlayerForm() {
     setEditingPlayer(null);
     setShowPlayerForm(true);
@@ -120,6 +150,33 @@ export default function AdminPage({
     );
   }
 
+  function openAddMatchForm() {
+    setEditingMatch(null);
+    setShowMatchForm(true);
+  }
+
+  function openEditMatchForm(match: Match) {
+    setEditingMatch(match);
+    setShowMatchForm(true);
+  }
+
+  function closeMatchForm() {
+    setShowMatchForm(false);
+    setEditingMatch(null);
+  }
+
+  function deleteMatch(match: Match) {
+    const confirmed = window.confirm(
+      `Weet je zeker dat je de wedstrijd ${match.home} ${match.homeGoals} - ${match.awayGoals} ${match.away} wilt verwijderen?`,
+    );
+
+    if (!confirmed) return;
+
+    setMatches((currentMatches) =>
+      currentMatches.filter((item) => item.id !== match.id),
+    );
+  }
+
   function addTeam(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
@@ -140,7 +197,9 @@ export default function AdminPage({
     }
 
     const newId =
-      teams.length > 0 ? Math.max(...teams.map((team) => team.id)) + 1 : 1;
+      teams.length > 0
+        ? Math.max(...teams.map((team) => team.id)) + 1
+        : 1;
 
     setTeams((currentTeams) => [...currentTeams, { id: newId, name }]);
     setNewTeamName("");
@@ -159,7 +218,7 @@ export default function AdminPage({
     );
 
     if (playersInTeam.length > 0 || matchesForTeam.length > 0) {
-      const reasons = [];
+      const reasons: string[] = [];
 
       if (playersInTeam.length > 0) {
         reasons.push(
@@ -192,38 +251,45 @@ export default function AdminPage({
     );
 
     if (selectedTeam === team.name) {
-      setSelectedTeam(null);
-      setPlayerSearch("");
+      returnToTeams();
     }
   }
 
   function returnToTeams() {
     setSelectedTeam(null);
+    setActiveTeamSection(null);
     setPlayerSearch("");
-    setShowPlayerForm(false);
-    setEditingPlayer(null);
-  }
-  function openAddMatchForm() {
-    setEditingMatch(null);
-    setShowMatchForm(true);
+    setMatchSearch("");
+    closePlayerForm();
+    closeMatchForm();
   }
 
-  function openEditMatchForm(match: Match) {
-    setEditingMatch(match);
-    setShowMatchForm(true);
+  function selectTeamSection(section: Exclude<TeamSection, null>) {
+    setActiveTeamSection(section);
+    setPlayerSearch("");
+    setMatchSearch("");
+    closePlayerForm();
+    closeMatchForm();
   }
 
-  function closeMatchForm() {
-    setShowMatchForm(false);
-    setEditingMatch(null);
+  function changeSelectedTeam(teamName: string) {
+    setSelectedTeam(teamName);
+    setActiveTeamSection(null);
+    setPlayerSearch("");
+    setMatchSearch("");
+    closePlayerForm();
+    closeMatchForm();
   }
+
   return (
     <main className="admin-page">
       <header className="admin-page-header">
         <div>
           <p className="admin-eyebrow">EREDIVISIE-VOETBALTRACKER</p>
           <h1>Beheeromgeving</h1>
-          <p>Beheer clubs en hun spelers op één overzichtelijke plek.</p>
+          <p>
+            Beheer teams, spelers en wedstrijden op één overzichtelijke plek.
+          </p>
         </div>
 
         <span className="admin-role-badge">Beheerder</span>
@@ -280,7 +346,7 @@ export default function AdminPage({
           <div className="admin-panel-heading">
             <div>
               <h2 id="admin-teams-title">Teams beheren</h2>
-              <p>Kies een club om de spelers te bekijken en te beheren.</p>
+              <p>Kies een club om de spelers en wedstrijden te beheren.</p>
             </div>
 
             <button
@@ -340,7 +406,7 @@ export default function AdminPage({
               />
             </label>
 
-            <span className="admin-player-count">
+            <span className="admin-player-count" aria-live="polite">
               {filteredTeams.length} van {teams.length} teams
             </span>
           </div>
@@ -348,8 +414,13 @@ export default function AdminPage({
           {filteredTeams.length > 0 ? (
             <div className="admin-team-grid">
               {filteredTeams.map((team) => {
-                const count = playerList.filter(
+                const playerCount = playerList.filter(
                   (player) => player.team === team.name,
+                ).length;
+
+                const matchCount = matches.filter(
+                  (match) =>
+                    match.home === team.name || match.away === team.name,
                 ).length;
 
                 return (
@@ -357,11 +428,8 @@ export default function AdminPage({
                     <button
                       type="button"
                       className="admin-team-select"
-                      onClick={() => {
-                        setSelectedTeam(team.name);
-                        setPlayerSearch("");
-                      }}
-                      aria-label={`Bekijk spelers van ${team.name}`}
+                      onClick={() => changeSelectedTeam(team.name)}
+                      aria-label={`Beheer spelers en wedstrijden van ${team.name}`}
                     >
                       <span className="admin-team-icon" aria-hidden="true">
                         ⚽
@@ -370,7 +438,10 @@ export default function AdminPage({
                       <span className="admin-team-card-content">
                         <strong>{team.name}</strong>
                         <span>
-                          {count} {count === 1 ? "speler" : "spelers"}
+                          {playerCount}{" "}
+                          {playerCount === 1 ? "speler" : "spelers"} ·{" "}
+                          {matchCount}{" "}
+                          {matchCount === 1 ? "wedstrijd" : "wedstrijden"}
                         </span>
                       </span>
 
@@ -409,7 +480,7 @@ export default function AdminPage({
       ) : (
         <section
           className="admin-panel"
-          aria-labelledby="admin-team-players-title"
+          aria-labelledby="admin-selected-team-title"
         >
           <button
             type="button"
@@ -420,167 +491,303 @@ export default function AdminPage({
           </button>
 
           <div className="admin-panel-heading admin-selected-team-heading">
-            <div>
-              <p className="admin-eyebrow">TEAMBEHEER</p>
-              <h2 id="admin-team-players-title">{selectedTeam}</h2>
-              <p>
-                {
-                  playerList.filter((player) => player.team === selectedTeam)
-                    .length
-                }{" "}
-                spelers gekoppeld aan dit team.
-              </p>
+            <div className="admin-team-header">
+              <span className="admin-team-eyebrow">TEAMBEHEER</span>
+
+              <h2
+                id="admin-selected-team-title"
+                className="admin-team-title"
+              >
+                <select
+                  className="admin-team-dropdown"
+                  value={selectedTeam}
+                  onChange={(event) =>
+                    changeSelectedTeam(event.target.value)
+                  }
+                  aria-label="Kies een team om te beheren"
+                >
+                  {sortedTeams.map((team) => (
+                    <option key={team.id} value={team.name}>
+                      {team.name}
+                    </option>
+                  ))}
+                </select>
+              </h2>
+
+              <p>Kies welk onderdeel je van dit team wilt beheren.</p>
             </div>
+          </div>
+
+          <div
+            className="admin-team-section-switch"
+            role="group"
+            aria-label="Kies wat je wilt beheren"
+          >
+            <button
+              type="button"
+              className={`admin-section-button ${
+                activeTeamSection === "players" ? "active" : ""
+              }`}
+              aria-pressed={activeTeamSection === "players"}
+              onClick={() => selectTeamSection("players")}
+            >
+              👥 Spelers
+            </button>
 
             <button
               type="button"
-              className="admin-primary-button"
-              onClick={openAddPlayerForm}
+              className={`admin-section-button ${
+                activeTeamSection === "matches" ? "active" : ""
+              }`}
+              aria-pressed={activeTeamSection === "matches"}
+              onClick={() => selectTeamSection("matches")}
             >
-              + Speler toevoegen
+              ⚽ Wedstrijden
             </button>
           </div>
 
-          <div className="admin-player-toolbar">
-            <label htmlFor="admin-player-search">
-              Zoek een speler
-              <input
-                id="admin-player-search"
-                type="search"
-                value={playerSearch}
-                onChange={(event) => setPlayerSearch(event.target.value)}
-                placeholder="Naam of positie..."
-              />
-            </label>
-
-            <span className="admin-player-count" aria-live="polite">
-              {teamPlayers.length} spelers weergegeven
-            </span>
-          </div>
-
-          {teamPlayers.length > 0 ? (
-            <div className="admin-player-list">
-              {teamPlayers.map((player) => (
-                <article className="admin-player-row" key={player.id}>
-                  <div className="admin-player-info">
-                    <strong>
-                      {player.firstname} {player.lastname}
-                    </strong>
-
-                    <div className="admin-player-meta">
-                      <span>{player.position}</span>
-                      <span className="admin-player-number">
-                        #{player.number}
-                      </span>
-                    </div>
-                  </div>
-
-                  <div className="admin-player-actions">
-                    <button
-                      type="button"
-                      className="admin-edit-button"
-                      onClick={() => openEditPlayerForm(player)}
-                      aria-label={`Bewerk ${player.firstname} ${player.lastname}`}
-                    >
-                      Bewerken
-                    </button>
-
-                    <button
-                      type="button"
-                      className="admin-delete-button"
-                      onClick={() => deletePlayer(player)}
-                      aria-label={`Verwijder ${player.firstname} ${player.lastname}`}
-                    >
-                      Verwijderen
-                    </button>
-                  </div>
-                </article>
-              ))}
-            </div>
-          ) : (
+          {activeTeamSection === null && (
             <div className="admin-empty-state">
               <span className="admin-empty-icon" aria-hidden="true">
-                👥
+                ⚽
               </span>
-              <strong>
-                {playerList.some((player) => player.team === selectedTeam)
-                  ? "Geen spelers gevonden"
-                  : "Nog geen spelers bij dit team"}
-              </strong>
+              <strong>Wat wil je beheren?</strong>
               <p>
-                {playerList.some((player) => player.team === selectedTeam)
-                  ? "Probeer een andere zoekterm."
-                  : "Voeg de eerste speler aan deze club toe."}
+                Kies hierboven voor spelers of wedstrijden van {selectedTeam}.
               </p>
-
-              {!playerList.some((player) => player.team === selectedTeam) && (
-                <button type="button" onClick={openAddPlayerForm}>
-                  Speler toevoegen
-                </button>
-              )}
             </div>
+          )}
+
+          {activeTeamSection === "players" && (
+            <>
+              <div className="admin-panel-heading">
+                <div>
+                  <h3>Spelers beheren</h3>
+                  <p>Voeg spelers toe, bewerk hun gegevens of verwijder ze.</p>
+                </div>
+
+                <button
+                  type="button"
+                  className="admin-primary-button"
+                  onClick={openAddPlayerForm}
+                >
+                  + Speler toevoegen
+                </button>
+              </div>
+
+              <div className="admin-player-toolbar">
+                <label htmlFor="admin-player-search">
+                  Zoek een speler
+                  <input
+                    id="admin-player-search"
+                    type="search"
+                    value={playerSearch}
+                    onChange={(event) => setPlayerSearch(event.target.value)}
+                    placeholder="Naam of positie..."
+                  />
+                </label>
+
+                <span className="admin-player-count" aria-live="polite">
+                  {teamPlayers.length} spelers weergegeven
+                </span>
+              </div>
+
+              {teamPlayers.length > 0 ? (
+                <div className="admin-player-list">
+                  {teamPlayers.map((player) => (
+                    <article className="admin-player-row" key={player.id}>
+                      <div className="admin-player-info">
+                        <strong>
+                          {player.firstname} {player.lastname}
+                        </strong>
+
+                        <div className="admin-player-meta">
+                          <span>{player.position}</span>
+                          <span className="admin-player-number">
+                            #{player.number}
+                          </span>
+                        </div>
+                      </div>
+
+                      <div className="admin-player-actions">
+                        <button
+                          type="button"
+                          className="admin-edit-button"
+                          onClick={() => openEditPlayerForm(player)}
+                          aria-label={`Bewerk ${player.firstname} ${player.lastname}`}
+                        >
+                          Bewerken
+                        </button>
+
+                        <button
+                          type="button"
+                          className="admin-delete-button"
+                          onClick={() => deletePlayer(player)}
+                          aria-label={`Verwijder ${player.firstname} ${player.lastname}`}
+                        >
+                          Verwijderen
+                        </button>
+                      </div>
+                    </article>
+                  ))}
+                </div>
+              ) : (
+                <div className="admin-empty-state">
+                  <span className="admin-empty-icon" aria-hidden="true">
+                    👥
+                  </span>
+                  <strong>
+                    {playerList.some(
+                      (player) => player.team === selectedTeam,
+                    )
+                      ? "Geen spelers gevonden"
+                      : "Nog geen spelers bij dit team"}
+                  </strong>
+                  <p>
+                    {playerList.some(
+                      (player) => player.team === selectedTeam,
+                    )
+                      ? "Probeer een andere zoekterm."
+                      : "Voeg de eerste speler aan deze club toe."}
+                  </p>
+
+                  {!playerList.some(
+                    (player) => player.team === selectedTeam,
+                  ) && (
+                    <button
+                      type="button"
+                      className="admin-primary-button"
+                      onClick={openAddPlayerForm}
+                    >
+                      Speler toevoegen
+                    </button>
+                  )}
+                </div>
+              )}
+            </>
+          )}
+
+          {activeTeamSection === "matches" && (
+            <>
+              <div className="admin-panel-heading">
+                <div>
+                  <h3>Wedstrijden beheren</h3>
+                  <p>
+                    Bekijk alle thuis- en uitwedstrijden van {selectedTeam}.
+                  </p>
+                </div>
+
+                <button
+                  type="button"
+                  className="admin-primary-button"
+                  onClick={openAddMatchForm}
+                >
+                  + Wedstrijd toevoegen
+                </button>
+              </div>
+
+              <div className="admin-player-toolbar">
+                <label htmlFor="admin-match-search">
+                  Zoek een wedstrijd
+                  <input
+                    id="admin-match-search"
+                    type="search"
+                    value={matchSearch}
+                    onChange={(event) => setMatchSearch(event.target.value)}
+                    placeholder="Team, datum of uitslag..."
+                  />
+                </label>
+
+                <span className="admin-player-count" aria-live="polite">
+                  {teamMatches.length} wedstrijden weergegeven
+                </span>
+              </div>
+
+              {teamMatches.length > 0 ? (
+                <div className="admin-player-list">
+                  {teamMatches.map((match) => (
+                    <article className="admin-player-row" key={match.id}>
+                      <div className="admin-player-info">
+                        <strong>
+                          {match.home} {match.homeGoals} – {match.awayGoals}{" "}
+                          {match.away}
+                        </strong>
+
+                        <div className="admin-player-meta">
+                          <span>{match.date}</span>
+                          <span>
+                            {match.home === selectedTeam
+                              ? "Thuiswedstrijd"
+                              : "Uitwedstrijd"}
+                          </span>
+                        </div>
+                      </div>
+
+                      <div className="admin-player-actions">
+                        <button
+                          type="button"
+                          className="admin-edit-button"
+                          onClick={() => openEditMatchForm(match)}
+                          aria-label={`Bewerk ${match.home} tegen ${match.away}`}
+                        >
+                          Bewerken
+                        </button>
+
+                        <button
+                          type="button"
+                          className="admin-delete-button"
+                          onClick={() => deleteMatch(match)}
+                          aria-label={`Verwijder ${match.home} tegen ${match.away}`}
+                        >
+                          Verwijderen
+                        </button>
+                      </div>
+                    </article>
+                  ))}
+                </div>
+              ) : (
+                <div className="admin-empty-state">
+                  <span className="admin-empty-icon" aria-hidden="true">
+                    ⚽
+                  </span>
+                  <strong>
+                    {matches.some(
+                      (match) =>
+                        match.home === selectedTeam ||
+                        match.away === selectedTeam,
+                    )
+                      ? "Geen wedstrijden gevonden"
+                      : "Nog geen wedstrijden voor dit team"}
+                  </strong>
+                  <p>
+                    {matches.some(
+                      (match) =>
+                        match.home === selectedTeam ||
+                        match.away === selectedTeam,
+                    )
+                      ? "Probeer een andere zoekterm."
+                      : "Voeg de eerste wedstrijd toe voor dit team."}
+                  </p>
+
+                  {!matches.some(
+                    (match) =>
+                      match.home === selectedTeam ||
+                      match.away === selectedTeam,
+                  ) && (
+                    <button
+                      type="button"
+                      className="admin-primary-button"
+                      onClick={openAddMatchForm}
+                    >
+                      Wedstrijd toevoegen
+                    </button>
+                  )}
+                </div>
+              )}
+            </>
           )}
         </section>
       )}
-
-      <section className="admin-panel" aria-labelledby="admin-matches-title">
-        <div className="admin-panel-heading">
-          <div>
-            <h2 id="admin-matches-title">Wedstrijden beheren</h2>
-            <p>Voeg wedstrijden toe of bewerk bestaande uitslagen.</p>
-          </div>
-
-          <button
-            type="button"
-            className="admin-primary-button"
-            onClick={openAddMatchForm}
-          >
-            + Wedstrijd toevoegen
-          </button>
-        </div>
-
-        {matches.length > 0 ? (
-          <div className="admin-player-list">
-            {matches.map((match) => (
-              <article className="admin-player-row" key={match.id}>
-                <div className="admin-player-info">
-                  <strong>
-                    {match.home} {match.homeGoals} – {match.awayGoals}{" "}
-                    {match.away}
-                  </strong>
-
-                  <div className="admin-player-meta">
-                    <span>{match.date}</span>
-                  </div>
-                </div>
-
-                <div className="admin-player-actions">
-                  <button
-                    type="button"
-                    className="admin-edit-button"
-                    onClick={() => openEditMatchForm(match)}
-                    aria-label={`Bewerk ${match.home} tegen ${match.away}`}
-                  >
-                    Bewerken
-                  </button>
-                </div>
-              </article>
-            ))}
-          </div>
-        ) : (
-          <div className="admin-empty-state">
-            <strong>Nog geen wedstrijden</strong>
-            <p>Er zijn nog geen wedstrijden om te beheren.</p>
-            <button
-              type="button"
-              className="admin-primary-button"
-              onClick={openAddMatchForm}
-            >
-              Eerste wedstrijd toevoegen
-            </button>
-          </div>
-        )}
-      </section>
 
       <section
         className="admin-panel admin-permissions-panel"
