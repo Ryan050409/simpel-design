@@ -3189,15 +3189,6 @@ textarea::placeholder {
   text-transform: uppercase;
 }
 
-.admin-role-badge {
-  flex-shrink: 0;
-  padding: 7px 12px;
-  border: 1px solid var(--border, #e2e8f0);
-  border-radius: 999px;
-  background: var(--card, #fff);
-  font-size: 0.82rem;
-  font-weight: 650;
-}
 
 .admin-header-content {
   min-width: 0;
@@ -3354,29 +3345,10 @@ textarea::placeholder {
   }
 }
 
-.admin-stat-content {
-  display: flex;
-  min-width: 0;
-  flex-direction: column;
-  gap: 3px;
-}
-
-.admin-stat-label {
-  color: var(--muted, #64748b);
-  font-size: 0.83rem;
-}
-
 .admin-stat-card strong {
   font-size: 1.55rem;
   line-height: 1.2;
 }
-
-.admin-stat-description {
-  color: var(--muted, #64748b);
-  font-size: 0.76rem;
-  line-height: 1.4;
-}
-
 /* =========================================
    ALGEMENE PANELEN
 ========================================= */
