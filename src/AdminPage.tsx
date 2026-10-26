@@ -4,12 +4,21 @@ import {
   ROLE_PERMISSIONS,
   canAccessAdminPage,
 } from "./permissions";
-
+import { Link } from "react-router-dom";
+import type { Dispatch, SetStateAction } from "react";
+import type { Player, Match, Team } from "./types";
 type AdminPageProps = {
   role: UserRole;
   playersCount: number;
   matchesCount: number;
   teamsCount: number;
+
+  playerList: Player[];
+  setPlayerList: Dispatch<SetStateAction<Player[]>>;
+  matches: Match[];
+  setMatches: Dispatch<SetStateAction<Match[]>>;
+  teams: Team[];
+  setTeams: Dispatch<SetStateAction<Team[]>>;
 };
 
 const PERMISSION_LABELS: Record<Permission, string> = {
@@ -57,6 +66,58 @@ export default function AdminPage({
         className="admin-overview"
         aria-labelledby="admin-overview-title"
       >
+              <section
+        className="admin-panel admin-quick-actions"
+        aria-labelledby="admin-quick-actions-title"
+      >
+        <div className="admin-panel-heading">
+          <div>
+            <h2 id="admin-quick-actions-title">Snelle acties</h2>
+            <p>Ga direct naar het onderdeel dat je wilt beheren.</p>
+          </div>
+        </div>
+
+        <div className="admin-actions-grid">
+          <Link to="/spelers" className="admin-action-card">
+            <span className="admin-action-icon" aria-hidden="true">
+              👥
+            </span>
+            <span className="admin-action-content">
+              <strong>Spelers beheren</strong>
+              <span>Spelers toevoegen, bekijken en bewerken.</span>
+            </span>
+            <span className="admin-action-arrow" aria-hidden="true">
+              →
+            </span>
+          </Link>
+
+          <Link to="/wedstrijden" className="admin-action-card">
+            <span className="admin-action-icon" aria-hidden="true">
+              ⚽
+            </span>
+            <span className="admin-action-content">
+              <strong>Wedstrijden beheren</strong>
+              <span>Wedstrijden bekijken en uitslagen aanpassen.</span>
+            </span>
+            <span className="admin-action-arrow" aria-hidden="true">
+              →
+            </span>
+          </Link>
+
+          <Link to="/instellingen" className="admin-action-card">
+            <span className="admin-action-icon" aria-hidden="true">
+              🛡️
+            </span>
+            <span className="admin-action-content">
+              <strong>Clubs beheren</strong>
+              <span>De bestaande clubinstellingen openen.</span>
+            </span>
+            <span className="admin-action-arrow" aria-hidden="true">
+              →
+            </span>
+          </Link>
+        </div>
+      </section>
         <h2 id="admin-overview-title">Overzicht</h2>
 
         <div className="admin-stats-grid">

@@ -464,6 +464,12 @@ function App() {
                   playersCount={playerList.length}
                   matchesCount={matches.length}
                   teamsCount={teams.length}
+                  playerList={playerList}
+                  setPlayerList={setPlayerList}
+                  matches={matches}
+                  setMatches={setMatches}
+                  teams={teams}
+                  setTeams={setTeams}
                 />
               ) : (
                 <Navigate to="/" replace />
