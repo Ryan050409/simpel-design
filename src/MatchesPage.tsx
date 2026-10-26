@@ -29,20 +29,12 @@ function getMatchResult(match: Match, team: string) {
   return "V";
 }
 
-function getResultClass(result: string | null) {
-  if (result === "W") {
-    return "result-win";
-  }
+function getResultLabel(result: string | null) {
+  if (result === "W") return "Gewonnen";
+  if (result === "G") return "Gelijkspel";
+  if (result === "V") return "Verloren";
 
-  if (result === "G") {
-    return "result-draw";
-  }
-
-  if (result === "V") {
-    return "result-loss";
-  }
-
-  return undefined;
+  return "Geen resultaat";
 }
 
 function getRowClass(result: string | null) {
@@ -159,12 +151,21 @@ function MatchesPage({ matches, setMatches, team, teams }: MatchesPageProps) {
                 const result = getMatchResult(match, team);
                 const homeIsFavorite = match.home === team;
                 const awayIsFavorite = match.away === team;
+                const homeIsWinner = match.homeGoals > match.awayGoals;
+                const awayIsWinner = match.awayGoals > match.homeGoals;
 
                 return (
                   <tr key={match.id} className={getRowClass(result)}>
                     <td>{new Date(match.date).toLocaleDateString("nl-NL")}</td>
 
-                    <td className={homeIsFavorite ? "favorite-team-name" : ""}>
+                    <td
+                      className={[
+                        homeIsFavorite ? "favorite-team-name" : "",
+                        homeIsWinner ? "winner-team-name" : "",
+                      ]
+                        .filter(Boolean)
+                        .join(" ")}
+                    >
                       {homeIsFavorite && (
                         <span
                           className="favorite-indicator"
@@ -177,7 +178,14 @@ function MatchesPage({ matches, setMatches, team, teams }: MatchesPageProps) {
                       {match.home}
                     </td>
 
-                    <td className={awayIsFavorite ? "favorite-team-name" : ""}>
+                    <td
+                      className={[
+                        awayIsFavorite ? "favorite-team-name" : "",
+                        awayIsWinner ? "winner-team-name" : "",
+                      ]
+                        .filter(Boolean)
+                        .join(" ")}
+                    >
                       {awayIsFavorite && (
                         <span
                           className="favorite-indicator"
@@ -197,29 +205,23 @@ function MatchesPage({ matches, setMatches, team, teams }: MatchesPageProps) {
                     </td>
 
                     <td>
-                      <span
-                        className={getResultClass(result)}
-                        aria-label={
-                          result === "W"
-                            ? "Winst"
-                            : result === "G"
-                              ? "Gelijkspel"
-                              : result === "V"
-                                ? "Verlies"
-                                : "Geen resultaat"
-                        }
-                        title={
-                          result === "W"
-                            ? "Winst"
-                            : result === "G"
-                              ? "Gelijkspel"
-                              : result === "V"
-                                ? "Verlies"
-                                : "Geen resultaat"
-                        }
-                      >
-                        {result ?? "-"}
-                      </span>
+                      <td>
+                        <span
+                          className={
+                            result === "W"
+                              ? "result-win"
+                              : result === "G"
+                                ? "result-draw"
+                                : result === "V"
+                                  ? "result-loss"
+                                  : "match-result-text"
+                          }
+                          aria-label={getResultLabel(result)}
+                          title={getResultLabel(result)}
+                        >
+                          {result ? getResultLabel(result) : "-"}
+                        </span>
+                      </td>
                     </td>
 
                     <td>
