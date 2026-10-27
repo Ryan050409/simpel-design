@@ -5312,3 +5312,60 @@ textarea::placeholder {
     flex-wrap: wrap;
   }
 }
+
+/* Mobiel: instellingenknop gelijk aan de andere navigatie-items */
+@media (max-width: 600px) {
+  .nav > .profile-menu {
+    flex: 1 1 0;
+    min-width: 0;
+    align-self: stretch;
+  }
+
+  .nav .profile-menu-trigger {
+    display: flex;
+    width: 100%;
+    min-width: 0;
+    min-height: 52px;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+
+    padding: 5px 1px;
+    border: 1px solid transparent;
+    border-radius: 9px;
+    background: transparent;
+    color: inherit;
+    box-sizing: border-box;
+  }
+
+  .nav .profile-menu-trigger .mobile-nav-icon {
+    display: block;
+    font-size: 17px;
+    line-height: 1.1;
+  }
+
+  .nav .profile-menu-trigger .mobile-nav-label {
+    display: block;
+    max-width: 100%;
+    font-size: 9px;
+    line-height: 1.2;
+    text-align: center;
+    overflow-wrap: anywhere;
+  }
+
+  .nav .profile-menu-trigger:focus-visible {
+    outline: 2px solid var(--accent-color, #60a5fa);
+    outline-offset: -2px;
+  }
+}
+
+@media (max-width: 340px) {
+  .nav .profile-menu-trigger .mobile-nav-icon {
+    font-size: 15px;
+  }
+
+  .nav .profile-menu-trigger .mobile-nav-label {
+    font-size: 8px;
+  }
+}

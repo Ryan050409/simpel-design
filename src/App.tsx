@@ -1,3 +1,4 @@
+
 import { useEffect, useRef, useState } from "react";
 import {
   BrowserRouter,
@@ -5,6 +6,7 @@ import {
   Route,
   NavLink,
   Navigate,
+  useLocation,
 } from "react-router-dom";
 
 import "./App.css";
@@ -13,7 +15,6 @@ import Dashboard from "./Dashboard.tsx";
 import MatchesPage from "./MatchesPage.tsx";
 import HomePage from "./HomePage";
 import HelpPage from "./HelpPage";
-
 import AdminPage from "./AdminPage";
 import { DEMO_USER } from "./demoUser";
 
@@ -21,8 +22,8 @@ import type { Player, Match, Team } from "./types.ts";
 
 /*
   TIJDELIJKE SEEDDATA
-  Deze data wordt één keer gebruikt om localStorage te vullen.
-  Nadat alles goed werkt, kunnen we deze data weer uit App.tsx halen.
+  Deze data wordt gebruikt wanneer er nog geen gegevens
+  in localStorage zijn opgeslagen.
 */
 
 const seedTeams: Team[] = [
@@ -173,12 +174,19 @@ function createSeedPlayers(): Player[] {
 const seedPlayers = createSeedPlayers();
 const seedMatches: Match[] = [];
 
-function App() {
+/*
+  Interne component om te controleren of een gebruiker
+  nog toegang heeft tot de huidige route.
+*/
+function AppContent() {
+  const location = useLocation();
+
   const [team, setTeam] = useState(() => {
     return localStorage.getItem("favoriteTeam") || "Feyenoord";
   });
 
   const [showProfileMenu, setShowProfileMenu] = useState(false);
+
   const [isLoggedIn, setIsLoggedIn] = useState(() => {
     return localStorage.getItem("demoLoggedIn") === "true";
   });
@@ -280,183 +288,233 @@ function App() {
     };
   }, [showProfileMenu]);
 
+  /*
+    Als de gebruiker uitlogt terwijl de adminpagina openstaat,
+    sturen we hem terug naar Home.
+  */
+  useEffect(() => {
+    if (
+      location.pathname === "/admin" &&
+      (!isLoggedIn || DEMO_USER.role !== "admin")
+    ) {
+      window.history.replaceState(null, "", "/");
+      window.dispatchEvent(new PopStateEvent("popstate"));
+    }
+  }, [isLoggedIn, location.pathname]);
+
+  const isAdmin = isLoggedIn && DEMO_USER.role === "admin";
+
   return (
-    <BrowserRouter>
-      <div className={`app ${theme}`}>
-        <nav className="nav">
-          <NavLink to="/">🏠 Home</NavLink>
+    <div className={`app ${theme}`}>
+      <nav className="nav" aria-label="Hoofdnavigatie">
+        <NavLink to="/" aria-label="Home">
+          <span className="mobile-nav-icon" aria-hidden="true">
+            🏠
+          </span>
+          <span className="mobile-nav-label">Home</span>
+        </NavLink>
 
-          <NavLink to="/dashboard">📊 Statistieken</NavLink>
+        <NavLink to="/dashboard" aria-label="Statistieken">
+          <span className="mobile-nav-icon" aria-hidden="true">
+            📊
+          </span>
+          <span className="mobile-nav-label">Stats</span>
+        </NavLink>
 
-          <NavLink to="/wedstrijden">⚽ Wedstrijden</NavLink>
+        <NavLink to="/wedstrijden" aria-label="Wedstrijden">
+          <span className="mobile-nav-icon" aria-hidden="true">
+            ⚽
+          </span>
+          <span className="mobile-nav-label">Wedstrijden</span>
+        </NavLink>
 
-          <NavLink to="/spelers">👥 Spelers</NavLink>
+        <NavLink to="/spelers" aria-label="Spelers">
+          <span className="mobile-nav-icon" aria-hidden="true">
+            👥
+          </span>
+          <span className="mobile-nav-label">Spelers</span>
+        </NavLink>
 
-          {isLoggedIn && DEMO_USER.role === "admin" && (
-            <NavLink to="/admin">admin</NavLink>
-          )}
+        {isAdmin && (
+          <NavLink to="/admin" aria-label="Admin">
+            <span className="mobile-nav-icon" aria-hidden="true">
+              🛡️
+            </span>
+            <span className="mobile-nav-label">Admin</span>
+          </NavLink>
+        )}
 
-          <div className="profile-menu" ref={profileMenuRef}>
-            <button
-              type="button"
-              className="profile-menu-trigger"
-              aria-label="Profiel en instellingen"
-              aria-expanded={showProfileMenu}
-              aria-haspopup="true"
-              onClick={() => setShowProfileMenu((open) => !open)}
-            >
+        <div className="profile-menu" ref={profileMenuRef}>
+          <button
+            type="button"
+            className="profile-menu-trigger"
+            aria-label="Profiel en instellingen"
+            aria-expanded={showProfileMenu}
+            aria-haspopup="true"
+            onClick={() => setShowProfileMenu((open) => !open)}
+          >
+            <span className="mobile-nav-icon" aria-hidden="true">
               ⚙️
-            </button>
+            </span>
+            <span className="mobile-nav-label">Instellingen</span>
+          </button>
 
-            {showProfileMenu && (
-              <div className="profile-menu-dropdown">
-                <h3>Profiel en instellingen</h3>
+          {showProfileMenu && (
+            <div className="profile-menu-dropdown">
+              <h3>Profiel en instellingen</h3>
 
-                <div className="profile-menu-section">
-                  <strong>Profiel</strong>
+              <div className="profile-menu-section">
+                <strong>Profiel</strong>
 
-                  {isLoggedIn ? (
-                    <>
-                      <span>{DEMO_USER.displayName}</span>
-                      <small>Rol: {DEMO_USER.role}</small>
+                {isLoggedIn ? (
+                  <>
+                    <span>{DEMO_USER.displayName}</span>
+                    <small>Rol: {DEMO_USER.role}</small>
 
-                      <button
-                        type="button"
-                        onClick={() => {
-                          setIsLoggedIn(false);
-                          setShowProfileMenu(false);
-                        }}
-                      >
-                        Uitloggen
-                      </button>
-                    </>
-                  ) : (
-                    <>
-                      <span>Je bent niet ingelogd.</span>
-
-                      <button
-                        type="button"
-                        onClick={() => {
-                          setIsLoggedIn(true);
-                          setShowProfileMenu(false);
-                        }}
-                      >
-                        Inloggen als demo-admin
-                      </button>
-                    </>
-                  )}
-                </div>
-
-                <div className="profile-menu-section">
-                  <label htmlFor="profile-theme">Thema</label>
-
-                  <select
-                    id="profile-theme"
-                    value={theme}
-                    onChange={(event) =>
-                      setTheme(event.target.value as "dark" | "light")
-                    }
-                  >
-                    <option value="dark">Donker</option>
-                    <option value="light">Licht</option>
-                  </select>
-                </div>
-
-                <div className="profile-menu-section">
-                  <strong>Favoriete club</strong>
-
-                  {teams.map((club) => (
                     <button
                       type="button"
-                      key={club.id}
-                      className="profile-team-option"
-                      aria-pressed={team === club.name}
                       onClick={() => {
-                        setTeam(club.name);
+                        setIsLoggedIn(false);
                         setShowProfileMenu(false);
                       }}
                     >
-                      {club.name}
-                      {team === club.name ? " ★" : ""}
+                      Uitloggen
                     </button>
-                  ))}
-                </div>
-                <NavLink to="/help" onClick={() => setShowProfileMenu(false)}>
-                  ❓ Hulp & veelgestelde vragen
-                </NavLink>
-                {isLoggedIn && DEMO_USER.role === "admin" && (
-                  <NavLink
-                    to="/admin"
-                    onClick={() => setShowProfileMenu(false)}
-                  >
-                    Adminpagina
-                  </NavLink>
+                  </>
+                ) : (
+                  <>
+                    <span>Je bent niet ingelogd.</span>
+
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setIsLoggedIn(true);
+                        setShowProfileMenu(false);
+                      }}
+                    >
+                      Inloggen als demo-admin
+                    </button>
+                  </>
                 )}
               </div>
-            )}
-          </div>
-        </nav>
 
-        <Routes>
-          <Route
-            path="/"
-            element={
-              <HomePage matches={matches} playerList={playerList} team={team} />
-            }
-          />
+              <div className="profile-menu-section">
+                <label htmlFor="profile-theme">Thema</label>
 
-          <Route
-            path="/dashboard"
-            element={
-              <Dashboard
-                matches={matches}
+                <select
+                  id="profile-theme"
+                  value={theme}
+                  onChange={(event) =>
+                    setTheme(event.target.value as "dark" | "light")
+                  }
+                >
+                  <option value="dark">Donker</option>
+                  <option value="light">Licht</option>
+                </select>
+              </div>
+
+              <div className="profile-menu-section">
+                <strong>Favoriete club</strong>
+
+                {teams.map((club) => (
+                  <button
+                    type="button"
+                    key={club.id}
+                    className="profile-team-option"
+                    aria-pressed={team === club.name}
+                    onClick={() => {
+                      setTeam(club.name);
+                      setShowProfileMenu(false);
+                    }}
+                  >
+                    {club.name}
+                    {team === club.name ? " ★" : ""}
+                  </button>
+                ))}
+              </div>
+
+              <NavLink to="/help" onClick={() => setShowProfileMenu(false)}>
+                ❓ Hulp & veelgestelde vragen
+              </NavLink>
+
+              {isAdmin && (
+                <NavLink
+                  to="/admin"
+                  onClick={() => setShowProfileMenu(false)}
+                >
+                  Adminpagina
+                </NavLink>
+              )}
+            </div>
+          )}
+        </div>
+      </nav>
+
+      <Routes>
+        <Route
+          path="/"
+          element={
+            <HomePage matches={matches} playerList={playerList} team={team} />
+          }
+        />
+
+        <Route
+          path="/dashboard"
+          element={
+            <Dashboard
+              matches={matches}
+              playerList={playerList}
+              team={team}
+            />
+          }
+        />
+
+        <Route
+          path="/wedstrijden"
+          element={<MatchesPage matches={matches} team={team} />}
+        />
+
+        <Route
+          path="/spelers"
+          element={<PlayersPage playerList={playerList} teams={teams} />}
+        />
+
+        <Route
+          path="/admin"
+          element={
+            isAdmin ? (
+              <AdminPage
+                role={DEMO_USER.role}
+                playersCount={playerList.length}
+                matchesCount={matches.length}
+                teamsCount={teams.length}
                 playerList={playerList}
+                setPlayerList={setPlayerList}
+                matches={matches}
+                setMatches={setMatches}
                 team={team}
+                teams={teams}
+                setTeams={setTeams}
               />
-            }
-          />
+            ) : (
+              <Navigate to="/" replace />
+            )
+          }
+        />
 
-          <Route
-            path="/wedstrijden"
-            element={<MatchesPage matches={matches} team={team} />}
-          />
+        <Route
+          path="/help"
+          element={<HelpPage isAdmin={isAdmin} />}
+        />
+      </Routes>
+    </div>
+  );
+}
 
-          <Route
-            path="/spelers"
-            element={<PlayersPage playerList={playerList} teams={teams} />}
-          />
-
-          <Route
-            path="/admin"
-            element={
-              isLoggedIn && DEMO_USER.role === "admin" ? (
-                <AdminPage
-                  role={DEMO_USER.role}
-                  playersCount={playerList.length}
-                  matchesCount={matches.length}
-                  teamsCount={teams.length}
-                  playerList={playerList}
-                  setPlayerList={setPlayerList}
-                  matches={matches}
-                  setMatches={setMatches}
-                  team={team}
-                  teams={teams}
-                  setTeams={setTeams}
-                />
-              ) : (
-                <Navigate to="/" replace />
-              )
-            }
-          />
-
-          <Route
-            path="/help"
-            element={
-              <HelpPage isAdmin={isLoggedIn && DEMO_USER.role === "admin"} />
-            }
-          />
-        </Routes>
-      </div>
+function App() {
+  return (
+    <BrowserRouter>
+      <AppContent />
     </BrowserRouter>
   );
 }
