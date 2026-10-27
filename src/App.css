@@ -4654,3 +4654,661 @@ textarea::placeholder {
     font-size: 0.875rem;
   }
 }
+
+/* ===== Mobiele navigatiebalk onderaan ===== */
+
+@media (max-width: 600px) {
+  .nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    justify-content: space-around;
+    gap: 2px;
+
+    width: 100%;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 8px 4px max(8px, env(safe-area-inset-bottom));
+
+    background: var(--card-background, #1e293b);
+    border-top: 1px solid var(--border-color, #334155);
+    border-radius: 16px 16px 0 0;
+    box-shadow: 0 -4px 18px rgb(0 0 0 / 12%);
+  }
+
+  /* Navigatielinks naast elkaar */
+  .nav > a {
+    display: flex;
+    flex: 1 1 0;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    min-width: 0;
+    min-height: 54px;
+    padding: 6px 2px;
+    border-radius: 10px;
+
+    font-size: 11px;
+    line-height: 1.3;
+    text-align: center;
+    text-decoration: none;
+    overflow-wrap: anywhere;
+  }
+
+  /* Instellingen krijgt dezelfde ruimte als een navigatie-item */
+  .nav > .profile-menu {
+    display: flex;
+    flex: 1 1 0;
+    align-items: stretch;
+    justify-content: center;
+    min-width: 0;
+  }
+
+  .nav .profile-menu-trigger {
+    width: 100%;
+    min-height: 54px;
+    padding: 6px 2px;
+    border-radius: 10px;
+  }
+
+  /* De losse adminlink blijft beschikbaar via het instellingenmenu */
+
+  /* Open het instellingenmenu boven de balk */
+  .nav .profile-menu-dropdown {
+    position: fixed;
+    top: auto;
+    bottom: calc(78px + env(safe-area-inset-bottom));
+    left: 12px;
+    right: 12px;
+
+    width: auto;
+    max-width: none;
+    max-height: 65vh;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    box-sizing: border-box;
+    z-index: 1001;
+  }
+
+  /* Voorkom dat de navigatie inhoud bedekt */
+  body {
+    padding-bottom: calc(82px + env(safe-area-inset-bottom));
+  }
+  
+@media (max-width: 600px) {
+  .nav {
+    justify-content: space-between;
+    gap: 2px;
+  }
+
+  .nav > a,
+  .nav > .profile-menu {
+    flex: 1 1 0;
+    min-width: 0;
+  }
+
+  .nav > a[href="/admin"] {
+    display: flex;
+  }
+
+  .nav > a[href="/admin"] {
+    font-size: 10px;
+    overflow-wrap: anywhere;
+  }
+}
+
+}
+
+/* Mobiel: teambeheer overzichtelijker maken */
+@media (max-width: 600px) {
+  .admin-team-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 10px;
+  }
+
+  .admin-team-card {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 12px;
+    border-radius: 14px;
+  }
+
+  .admin-team-select {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    min-width: 0;
+    min-height: 56px;
+    padding: 4px;
+    text-align: left;
+  }
+
+  .admin-team-card-content {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .admin-team-card-content strong {
+    display: block;
+    font-size: 15px;
+    line-height: 1.4;
+    overflow-wrap: anywhere;
+  }
+
+  .admin-team-card-content > span {
+    display: block;
+    margin-top: 4px;
+    font-size: 12px;
+    line-height: 1.5;
+  }
+
+  .admin-team-arrow {
+    flex-shrink: 0;
+    font-size: 20px;
+  }
+
+  .admin-team-delete {
+    align-self: flex-start;
+    min-height: 40px;
+    padding: 9px 14px;
+    border-radius: 9px;
+    font-size: 13px;
+  }
+}
+
+/* =========================================
+   MOBIEL — ADMINPAGINA
+========================================= */
+
+@media (max-width: 600px) {
+  .admin-page {
+    padding: 12px 10px 28px;
+  }
+
+  /* Compactere header */
+  .admin-page-header {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 16px;
+    text-align: center;
+  }
+
+  .admin-header-content {
+    width: 100%;
+  }
+
+  .admin-header-title {
+    justify-content: center;
+    gap: 10px;
+  }
+
+  .admin-header-icon {
+    width: 40px;
+    height: 40px;
+    flex-shrink: 0;
+  }
+
+  .admin-page-header h1 {
+    margin: 0;
+    font-size: 1.5rem;
+    line-height: 1.2;
+  }
+
+  .admin-eyebrow {
+    margin-bottom: 3px;
+    font-size: 0.62rem;
+    letter-spacing: 1px;
+  }
+
+  .admin-header-description {
+    max-width: 320px;
+    margin: 8px auto 0;
+    font-size: 0.82rem;
+    line-height: 1.45;
+  }
+
+  .admin-role-badge {
+    align-self: center;
+    padding: 5px 10px;
+    font-size: 0.72rem;
+  }
+
+  /* Statistieken: drie compacte kaarten naast elkaar */
+  .admin-stats-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 7px;
+  }
+
+  .admin-stat-card {
+    display: flex;
+    min-width: 0;
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 7px;
+    padding: 10px 8px;
+    border-radius: 12px;
+  }
+
+  .admin-stat-icon {
+    display: grid;
+    width: 30px;
+    height: 30px;
+    place-items: center;
+    font-size: 0.9rem;
+  }
+
+  .admin-stat-content {
+    min-width: 0;
+    width: 100%;
+  }
+
+  .admin-stat-label {
+    display: block;
+    font-size: 0.72rem;
+    line-height: 1.3;
+    overflow-wrap: anywhere;
+  }
+
+  .admin-stat-card strong {
+    display: block;
+    margin: 3px 0;
+    font-size: 1.25rem;
+    line-height: 1.2;
+  }
+
+  .admin-stat-description {
+    display: block;
+    font-size: 0.65rem;
+    line-height: 1.35;
+    overflow-wrap: anywhere;
+  }
+
+  /* Minder ruimte tussen de bovenste onderdelen */
+  .admin-overview h2 {
+    margin: 0 0 10px;
+    font-size: 1.15rem;
+  }
+
+  .admin-export-panel {
+    margin-top: 14px;
+  }
+
+  .admin-panel {
+    margin-bottom: 14px;
+    padding: 14px 12px;
+    border-radius: 12px;
+  }
+
+  .admin-panel-heading {
+    align-items: stretch;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 14px;
+  }
+
+  .admin-panel-heading h2 {
+    font-size: 1.05rem;
+  }
+
+  .admin-primary-button {
+    width: 100%;
+    min-height: 42px;
+  }
+
+  /* Zoekvelden */
+  .admin-team-toolbar,
+  .admin-player-toolbar {
+    align-items: stretch;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .admin-team-toolbar label,
+  .admin-player-toolbar label {
+    width: 100%;
+  }
+
+  .admin-player-count {
+    padding-bottom: 0;
+  }
+
+  /* Teamlijst */
+  .admin-team-grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 10px;
+  }
+
+  .admin-team-select {
+    padding: 13px;
+  }
+
+  .admin-team-delete {
+    margin-left: 13px;
+  }
+
+  .admin-team-form {
+    padding: 12px;
+  }
+
+  .admin-team-form-fields {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .admin-team-form-fields .admin-primary-button {
+    width: 100%;
+  }
+
+  /* Spelers en wedstrijden */
+  .admin-selected-team-heading {
+    padding-bottom: 15px;
+  }
+
+  .admin-player-row {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 12px;
+    padding: 14px 0;
+  }
+
+  .admin-player-actions {
+    width: 100%;
+  }
+
+  .admin-player-actions button {
+    flex: 1;
+  }
+
+  /* Rechten */
+  .admin-permissions-list {
+    grid-template-columns: 1fr;
+  }
+
+  .admin-permissions-list li {
+    min-height: 48px;
+    padding: 11px 12px;
+    font-size: 0.875rem;
+  }
+}
+
+/* Mobiele wedstrijdkaarten: rustigere en consistentere indeling */
+@media (max-width: 480px) {
+  .matches-page {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+
+  /* Filters netjes uitlijnen */
+  .matches-page-actions {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+  }
+
+  .matches-page-actions .match-filter {
+    min-width: 0;
+  }
+
+  .matches-page-actions .match-filter label {
+    display: block;
+    margin-bottom: 5px;
+    font-size: 11px;
+    line-height: 1.4;
+  }
+
+  .matches-page-actions .match-filter select {
+    min-height: 44px;
+    padding: 8px 10px;
+    border-radius: 10px;
+    font-size: 12px;
+  }
+
+  /* Wedstrijdkaarten */
+  .matches-table tbody {
+    gap: 10px;
+  }
+
+  .matches-table tbody tr {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) auto;
+    gap: 8px;
+    padding: 12px;
+    border-radius: 14px;
+  }
+
+  /* Datum */
+  .matches-table tbody td:first-child {
+    padding: 0 0 10px;
+    border-bottom: 1px solid var(--border-color);
+    font-size: 11px;
+  }
+
+  /* Teamnamen */
+  .matches-table tbody td:nth-child(2),
+  .matches-table tbody td:nth-child(3) {
+    min-width: 0;
+    padding: 8px 2px;
+    font-size: 12px;
+    line-height: 1.45;
+    overflow-wrap: anywhere;
+  }
+
+  /* Thuis- en uitlabels */
+  .matches-table tbody td:nth-child(2)::before,
+  .matches-table tbody td:nth-child(3)::before {
+    margin-bottom: 7px;
+    color: var(--muted-text-color);
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+  }
+
+  /* Score duidelijk herkenbaar houden */
+  .matches-table .match-score {
+    display: inline-block;
+    padding: 8px 9px;
+    border: 1px solid var(--border-color);
+    border-radius: 9px;
+    font-size: 16px;
+    font-weight: 800;
+    white-space: nowrap;
+  }
+
+  /* Resultaat als aparte, goed leesbare status */
+  .matches-table tbody td:nth-child(5) {
+    padding-top: 10px;
+  }
+
+  .matches-table .result-win,
+  .matches-table .result-draw,
+  .matches-table .result-loss {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 36px;
+    padding: 7px 14px;
+    border-radius: 9px;
+    font-size: 12px;
+    font-weight: 700;
+  }
+}
+
+@media (max-width: 360px) {
+  .matches-page-actions {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* =========================================================
+   Mobiele afwerking per pagina
+   ========================================================= */
+
+@media (max-width: 768px) {
+  body {
+    padding: 16px 14px calc(88px + env(safe-area-inset-bottom));
+  }
+
+  #root,
+  .app {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .matches-page,
+  .players-page,
+  .help-page,
+  .admin-page,
+  .dashboard,
+  .home-page {
+    min-width: 0;
+  }
+}
+
+@media (max-width: 600px) {
+  body {
+    padding: 12px 10px calc(88px + env(safe-area-inset-bottom));
+  }
+
+  /* Navigatie */
+  .nav {
+    max-width: none;
+  }
+
+  .nav > a {
+    overflow-wrap: anywhere;
+  }
+
+  /* Home */
+  .home-page {
+    padding-right: 0;
+    padding-left: 0;
+  }
+
+  .home-page-header,
+  .home-page-panel,
+  .home-page-player-summary {
+    min-width: 0;
+  }
+
+  .home-page-match {
+    gap: 8px;
+  }
+
+  .home-page-result-text {
+    overflow-wrap: anywhere;
+  }
+
+  /* Dashboard */
+  .dashboard-section-heading {
+    min-width: 0;
+  }
+
+  .dashboard-section-heading > div {
+    min-width: 0;
+  }
+
+  .dashboard-section-count {
+    max-width: 42%;
+    text-align: center;
+    white-space: normal;
+  }
+
+  /* Spelers */
+  .player-search label {
+    display: block;
+    margin-bottom: 6px;
+  }
+
+  .player-card-header > div:first-child {
+    min-width: 0;
+  }
+
+  /* Wedstrijden */
+  .matches-page-header > div:first-child {
+    min-width: 0;
+  }
+
+  .matches-table tbody tr {
+    min-width: 0;
+  }
+
+  .matches-table tbody td:nth-child(2),
+  .matches-table tbody td:nth-child(3) {
+    overflow-wrap: anywhere;
+  }
+
+  /* Hulp */
+  .help-page {
+    padding-right: 2px;
+    padding-left: 2px;
+  }
+
+  .faq-question {
+    min-width: 0;
+  }
+
+  .faq-question > span:first-child {
+    min-width: 0;
+    overflow-wrap: anywhere;
+  }
+
+  /* Beheer */
+  .admin-page-header,
+  .admin-panel-heading,
+  .admin-team-toolbar,
+  .admin-player-toolbar {
+    min-width: 0;
+  }
+
+  .admin-team-dropdown {
+    width: 100%;
+  }
+
+  /* Formulieren en details */
+  .modal-overlay {
+    padding: 12px;
+  }
+
+  .modal {
+    width: 100%;
+    max-width: 100%;
+    padding: 44px 16px 18px;
+  }
+
+  .modal .form-grid,
+  .modal .player-details-stats {
+    min-width: 0;
+  }
+}
+
+@media (max-width: 380px) {
+  .admin-stats-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .admin-stat-card {
+    align-items: center;
+    flex-direction: row;
+  }
+
+  .home-page-player-summary-stats {
+    flex-wrap: wrap;
+    gap: 16px 24px;
+  }
+
+  .player-details-name-row {
+    flex-wrap: wrap;
+  }
+}
