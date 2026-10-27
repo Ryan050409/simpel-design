@@ -382,7 +382,7 @@ function App() {
                   ))}
                 </div>
                 <NavLink to="/help" onClick={() => setShowProfileMenu(false)}>
-                ❓ Hulp & veelgestelde vragen
+                  ❓ Hulp & veelgestelde vragen
                 </NavLink>
                 {isLoggedIn && DEMO_USER.role === "admin" && (
                   <NavLink
@@ -448,7 +448,13 @@ function App() {
               )
             }
           />
-          <Route path="/help" element={<HelpPage />} />
+
+          <Route
+            path="/help"
+            element={
+              <HelpPage isAdmin={isLoggedIn && DEMO_USER.role === "admin"} />
+            }
+          />
         </Routes>
       </div>
     </BrowserRouter>

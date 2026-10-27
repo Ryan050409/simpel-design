@@ -1964,13 +1964,14 @@ textarea::placeholder {
   font-size: 24px;
 }
 
-.faq-list {
-  overflow: hidden;
 
-  background: var(--card-background);
-  border: 1px solid var(--border-color);
-  border-radius: 16px;
+.faq-list {
+  overflow: visible;
+  background: transparent;
+  border: 0;
+  box-shadow: none;
 }
+
 
 .faq-item {
   border-bottom: 1px solid var(--border-color);

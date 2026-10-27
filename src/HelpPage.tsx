@@ -1,7 +1,18 @@
+
 import { useState } from "react";
 
+type FAQ = {
+  question: string;
+  answer: string;
+  adminOnly?: boolean;
+};
 
-const faqCategories = [
+type FAQCategory = {
+  title: string;
+  questions: FAQ[];
+};
+
+const faqCategories: FAQCategory[] = [
   {
     title: "Teams en spelers",
     questions: [
@@ -9,31 +20,37 @@ const faqCategories = [
         question: "Hoe voeg ik een speler toe?",
         answer:
           "Ga naar de Adminpagina, kies een team en open Spelers beheren. Daar kun je een speler toevoegen.",
+        adminOnly: true,
       },
       {
         question: "Hoe pas ik een speler aan?",
         answer:
           "Ga naar Spelers beheren op de Adminpagina en kies de speler die je wilt aanpassen.",
+        adminOnly: true,
       },
       {
         question: "Hoe verwijder ik een speler?",
         answer:
           "Open Spelers beheren op de Adminpagina en gebruik de verwijderoptie bij de juiste speler. Controleer altijd of je de juiste speler hebt geselecteerd.",
+        adminOnly: true,
       },
       {
         question: "Hoe voeg ik een team toe?",
         answer:
           "Ga naar de Adminpagina en open Teams beheren. Daar kun je een team toevoegen.",
+        adminOnly: true,
       },
       {
         question: "Kan ik een team verwijderen?",
         answer:
           "Ga naar Teams beheren op de Adminpagina en gebruik de verwijderoptie bij het juiste team. Controleer eerst of je het juiste team hebt geselecteerd.",
+        adminOnly: true,
       },
       {
         question: "Kan ik zelf een teamnaam typen?",
         answer:
           "Je kunt teams beheren via Teams beheren op de Adminpagina. Bij het toevoegen van spelers en wedstrijden kun je een beschikbaar team selecteren.",
+        adminOnly: true,
       },
     ],
   },
@@ -44,16 +61,19 @@ const faqCategories = [
         question: "Hoe voeg ik een wedstrijd toe?",
         answer:
           "Ga naar de Adminpagina en open Wedstrijden beheren. Gebruik daar de beschikbare opties om een wedstrijd toe te voegen.",
+        adminOnly: true,
       },
       {
         question: "Hoe pas ik een wedstrijd aan?",
         answer:
           "Open Wedstrijden beheren op de Adminpagina en kies de wedstrijd die je wilt aanpassen.",
+        adminOnly: true,
       },
       {
         question: "Kan ik een wedstrijd verwijderen?",
         answer:
           "Ja. Ga naar Wedstrijden beheren op de Adminpagina en gebruik de verwijderoptie bij de juiste wedstrijd.",
+        adminOnly: true,
       },
       {
         question: "Wat betekent de uitslag van een wedstrijd?",
@@ -104,11 +124,13 @@ const faqCategories = [
         question: "Wat kan ik op de Adminpagina doen?",
         answer:
           "De Adminpagina bevat beheerfuncties voor de onderdelen die jouw gebruikersrechten toestaan, zoals het beheren van teams, spelers en wedstrijden.",
+        adminOnly: true,
       },
       {
         question: "Waarom kan ik de Adminpagina niet openen?",
         answer:
           "De Adminpagina is bedoeld voor gebruikers met de juiste rechten. Controleer of je met de juiste demo-gebruiker bent ingelogd.",
+        adminOnly: true,
       },
       {
         question: "Hoe log ik uit?",
@@ -119,6 +141,7 @@ const faqCategories = [
         question: "Waarom zie ik bepaalde beheeropties niet?",
         answer:
           "Welke opties zichtbaar zijn, kan afhangen van de rechten die aan de gebruiker zijn toegekend.",
+        adminOnly: true,
       },
       {
         question: "Is de demo-login een beveiligd accountsysteem?",
@@ -139,6 +162,7 @@ const faqCategories = [
         question: "Hoe download ik een back-up?",
         answer:
           "Open de Adminpagina en zoek de sectie Gegevens exporteren. Gebruik Back-up downloaden om het JSON-bestand op te slaan, als deze optie beschikbaar is.",
+        adminOnly: true,
       },
       {
         question: "Waarom zijn mijn gegevens verdwenen?",
@@ -184,18 +208,27 @@ const faqCategories = [
   },
 ];
 
+type HelpPageProps = {
+  isAdmin: boolean;
+};
 
-function HelpPage() {
+function HelpPage({ isAdmin }: HelpPageProps) {
   const [openCategory, setOpenCategory] = useState<string | null>(null);
   const [openQuestion, setOpenQuestion] = useState<string | null>(null);
   const [searchTerm, setSearchTerm] = useState("");
+
+  const search = searchTerm.toLowerCase().trim();
 
   const filteredCategories = faqCategories
     .map((category) => ({
       ...category,
       questions: category.questions.filter((faq) => {
-        const search = searchTerm.toLowerCase().trim();
+        // Verberg adminvragen voor gebruikers zonder adminrechten.
+        if (faq.adminOnly && !isAdmin) {
+          return false;
+        }
 
+        // Zoek alleen binnen vragen die de gebruiker mag zien.
         return (
           faq.question.toLowerCase().includes(search) ||
           faq.answer.toLowerCase().includes(search)
@@ -207,7 +240,7 @@ function HelpPage() {
   return (
     <main className="help-page">
       <header className="help-page-header">
-        <h1>❓ Hulp & veelgestelde vragen</h1>
+        <h1>❓ Hulp &amp; veelgestelde vragen</h1>
         <p>
           Antwoorden op veelgestelde vragen over het gebruik van de
           Voetbaltracker.
@@ -216,6 +249,7 @@ function HelpPage() {
 
       <section className="faq-section" aria-labelledby="faq-title">
         <h2 id="faq-title">Veelgestelde vragen</h2>
+
         <label htmlFor="faq-search">Zoek een vraag</label>
         <input
           id="faq-search"
@@ -246,14 +280,18 @@ function HelpPage() {
                   className="faq-question"
                   onClick={() => {
                     setOpenCategory(
-                      openCategory === category.title ? null : category.title,
+                      openCategory === category.title
+                        ? null
+                        : category.title,
                     );
                     setOpenQuestion(null);
                   }}
                   aria-expanded={isCategoryOpen}
                 >
                   <span>{category.title}</span>
-                  <span aria-hidden="true">{isCategoryOpen ? "−" : "+"}</span>
+                  <span aria-hidden="true">
+                    {isCategoryOpen ? "−" : "+"}
+                  </span>
                 </button>
 
                 {isCategoryOpen && (
