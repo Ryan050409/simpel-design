@@ -2018,6 +2018,128 @@ textarea::placeholder {
   line-height: 1.6;
 }
 
+
+/* HelpPage: overzichtelijke categorieën */
+.faq-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+  max-width: 900px;
+  margin: 20px auto 0;
+}
+
+.faq-list > .faq-item {
+  overflow: hidden;
+  margin: 0;
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  background: var(--card-background);
+  box-shadow: var(--shadow-modal);
+}
+
+/* Hoofdcategorieën */
+.faq-list > .faq-item > .faq-question {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  width: 100%;
+  min-height: 58px;
+  padding: 16px 20px;
+  border: 0;
+  border-radius: 0;
+  background: var(--secondary-background);
+  color: var(--text-color);
+  font-size: 16px;
+  font-weight: 700;
+  text-align: left;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.faq-list > .faq-item > .faq-question:hover {
+  background: var(--card-background);
+}
+
+/* Inhoud binnen een categorie */
+.faq-category-content {
+  padding: 8px 16px 12px;
+  background: var(--card-background);
+}
+
+/* Individuele vragen */
+.faq-category-content .faq-item {
+  margin: 0;
+  border: 0;
+  border-bottom: 1px solid var(--border-color);
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+.faq-category-content .faq-item:last-child {
+  border-bottom: 0;
+}
+
+.faq-category-content .faq-question {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  width: 100%;
+  min-height: 48px;
+  padding: 13px 8px;
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--text-color);
+  font-size: 14px;
+  font-weight: 500;
+  text-align: left;
+  cursor: pointer;
+}
+
+.faq-category-content .faq-question:hover {
+  background: var(--secondary-background);
+}
+
+/* Antwoorden */
+.faq-category-content .faq-answer {
+  padding: 4px 8px 16px;
+  color: var(--text-color);
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+/* Duidelijke toetsenbordfocus */
+.faq-list button:focus-visible {
+  outline: 2px solid var(--accent-color);
+  outline-offset: -3px;
+}
+
+/* Mobiele weergave */
+@media (max-width: 600px) {
+  .faq-list {
+    gap: 10px;
+    margin-top: 16px;
+  }
+
+  .faq-list > .faq-item > .faq-question {
+    min-height: 54px;
+    padding: 14px;
+    font-size: 15px;
+  }
+
+  .faq-category-content {
+    padding: 6px 10px;
+  }
+
+  .faq-category-content .faq-question {
+    padding: 12px 6px;
+  }
+}
+
 /* =========================================================
    Wedstrijden
    ========================================================= */
@@ -3044,8 +3166,16 @@ textarea::placeholder {
   border-radius: 8px;
 }
 
-.profile-menu-dropdown > a:hover {
+.profile-menu-dropdown > a.active,
+.profile-menu-dropdown > a[aria-current="page"] {
   background: var(--secondary-background);
+  color: var(--text-color);
+}
+
+.profile-menu-dropdown > a.active:hover,
+.profile-menu-dropdown > a[aria-current="page"]:hover {
+  background: var(--secondary-background);
+  color: var(--text-color);
 }
 
 @media (max-width: 768px) {
@@ -4003,42 +4133,52 @@ textarea::placeholder {
 }
 
 /* Fix: teamkaart niet volledig blauw maken bij hover */
-.admin-page .admin-team-card:hover,
-.admin-page .admin-team-card:hover .admin-team-select {
-  background-color: var(--card, #ffffff) !important;
-  color: var(--text, #0f172a) !important;
-}
 
-.admin-page .admin-team-card:hover .admin-team-card-content strong {
-  color: var(--text, #0f172a) !important;
-}
+/* =========================================
+   TEAMKAARTEN — HOVER EN LEESBAARHEID
+========================================= */
 
-.admin-page .admin-team-card:hover .admin-team-card-content > span {
-  color: var(--muted, #64748b) !important;
-}
-
-.admin-page .admin-team-card:hover .admin-team-arrow {
-  color: var(--accent, #2563eb) !important;
-}
-
+/* Lichte modus */
 .admin-page .admin-team-card:hover {
   border-color: var(--accent, #2563eb);
   box-shadow: 0 5px 16px rgb(37 99 235 / 10%);
 }
 
+.admin-page .admin-team-card:hover,
+.admin-page .admin-team-card:hover .admin-team-select {
+  background-color: var(--card, #ffffff);
+  color: var(--text, #0f172a);
+}
+
+.admin-page .admin-team-card:hover .admin-team-card-content strong {
+  color: var(--text, #0f172a);
+}
+
+.admin-page .admin-team-card:hover .admin-team-card-content > span {
+  color: var(--muted, #64748b);
+}
+
+.admin-page .admin-team-card:hover .admin-team-arrow {
+  color: var(--accent, #2563eb);
+}
+
 /* Donkere modus */
 .app:not(.light) .admin-page .admin-team-card:hover,
 .app:not(.light) .admin-page .admin-team-card:hover .admin-team-select {
-  background-color: var(--card, #1e293b) !important;
-  color: var(--text, #f8fafc) !important;
+  background-color: #263449;
+  color: #f8fafc;
 }
 
-.app:not(.light)
-  .admin-page
-  .admin-team-card:hover
-  .admin-team-card-content
-  strong {
-  color: var(--text, #f8fafc) !important;
+.app:not(.light) .admin-page .admin-team-card:hover .admin-team-card-content strong {
+  color: #f8fafc;
+}
+
+.app:not(.light) .admin-page .admin-team-card:hover .admin-team-card-content > span {
+  color: #cbd5e1;
+}
+
+.app:not(.light) .admin-page .admin-team-card:hover .admin-team-arrow {
+  color: #93c5fd;
 }
 
 /* =========================================
