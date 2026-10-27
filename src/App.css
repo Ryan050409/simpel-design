@@ -4721,18 +4721,30 @@ textarea::placeholder {
   /* De losse adminlink blijft beschikbaar via het instellingenmenu */
 
   /* Open het instellingenmenu boven de balk */
+
+  /* Instellingenmenu boven de mobiele navigatie */
   .nav .profile-menu-dropdown {
     position: fixed;
     top: auto;
-    bottom: calc(78px + env(safe-area-inset-bottom));
-    left: 12px;
-    right: 12px;
+    bottom: calc(82px + env(safe-area-inset-bottom));
+
+    left: max(12px, env(safe-area-inset-left));
+    right: max(12px, env(safe-area-inset-right));
 
     width: auto;
-    max-width: none;
-    max-height: 65vh;
+    max-width: 480px;
+    max-height: calc(
+      100dvh - 110px - env(safe-area-inset-bottom)
+    );
+
+    margin-left: auto;
+    margin-right: auto;
+    padding: 16px;
+
     overflow-y: auto;
     overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
+
     box-sizing: border-box;
     z-index: 1001;
   }
@@ -4758,10 +4770,22 @@ textarea::placeholder {
     display: flex;
   }
 
-  .nav > a[href="/admin"] {
-    font-size: 10px;
-    overflow-wrap: anywhere;
-  }
+  
+/* Navigatieteksten verbergen op kleine schermen */
+.nav > a {
+  font-size: 0;
+}
+
+.nav > a .mobile-nav-icon,
+.nav .profile-menu-trigger .mobile-nav-icon {
+  font-size: 20px;
+}
+
+.nav > a .mobile-nav-label,
+.nav .profile-menu-trigger .mobile-nav-label {
+  display: none;
+}
+
 }
 
 }
@@ -5346,12 +5370,7 @@ textarea::placeholder {
   }
 
   .nav .profile-menu-trigger .mobile-nav-label {
-    display: block;
-    max-width: 100%;
-    font-size: 9px;
-    line-height: 1.2;
-    text-align: center;
-    overflow-wrap: anywhere;
+    display: none;
   }
 
   .nav .profile-menu-trigger:focus-visible {
