@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 
 type FAQ = {
@@ -257,6 +256,7 @@ function HelpPage({ isAdmin }: HelpPageProps) {
           value={searchTerm}
           onChange={(event) => {
             setSearchTerm(event.target.value);
+            setOpenCategory(null);
             setOpenQuestion(null);
           }}
           placeholder="Bijv. speler, team of wedstrijd..."
@@ -273,6 +273,10 @@ function HelpPage({ isAdmin }: HelpPageProps) {
             const isCategoryOpen =
               searchTerm.trim() !== "" || openCategory === category.title;
 
+            const categoryId = `category-${category.title
+              .toLowerCase()
+              .replace(/[^a-z0-9]+/g, "-")}`;
+
             return (
               <div className="faq-item" key={category.title}>
                 <button
@@ -280,60 +284,57 @@ function HelpPage({ isAdmin }: HelpPageProps) {
                   className="faq-question"
                   onClick={() => {
                     setOpenCategory(
-                      openCategory === category.title
-                        ? null
-                        : category.title,
+                      openCategory === category.title ? null : category.title,
                     );
                     setOpenQuestion(null);
                   }}
                   aria-expanded={isCategoryOpen}
+                  aria-controls={categoryId}
                 >
                   <span>{category.title}</span>
-                  <span aria-hidden="true">
-                    {isCategoryOpen ? "−" : "+"}
-                  </span>
+                  <span aria-hidden="true">{isCategoryOpen ? "−" : "+"}</span>
                 </button>
 
-                {isCategoryOpen && (
-                  <div className="faq-category-content">
-                    {category.questions.map((faq) => {
-                      const questionId = `${category.title}-${faq.question}`;
-                      const isQuestionOpen = openQuestion === questionId;
-                      const answerId = `answer-${questionId
-                        .toLowerCase()
-                        .replace(/[^a-z0-9]+/g, "-")}`;
+                <div
+                  className="faq-category-content"
+                  id={categoryId}
+                  hidden={!isCategoryOpen}
+                >
+                  {category.questions.map((faq) => {
+                    const questionId = `${category.title}-${faq.question}`;
+                    const isQuestionOpen = openQuestion === questionId;
+                    const answerId = `answer-${questionId
+                      .toLowerCase()
+                      .replace(/[^a-z0-9]+/g, "-")}`;
 
-                      return (
-                        <div className="faq-item" key={faq.question}>
-                          <button
-                            type="button"
-                            className="faq-question"
-                            onClick={() =>
-                              setOpenQuestion(
-                                isQuestionOpen ? null : questionId,
-                              )
-                            }
-                            aria-expanded={isQuestionOpen}
-                            aria-controls={answerId}
-                          >
-                            <span>{faq.question}</span>
-                            <span aria-hidden="true">
-                              {isQuestionOpen ? "−" : "+"}
-                            </span>
-                          </button>
+                    return (
+                      <div className="faq-item" key={faq.question}>
+                        <button
+                          type="button"
+                          className="faq-question"
+                          onClick={() =>
+                            setOpenQuestion(isQuestionOpen ? null : questionId)
+                          }
+                          aria-expanded={isQuestionOpen}
+                          aria-controls={answerId}
+                        >
+                          <span>{faq.question}</span>
+                          <span aria-hidden="true">
+                            {isQuestionOpen ? "−" : "+"}
+                          </span>
+                        </button>
 
-                          <div
-                            className="faq-answer"
-                            id={answerId}
-                            hidden={!isQuestionOpen}
-                          >
-                            {faq.answer}
-                          </div>
+                        <div
+                          className="faq-answer"
+                          id={answerId}
+                          hidden={!isQuestionOpen}
+                        >
+                          {faq.answer}
                         </div>
-                      );
-                    })}
-                  </div>
-                )}
+                      </div>
+                    );
+                  })}
+                </div>
               </div>
             );
           })}

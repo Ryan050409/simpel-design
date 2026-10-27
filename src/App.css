@@ -197,14 +197,16 @@ button:active {
   transform: translateY(1px);
 }
 
+
 button:focus-visible,
 input:focus-visible,
 select:focus-visible,
 textarea:focus-visible,
 a:focus-visible {
-  outline: 3px solid var(--accent-soft);
-  outline-offset: 2px;
+  outline: 3px solid #60a5fa;
+  outline-offset: 3px;
 }
+
 
 input,
 select,
@@ -2103,20 +2105,27 @@ textarea::placeholder {
 
 .faq-category-content .faq-question:hover {
   background: var(--secondary-background);
+  font-weight: 700;
+  border-left: 3ox sikud var(--accent-color);
+  padding-left: 5px;
 }
 
 /* Antwoorden */
 .faq-category-content .faq-answer {
-  padding: 4px 8px 16px;
+  padding: 6px 12px 18px;
   color: var(--text-color);
-  font-size: 14px;
-  line-height: 1.7;
+  font-size: 15px;
+  line-height: 1.8;
+  overflow-wrap: anywhere;
 }
 
 /* Duidelijke toetsenbordfocus */
 .faq-list button:focus-visible {
-  outline: 2px solid var(--accent-color);
+  outline: 3px solid #60a5fa;
   outline-offset: -3px;
+  background: var(--secondary-background);
+  position: relative;
+  z-index: 1;
 }
 
 /* Mobiele weergave */
