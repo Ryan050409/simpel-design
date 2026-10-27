@@ -14,12 +14,26 @@ function HomePage({ matches, playerList, team }: HomePageProps) {
 
   const recentMatches = [...teamMatches]
     .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
-    .slice(0, 5);
+    .slice(0, 6);
 
+  const latestMatch = recentMatches[0];
+  const previousMatches = recentMatches.slice(1);
+  const latestMatchResult = latestMatch
+    ? latestMatch.homeGoals === latestMatch.awayGoals
+      ? "Gelijkspel"
+      : (
+            latestMatch.home === team
+              ? latestMatch.homeGoals > latestMatch.awayGoals
+              : latestMatch.awayGoals > latestMatch.homeGoals
+          )
+        ? "Gewonnen"
+        : "Verloren"
+    : null;
   const wins = teamMatches.filter((match) => {
     const teamGoals = match.home === team ? match.homeGoals : match.awayGoals;
     const opponentGoals =
       match.home === team ? match.awayGoals : match.homeGoals;
+
     return teamGoals > opponentGoals;
   }).length;
 
@@ -45,20 +59,64 @@ function HomePage({ matches, playerList, team }: HomePageProps) {
     <div className="home-page">
       <div className="home-page-header">
         <div>
-          <h1>🏠 Welkom bij Voetbaltracker</h1>
+          <h1>⚽ Welkom bij Voetbaltracker</h1>
           <p>Bekijk de prestaties en laatste wedstrijden van {team}.</p>
         </div>
+
         <div className="home-page-team-badge">
-          <span>⭐</span>
+          <span aria-hidden="true">⭐</span>
           <strong>{team}</strong>
         </div>
       </div>
+
+      {latestMatch && (
+        <section
+          className="home-page-featured-match"
+          aria-labelledby="home-featured-match-title"
+        >
+          <div className="home-page-featured-match-heading">
+            <span className="home-page-panel-label">⚽ LAATSTE UITSLAG</span>
+            <Link to="/wedstrijden">Alle wedstrijden →</Link>
+          </div>
+
+          <h2 id="home-featured-match-title">Laatste wedstrijd van {team}</h2>
+          {latestMatchResult && (
+            <span
+              className="home-page-match-status"
+              aria-label={`Resultaat voor ${team}: ${latestMatchResult}`}
+            >
+              {latestMatchResult}
+            </span>
+          )}
+
+          <div className="home-page-featured-match-score">
+            <strong>{latestMatch.home}</strong>
+
+            <div
+              className="home-page-featured-score"
+              aria-label={`Uitslag ${latestMatch.homeGoals} tegen ${latestMatch.awayGoals}`}
+            >
+              <span>{latestMatch.homeGoals}</span>
+              <span aria-hidden="true">–</span>
+              <span>{latestMatch.awayGoals}</span>
+            </div>
+
+            <strong>{latestMatch.away}</strong>
+          </div>
+
+          <p className="home-page-featured-match-date">
+            Gespeeld op {latestMatch.date}
+          </p>
+        </section>
+      )}
+
       <div className="home-page-section-title">
         <div>
           <h2>Jouw overzicht</h2>
           <p>Een korte samenvatting van je team.</p>
         </div>
       </div>
+
       <div className="home-page-stats">
         <div className="home-page-stat">
           <span>Wedstrijden</span>
@@ -84,6 +142,7 @@ function HomePage({ matches, playerList, team }: HomePageProps) {
           <small>verloren wedstrijden</small>
         </div>
       </div>
+
       <div className="home-page-player-summary">
         <div className="home-page-player-summary-header">
           <div>
@@ -119,19 +178,21 @@ function HomePage({ matches, playerList, team }: HomePageProps) {
           </div>
         )}
       </div>
+
       <div className="home-page-content-grid">
         <div className="home-page-panel">
           <div className="home-page-panel-heading">
             <div>
               <span className="home-page-panel-label">🕐 RECENT</span>
-              <h2>Laatste wedstrijden</h2>
+              <h2>Eerdere wedstrijden</h2>
             </div>
-            <Link to="/wedstrijden">Bekijk alles</Link>
+
+
           </div>
 
-          {recentMatches.length > 0 ? (
+          {previousMatches.length > 0 ? (
             <div className="home-page-match-list">
-              {recentMatches.map((match) => {
+              {previousMatches.map((match) => {
                 const teamIsHome = match.home === team;
                 const teamGoals = teamIsHome
                   ? match.homeGoals
@@ -140,6 +201,7 @@ function HomePage({ matches, playerList, team }: HomePageProps) {
                   ? match.awayGoals
                   : match.homeGoals;
                 const opponent = teamIsHome ? match.away : match.home;
+
                 const result =
                   teamGoals > opponentGoals
                     ? "W"
@@ -147,39 +209,32 @@ function HomePage({ matches, playerList, team }: HomePageProps) {
                       ? "G"
                       : "V";
 
+                const resultLabel =
+                  result === "W"
+                    ? "Gewonnen"
+                    : result === "G"
+                      ? "Gelijkspel"
+                      : "Verloren";
+
                 return (
                   <div className="home-page-match" key={match.id}>
                     <div
                       className={`home-page-result result-${result.toLowerCase()}`}
-                      aria-label={
-                        result === "W"
-                          ? "Gewonnen"
-                          : result === "G"
-                            ? "Gelijkspel"
-                            : "Verloren"
-                      }
-                      title={
-                        result === "W"
-                          ? "Gewonnen"
-                          : result === "G"
-                            ? "Gelijkspel"
-                            : "Verloren"
-                      }
+                      aria-label={resultLabel}
+                      title={resultLabel}
                     >
                       <span className="home-page-result-text">
-                        {result === "W"
-                          ? "Gewonnen"
-                          : result === "G"
-                            ? "Gelijkspel"
-                            : "Verloren"}
+                        {resultLabel}
                       </span>
                     </div>
+
                     <div className="home-page-match-info">
                       <strong>
                         {team} - {opponent}
                       </strong>
                       <span>{match.date}</span>
                     </div>
+
                     <strong className="home-page-match-score">
                       {teamGoals} - {opponentGoals}
                     </strong>
@@ -189,9 +244,13 @@ function HomePage({ matches, playerList, team }: HomePageProps) {
             </div>
           ) : (
             <div className="home-page-empty">
-              <span>⚽</span>
-              <p>Nog geen wedstrijden toegevoegd.</p>
-              <Link to="/wedstrijden">Eerste wedstrijd toevoegen →</Link>
+              <span aria-hidden="true">⚽</span>
+              <p>
+                {latestMatch
+                  ? "Er zijn nog geen eerdere wedstrijden."
+                  : "Nog geen wedstrijden toegevoegd."}
+              </p>
+              <Link to="/wedstrijden">Bekijk wedstrijden →</Link>
             </div>
           )}
         </div>
@@ -209,11 +268,13 @@ function HomePage({ matches, playerList, team }: HomePageProps) {
 
           <div className="home-page-panel home-page-top-player">
             <span className="home-page-panel-label">🏆 TOPSCORER</span>
+
             {topScorer ? (
               <>
                 <h2>
                   {topScorer.firstname} {topScorer.lastname}
                 </h2>
+
                 <div className="home-page-top-player-stats">
                   <strong>{topScorer.goals}</strong>
                   <span>doelpunten</span>

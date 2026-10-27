@@ -118,8 +118,8 @@ body:has(.app.light) {
 
 #root {
   width: 100%;
-  max-width: 1200px;
-  margin: 0 auto;
+  max-width: none;
+  margin: 0 ;
 }
 
 .app {
@@ -630,8 +630,111 @@ textarea::placeholder {
 
 .home-page-match-score {
   flex-shrink: 0;
+  padding: 6px 10px;
+
+  background: var(--secondary-background);
   color: var(--text-color);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+
+
+  font-size: 15px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.home-page-featured-match {
+  margin-bottom: 18px;
+  padding: 22px 24px;
+
+  background:
+    linear-gradient(110deg, var(--accent-soft), transparent 75%),
+    var(--card-background);
+
+  color: var(--text-color);
+  border: 1px solid var(--border-color);
+  border-radius: 14px;
+  box-shadow: var(--shadow-card);
+}
+
+.home-page-featured-match-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.home-page-featured-match-heading a {
+  color: var(--accent);
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.home-page-featured-match h2 {
+  margin: 14px 0;
+  font-size: 18px;
+}
+
+.home-page-featured-match-score {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  align-items: center;
+  gap: 16px;
+}
+
+.home-page-featured-match-score > strong {
+  min-width: 0;
+  overflow-wrap: anywhere;
   font-size: 16px;
+}
+
+.home-page-featured-match-score > strong:last-child {
+  text-align: right;
+}
+
+.home-page-featured-score {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+
+  padding: 9px 15px;
+  background: var(--secondary-background);
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+
+  font-size: 24px;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+}
+
+.home-page-featured-match-date {
+  margin: 12px 0 0;
+  color: var(--muted-text-color);
+  font-size: 13px;
+}
+
+@media (max-width: 420px) {
+  .home-page-featured-match {
+    padding: 16px;
+  }
+
+  .home-page-featured-match-score {
+    gap: 8px;
+  }
+
+  .home-page-featured-match-score > strong {
+    font-size: 13px;
+  }
+
+  .home-page-featured-score {
+    gap: 7px;
+    padding: 8px;
+    font-size: 20px;
+  }
 }
 
 .home-page-side-column {
@@ -5416,4 +5519,76 @@ textarea::placeholder {
   .nav .profile-menu-trigger .mobile-nav-icon {
     font-size: 17px;
   }
+}
+
+/* =========================================
+   SUBTIEL VOETBALVELD AAN DE ZIJKANTEN
+========================================= */
+
+.app {
+  position: relative;
+  isolation: isolate;
+}
+
+
+.app::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+
+  background-image:
+    radial-gradient(
+      circle at center,
+      transparent 0 72px,
+      rgba(96, 165, 250, 0.035) 73px 74px,
+      transparent 75px
+    ),
+    linear-gradient(
+      90deg,
+      transparent calc(50% - 1px),
+      rgba(96, 165, 250, 0.025) 50%,
+      transparent calc(50% + 1px)
+    );
+
+  background-size: 300px 300px, 100% 100%;
+  background-position: center center;
+  background-repeat: repeat, no-repeat;
+}
+
+.app.light::before {
+  background-image:
+    radial-gradient(
+      circle at center,
+      transparent 0 72px,
+      rgba(37, 99, 235, 0.04) 73px 74px,
+      transparent 75px
+    ),
+    linear-gradient(
+      90deg,
+      transparent calc(50% - 1px),
+      rgba(37, 99, 235, 0.025) 50%,
+      transparent calc(50% + 1px)
+    );
+}
+
+
+/* Homepage: duidelijke status bij de laatste uitslag */
+.home-page-match-status {
+  display: inline-flex;
+  align-items: center;
+  min-height: 30px;
+  margin: 0 0 14px;
+  padding: 5px 11px;
+
+  background: var(--secondary-background);
+  color: var(--text-color);
+  border: 1px solid var(--border-color);
+  border-left: 3px solid var(--accent);
+  border-radius: 8px;
+
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1.4;
 }
