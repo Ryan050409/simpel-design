@@ -280,19 +280,17 @@ function HelpPage({ isAdmin }: HelpPageProps) {
             return (
               <div className="faq-item" key={category.title}>
                 <button
-                  type="button"
                   className="faq-question"
-                  onClick={() => {
-                    setOpenCategory(
-                      openCategory === category.title ? null : category.title,
-                    );
-                    setOpenQuestion(null);
-                  }}
                   aria-expanded={isCategoryOpen}
                   aria-controls={categoryId}
+                  onClick={() =>
+                    setOpenCategory(isCategoryOpen ? null : category.title)
+                  }
                 >
                   <span>{category.title}</span>
-                  <span aria-hidden="true">{isCategoryOpen ? "−" : "+"}</span>
+                  <span className="faq-toggle-icon" aria-hidden="true">
+                    {isCategoryOpen ? "−" : "+"}
+                  </span>
                 </button>
 
                 <div
