@@ -880,6 +880,7 @@ textarea::placeholder {
    Dashboard
    ========================================================= */
 
+
 .stats-grid {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -1046,18 +1047,38 @@ textarea::placeholder {
   font-weight: 600;
 }
 
+
 .dashboard-stats-grid {
   max-width: none;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 14px;
 }
 
 .dashboard-stat-card {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
   min-height: 150px;
   padding: 18px;
+
   border-radius: 16px;
+
   transition:
     border-color 0.2s ease,
     transform 0.2s ease;
+}
+
+.dashboard-stat-card .dashboard-stat-value {
+  margin: 16px 0 8px;
+  font-size: clamp(24px, 2vw, 32px);
+  line-height: 1.2;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+}
+
+.dashboard-stat-card .dashboard-stat-detail {
+  margin-top: auto;
+  line-height: 1.4;
 }
 
 .dashboard-stat-card:hover {
@@ -5591,4 +5612,17 @@ textarea::placeholder {
   font-size: 12px;
   font-weight: 700;
   line-height: 1.4;
+}
+
+/* Homepage: herkenbaar favoriet team en winnaar */
+
+.home-page-featured-match-score .featured-team-favorite {
+  color: var(--accent);
+}
+
+.home-page-featured-match-score .featured-team-winner {
+  text-decoration: underline;
+  text-decoration-color: var(--success);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 4px;
 }

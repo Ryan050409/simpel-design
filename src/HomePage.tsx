@@ -90,8 +90,18 @@ function HomePage({ matches, playerList, team }: HomePageProps) {
           )}
 
           <div className="home-page-featured-match-score">
-            <strong>{latestMatch.home}</strong>
-
+            <strong
+              className={[
+                latestMatch.home === team ? "featured-team-favorite" : "",
+                latestMatch.homeGoals > latestMatch.awayGoals
+                  ? "featured-team-winner"
+                  : "",
+              ]
+                .filter(Boolean)
+                .join(" ")}
+            >
+              {latestMatch.home}
+            </strong>
             <div
               className="home-page-featured-score"
               aria-label={`Uitslag ${latestMatch.homeGoals} tegen ${latestMatch.awayGoals}`}
@@ -100,8 +110,18 @@ function HomePage({ matches, playerList, team }: HomePageProps) {
               <span aria-hidden="true">–</span>
               <span>{latestMatch.awayGoals}</span>
             </div>
-
-            <strong>{latestMatch.away}</strong>
+            <strong
+              className={[
+                latestMatch.away === team ? "featured-team-favorite" : "",
+                latestMatch.awayGoals > latestMatch.homeGoals
+                  ? "featured-team-winner"
+                  : "",
+              ]
+                .filter(Boolean)
+                .join(" ")}
+            >
+              {latestMatch.away}
+            </strong>{" "}
           </div>
 
           <p className="home-page-featured-match-date">
@@ -186,8 +206,6 @@ function HomePage({ matches, playerList, team }: HomePageProps) {
               <span className="home-page-panel-label">🕐 RECENT</span>
               <h2>Eerdere wedstrijden</h2>
             </div>
-
-
           </div>
 
           {previousMatches.length > 0 ? (
