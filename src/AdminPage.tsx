@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import type { Dispatch, SetStateAction, FormEvent } from "react";
 
@@ -53,8 +52,7 @@ export default function AdminPage({
   setTeams,
 }: AdminPageProps) {
   const [selectedTeam, setSelectedTeam] = useState<string | null>(null);
-  const [activeTeamSection, setActiveTeamSection] =
-    useState<TeamSection>(null);
+  const [activeTeamSection, setActiveTeamSection] = useState<TeamSection>(null);
 
   const [showPlayerForm, setShowPlayerForm] = useState(false);
   const [editingPlayer, setEditingPlayer] = useState<Player | null>(null);
@@ -116,8 +114,7 @@ export default function AdminPage({
   const teamMatches = selectedTeam
     ? matches
         .filter(
-          (match) =>
-            match.home === selectedTeam || match.away === selectedTeam,
+          (match) => match.home === selectedTeam || match.away === selectedTeam,
         )
         .filter((match) => {
           const search = matchSearch.trim().toLowerCase();
@@ -129,10 +126,7 @@ export default function AdminPage({
             `${match.homeGoals}-${match.awayGoals}`.includes(search)
           );
         })
-        .sort(
-          (a, b) =>
-            new Date(b.date).getTime() - new Date(a.date).getTime(),
-        )
+        .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
     : [];
 
   function exportData() {
@@ -212,9 +206,15 @@ export default function AdminPage({
   function deleteMatch(match: Match) {
     if (!canManageMatches) return;
 
-    const confirmed = window.confirm(
-      `Weet je zeker dat je de wedstrijd ${match.home} ${match.homeGoals} - ${match.awayGoals} ${match.away} wilt verwijderen?`,
-    );
+    const hasResult =
+      typeof match.homeGoals === "number" &&
+      typeof match.awayGoals === "number";
+
+    const message = hasResult
+      ? `LET OP: deze wedstrijd heeft al een uitslag.\n\n${match.home} ${match.homeGoals} - ${match.awayGoals} ${match.away}\n\nWeet je zeker dat je deze gespeelde wedstrijd definitief wilt verwijderen?`
+      : `Weet je zeker dat je de wedstrijd ${match.home} tegen ${match.away} wilt verwijderen?`;
+
+    const confirmed = window.confirm(message);
 
     if (!confirmed) return;
 
@@ -421,9 +421,7 @@ export default function AdminPage({
         <div className="admin-panel-heading">
           <div>
             <h2>Gegevens exporteren</h2>
-            <p>
-              Download een back-up van je spelers, wedstrijden en teams.
-            </p>
+            <p>Download een back-up van je spelers, wedstrijden en teams.</p>
           </div>
 
           <button
