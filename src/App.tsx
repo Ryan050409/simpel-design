@@ -187,7 +187,9 @@ function AppContent() {
   const [showProfileMenu, setShowProfileMenu] = useState(false);
   const [language, setLanguage] = useState<Language>(() => {
     const savedLanguage = localStorage.getItem("language");
-    return savedLanguage === "en" ? "en" : "nl";
+    return savedLanguage === "en" || savedLanguage === "de"
+      ? savedLanguage
+      : "nl";
   });
 
   const [isLoggedIn, setIsLoggedIn] = useState(() => {
@@ -414,11 +416,12 @@ function AppContent() {
                   id="profile-language"
                   value={language}
                   onChange={(event) =>
-                    setLanguage(event.target.value as "nl" | "en")
+                    setLanguage(event.target.value as Language)
                   }
                 >
                   <option value="nl">🇳🇱 {t.languageDutch}</option>
                   <option value="en">🇬🇧 {t.languageEnglish}</option>
+                  <option value="de">🇩🇪 {t.languageGerman}</option>
                 </select>
                 <div className="profile-menu-section"></div>
                 <label htmlFor="profile-theme">{t.theme}</label>

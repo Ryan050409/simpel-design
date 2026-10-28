@@ -6,7 +6,7 @@ type DashboardProps = {
   matches: Match[];
   playerList: Player[];
   team: string;
-  language: "nl" | "en";
+  language: "nl" | "en" | "de";
 };
 
 function Dashboard({
