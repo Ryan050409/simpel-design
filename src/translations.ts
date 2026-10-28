@@ -1845,6 +1845,52 @@ const translationCatalog = {
       "Möchtest du dieses bereits gespielte Spiel endgültig löschen?",
     adminDenied: "Zugriff verweigert",
 
+    // ==================== DASHBOARD: TITEL EN TOEGANKELIJKHEID ====================
+    dashboardTitle: "Dashboard",
+    dashboardScoredGoalsAriaLabel: "Erzielte Tore",
+    dashboardConcededGoalsAriaLabel: "Gegentore",
+
+    // ==================== ALLGEMEINE AKTIONEN ====================
+    save: "Speichern",
+    close: "Schließen",
+    next: "Weiter",
+    previous: "Zurück",
+
+    // ==================== SPIELERFORMULAR: WEITERE BEZEICHNUNGEN ====================
+    addNewPlayer: "Neuen Spieler hinzufügen",
+    editPlayer: "Spieler bearbeiten",
+    firstName: "Vorname",
+    lastName: "Nachname",
+    playerMatches: "Gespielte Spiele",
+    playerMinutes: "Gespielte Minuten",
+    basicInformation: "Allgemeine Angaben",
+    playerStatistics: "Spielerstatistiken",
+    nextStep: "Weiter",
+    previousStep: "Zurück",
+    savePlayer: "Spieler speichern",
+    updatePlayer: "Spieler aktualisieren",
+    requiredFields: "Alle Pflichtfelder müssen ausgefüllt werden!",
+    requiredBasicFields: "Bitte fülle alle grundlegenden Angaben aus!",
+    negativeNumbersNotAllowed: "Negative Zahlen sind nicht erlaubt!",
+    ratingMaximum: "Die Bewertung darf nicht höher als 10 sein!",
+
+    // ==================== SPIELFORMULAR: WEITERE BEZEICHNUNGEN ====================
+    addNewMatch: "Neues Spiel hinzufügen",
+    editMatch: "Spiel bearbeiten",
+    homeTeam: "Heimteam",
+    awayTeam: "Auswärtsteam",
+    homeGoals: "Tore des Heimteams",
+    awayGoals: "Tore des Auswärtsteams",
+    matchAlreadyPlayed: "Dieses Spiel wurde bereits gespielt.",
+    selectHomeTeam: "Heimteam auswählen",
+    selectAwayTeam: "Auswärtsteam auswählen",
+    selectMatchDate: "Spieldatum auswählen",
+    sameTeamsNotAllowed: "Ein Team kann nicht gegen sich selbst spielen!",
+    matchDateRequired: "Das Spieldatum ist erforderlich!",
+    goalsMustBeNonNegative: "Die Anzahl der Tore darf nicht negativ sein!",
+    saveMatch: "Spiel speichern",
+    updateMatch: "Spiel aktualisieren",
+
     // ==================== GENERAL ACTIONS AND ACCESSIBILITY ====================
     open: "Öffnen",
     back: "Zurück",
