@@ -52,7 +52,6 @@ function MatchesPage({ matches, team, language }: MatchesPageProps) {
       ? matches.filter((match) => match.home === team || match.away === team)
       : matches;
 
-
   const resultFilteredMatches = visibleMatches.filter((match) => {
     if (resultFilter === "all") return true;
 
@@ -64,7 +63,6 @@ function MatchesPage({ matches, team, language }: MatchesPageProps) {
 
     return true;
   });
-
 
   const sortedMatches = [...resultFilteredMatches].sort((a, b) => {
     const dateA = new Date(a.date).getTime();
@@ -86,60 +84,56 @@ function MatchesPage({ matches, team, language }: MatchesPageProps) {
           </p>
         </div>
 
-        
-<div className="matches-page-actions">
-  <div className="match-filter">
-    <label htmlFor="match-view">{t.showMatches}</label>
+        <div className="matches-page-actions">
+          <div className="match-filter">
+            <label htmlFor="match-view">{t.showMatches}</label>
 
-    <select
-      id="match-view"
-      value={matchView}
-      onChange={(event) =>
-        setMatchView(event.target.value as "favorite" | "all")
-      }
-    >
-      <option value="favorite">{t.favoriteTeamOption}</option>
-      <option value="all">{t.allTeams}</option>
-    </select>
-  </div>
+            <select
+              id="match-view"
+              value={matchView}
+              onChange={(event) =>
+                setMatchView(event.target.value as "favorite" | "all")
+              }
+            >
+              <option value="favorite">{t.favoriteTeamOption}</option>
+              <option value="all">{t.allTeams}</option>
+            </select>
+          </div>
 
-  <div className="match-filter">
-    <label htmlFor="match-result-filter">
-      {t.filterByOutcome}
-    </label>
+          <div className="match-filter">
+            <label htmlFor="match-result-filter">{t.filterByOutcome}</label>
 
-    <select
-      id="match-result-filter"
-      value={resultFilter}
-      onChange={(event) =>
-        setResultFilter(
-          event.target.value as "all" | "home" | "draw" | "away"
-        )
-      }
-    >
-      <option value="all">{t.allOutcomes}</option>
-      <option value="home">{t.homeWinFilter}</option>
-      <option value="draw">{t.drawFilter}</option>
-      <option value="away">{t.awayWinFilter}</option>
-    </select>
-  </div>
+            <select
+              id="match-result-filter"
+              value={resultFilter}
+              onChange={(event) =>
+                setResultFilter(
+                  event.target.value as "all" | "home" | "draw" | "away",
+                )
+              }
+            >
+              <option value="all">{t.allOutcomes}</option>
+              <option value="home">{t.homeWinFilter}</option>
+              <option value="draw">{t.drawFilter}</option>
+              <option value="away">{t.awayWinFilter}</option>
+            </select>
+          </div>
 
-  <div className="match-filter">
-    <label htmlFor="match-sort">{t.sortByDate}</label>
+          <div className="match-filter">
+            <label htmlFor="match-sort">{t.sortByDate}</label>
 
-    <select
-      id="match-sort"
-      value={sortOrder}
-      onChange={(event) =>
-        setSortOrder(event.target.value as "newest" | "oldest")
-      }
-    >
-      <option value="newest">{t.newestFirst}</option>
-      <option value="oldest">{t.oldestFirst}</option>
-    </select>
-  </div>
-</div>
-
+            <select
+              id="match-sort"
+              value={sortOrder}
+              onChange={(event) =>
+                setSortOrder(event.target.value as "newest" | "oldest")
+              }
+            >
+              <option value="newest">{t.newestFirst}</option>
+              <option value="oldest">{t.oldestFirst}</option>
+            </select>
+          </div>
+        </div>
       </div>
 
       <div className="matches-table-wrapper">
@@ -172,20 +166,22 @@ function MatchesPage({ matches, team, language }: MatchesPageProps) {
                   <tr key={match.id} className={getRowClass(result)}>
                     <td>
                       {new Date(match.date).toLocaleDateString(
-                        language === "nl" ? "nl-NL" : "en-GB",
+                        language === "nl"
+                          ? "nl-NL"
+                          : language === "de"
+                            ? "de-DE"
+                            : "en-GB",
                       )}
                     </td>
 
-                    <td
-                      className={homeIsWinner ? "winner-team-name" : ""}
-                    >
+                    <td className={homeIsWinner ? "winner-team-name" : ""}>
                       {homeIsFavorite && (
                         <span
                           className="favorite-indicator"
                           aria-label={t.favoriteTeamIndicator}
                           title={t.favoriteTeamIndicator}
                         >
-                            ★{" "}
+                          ★{" "}
                         </span>
                       )}
                       {match.home}
@@ -201,17 +197,8 @@ function MatchesPage({ matches, team, language }: MatchesPageProps) {
                     >
                       {awayIsFavorite && (
                         <span
-                          className="favorite-indicator"
-                          aria-label={
-                            language === "nl"
-                              ? "Favoriet team"
-                              : "Favorite team"
-                          }
-                          title={
-                            language === "nl"
-                              ? "Favoriet team"
-                              : "Favorite team"
-                          }
+                          aria-label={t.favoriteTeamIndicator}
+                          title={t.favoriteTeamIndicator}
                         >
                           ★{" "}
                         </span>

@@ -1,12 +1,12 @@
 import { Link } from "react-router-dom";
 import type { Match, Player } from "./types.ts";
-import { translations } from "./translations.ts";
+import { translations, type Language } from "./translations.ts";
 
 type HomePageProps = {
   matches: Match[];
   playerList: Player[];
   team: string;
-  language: "nl" | "en" | "de";
+  language: Language;
 };
 
 function HomePage({

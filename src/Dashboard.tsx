@@ -1,12 +1,12 @@
 
 import type { Player, Match } from "./types.ts";
-import { translations } from "./translations.ts";
+import { translations, type Language } from "./translations.ts";
 
 type DashboardProps = {
   matches: Match[];
   playerList: Player[];
   team: string;
-  language: "nl" | "en" | "de";
+  language: Language;
 };
 
 function Dashboard({
