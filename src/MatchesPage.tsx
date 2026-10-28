@@ -52,19 +52,19 @@ function MatchesPage({ matches, team, language }: MatchesPageProps) {
       ? matches.filter((match) => match.home === team || match.away === team)
       : matches;
 
+
   const resultFilteredMatches = visibleMatches.filter((match) => {
     if (resultFilter === "all") return true;
 
-    if (resultFilter === "draw") {
-      return match.homeGoals === match.awayGoals;
-    }
+    const result = getMatchResult(match, team);
 
-    if (resultFilter === "home") {
-      return match.homeGoals > match.awayGoals;
-    }
+    if (resultFilter === "home") return result === "W";
+    if (resultFilter === "draw") return result === "G";
+    if (resultFilter === "away") return result === "V";
 
-    return match.awayGoals > match.homeGoals;
+    return true;
   });
+
 
   const sortedMatches = [...resultFilteredMatches].sort((a, b) => {
     const dateA = new Date(a.date).getTime();

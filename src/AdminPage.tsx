@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import type { Dispatch, SetStateAction, FormEvent } from "react";
 
@@ -9,7 +8,7 @@ import type { Player, Match, Team } from "./types";
 import PlayerForm from "./PlayerForm";
 import MatchForm from "./MatchForm";
 import type { Language } from "./translations";
-import {translations} from "./translations.ts"
+import { translations } from "./translations.ts";
 
 type AdminPageProps = {
   role: UserRole;
@@ -149,8 +148,7 @@ export default function AdminPage({
   ];
 
   const [selectedTeam, setSelectedTeam] = useState<string | null>(null);
-  const [activeTeamSection, setActiveTeamSection] =
-    useState<TeamSection>(null);
+  const [activeTeamSection, setActiveTeamSection] = useState<TeamSection>(null);
 
   const [showPlayerForm, setShowPlayerForm] = useState(false);
   const [editingPlayer, setEditingPlayer] = useState<Player | null>(null);
@@ -252,9 +250,7 @@ export default function AdminPage({
 
     if (!confirmed) return;
 
-    setPlayerList((current) =>
-      current.filter((item) => item.id !== player.id),
-    );
+    setPlayerList((current) => current.filter((item) => item.id !== player.id));
   }
 
   function openAddMatchForm() {
@@ -282,9 +278,7 @@ export default function AdminPage({
 
     if (!window.confirm(message)) return;
 
-    setMatches((current) =>
-      current.filter((item) => item.id !== match.id),
-    );
+    setMatches((current) => current.filter((item) => item.id !== match.id));
   }
 
   function addTeam(event: FormEvent<HTMLFormElement>) {
@@ -304,9 +298,7 @@ export default function AdminPage({
     }
 
     const newId =
-      teams.length > 0
-        ? Math.max(...teams.map((item) => item.id)) + 1
-        : 1;
+      teams.length > 0 ? Math.max(...teams.map((item) => item.id)) + 1 : 1;
 
     setTeams((current) => [...current, { id: newId, name }]);
     setNewTeamName("");
@@ -330,15 +322,11 @@ export default function AdminPage({
       const reasons: string[] = [];
 
       if (playersInTeam.length > 0) {
-        reasons.push(
-          `${playersInTeam.length} ${t.linkedPlayers}`,
-        );
+        reasons.push(`${playersInTeam.length} ${t.linkedPlayers}`);
       }
 
       if (matchesForTeam.length > 0) {
-        reasons.push(
-          `${matchesForTeam.length} ${t.linkedMatches}`,
-        );
+        reasons.push(`${matchesForTeam.length} ${t.linkedMatches}`);
       }
 
       window.alert(
@@ -347,11 +335,7 @@ export default function AdminPage({
       return;
     }
 
-    if (
-      !window.confirm(
-        `${t.deleteTeamConfirm}\n\n${teamToDelete.name}`,
-      )
-    ) {
+    if (!window.confirm(`${t.deleteTeamConfirm}\n\n${teamToDelete.name}`)) {
       return;
     }
 
@@ -419,9 +403,7 @@ export default function AdminPage({
             `${match.homeGoals}-${match.awayGoals}`.includes(search)
           );
         })
-        .sort(
-          (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
-        )
+        .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
     : [];
 
   return (
@@ -459,12 +441,17 @@ export default function AdminPage({
         </span>
       </header>
 
-      <section className="admin-overview" aria-labelledby="admin-overview-title">
+      <section
+        className="admin-overview"
+        aria-labelledby="admin-overview-title"
+      >
         <h2 id="admin-overview-title">{t.overview}</h2>
 
         <div className="admin-stats-grid">
           <article className="admin-stat-card">
-            <span className="admin-stat-icon" aria-hidden="true">👥</span>
+            <span className="admin-stat-icon" aria-hidden="true">
+              👥
+            </span>
             <div className="admin-stat-content">
               <span className="admin-stat-label">{t.players}</span>
               <strong>{playersCount}</strong>
@@ -473,7 +460,9 @@ export default function AdminPage({
           </article>
 
           <article className="admin-stat-card">
-            <span className="admin-stat-icon" aria-hidden="true">⚽</span>
+            <span className="admin-stat-icon" aria-hidden="true">
+              ⚽
+            </span>
             <div className="admin-stat-content">
               <span className="admin-stat-label">{t.matches}</span>
               <strong>{matchesCount}</strong>
@@ -482,7 +471,9 @@ export default function AdminPage({
           </article>
 
           <article className="admin-stat-card">
-            <span className="admin-stat-icon" aria-hidden="true">🛡️</span>
+            <span className="admin-stat-icon" aria-hidden="true">
+              🛡️
+            </span>
             <div className="admin-stat-content">
               <span className="admin-stat-label">{t.teams}</span>
               <strong>{teamsCount}</strong>
@@ -607,7 +598,9 @@ export default function AdminPage({
                         <strong>{item.name}</strong>
                         <span>
                           {playerCount}{" "}
-                          {playerCount === 1 ? t.playerSingular : t.playerPlural}
+                          {playerCount === 1
+                            ? t.playerSingular
+                            : t.playerPlural}
                           {" · "}
                           {matchCount}{" "}
                           {matchCount === 1 ? t.matchSingular : t.matchPlural}
@@ -635,15 +628,16 @@ export default function AdminPage({
             </div>
           ) : (
             <div className="admin-empty-state">
-              <strong>
-                {teams.length === 0 ? t.noTeams : t.noTeamsFound}
-              </strong>
+              <strong>{teams.length === 0 ? t.noTeams : t.noTeamsFound}</strong>
               <p>{teams.length === 0 ? t.addTeamToStart : t.trySearch}</p>
             </div>
           )}
         </section>
       ) : (
-        <section className="admin-panel" aria-labelledby="admin-selected-team-title">
+        <section
+          className="admin-panel"
+          aria-labelledby="admin-selected-team-title"
+        >
           <button
             type="button"
             className="admin-back-button"
@@ -705,7 +699,9 @@ export default function AdminPage({
 
           {activeTeamSection === null && (
             <div className="admin-empty-state">
-              <span className="admin-empty-icon" aria-hidden="true">⚽</span>
+              <span className="admin-empty-icon" aria-hidden="true">
+                ⚽
+              </span>
               <strong>{t.chooseWhat}</strong>
               <p>
                 {t.chooseSectionDescription} {selectedTeam}.
@@ -796,7 +792,9 @@ export default function AdminPage({
                 </div>
               ) : (
                 <div className="admin-empty-state">
-                  <span className="admin-empty-icon" aria-hidden="true">👥</span>
+                  <span className="admin-empty-icon" aria-hidden="true">
+                    👥
+                  </span>
                   <strong>
                     {playerList.some((player) => player.team === selectedTeam)
                       ? t.noPlayersFound
@@ -809,7 +807,9 @@ export default function AdminPage({
                   </p>
 
                   {canManagePlayers &&
-                    !playerList.some((player) => player.team === selectedTeam) && (
+                    !playerList.some(
+                      (player) => player.team === selectedTeam,
+                    ) && (
                       <button
                         type="button"
                         className="admin-primary-button"
@@ -909,11 +909,14 @@ export default function AdminPage({
                 </div>
               ) : (
                 <div className="admin-empty-state">
-                  <span className="admin-empty-icon" aria-hidden="true">⚽</span>
+                  <span className="admin-empty-icon" aria-hidden="true">
+                    ⚽
+                  </span>
                   <strong>
                     {matches.some(
                       (match) =>
-                        match.home === selectedTeam || match.away === selectedTeam,
+                        match.home === selectedTeam ||
+                        match.away === selectedTeam,
                     )
                       ? t.noMatchesFound
                       : t.noMatches}
@@ -921,7 +924,8 @@ export default function AdminPage({
                   <p>
                     {matches.some(
                       (match) =>
-                        match.home === selectedTeam || match.away === selectedTeam,
+                        match.home === selectedTeam ||
+                        match.away === selectedTeam,
                     )
                       ? t.trySearch
                       : t.addFirstMatch}
@@ -930,7 +934,8 @@ export default function AdminPage({
                   {canManageMatches &&
                     !matches.some(
                       (match) =>
-                        match.home === selectedTeam || match.away === selectedTeam,
+                        match.home === selectedTeam ||
+                        match.away === selectedTeam,
                     ) && (
                       <button
                         type="button"

@@ -440,9 +440,9 @@ export const translations = {
     sortMatchesAriaLabel: "Wedstrijden sorteren op datum",
     filterByOutcome: "Filter op uitslag:",
     allOutcomes: "Alle uitslagen",
-    homeWinFilter: "Thuis gewonnen",
+    homeWinFilter: "Gewonnen",
     drawFilter: "Gelijkspel",
-    awayWinFilter: "Uit gewonnen",
+    awayWinFilter: "Verloren",
 
     // ==================== SPELERSPAGINA ====================
     playersIntro: "Bekijk de spelers en hun statistieken.",
@@ -1061,9 +1061,9 @@ export const translations = {
     sortMatchesAriaLabel: "Sort matches by date",
     filterByOutcome: "Filter by result:",
     allOutcomes: "All results",
-    homeWinFilter: "Home win",
+    homeWinFilter: "Win",
     drawFilter: "Draw",
-    awayWinFilter: "Away win",
+    awayWinFilter: "Loss",
 
     // ==================== PLAYERS PAGE ====================
     playersIntro: "View the players and their statistics.",
