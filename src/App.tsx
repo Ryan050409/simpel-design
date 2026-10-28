@@ -1,4 +1,3 @@
-
 import { useEffect, useRef, useState } from "react";
 import {
   BrowserRouter,
@@ -480,36 +479,42 @@ function AppContent() {
             />
           }
         />
-   ```tsx
-<Route
-  path="/dashboard"
-  element={
-    <Dashboard
-      matches={matches}
-      playerList={playerList}
-      team={team}
-      language={language}
-    />
-  }
-/>
-```
-
+        ```tsx
+        <Route
+          path="/dashboard"
+          element={
+            <Dashboard
+              matches={matches}
+              playerList={playerList}
+              team={team}
+              language={language}
+            />
+          }
+        />
+        ```
         <Route
           path="/wedstrijden"
-          element={<MatchesPage matches={matches} team={team} language={language} />}
+          element={
+            <MatchesPage matches={matches} team={team} language={language} />
+          }
         />
-
         <Route
           path="/spelers"
-          element={<PlayersPage playerList={playerList} teams={teams} language={language} />}
+          element={
+            <PlayersPage
+              playerList={playerList}
+              teams={teams}
+              language={language}
+            />
+          }
         />
-
         <Route
           path="/admin"
           element={
             isAdmin ? (
               <AdminPage
                 role={DEMO_USER.role}
+                language={language}
                 playersCount={playerList.length}
                 matchesCount={matches.length}
                 teamsCount={teams.length}
@@ -526,7 +531,6 @@ function AppContent() {
             )
           }
         />
-
         <Route path="/help" element={<HelpPage isAdmin={isAdmin} />} />
       </Routes>
     </div>
