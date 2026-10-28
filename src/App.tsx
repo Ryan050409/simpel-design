@@ -484,7 +484,6 @@ function AppContent() {
             />
           }
         />
-        ```tsx
         <Route
           path="/dashboard"
           element={
@@ -496,7 +495,6 @@ function AppContent() {
             />
           }
         />
-        ```
         <Route
           path="/wedstrijden"
           element={

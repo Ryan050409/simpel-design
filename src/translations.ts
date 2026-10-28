@@ -1263,6 +1263,174 @@ const translationCatalog = {
     settings: "Einstellungen",
     help: "Hilfe & häufig gestellte Fragen",
 
+    // ==================== HILFESEITE: ÜBERSCHRIFTEN UND SUCHE ====================
+    helpTitle: "Hilfe und häufig gestellte Fragen",
+    helpDescription:
+      "Hier findest du Antworten auf Fragen zur Verwendung des Fußball-Trackers.",
+    searchQuestions: "Fragen suchen...",
+    noQuestionsFound: "Keine Fragen gefunden",
+    noQuestionsDescription: "Versuche es mit einem anderen Suchbegriff.",
+    showAnswer: "Antwort anzeigen",
+    hideAnswer: "Antwort ausblenden",
+
+    // ==================== HILFESEITE: TEAMS UND SPIELER ====================
+    faqTeamsTitle: "Teams und Spieler",
+    faqTeamSelectionQuestion: "Wie wähle ich ein Team aus?",
+    faqTeamSelectionAnswer:
+      "Wähle über die Teamauswahl den Verein aus, dessen Informationen du ansehen möchtest.",
+    faqAddPlayerQuestion: "Wie füge ich einen Spieler hinzu?",
+    faqAddPlayerAnswer:
+      "Ein Administrator kann auf der Verwaltungsseite ein Team auswählen und dort einen Spieler hinzufügen.",
+    faqEditPlayerQuestion: "Wie bearbeite ich einen Spieler?",
+    faqEditPlayerAnswer:
+      "Ein Administrator kann einen Spieler auswählen und die verfügbare Bearbeitungsfunktion verwenden.",
+    faqDeletePlayerQuestion: "Wie lösche ich einen Spieler?",
+    faqDeletePlayerAnswer:
+      "Ein Administrator kann Spieler über die Spielerverwaltung löschen. Prüfe vorher, ob du den richtigen Spieler ausgewählt hast.",
+
+    // ==================== HILFESEITE: SPIELE UND ERGEBNISSE ====================
+    faqMatchesTitle: "Spiele und Ergebnisse",
+    faqAddMatchQuestion: "Wie füge ich ein Spiel hinzu?",
+    faqAddMatchAnswer:
+      "Ein Administrator kann über die Spielverwaltung ein Spiel hinzufügen.",
+    faqEditMatchQuestion: "Kann ich ein Spiel bearbeiten?",
+    faqEditMatchAnswer:
+      "Ein Administrator kann ein Spiel auswählen und die verfügbare Bearbeitungsfunktion verwenden.",
+    faqDeleteMatchQuestion: "Wie lösche ich ein Spiel?",
+    faqDeleteMatchAnswer:
+      "Ein Administrator kann ein Spiel über die Spielverwaltung löschen.",
+    faqResultsQuestion: "Wo kann ich Ergebnisse ansehen?",
+    faqResultsAnswer:
+      "Verfügbare Ergebnisse findest du auf der Startseite, im Dashboard und auf der Spieleseite.",
+    faqNoMatchQuestion: "Warum kann ich ein Spiel nicht sehen?",
+    faqNoMatchAnswer:
+      "Prüfe, ob das Spiel hinzugefügt wurde und ob Suchbegriffe oder Filter es ausblenden.",
+    faqMatchScoreQuestion: "Was bedeutet ein Spielergebnis?",
+    faqMatchScoreAnswer:
+      "Das Ergebnis zeigt die erzielten Tore der Heim- und Auswärtsmannschaft. Die Mannschaft mit mehr Toren gewinnt. Bei Gleichstand endet das Spiel unentschieden.",
+
+    // ==================== HILFESEITE: STATISTIKEN UND DASHBOARD ====================
+    faqStatsTitle: "Statistiken und Dashboard",
+    faqStatsQuestion: "Welche Statistiken kann ich ansehen?",
+    faqStatsAnswer:
+      "Je nach verfügbaren Daten kannst du Spiele, Siege, Niederlagen, Tore und Spielerstatistiken ansehen.",
+    faqNoStatsQuestion: "Warum sehe ich noch keine Statistiken?",
+    faqNoStatsAnswer:
+      "Die Statistiken hängen von den im Tracker gespeicherten Daten ab. Füge bei Bedarf Spiele oder Spieler hinzu.",
+    faqPlayerStatsQuestion: "Welche Spielerstatistiken kann ich ansehen?",
+    faqPlayerStatsAnswer:
+      "Je nach verfügbaren Daten kannst du Tore, Vorlagen, Einsätze und Bewertungen ansehen.",
+    faqGoalsAssistsQuestion: "Was bedeuten Tore und Vorlagen?",
+    faqGoalsAssistsAnswer:
+      "Ein Tor wird von einem Spieler erzielt. Eine Vorlage ist ein Pass, der unmittelbar zu einem Tor führt.",
+    faqMissingStatsQuestion: "Warum fehlen einige Statistiken?",
+    faqMissingStatsAnswer:
+      "Möglicherweise wurden noch nicht alle Statistiken eingetragen. Ein Benutzer mit den entsprechenden Verwaltungsrechten kann fehlende Daten ergänzen.",
+    faqFindPlayerQuestion: "Wie finde ich einen Spieler?",
+    faqFindPlayerAnswer:
+      "Öffne die Spielerseite und verwende das Suchfeld, um einen Spieler anhand seines Namens zu finden.",
+
+    // ==================== HILFESEITE: LIEBLINGSVEREIN ====================
+    faqFavoriteQuestion: "Was bringt mir mein Lieblingsverein?",
+    faqFavoriteAnswer:
+      "Mit deinem Lieblingsverein kannst du schneller auf Informationen zu deinem ausgewählten Verein zugreifen.",
+    faqFavoriteClubQuestion: "Wie ändere ich meinen Lieblingsverein?",
+    faqFavoriteClubAnswer:
+      "Öffne das Profilmenü und wähle in den Einstellungen für den Lieblingsverein einen anderen Verein aus.",
+
+    // ==================== HILFESEITE: KONTO UND BERECHTIGUNGEN ====================
+    faqAccountTitle: "Konto und Administratorrechte",
+    faqLoginQuestion: "Wie melde ich mich an?",
+    faqLoginAnswer:
+      "Verwende die verfügbare Demo-Anmeldeoption, um dich als Demo-Administrator anzumelden.",
+    faqAdminQuestion: "Was kann ein Administrator tun?",
+    faqAdminAnswer:
+      "Abhängig von den zugewiesenen Berechtigungen kann ein Administrator Teams, Spieler und Spiele verwalten.",
+    faqPermissionsQuestion: "Warum kann ich die Verwaltungsseite nicht öffnen?",
+    faqPermissionsAnswer:
+      "Die Verwaltungsseite ist nur für angemeldete Benutzer mit den entsprechenden Administratorrechten zugänglich.",
+    faqMissingAdminOptionsQuestion: "Warum fehlen einige Verwaltungsoptionen?",
+    faqMissingAdminOptionsAnswer:
+      "Die verfügbaren Optionen hängen von den dem Benutzer zugewiesenen Berechtigungen ab.",
+    faqRolesQuestion:
+      "Was ist der Unterschied zwischen einem Administrator und einem Spieler?",
+    faqRolesAnswer:
+      "Ein Administrator kann die Bereiche verwalten, für die er berechtigt ist. Ein Spieler hat keine Administratorrechte.",
+    faqLogoutQuestion: "Wie melde ich mich ab?",
+    faqLogoutAnswer: "Öffne das Profilmenü und wähle die Abmeldeoption.",
+    faqDemoSecurityQuestion: "Ist die Demo-Anmeldung ein sicheres Kontosystem?",
+    faqDemoSecurityAnswer:
+      "Die Demo-Anmeldung simuliert Benutzer und Berechtigungen zu Demonstrationszwecken. Sie ersetzt kein sicheres Kontosystem.",
+
+    // ==================== HILFESEITE: DATEN UND SICHERUNGEN ====================
+    faqDataTitle: "Daten und Sicherungen",
+    faqStorageQuestion: "Wo werden meine Daten gespeichert?",
+    faqStorageAnswer:
+      "Der Tracker verwendet den Browserspeicher für lokal gespeicherte Daten. Diese Daten sind nicht automatisch auf anderen Geräten verfügbar.",
+    faqBackupQuestion: "Wie erstelle ich eine Sicherung?",
+    faqBackupAnswer:
+      "Wenn die Exportfunktion verfügbar ist, kannst du im Verwaltungszentrum eine Sicherung herunterladen.",
+    faqDataMissingQuestion: "Warum sind meine Daten verschwunden?",
+    faqDataMissingAnswer:
+      "Prüfe, ob du denselben Browser und dasselbe Browserprofil verwendest. Gelöschte Browserdaten können lokal gespeicherte Daten entfernen.",
+    faqDataOnlineQuestion: "Werden meine Daten automatisch online gespeichert?",
+    faqDataOnlineAnswer:
+      "Gehe nicht davon aus, dass deine Daten automatisch online gespeichert werden. Lokal gespeicherte Daten verbleiben im Browserspeicher.",
+    faqLocalDataQuestion:
+      "Kann ich meine Daten auf einem anderen Gerät ansehen?",
+    faqLocalDataAnswer:
+      "Lokal in deinem Browser gespeicherte Daten sind nicht automatisch auf anderen Geräten verfügbar.",
+    faqExportQuestion: "Wie exportiere ich meine Daten?",
+    faqExportAnswer:
+      "Öffne das Verwaltungszentrum und verwende die Option zum Herunterladen einer Sicherung, sofern sie verfügbar ist.",
+
+    // ==================== HILFESEITE: SPRACHE UND DARSTELLUNG ====================
+    faqLanguageQuestion: "Wie ändere ich die Sprache?",
+    faqLanguageAnswer:
+      "Öffne das Profilmenü und wähle in den Spracheinstellungen Niederländisch, Englisch oder Deutsch aus.",
+    faqLanguageIssueQuestion:
+      "Warum wird nicht alles in die gewählte Sprache übersetzt?",
+    faqLanguageIssueAnswer:
+      "Nicht jeder Text wird automatisch übersetzt. Die jeweilige Seite muss die Übersetzungen aus translations.ts verwenden.",
+    faqMobileQuestion:
+      "Kann ich den Fußball-Tracker auf meinem Handy verwenden?",
+    faqMobileAnswer:
+      "Die Seiten sind für verschiedene Bildschirmgrößen ausgelegt. Die Darstellung passt sich der Bildschirmgröße an.",
+    faqThemeQuestion: "Wie wechsle ich zwischen hellem und dunklem Modus?",
+    faqThemeAnswer:
+      "Öffne das Profilmenü und verwende die Designoption, um die Darstellung zu ändern.",
+    faqMoreHelpQuestion:
+      "Was kann ich tun, wenn meine Frage hier nicht beantwortet wird?",
+    faqMoreHelpAnswer:
+      "Prüfe die passende Kategorie und versuche andere Suchbegriffe. Du kannst auch den Administrator um Hilfe bitten.",
+
+    // ==================== HILFESEITE: FEHLERBEHEBUNG ====================
+    faqTroubleshootingTitle: "Fehlerbehebung",
+    faqRefreshQuestion: "Was soll ich tun, wenn keine Daten angezeigt werden?",
+    faqRefreshAnswer:
+      "Prüfe, ob du das richtige Team ausgewählt hast und ob die erforderlichen Daten hinzugefügt wurden.",
+    faqSearchNoResultsQuestion: "Warum liefert die Suche keine Ergebnisse?",
+    faqSearchNoResultsAnswer:
+      "Prüfe die Schreibweise und versuche einen kürzeren Suchbegriff. Wenn nichts gefunden wird, erscheint eine entsprechende Meldung.",
+    faqButtonIssueQuestion:
+      "Was soll ich tun, wenn eine Schaltfläche nicht funktioniert?",
+    faqButtonIssueAnswer:
+      "Aktualisiere die Seite und versuche es erneut. Wenn das Problem weiterhin besteht, prüfe, ob eine Fehlermeldung angezeigt wird.",
+
+    // ==================== HILFESEITE: SUCHFELD UND ÜBERSCHRIFTEN ====================
+    faqPageHeading: "Häufig gestellte Fragen",
+    faqSearchLabel: "Fragen suchen",
+    faqSearchPlaceholder: "Z. B. Spieler, Team oder Spiel...",
+    faqAddTeamQuestion: "Wie füge ich ein Team hinzu?",
+    faqAddTeamAnswer:
+      "Öffne die Verwaltungsseite und wähle die Teamverwaltung. Dort kannst du ein Team hinzufügen.",
+    faqDeleteTeamQuestion: "Kann ich ein Team löschen?",
+    faqDeleteTeamAnswer:
+      "Ein Team kann nicht gelöscht werden, solange Spieler oder Spiele damit verknüpft sind.",
+    faqTypeTeamNameQuestion: "Kann ich einen Teamnamen selbst eingeben?",
+    faqTypeTeamNameAnswer:
+      "Du kannst ein Team über die Teamverwaltung hinzufügen. Beim Hinzufügen von Spielern und Spielen kannst du ein verfügbares Team auswählen.",
+
     // ==================== PROFILE AND SETTINGS ====================
     profileSettings: "Profil und Einstellungen",
     profile: "Profil",
@@ -1372,8 +1540,7 @@ const translationCatalog = {
     administrator: "Administrator",
     playerRole: "Spieler",
     noAccess: "Kein Zugriff",
-    noAccessDescription:
-      "Du hast keine Berechtigung, diese Seite aufzurufen.",
+    noAccessDescription: "Du hast keine Berechtigung, diese Seite aufzurufen.",
     playersInTracker: "Im Tracker",
     savedMatches: "Gespeicherte Spiele",
     clubsInTracker: "Vereine im Tracker",
@@ -1396,10 +1563,8 @@ const translationCatalog = {
     teamsOf: "von",
     teams: "Teams",
     teamDeleteBlocked: "Dieses Team kann noch nicht gelöscht werden.",
-    linkedDataWarning:
-      "Entferne oder ändere zuerst die verknüpften Daten.",
-    deleteTeamConfirmation:
-      "Möchtest du dieses Team wirklich löschen?",
+    linkedDataWarning: "Entferne oder ändere zuerst die verknüpften Daten.",
+    deleteTeamConfirmation: "Möchtest du dieses Team wirklich löschen?",
     noTeamsYet: "Es gibt noch keine Teams.",
     noTeamsFound: "Keine Teams gefunden",
     addTeamToStart: "Füge ein Team hinzu, um zu beginnen.",
@@ -1428,8 +1593,7 @@ const translationCatalog = {
     noPlayersForTeam: "Noch keine Spieler in diesem Team",
     addFirstPlayerToTeam: "Füge den ersten Spieler zu diesem Verein hinzu.",
     playerCount: "Spieler",
-    deletePlayerConfirmation:
-      "Möchtest du diesen Spieler wirklich löschen?",
+    deletePlayerConfirmation: "Möchtest du diesen Spieler wirklich löschen?",
     manageMatches: "Spiele verwalten",
     manageMatchesDescription: "Sieh dir alle Heim- und Auswärtsspiele von",
     addMatch: "Spiel hinzufügen",
@@ -1441,8 +1605,7 @@ const translationCatalog = {
     homeMatch: "Heimspiel",
     awayMatch: "Auswärtsspiel",
     matchCount: "Spiele",
-    deleteMatchConfirmation:
-      "Möchtest du dieses Spiel wirklich löschen?",
+    deleteMatchConfirmation: "Möchtest du dieses Spiel wirklich löschen?",
     playedMatchWarning: "ACHTUNG: Dieses Spiel hat bereits ein Ergebnis.",
     deletePlayedMatchConfirmation:
       "Möchtest du dieses bereits gespielte Spiel endgültig löschen?",
@@ -1483,6 +1646,204 @@ const translationCatalog = {
     closeButton: "Schließen",
     openButton: "Öffnen",
     backButton: "Zurück",
+
+    // ==================== SPIELSEITE: FILTER UND SORTIERUNG ====================
+    scoreAgainst: "gegen",
+    favoriteTeamOption: "Lieblingsverein",
+    allTeams: "Alle Teams",
+    matchesIntro: "Sieh dir die verfügbaren Spiele und Ergebnisse an.",
+    showMatchesLabel: "Spiele anzeigen",
+    sortByDateLabel: "Nach Datum sortieren",
+    newestFirst: "Neueste zuerst",
+    oldestFirst: "Älteste zuerst",
+    dateColumn: "Datum",
+    homeColumn: "Heimteam",
+    awayColumn: "Auswärtsteam",
+    scoreColumn: "Ergebnis",
+    resultColumn: "Resultat",
+    wonResult: "Gewonnen",
+    drawResult: "Unentschieden",
+    lostResult: "Verloren",
+    noResult: "Kein Ergebnis",
+    noMatchesForSelection: "Keine Spiele für diese Auswahl gefunden.",
+    favoriteMatchesAriaLabel: "Spiele des Lieblingsvereins anzeigen",
+    showAllMatchesAriaLabel: "Alle Spiele anzeigen",
+    sortMatchesAriaLabel: "Spiele sortieren",
+    filterByOutcome: "Nach Ergebnis filtern",
+    allOutcomes: "Alle Ergebnisse",
+    homeWinFilter: "Heimsieg",
+    drawFilter: "Unentschieden",
+    awayWinFilter: "Auswärtssieg",
+
+    // ==================== SPIELSEITE: TABELLEN UND ERGEBNISSE ====================
+    matchesDescription: "Übersicht aller verfügbaren Spiele.",
+    showMatches: "Spiele anzeigen",
+    sortByDate: "Nach Datum sortieren",
+    matchHome: "Heimteam",
+    matchAway: "Auswärtsteam",
+    matchScore: "Ergebnis",
+    matchResult: "Resultat",
+    resultWon: "Gewonnen",
+    resultDraw: "Unentschieden",
+    resultLost: "Verloren",
+    favoriteTeamIndicator: "Lieblingsverein",
+
+    // ==================== SPIELERSEITE: SUCHE UND ÜBERSICHT ====================
+    playersIntro: "Sieh dir die Spieler und ihre Statistiken an.",
+    searchPlayerLabel: "Spieler suchen",
+    searchPlayerPlaceholderPage: "Nach Vor- oder Nachnamen suchen...",
+    noPlayersFoundMessage: "Keine Spieler gefunden.",
+    closePlayerDetails: "Spielerdetails schließen",
+    ratingUppercase: "BEWERTUNG",
+
+    // ==================== SPIELERSEITE: POSITIONEN ====================
+    goalkeeperPosition: "Torwart",
+    defenderPosition: "Verteidiger",
+    midfielderPosition: "Mittelfeldspieler",
+    forwardPosition: "Stürmer",
+
+    // ==================== SPIELERSEITE: STATISTIKEN ====================
+    goalsStat: "Tore",
+    assistsStat: "Vorlagen",
+    tacklesStat: "Tacklings",
+    interceptionsStat: "Abgefangene Bälle",
+    savesStat: "Paraden",
+    oneVsOneSavesStat: "Paraden im Eins-gegen-eins",
+    matchesStat: "Spiele",
+    minutesStat: "Minuten",
+    blocksStat: "Geblockte Schüsse",
+    clearancesStat: "Befreiungsschläge",
+    duelsWonStat: "Gewonnene Zweikämpfe",
+    foulsStat: "Fouls",
+    cleanSheetsStat: "Zu-Null-Spiele",
+    penaltySavesStat: "Gehaltene Elfmeter",
+    goalsConcededStat: "Gegentore",
+
+    // ==================== SPIELERSEITE: DETAILANSICHT ====================
+    playersDescriptionPage: "Sieh dir die Spieler und ihre Statistiken an.",
+    searchForPlayer: "Spieler suchen",
+    searchPlayerByName: "Nach Vor- oder Nachnamen suchen...",
+    playerDetails: "Spielerdetails anzeigen",
+    viewPlayerDetails: "Details anzeigen für",
+    goalkeeper: "Torwart",
+    defender: "Verteidiger",
+    midfielder: "Mittelfeldspieler",
+    forward: "Stürmer",
+    tackles: "Tacklings",
+    interceptions: "Abgefangene Bälle",
+    saves: "Paraden",
+    oneOnOneSaves: "Paraden im Eins-gegen-eins",
+    minutesPlayed: "Gespielte Minuten",
+    blocks: "Geblockte Schüsse",
+    clearances: "Befreiungsschläge",
+    duelsWon: "Gewonnene Zweikämpfe",
+    fouls: "Fouls",
+    cleanSheets: "Zu-Null-Spiele",
+    penaltySaves: "Gehaltene Elfmeter",
+    goalsConceded: "Gegentore",
+    noPlayersMatchSearch: "Keine Spieler gefunden.",
+
+    // ==================== SPIELERFORMULAR: ÜBERSCHRIFTEN UND ALLGEMEINES ====================
+    playerFormAddTitle: "Spieler hinzufügen",
+    playerFormEditTitle: "Spieler bearbeiten",
+    playerFormGeneralSection: "Allgemeine Angaben",
+    playerFirstName: "Vorname",
+    playerFirstNamePlaceholder: "Vorname des Spielers",
+    playerLastName: "Nachname",
+    playerLastNamePlaceholder: "Nachname des Spielers",
+    playerNumber: "Trikotnummer",
+    playerNumberPlaceholder: "Trikotnummer",
+    playerPosition: "Position",
+    playerChoosePosition: "Position auswählen",
+    playerChooseTeam: "Team auswählen",
+    playerTeam: "Team",
+    playerMatchesPlayed: "Gespielte Spiele",
+    playerMinutesPlayed: "Gespielte Minuten",
+
+    // ==================== SPIELERFORMULAR: ANGRIFF UND ABWEHR ====================
+    playerAttackingSection: "Angriff",
+    playerGoals: "Tore",
+    playerAssists: "Vorlagen",
+    playerDefendingSection: "Abwehr",
+    playerTackles: "Tacklings",
+    playerInterceptions: "Abgefangene Bälle",
+    playerBlocks: "Geblockte Schüsse",
+    playerClearances: "Befreiungsschläge",
+    playerDuelsWon: "Gewonnene Zweikämpfe",
+    playerFouls: "Fouls",
+
+    // ==================== SPIELERFORMULAR: TORWART UND BEWERTUNG ====================
+    playerGoalkeeperSection: "Torwartstatistiken",
+    playerSaves: "Paraden",
+    playerOneVsOneSaves: "Paraden im Eins-gegen-eins",
+    playerCleanSheets: "Zu-Null-Spiele",
+    playerPenaltySaves: "Gehaltene Elfmeter",
+    playerGoalsConceded: "Gegentore",
+    playerRatingSection: "Bewertung",
+    playerRating: "Bewertung",
+    playerRequiredBasicFields:
+      "Bitte fülle zuerst alle grundlegenden Angaben aus!",
+    playerRequiredFields: "Bitte fülle alle Pflichtfelder aus!",
+    playerNegativeNumbers: "Negative Zahlen sind nicht erlaubt!",
+    playerRatingMax: "Die Bewertung darf nicht höher als 10 sein!",
+    playerSave: "Spieler speichern",
+    playerNext: "Weiter",
+    playerPrevious: "Zurück",
+
+    // ==================== SPIELFORMULAR: TEAMS UND ERGEBNIS ====================
+    matchFormAddTitle: "Spiel hinzufügen",
+    matchFormEditTitle: "Spiel bearbeiten",
+    matchHomeTeam: "Heimteam",
+    matchChooseHomeTeam: "Heimteam auswählen",
+    matchAwayTeam: "Auswärtsteam",
+    matchChooseAwayTeam: "Auswärtsteam auswählen",
+    matchHomeGoals: "Tore des Heimteams",
+    matchAwayGoals: "Tore des Auswärtsteams",
+    matchDate: "Datum",
+    matchRequiredFields: "Alle Felder müssen ausgefüllt werden!",
+    matchSameTeamError: "Ein Team kann nicht gegen sich selbst spielen!",
+    matchNegativeGoalsError: "Die Anzahl der Tore darf nicht negativ sein!",
+    matchSave: "Spiel speichern",
+
+    // ==================== FORMULARE: ALLGEMEINE AKTIONEN ====================
+    requiredField: "Pflichtfeld",
+    optionalField: "Optional",
+
+    // ==================== ADMIN: ÜBERSICHT UND SUCHFELDER ====================
+    adminOverview: "Übersicht",
+    adminInTracker: "Im Tracker",
+    adminBackupDescription:
+      "Lade eine Sicherung deiner Spieler, Spiele und Teams herunter.",
+    adminTeamPlaceholder: "Zum Beispiel: Ajax",
+    adminTeamSearchPlaceholder: "Nach Vereinsnamen suchen...",
+    adminSearchTeam: "Teams suchen",
+    adminSearchPlayer: "Spieler suchen",
+    adminSearchMatch: "Spiele suchen",
+    adminPlayersDisplayed: "Spieler angezeigt",
+    adminMatchesDisplayed: "Spiele angezeigt",
+
+    // ==================== ADMIN: TEAMS UND MELDUNGEN ====================
+    adminTeamExists: "Dieses Team existiert bereits.",
+    adminNoTeams: "Es gibt noch keine Teams.",
+    adminNoMatchesForTeam: "Für dieses Team gibt es noch keine Spiele.",
+    adminTrySearch: "Versuche einen anderen Suchbegriff.",
+    adminChooseTeam: "Wähle ein Team zur Verwaltung aus.",
+    adminChooseSection: "Wähle den Bereich aus, den du verwalten möchtest.",
+    adminChooseWhat: "Was möchtest du verwalten?",
+    adminLinkedPlayers: "Spieler, die mit diesem Team verknüpft sind",
+    adminLinkedMatches: "Spiele, die mit diesem Team verknüpft sind",
+    adminPlayerSingular: "Spieler",
+    adminPlayerPlural: "Spieler",
+    adminMatchSingular: "Spiel",
+    adminMatchPlural: "Spiele",
+
+    // ==================== ADMIN: LÖSCHBESTÄTIGUNGEN UND ZUGRIFF ====================
+    adminDeleteTeamConfirm: "Möchtest du dieses Team wirklich löschen?",
+    adminDeletePlayerConfirm: "Möchtest du diesen Spieler wirklich löschen?",
+    adminDeleteMatchConfirm: "Möchtest du dieses Spiel wirklich löschen?",
+    adminDeletePlayedMatchConfirm:
+      "Möchtest du dieses bereits gespielte Spiel endgültig löschen?",
+    adminDenied: "Zugriff verweigert",
 
     // ==================== GENERAL ACTIONS AND ACCESSIBILITY ====================
     open: "Öffnen",
