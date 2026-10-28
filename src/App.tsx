@@ -17,7 +17,7 @@ import HomePage from "./HomePage";
 import HelpPage from "./HelpPage";
 import AdminPage from "./AdminPage";
 import { DEMO_USER } from "./demoUser";
-
+import { translations, type Language } from "./translations.ts";
 import type { Player, Match, Team } from "./types.ts";
 
 /*
@@ -186,6 +186,10 @@ function AppContent() {
   });
 
   const [showProfileMenu, setShowProfileMenu] = useState(false);
+  const [language, setLanguage] = useState<Language>(() => {
+    const savedLanguage = localStorage.getItem("language");
+    return savedLanguage === "en" ? "en" : "nl";
+  });
 
   const [isLoggedIn, setIsLoggedIn] = useState(() => {
     return localStorage.getItem("demoLoggedIn") === "true";
@@ -266,6 +270,10 @@ function AppContent() {
   }, [theme]);
 
   useEffect(() => {
+    localStorage.setItem("language", language);
+  }, [language]);
+
+  useEffect(() => {
     localStorage.setItem("demoLoggedIn", String(isLoggedIn));
   }, [isLoggedIn]);
 
@@ -303,6 +311,7 @@ function AppContent() {
   }, [isLoggedIn, location.pathname]);
 
   const isAdmin = isLoggedIn && DEMO_USER.role === "admin";
+  const t = translations[language];
 
   return (
     <div className={`app ${theme}`}>
@@ -318,21 +327,21 @@ function AppContent() {
           <span className="mobile-nav-icon" aria-hidden="true">
             📊
           </span>
-          <span className="mobile-nav-label">Stats</span>
+          <span className="mobile-nav-label">{t.stats}</span>
         </NavLink>
 
         <NavLink to="/wedstrijden" aria-label="Wedstrijden">
           <span className="mobile-nav-icon" aria-hidden="true">
             ⚽
           </span>
-          <span className="mobile-nav-label">Wedstrijden</span>
+          <span className="mobile-nav-label">{t.matches}</span>
         </NavLink>
 
         <NavLink to="/spelers" aria-label="Spelers">
           <span className="mobile-nav-icon" aria-hidden="true">
             👥
           </span>
-          <span className="mobile-nav-label">Spelers</span>
+          <span className="mobile-nav-label">{t.players}</span>
         </NavLink>
 
         {isAdmin && (
@@ -340,7 +349,7 @@ function AppContent() {
             <span className="mobile-nav-icon" aria-hidden="true">
               🛡️
             </span>
-            <span className="mobile-nav-label">Admin</span>
+            <span className="mobile-nav-label">{t.admin}</span>
           </NavLink>
         )}
 
@@ -356,12 +365,12 @@ function AppContent() {
             <span className="mobile-nav-icon" aria-hidden="true">
               ⚙️
             </span>
-            <span className="mobile-nav-label">Instellingen</span>
+            <span className="mobile-nav-label">{t.settings}</span>
           </button>
 
           {showProfileMenu && (
             <div className="profile-menu-dropdown">
-              <h3>Profiel en instellingen</h3>
+              <h3>{t.profileSettings}</h3>
 
               <div className="profile-menu-section">
                 <strong>Profiel</strong>
@@ -397,9 +406,21 @@ function AppContent() {
                   </>
                 )}
               </div>
-
               <div className="profile-menu-section">
-                <label htmlFor="profile-theme">Thema</label>
+                <label htmlFor="profile-language">Taal/ Language</label>
+
+                <select
+                  id="profile-language"
+                  value={language}
+                  onChange={(event) =>
+                    setLanguage(event.target.value as "nl" | "en")
+                  }
+                >
+                  <option value="nl">🇳🇱 Nederlands</option>
+                  <option value="en">🇬🇧 English</option>
+                </select>
+                <div className="profile-menu-section"></div>
+                <label htmlFor="profile-theme">{t.theme}</label>
 
                 <select
                   id="profile-theme"
@@ -408,13 +429,13 @@ function AppContent() {
                     setTheme(event.target.value as "dark" | "light")
                   }
                 >
-                  <option value="dark">Donker</option>
-                  <option value="light">Licht</option>
+                  <option value="dark">{t.dark}</option>
+                  <option value="light">{t.light}</option>
                 </select>
               </div>
 
               <div className="profile-menu-section">
-                <strong>Favoriete club</strong>
+                <strong>{t.favoriteClub}</strong>
 
                 {teams.map((club) => (
                   <button
@@ -434,15 +455,12 @@ function AppContent() {
               </div>
 
               <NavLink to="/help" onClick={() => setShowProfileMenu(false)}>
-                ❓ Hulp & veelgestelde vragen
+                {t.help}
               </NavLink>
 
               {isAdmin && (
-                <NavLink
-                  to="/admin"
-                  onClick={() => setShowProfileMenu(false)}
-                >
-                  Adminpagina
+                <NavLink to="/admin" onClick={() => setShowProfileMenu(false)}>
+                  {t.admin}
                 </NavLink>
               )}
             </div>
@@ -454,18 +472,19 @@ function AppContent() {
         <Route
           path="/"
           element={
-            <HomePage matches={matches} playerList={playerList} team={team} />
+            <HomePage
+              matches={matches}
+              playerList={playerList}
+              team={team}
+              language={language}
+            />
           }
         />
 
         <Route
           path="/dashboard"
           element={
-            <Dashboard
-              matches={matches}
-              playerList={playerList}
-              team={team}
-            />
+            <Dashboard matches={matches} playerList={playerList} team={team} />
           }
         />
 
@@ -502,10 +521,7 @@ function AppContent() {
           }
         />
 
-        <Route
-          path="/help"
-          element={<HelpPage isAdmin={isAdmin} />}
-        />
+        <Route path="/help" element={<HelpPage isAdmin={isAdmin} />} />
       </Routes>
     </div>
   );

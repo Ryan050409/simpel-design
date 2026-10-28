@@ -1,13 +1,22 @@
 import { Link } from "react-router-dom";
 import type { Match, Player } from "./types.ts";
+import { translations } from "./translations.ts";
 
 type HomePageProps = {
   matches: Match[];
   playerList: Player[];
   team: string;
+  language: "nl" | "en";
 };
 
-function HomePage({ matches, playerList, team }: HomePageProps) {
+function HomePage({
+  matches,
+  playerList,
+  team,
+  language,
+}: HomePageProps) {
+  const t = translations[language];
+
   const teamMatches = matches.filter(
     (match) => match.home === team || match.away === team,
   );
@@ -18,16 +27,17 @@ function HomePage({ matches, playerList, team }: HomePageProps) {
 
   const latestMatch = recentMatches[0];
   const previousMatches = recentMatches.slice(1);
+
   const latestMatchResult = latestMatch
     ? latestMatch.homeGoals === latestMatch.awayGoals
-      ? "Gelijkspel"
+      ? t.draw
       : (
             latestMatch.home === team
               ? latestMatch.homeGoals > latestMatch.awayGoals
               : latestMatch.awayGoals > latestMatch.homeGoals
           )
-        ? "Gewonnen"
-        : "Verloren"
+        ? t.won
+        : t.lost
     : null;
   const wins = teamMatches.filter((match) => {
     const teamGoals = match.home === team ? match.homeGoals : match.awayGoals;
@@ -59,8 +69,10 @@ function HomePage({ matches, playerList, team }: HomePageProps) {
     <div className="home-page">
       <div className="home-page-header">
         <div>
-          <h1>⚽ Welkom bij Voetbaltracker</h1>
-          <p>Bekijk de prestaties en laatste wedstrijden van {team}.</p>
+          <h1>⚽ {t.welcome}</h1>
+          <p>
+            {t.teamDescription} {team}.
+          </p>
         </div>
 
         <div className="home-page-team-badge">
@@ -75,15 +87,20 @@ function HomePage({ matches, playerList, team }: HomePageProps) {
           aria-labelledby="home-featured-match-title"
         >
           <div className="home-page-featured-match-heading">
-            <span className="home-page-panel-label">⚽ LAATSTE UITSLAG</span>
-            <Link to="/wedstrijden">Alle wedstrijden →</Link>
+            <span className="home-page-panel-label">
+              ⚽ {t.latestResult}
+            </span>
+            <Link to="/wedstrijden">{t.allMatches} →</Link>
           </div>
 
-          <h2 id="home-featured-match-title">Laatste wedstrijd van {team}</h2>
+          <h2 id="home-featured-match-title">
+            {t.latestMatch} {team}
+          </h2>
+
           {latestMatchResult && (
             <span
               className="home-page-match-status"
-              aria-label={`Resultaat voor ${team}: ${latestMatchResult}`}
+              aria-label={`${t.latestResult} ${team}: ${latestMatchResult}`}
             >
               {latestMatchResult}
             </span>
@@ -102,14 +119,20 @@ function HomePage({ matches, playerList, team }: HomePageProps) {
             >
               {latestMatch.home}
             </strong>
+
             <div
               className="home-page-featured-score"
-              aria-label={`Uitslag ${latestMatch.homeGoals} tegen ${latestMatch.awayGoals}`}
+              aria-label={
+                language === "nl"
+                  ? `Uitslag ${latestMatch.homeGoals} tegen ${latestMatch.awayGoals}`
+                  : `Score ${latestMatch.homeGoals} to ${latestMatch.awayGoals}`
+              }
             >
               <span>{latestMatch.homeGoals}</span>
               <span aria-hidden="true">–</span>
               <span>{latestMatch.awayGoals}</span>
             </div>
+
             <strong
               className={[
                 latestMatch.away === team ? "featured-team-favorite" : "",
@@ -121,79 +144,87 @@ function HomePage({ matches, playerList, team }: HomePageProps) {
                 .join(" ")}
             >
               {latestMatch.away}
-            </strong>{" "}
+            </strong>
           </div>
 
           <p className="home-page-featured-match-date">
-            Gespeeld op {latestMatch.date}
+            {t.playedOn} {latestMatch.date}
           </p>
         </section>
       )}
 
       <div className="home-page-section-title">
         <div>
-          <h2>Jouw overzicht</h2>
-          <p>Een korte samenvatting van je team.</p>
+          <h2>{t.overview}</h2>
+          <p>{t.teamSummary}</p>
         </div>
       </div>
 
       <div className="home-page-stats">
         <div className="home-page-stat">
-          <span>Wedstrijden</span>
+          <span>{t.matches}</span>
           <strong>{teamMatches.length}</strong>
-          <small>totaal gespeeld</small>
+          <small>{t.totalMatches}</small>
         </div>
 
         <div className="home-page-stat">
-          <span>Gewonnen</span>
+          <span>{t.won}</span>
           <strong>{wins}</strong>
-          <small>van {teamMatches.length} wedstrijden</small>
+          <small>
+            {t.ofMatches} {teamMatches.length} {t.matches.toLowerCase()}
+          </small>
         </div>
 
         <div className="home-page-stat">
-          <span>Gelijk</span>
+          <span>{t.draw}</span>
           <strong>{draws}</strong>
-          <small>onbesliste wedstrijden</small>
+          <small>{t.undecidedMatches}</small>
         </div>
 
         <div className="home-page-stat">
-          <span>Verloren</span>
+          <span>{t.lost}</span>
           <strong>{losses}</strong>
-          <small>verloren wedstrijden</small>
+          <small>{t.lostMatches}</small>
         </div>
       </div>
 
       <div className="home-page-player-summary">
         <div className="home-page-player-summary-header">
           <div>
-            <span className="home-page-panel-label">👥 TEAMSELECTIE</span>
+            <span className="home-page-panel-label">
+              👥 {t.teamSelection}
+            </span>
           </div>
 
-          <Link to="/spelers">Alle spelers →</Link>
+          <Link to="/spelers">{t.allPlayers} →</Link>
         </div>
 
         <div className="home-page-player-summary-stats">
           <div>
             <strong>{teamPlayers.length}</strong>
-            <span>{teamPlayers.length === 1 ? "speler" : "spelers"}</span>
+            <span>
+              {teamPlayers.length === 1 ? t.player : t.players}
+            </span>
           </div>
 
           <div>
             <strong>{averageRating ?? "-"}</strong>
-            <span>gemiddelde rating</span>
+            <span>{t.averageRating}</span>
           </div>
         </div>
 
         {topScorer && (
           <div className="home-page-player-summary-topscorer">
-            <span>🏆 Topscorer</span>
+            <span>🏆 {t.topScorer}</span>
 
             <div>
               <strong>
                 {topScorer.firstname} {topScorer.lastname}
               </strong>
 
-              <span>{topScorer.goals} doelpunten</span>
+              <span>
+                {topScorer.goals} {t.goals}
+              </span>
             </div>
           </div>
         )}
@@ -203,8 +234,10 @@ function HomePage({ matches, playerList, team }: HomePageProps) {
         <div className="home-page-panel">
           <div className="home-page-panel-heading">
             <div>
-              <span className="home-page-panel-label">🕐 RECENT</span>
-              <h2>Eerdere wedstrijden</h2>
+              <span className="home-page-panel-label">
+                🕐 {t.recent}
+              </span>
+              <h2>{t.previousMatches}</h2>
             </div>
           </div>
 
@@ -229,10 +262,10 @@ function HomePage({ matches, playerList, team }: HomePageProps) {
 
                 const resultLabel =
                   result === "W"
-                    ? "Gewonnen"
+                    ? t.won
                     : result === "G"
-                      ? "Gelijkspel"
-                      : "Verloren";
+                      ? t.draw
+                      : t.lost;
 
                 return (
                   <div className="home-page-match" key={match.id}>
@@ -265,27 +298,31 @@ function HomePage({ matches, playerList, team }: HomePageProps) {
               <span aria-hidden="true">⚽</span>
               <p>
                 {latestMatch
-                  ? "Er zijn nog geen eerdere wedstrijden."
-                  : "Nog geen wedstrijden toegevoegd."}
+                  ? t.noPreviousMatches
+                  : t.noMatches}
               </p>
-              <Link to="/wedstrijden">Bekijk wedstrijden →</Link>
+              <Link to="/wedstrijden">{t.viewMatches} →</Link>
             </div>
           )}
         </div>
 
         <div className="home-page-side-column">
           <div className="home-page-panel home-page-team-panel">
-            <span className="home-page-panel-label">⭐ FAVORIET TEAM</span>
+            <span className="home-page-panel-label">
+              ⭐ {t.favoriteTeam}
+            </span>
             <h2>{team}</h2>
             <p>
               {teamMatches.length === 0
-                ? "Voeg je eerste wedstrijd toe om hier meer teaminformatie te zien."
-                : `${wins} gewonnen · ${draws} gelijk · ${losses} verloren`}
+                ? t.addFirstMatch
+                : `${wins} ${t.wonShort} · ${draws} ${t.drawShort} · ${losses} ${t.lostShort}`}
             </p>
           </div>
 
           <div className="home-page-panel home-page-top-player">
-            <span className="home-page-panel-label">🏆 TOPSCORER</span>
+            <span className="home-page-panel-label">
+              🏆 {t.topScorerLabel}
+            </span>
 
             {topScorer ? (
               <>
@@ -295,13 +332,13 @@ function HomePage({ matches, playerList, team }: HomePageProps) {
 
                 <div className="home-page-top-player-stats">
                   <strong>{topScorer.goals}</strong>
-                  <span>doelpunten</span>
+                  <span>{t.goals}</span>
                 </div>
               </>
             ) : (
               <div className="home-page-empty-small">
-                <p>Nog geen spelers toegevoegd.</p>
-                <Link to="/spelers">Eerste speler toevoegen →</Link>
+                <p>{t.noPlayers}</p>
+                <Link to="/spelers">{t.addFirstPlayer} →</Link>
               </div>
             )}
           </div>
