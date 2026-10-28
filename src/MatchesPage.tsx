@@ -177,12 +177,7 @@ function MatchesPage({ matches, team, language }: MatchesPageProps) {
                     </td>
 
                     <td
-                      className={[
-                        homeIsFavorite ? "favorite-team-name" : "",
-                        homeIsWinner ? "winner-team-name" : "",
-                      ]
-                        .filter(Boolean)
-                        .join(" ")}
+                      className={homeIsWinner ? "winner-team-name" : ""}
                     >
                       {homeIsFavorite && (
                         <span
@@ -190,7 +185,7 @@ function MatchesPage({ matches, team, language }: MatchesPageProps) {
                           aria-label={t.favoriteTeamIndicator}
                           title={t.favoriteTeamIndicator}
                         >
-                          {" "}
+                            ★{" "}
                         </span>
                       )}
                       {match.home}
@@ -218,7 +213,7 @@ function MatchesPage({ matches, team, language }: MatchesPageProps) {
                               : "Favorite team"
                           }
                         >
-                          {" "}
+                          ★{" "}
                         </span>
                       )}
                       {match.away}

@@ -3368,8 +3368,12 @@ textarea::placeholder {
 
 /* Favoriete team altijd herkenbaar */
 .matches-table .favorite-team-name {
-  color: #15803d;
+  color:inherit;
+}
+.matches-table .favorite-indicator { 
+  color: #16a34a;
   font-weight: 700;
+  margin-right: 4px;
 }
 /* Winnaar duidelijk aangeven zonder gekleurde resultaatbadge */
 .matches-table .winner-team-name {
