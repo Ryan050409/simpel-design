@@ -149,7 +149,7 @@ export const translations = {
     noPreviousMatches: "There are no previous matches yet.",
     noMatches: "No matches have been added yet.",
     viewMatches: "View matches",
-    favoriteTeam: "FAVORITE TEAM",
+    favoriteTeam: "Favorite team",
     addFirstMatch: "Add your first match to see more team information here.",
     wonShort: "won",
     drawShort: "drawn",

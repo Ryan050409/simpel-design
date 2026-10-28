@@ -1,10 +1,13 @@
 import { useState } from "react";
 import type { Match } from "./types.ts";
+import { translations, type Language } from "./translations.ts";
 
 type MatchesPageProps = {
   matches: Match[];
   team: string;
+  language: Language;
 };
+
 function getMatchResult(match: Match, team: string) {
   if (match.home !== team && match.away !== team) {
     return null;
@@ -13,42 +16,30 @@ function getMatchResult(match: Match, team: string) {
   const teamGoals = match.home === team ? match.homeGoals : match.awayGoals;
   const opponentGoals = match.home === team ? match.awayGoals : match.homeGoals;
 
-  if (teamGoals > opponentGoals) {
-    return "W";
-  }
-
-  if (teamGoals === opponentGoals) {
-    return "G";
-  }
-
+  if (teamGoals > opponentGoals) return "W";
+  if (teamGoals === opponentGoals) return "G";
   return "V";
 }
 
-function getResultLabel(result: string | null) {
-  if (result === "W") return "Gewonnen";
-  if (result === "G") return "Gelijkspel";
-  if (result === "V") return "Verloren";
+function getResultLabel(result: string | null, language: Language) {
+  if (result === "W") return language === "nl" ? "Gewonnen" : "Won";
+  if (result === "G") return language === "nl" ? "Gelijkspel" : "Draw";
+  if (result === "V") return language === "nl" ? "Verloren" : "Lost";
 
-  return "Geen resultaat";
+  return language === "nl" ? "Geen resultaat" : "No result";
 }
 
 function getRowClass(result: string | null) {
-  if (result === "W") {
-    return "match-row-win";
-  }
-
-  if (result === "G") {
-    return "match-row-draw";
-  }
-
-  if (result === "V") {
-    return "match-row-loss";
-  }
+  if (result === "W") return "match-row-win";
+  if (result === "G") return "match-row-draw";
+  if (result === "V") return "match-row-loss";
 
   return undefined;
 }
 
-function MatchesPage({ matches, team }: MatchesPageProps) {
+function MatchesPage({ matches, team, language }: MatchesPageProps) {
+  const t = translations[language];
+
   const [matchView, setMatchView] = useState<"favorite" | "all">("favorite");
   const [sortOrder, setSortOrder] = useState<"newest" | "oldest">("newest");
 
@@ -64,17 +55,26 @@ function MatchesPage({ matches, team }: MatchesPageProps) {
     return sortOrder === "newest" ? dateB - dateA : dateA - dateB;
   });
 
+  const resultLabel = (result: string | null) =>
+    getResultLabel(result, language);
+
   return (
     <div className="matches-page">
       <div className="matches-page-header">
         <div>
-          <h1>⚽ Wedstrijden</h1>
-          <p>Bekijk en beheer de wedstrijden van {team}.</p>
+          <h1>⚽ {t.matches}</h1>
+          <p>
+            {language === "nl"
+              ? `Bekijk de wedstrijden van ${team}.`
+              : `View the matches for ${team}.`}
+          </p>
         </div>
 
         <div className="matches-page-actions">
           <div className="match-filter">
-            <label htmlFor="match-view">Toon wedstrijden:</label>
+            <label htmlFor="match-view">
+              {language === "nl" ? "Toon wedstrijden:" : "Show matches:"}
+            </label>
 
             <select
               id="match-view"
@@ -83,13 +83,15 @@ function MatchesPage({ matches, team }: MatchesPageProps) {
                 setMatchView(event.target.value as "favorite" | "all")
               }
             >
-              <option value="favorite">Favoriete team</option>
-              <option value="all">Alle teams</option>
+              <option value="favorite">{t.favoriteTeam}</option>
+              <option value="all">{t.allMatches}</option>
             </select>
           </div>
 
           <div className="match-filter">
-            <label htmlFor="match-sort">Sorteer op datum:</label>
+            <label htmlFor="match-sort">
+              {language === "nl" ? "Sorteer op datum:" : "Sort by date:"}
+            </label>
 
             <select
               id="match-sort"
@@ -98,8 +100,12 @@ function MatchesPage({ matches, team }: MatchesPageProps) {
                 setSortOrder(event.target.value as "newest" | "oldest")
               }
             >
-              <option value="newest">Nieuwste eerst</option>
-              <option value="oldest">Oudste eerst</option>
+              <option value="newest">
+                {language === "nl" ? "Nieuwste eerst" : "Newest first"}
+              </option>
+              <option value="oldest">
+                {language === "nl" ? "Oudste eerst" : "Oldest first"}
+              </option>
             </select>
           </div>
         </div>
@@ -109,18 +115,22 @@ function MatchesPage({ matches, team }: MatchesPageProps) {
         <table className="matches-table">
           <thead>
             <tr>
-              <th>Datum</th>
-              <th>Thuis</th>
-              <th>Uit</th>
-              <th>Uitslag</th>
-              <th>Resultaat</th>
+              <th>{language === "nl" ? "Datum" : "Date"}</th>
+              <th>{language === "nl" ? "Thuis" : "Home"}</th>
+              <th>{language === "nl" ? "Uit" : "Away"}</th>
+              <th>{language === "nl" ? "Uitslag" : "Score"}</th>
+              <th>{language === "nl" ? "Resultaat" : "Result"}</th>
             </tr>
           </thead>
 
           <tbody>
             {sortedMatches.length === 0 ? (
               <tr>
-                <td colSpan={5}>Geen wedstrijden gevonden.</td>
+                <td colSpan={5}>
+                  {language === "nl"
+                    ? "Geen wedstrijden gevonden."
+                    : "No matches found."}
+                </td>
               </tr>
             ) : (
               sortedMatches.map((match) => {
@@ -129,10 +139,15 @@ function MatchesPage({ matches, team }: MatchesPageProps) {
                 const awayIsFavorite = match.away === team;
                 const homeIsWinner = match.homeGoals > match.awayGoals;
                 const awayIsWinner = match.awayGoals > match.homeGoals;
+                const label = resultLabel(result);
 
                 return (
                   <tr key={match.id} className={getRowClass(result)}>
-                    <td>{new Date(match.date).toLocaleDateString("nl-NL")}</td>
+                    <td>
+                      {new Date(match.date).toLocaleDateString(
+                        language === "nl" ? "nl-NL" : "en-GB"
+                      )}
+                    </td>
 
                     <td
                       className={[
@@ -145,8 +160,16 @@ function MatchesPage({ matches, team }: MatchesPageProps) {
                       {homeIsFavorite && (
                         <span
                           className="favorite-indicator"
-                          aria-label="Favoriet team"
-                          title="Favoriet team"
+                          aria-label={
+                            language === "nl"
+                              ? "Favoriet team"
+                              : "Favorite team"
+                          }
+                          title={
+                            language === "nl"
+                              ? "Favoriet team"
+                              : "Favorite team"
+                          }
                         >
                           {" "}
                         </span>
@@ -165,8 +188,16 @@ function MatchesPage({ matches, team }: MatchesPageProps) {
                       {awayIsFavorite && (
                         <span
                           className="favorite-indicator"
-                          aria-label="Favoriet team"
-                          title="Favoriet team"
+                          aria-label={
+                            language === "nl"
+                              ? "Favoriet team"
+                              : "Favorite team"
+                          }
+                          title={
+                            language === "nl"
+                              ? "Favoriet team"
+                              : "Favorite team"
+                          }
                         >
                           {" "}
                         </span>
@@ -191,10 +222,10 @@ function MatchesPage({ matches, team }: MatchesPageProps) {
                                 ? "result-loss"
                                 : "match-result-text"
                         }
-                        aria-label={getResultLabel(result)}
-                        title={getResultLabel(result)}
+                        aria-label={label}
+                        title={label}
                       >
-                        {result ? getResultLabel(result) : "-"}
+                        {result ? label : "-"}
                       </span>
                     </td>
                   </tr>

@@ -496,7 +496,7 @@ function AppContent() {
 
         <Route
           path="/wedstrijden"
-          element={<MatchesPage matches={matches} team={team} />}
+          element={<MatchesPage matches={matches} team={team} language={language} />}
         />
 
         <Route
