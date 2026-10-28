@@ -123,9 +123,7 @@ function HomePage({
             <div
               className="home-page-featured-score"
               aria-label={
-                language === "nl"
-                  ? `Uitslag ${latestMatch.homeGoals} tegen ${latestMatch.awayGoals}`
-                  : `Score ${latestMatch.homeGoals} to ${latestMatch.awayGoals}`
+                `${t.scoreLabel} ${latestMatch.homeGoals} ${t.scoreAgainst} ${latestMatch.awayGoals}`
               }
             >
               <span>{latestMatch.homeGoals}</span>

@@ -9,6 +9,7 @@ import type { Player, Match, Team } from "./types";
 import PlayerForm from "./PlayerForm";
 import MatchForm from "./MatchForm";
 import type { Language } from "./translations";
+import {translations} from "./translations.ts"
 
 type AdminPageProps = {
   role: UserRole;
@@ -41,158 +42,96 @@ export default function AdminPage({
   teams,
   setTeams,
 }: AdminPageProps) {
-  const isDutch = language === "nl";
-
+  const locale = translations[language];
   const t = {
-    title: isDutch ? "Beheercentrum" : "Admin center",
-    description: isDutch
-      ? "Beheer teams, spelers en wedstrijden op één overzichtelijke plek."
-      : "Manage teams, players and matches in one convenient place.",
-    administrator: isDutch ? "Beheerder" : "Administrator",
-    player: isDutch ? "Speler" : "Player",
-    noAccess: isDutch ? "Geen toegang" : "Access denied",
-    noAccessDescription: isDutch
-      ? "Je hebt geen toestemming om deze pagina te bekijken."
-      : "You do not have permission to view this page.",
-    overview: isDutch ? "Overzicht" : "Overview",
-    players: isDutch ? "Spelers" : "Players",
-    matches: isDutch ? "Wedstrijden" : "Matches",
-    teams: isDutch ? "Teams" : "Teams",
-    inTracker: isDutch ? "In de tracker" : "In the tracker",
-    savedMatches: isDutch ? "Opgeslagen wedstrijden" : "Saved matches",
-    clubsInTracker: isDutch ? "Clubs in de tracker" : "Clubs in the tracker",
-    exportData: isDutch ? "Gegevens exporteren" : "Export data",
-    backupDescription: isDutch
-      ? "Download een back-up van je spelers, wedstrijden en teams."
-      : "Download a backup of your players, matches and teams.",
-    downloadBackup: isDutch ? "Back-up downloaden" : "Download backup",
-    manageTeams: isDutch ? "Teams beheren" : "Manage teams",
-    chooseTeamDescription: isDutch
-      ? "Kies een club om de spelers en wedstrijden te beheren."
-      : "Choose a club to manage its players and matches.",
-    cancel: isDutch ? "Annuleren" : "Cancel",
-    addTeam: isDutch ? "Team toevoegen" : "Add team",
-    newTeamName: isDutch ? "Naam van het nieuwe team" : "New team name",
-    teamPlaceholder: isDutch ? "Bijvoorbeeld: Ajax" : "For example: Ajax",
-    saveTeam: isDutch ? "Team opslaan" : "Save team",
-    enterTeamName: isDutch
-      ? "Vul een teamnaam in."
-      : "Enter a team name.",
-    teamExists: isDutch
-      ? "Dit team bestaat al."
-      : "This team already exists.",
-    searchTeam: isDutch ? "Zoek een team" : "Search teams",
-    searchTeamPlaceholder: isDutch
-      ? "Zoek op clubnaam..."
-      : "Search by club name...",
-    of: isDutch ? "van" : "of",
-    teamCount: isDutch ? "teams" : "teams",
-    backToTeams: isDutch ? "Terug naar teams" : "Back to teams",
-    teamManagement: isDutch ? "TEAMBEHEER" : "TEAM MANAGEMENT",
-    chooseTeam: isDutch
-      ? "Kies een team om te beheren"
-      : "Choose a team to manage",
-    chooseSection: isDutch
-      ? "Kies wat je wilt beheren"
-      : "Choose what you want to manage",
-    chooseWhat: isDutch
-      ? "Wat wil je beheren?"
-      : "What would you like to manage?",
-    chooseSectionDescription: isDutch
-      ? "Kies hierboven voor spelers of wedstrijden van"
-      : "Choose players or matches for",
-    managePlayers: isDutch ? "Spelers beheren" : "Manage players",
-    manageMatches: isDutch ? "Wedstrijden beheren" : "Manage matches",
-    playersDescription: isDutch
-      ? "Voeg spelers toe, bewerk hun gegevens of verwijder ze."
-      : "Add players, edit their details or delete them.",
-    matchesDescription: isDutch
-      ? "Bekijk alle thuis- en uitwedstrijden van"
-      : "View all home and away matches for",
-    addPlayer: isDutch ? "Speler toevoegen" : "Add player",
-    addMatch: isDutch ? "Wedstrijd toevoegen" : "Add match",
-    searchPlayer: isDutch ? "Zoek een speler" : "Search players",
-    searchPlayerPlaceholder: isDutch
-      ? "Naam of positie..."
-      : "Name or position...",
-    searchMatch: isDutch ? "Zoek een wedstrijd" : "Search matches",
-    searchMatchPlaceholder: isDutch
-      ? "Team, datum of uitslag..."
-      : "Team, date or score...",
-    playersDisplayed: isDutch
-      ? "spelers weergegeven"
-      : "players displayed",
-    matchesDisplayed: isDutch
-      ? "wedstrijden weergegeven"
-      : "matches displayed",
-    edit: isDutch ? "Bewerken" : "Edit",
-    delete: isDutch ? "Verwijderen" : "Delete",
-    noTeams: isDutch ? "Er zijn nog geen teams" : "There are no teams yet",
-    noTeamsFound: isDutch ? "Geen teams gevonden" : "No teams found",
-    addTeamToStart: isDutch
-      ? "Voeg een team toe om te beginnen."
-      : "Add a team to get started.",
-    trySearch: isDutch
-      ? "Probeer een andere zoekterm."
-      : "Try another search term.",
-    noPlayers: isDutch
-      ? "Nog geen spelers bij dit team"
-      : "No players for this team yet",
-    noPlayersFound: isDutch ? "Geen spelers gevonden" : "No players found",
-    addFirstPlayer: isDutch
-      ? "Voeg de eerste speler aan deze club toe."
-      : "Add the first player to this club.",
-    noMatches: isDutch
-      ? "Nog geen wedstrijden voor dit team"
-      : "No matches for this team yet",
-    noMatchesFound: isDutch
-      ? "Geen wedstrijden gevonden"
-      : "No matches found",
-    addFirstMatch: isDutch
-      ? "Voeg de eerste wedstrijd toe voor dit team."
-      : "Add the first match for this team.",
-    homeMatch: isDutch ? "Thuiswedstrijd" : "Home match",
-    awayMatch: isDutch ? "Uitwedstrijd" : "Away match",
-    permissions: isDutch ? "Toegangsrechten" : "Access permissions",
-    permissionsDescription: isDutch
-      ? "Overzicht van de rechten voor jouw huidige rol."
-      : "Overview of the permissions for your current role.",
-    allowed: isDutch ? "Toegestaan" : "Allowed",
-    denied: isDutch ? "Geen toegang" : "No access",
-    playersPermission: isDutch ? "Spelers beheren" : "Manage players",
-    matchesPermission: isDutch ? "Wedstrijden beheren" : "Manage matches",
-    teamsPermission: isDutch ? "Teams beheren" : "Manage teams",
-    usersPermission: isDutch
-      ? "Gebruikers en rechten beheren"
-      : "Manage users and permissions",
-    linkedDataWarning: isDutch
-      ? "Verwijder of wijzig eerst de gekoppelde gegevens."
-      : "Remove or update the linked data first.",
-    deleteTeamConfirm: isDutch
-      ? "Weet je zeker dat je team wilt verwijderen?"
-      : "Are you sure you want to delete this team?",
-    deletePlayerConfirm: isDutch
-      ? "Weet je zeker dat je deze speler wilt verwijderen?"
-      : "Are you sure you want to delete this player?",
-    deleteMatchConfirm: isDutch
-      ? "Weet je zeker dat je deze wedstrijd wilt verwijderen?"
-      : "Are you sure you want to delete this match?",
-    playedMatchWarning: isDutch
-      ? "LET OP: deze wedstrijd heeft al een uitslag."
-      : "WARNING: this match already has a result.",
-    deletePlayedMatchConfirm: isDutch
-      ? "Weet je zeker dat je deze gespeelde wedstrijd definitief wilt verwijderen?"
-      : "Are you sure you want to permanently delete this played match?",
-    linkedPlayers: isDutch
-      ? "speler(s) aan dit team gekoppeld"
-      : "player(s) linked to this team",
-    linkedMatches: isDutch
-      ? "wedstrijd(en) aan dit team gekoppeld"
-      : "match(es) linked to this team",
-    playerSingular: isDutch ? "speler" : "player",
-    playerPlural: isDutch ? "spelers" : "players",
-    matchSingular: isDutch ? "wedstrijd" : "match",
-    matchPlural: isDutch ? "wedstrijden" : "matches",
+    title: locale.adminCenter,
+    description: locale.adminDescription,
+    administrator: locale.administrator,
+    player: locale.playerRole,
+    noAccess: locale.noAccess,
+    noAccessDescription: locale.noAccessDescription,
+    overview: locale.adminOverview,
+    players: locale.players,
+    matches: locale.matches,
+    teams: locale.teams,
+    inTracker: locale.adminInTracker,
+    savedMatches: locale.savedMatches,
+    clubsInTracker: locale.clubsInTracker,
+    exportData: locale.exportData,
+    backupDescription: locale.adminBackupDescription,
+    downloadBackup: locale.downloadBackup,
+    manageTeams: locale.manageTeams,
+    chooseTeamDescription: locale.chooseTeamDescription,
+    cancel: locale.cancel,
+    addTeam: locale.addTeam,
+    newTeamName: locale.newTeamName,
+    teamPlaceholder: locale.adminTeamPlaceholder,
+    saveTeam: locale.saveTeam,
+    enterTeamName: locale.enterTeamName,
+    teamExists: locale.adminTeamExists,
+    searchTeam: locale.adminSearchTeam,
+    searchTeamPlaceholder: locale.adminTeamSearchPlaceholder,
+    of: locale.teamsOf,
+    teamCount: locale.teamCount,
+    backToTeams: locale.backToTeams,
+    teamManagement: locale.teamManagement,
+    chooseTeam: locale.adminChooseTeam,
+    chooseSection: locale.adminChooseSection,
+    chooseWhat: locale.adminChooseWhat,
+    chooseSectionDescription: locale.choosePlayersOrMatches,
+    managePlayers: locale.managePlayers,
+    manageMatches: locale.manageMatches,
+    playersDescription: locale.managePlayersDescription,
+    matchesDescription: locale.manageMatchesDescription,
+    addPlayer: locale.addPlayer,
+    addMatch: locale.addMatch,
+    searchPlayer: locale.adminSearchPlayer,
+    searchPlayerPlaceholder: locale.searchPlayerPlaceholder,
+    searchMatch: locale.adminSearchMatch,
+    searchMatchPlaceholder: locale.searchMatchPlaceholder,
+    playersDisplayed: locale.adminPlayersDisplayed,
+    matchesDisplayed: locale.adminMatchesDisplayed,
+    edit: locale.edit,
+    delete: locale.delete,
+    noTeams: locale.adminNoTeams,
+    noTeamsFound: locale.noTeamsFound,
+    addTeamToStart: locale.addTeamToStart,
+    trySearch: locale.adminTrySearch,
+    noPlayers: locale.noPlayersForTeam,
+    noPlayersFound: locale.noPlayersFound,
+    addFirstPlayer: locale.addFirstPlayerToTeam,
+    noMatches: locale.adminNoMatchesForTeam,
+    noMatchesFound: locale.noMatchesFound,
+    addFirstMatch: locale.addFirstMatchToTeam,
+    homeMatch: locale.homeMatch,
+    awayMatch: locale.awayMatch,
+    permissions: locale.generalPermissions,
+    permissionsDescription: locale.permissionsDescription,
+    allowed: locale.allowed,
+    denied: locale.noPermission,
+    playersPermission: locale.managePlayersPermission,
+    matchesPermission: locale.manageMatchesPermission,
+    teamsPermission: locale.manageTeamsPermission,
+    usersPermission: locale.manageUsersPermission,
+    linkedDataWarning: locale.linkedDataWarning,
+    deleteTeamConfirm: locale.adminDeleteTeamConfirm,
+    deletePlayerConfirm: locale.adminDeletePlayerConfirm,
+    deleteMatchConfirm: locale.adminDeleteMatchConfirm,
+    playedMatchWarning: locale.playedMatchWarning,
+    deletePlayedMatchConfirm: locale.adminDeletePlayedMatchConfirm,
+    linkedPlayers: locale.adminLinkedPlayers,
+    linkedMatches: locale.adminLinkedMatches,
+    playerSingular: locale.adminPlayerSingular,
+    playerPlural: locale.adminPlayerPlural,
+    matchSingular: locale.adminMatchSingular,
+    matchPlural: locale.adminMatchPlural,
+  };
+
+  const positionLabels: Record<string, string> = {
+    Keeper: locale.goalkeeperPosition,
+    Verdediger: locale.defenderPosition,
+    Middenvelder: locale.midfielderPosition,
+    Aanvaller: locale.forwardPosition,
   };
 
   const permissionLabels: Record<Permission, string> = {
@@ -820,7 +759,9 @@ export default function AdminPage({
                         </strong>
 
                         <div className="admin-player-meta">
-                          <span>{player.position}</span>
+                          <span>
+                            {positionLabels[player.position] ?? player.position}
+                          </span>
                           <span className="admin-player-number">
                             #{player.number}
                           </span>
@@ -1043,6 +984,7 @@ export default function AdminPage({
           setPlayerList={setPlayerList}
           closeModal={closePlayerForm}
           teams={teams}
+          language={language}
         />
       )}
 
@@ -1053,6 +995,7 @@ export default function AdminPage({
           setMatches={setMatches}
           closeModal={closeMatchForm}
           teams={teams}
+          language={language}
         />
       )}
     </main>

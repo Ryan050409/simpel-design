@@ -314,29 +314,29 @@ function AppContent() {
 
   return (
     <div className={`app ${theme}`}>
-      <nav className="nav" aria-label="Hoofdnavigatie">
-        <NavLink to="/" aria-label="Home">
+      <nav className="nav" aria-label={t.mainNavigationLabel}>
+        <NavLink to="/" aria-label={t.homeAriaLabel}>
           <span className="mobile-nav-icon" aria-hidden="true">
             🏠
           </span>
-          <span className="mobile-nav-label">Home</span>
+          <span className="mobile-nav-label">{t.home}</span>
         </NavLink>
 
-        <NavLink to="/dashboard" aria-label="Statistieken">
+        <NavLink to="/dashboard" aria-label={t.statsAriaLabel}>
           <span className="mobile-nav-icon" aria-hidden="true">
             📊
           </span>
           <span className="mobile-nav-label">{t.stats}</span>
         </NavLink>
 
-        <NavLink to="/wedstrijden" aria-label="Wedstrijden">
+        <NavLink to="/wedstrijden" aria-label={t.matchesAriaLabel}>
           <span className="mobile-nav-icon" aria-hidden="true">
             ⚽
           </span>
           <span className="mobile-nav-label">{t.matches}</span>
         </NavLink>
 
-        <NavLink to="/spelers" aria-label="Spelers">
+        <NavLink to="/spelers" aria-label={t.playersAriaLabel}>
           <span className="mobile-nav-icon" aria-hidden="true">
             👥
           </span>
@@ -344,7 +344,7 @@ function AppContent() {
         </NavLink>
 
         {isAdmin && (
-          <NavLink to="/admin" aria-label="Admin">
+          <NavLink to="/admin" aria-label={t.adminAriaLabel}>
             <span className="mobile-nav-icon" aria-hidden="true">
               🛡️
             </span>
@@ -356,7 +356,7 @@ function AppContent() {
           <button
             type="button"
             className="profile-menu-trigger"
-            aria-label="Profiel en instellingen"
+            aria-label={t.profileMenuAriaLabel}
             aria-expanded={showProfileMenu}
             aria-haspopup="true"
             onClick={() => setShowProfileMenu((open) => !open)}
@@ -372,12 +372,14 @@ function AppContent() {
               <h3>{t.profileSettings}</h3>
 
               <div className="profile-menu-section">
-                <strong>Profiel</strong>
+                <strong>{t.profile}</strong>
 
                 {isLoggedIn ? (
                   <>
-                    <span>{DEMO_USER.displayName}</span>
-                    <small>Rol: {DEMO_USER.role}</small>
+                    <span>{t.demoUserName}</span>
+                    <small>
+                      {t.role}: {isAdmin ? t.administrator : t.playerRole}
+                    </small>
 
                     <button
                       type="button"
@@ -386,12 +388,12 @@ function AppContent() {
                         setShowProfileMenu(false);
                       }}
                     >
-                      Uitloggen
+                      {t.logout}
                     </button>
                   </>
                 ) : (
                   <>
-                    <span>Je bent niet ingelogd.</span>
+                    <span>{t.notLoggedIn}</span>
 
                     <button
                       type="button"
@@ -400,13 +402,13 @@ function AppContent() {
                         setShowProfileMenu(false);
                       }}
                     >
-                      Inloggen als demo-admin
+                      {t.demoLogin}
                     </button>
                   </>
                 )}
               </div>
               <div className="profile-menu-section">
-                <label htmlFor="profile-language">Taal/ Language</label>
+                <label htmlFor="profile-language">{t.language}</label>
 
                 <select
                   id="profile-language"
@@ -415,8 +417,8 @@ function AppContent() {
                     setLanguage(event.target.value as "nl" | "en")
                   }
                 >
-                  <option value="nl">🇳🇱 Nederlands</option>
-                  <option value="en">🇬🇧 English</option>
+                  <option value="nl">🇳🇱 {t.languageDutch}</option>
+                  <option value="en">🇬🇧 {t.languageEnglish}</option>
                 </select>
                 <div className="profile-menu-section"></div>
                 <label htmlFor="profile-theme">{t.theme}</label>

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import type { Dispatch, SetStateAction } from "react";
 import type { Player, Team } from "./types.ts";
+import { translations, type Language } from "./translations.ts";
 
 type PlayerFormProps = {
   editingPlayer?: Player | null;
@@ -8,6 +9,7 @@ type PlayerFormProps = {
   setPlayerList: Dispatch<SetStateAction<Player[]>>;
   closeModal: () => void;
   teams: Team[];
+  language: Language;
 };
 
 function PlayerForm({
@@ -16,7 +18,9 @@ function PlayerForm({
   setPlayerList,
   closeModal,
   teams,
+  language,
 }: PlayerFormProps) {
+  const t = translations[language];
   const [formStep, setFormStep] = useState(1);
 
   const [newPlayerFirstName, setNewPlayerFirstName] = useState(
@@ -110,7 +114,7 @@ function PlayerForm({
       newPlayerNumber.trim() === "" ||
       newPlayerPosition.trim() === ""
     ) {
-      setWarning("Vul eerst alle basisgegevens in!");
+      setWarning(t.playerRequiredBasicFields);
       return;
     }
 
@@ -129,7 +133,7 @@ function PlayerForm({
       newPlayerMinutesPlayed.trim() === "" ||
       newPlayerRating.trim() === ""
     ) {
-      setWarning("Vul alle verplichte velden in!");
+      setWarning(t.playerRequiredFields);
       return;
     }
 
@@ -154,12 +158,12 @@ function PlayerForm({
     ];
 
     if (numericValues.some((value) => Number(value) < 0)) {
-      setWarning("Getallen kunnen niet negatief zijn!");
+      setWarning(t.playerNegativeNumbers);
       return;
     }
 
     if (Number(newPlayerRating) > 10) {
-      setWarning("De rating kan maximaal 10 zijn!");
+      setWarning(t.playerRatingMax);
       return;
     }
 
@@ -215,12 +219,17 @@ function PlayerForm({
   return (
     <div className="modal-overlay">
       <div className="modal">
-        <button className="modal-close" type="button" onClick={closeModal}>
+        <button
+          className="modal-close"
+          type="button"
+          aria-label={t.closeDialog}
+          onClick={closeModal}
+        >
           ×
         </button>
 
         <h2 className="h2-player">
-          {editingPlayer ? "Speler bewerken" : "Speler toevoegen"}
+          {editingPlayer ? t.playerFormEditTitle : t.playerFormAddTitle}
         </h2>
 
         {warning && <p className="warning">{warning}</p>}
@@ -228,54 +237,54 @@ function PlayerForm({
         {formStep === 1 && (
           <>
             <div className="form-grid">
-              <h3 className="form-section-title">Algemeen</h3>
+              <h3 className="form-section-title">{t.playerFormGeneralSection}</h3>
 
               <div className="form-field">
-                <label htmlFor="player-firstname">Voornaam</label>
+                <label htmlFor="player-firstname">{t.playerFirstName}</label>
                 <input
                   id="player-firstname"
                   type="text"
-                  placeholder="Voornaam speler"
+                  placeholder={t.playerFirstNamePlaceholder}
                   value={newPlayerFirstName}
                   onChange={(e) => setNewPlayerFirstName(e.target.value)}
                 />
               </div>
 
               <div className="form-field">
-                <label htmlFor="player-lastname">Achternaam</label>
+                <label htmlFor="player-lastname">{t.playerLastName}</label>
                 <input
                   id="player-lastname"
                   type="text"
-                  placeholder="Achternaam speler"
+                  placeholder={t.playerLastNamePlaceholder}
                   value={newPlayerLastName}
                   onChange={(e) => setNewPlayerLastName(e.target.value)}
                 />
               </div>
 
               <div className="form-field">
-                <label htmlFor="player-number">Rugnummer</label>
+                <label htmlFor="player-number">{t.playerNumber}</label>
                 <input
                   id="player-number"
                   type="number"
                   min="0"
-                  placeholder="Rugnummer"
+                  placeholder={t.playerNumberPlaceholder}
                   value={newPlayerNumber}
                   onChange={(e) => setNewPlayerNumber(e.target.value)}
                 />
               </div>
 
               <div className="form-field">
-                <label htmlFor="player-position">Positie</label>
+                <label htmlFor="player-position">{t.playerPosition}</label>
                 <select
                   id="player-position"
                   value={newPlayerPosition}
                   onChange={(e) => setNewPlayerPosition(e.target.value)}
                 >
-                  <option value="">Kies positie</option>
-                  <option value="Keeper">Keeper</option>
-                  <option value="Verdediger">Verdediger</option>
-                  <option value="Middenvelder">Middenvelder</option>
-                  <option value="Aanvaller">Aanvaller</option>
+                  <option value="">{t.playerChoosePosition}</option>
+                  <option value="Keeper">{t.goalkeeperPosition}</option>
+                  <option value="Verdediger">{t.defenderPosition}</option>
+                  <option value="Middenvelder">{t.midfielderPosition}</option>
+                  <option value="Aanvaller">{t.forwardPosition}</option>
                 </select>
               </div>
             </div>
@@ -285,7 +294,7 @@ function PlayerForm({
               className="save-player-button"
               onClick={goToNextStep}
             >
-              Doorgaan
+              {t.playerNext}
             </button>
           </>
         )}
@@ -293,16 +302,16 @@ function PlayerForm({
         {formStep === 2 && (
           <>
             <div className="form-grid">
-              <h3 className="form-section-title">Algemeen</h3>
+              <h3 className="form-section-title">{t.playerFormGeneralSection}</h3>
 
               <div className="form-field">
-                <label htmlFor="player-team">Team</label>
+                <label htmlFor="player-team">{t.playerTeam}</label>
                 <select
                   id="player-team"
                   value={newPlayerTeam}
                   onChange={(e) => setNewPlayerTeam(e.target.value)}
                 >
-                  <option value="">Kies een team</option>
+                  <option value="">{t.playerChooseTeam}</option>
                   {teams.map((team) => (
                     <option key={team.id} value={team.name}>
                       {team.name}
@@ -312,7 +321,7 @@ function PlayerForm({
               </div>
 
               <div className="form-field">
-                <label htmlFor="player-matches">Wedstrijden</label>
+                <label htmlFor="player-matches">{t.playerMatchesPlayed}</label>
                 <input
                   id="player-matches"
                   type="number"
@@ -323,7 +332,7 @@ function PlayerForm({
               </div>
 
               <div className="form-field">
-                <label htmlFor="player-minutes">Minuten gespeeld</label>
+                <label htmlFor="player-minutes">{t.playerMinutesPlayed}</label>
                 <input
                   id="player-minutes"
                   type="number"
@@ -333,10 +342,10 @@ function PlayerForm({
                 />
               </div>
 
-              <h3 className="form-section-title">Aanvallend</h3>
+              <h3 className="form-section-title">{t.playerAttackingSection}</h3>
 
               <div className="form-field">
-                <label htmlFor="player-goals">Goals</label>
+                <label htmlFor="player-goals">{t.playerGoals}</label>
                 <input
                   id="player-goals"
                   type="number"
@@ -347,7 +356,7 @@ function PlayerForm({
               </div>
 
               <div className="form-field">
-                <label htmlFor="player-assists">Assists</label>
+                <label htmlFor="player-assists">{t.playerAssists}</label>
                 <input
                   id="player-assists"
                   type="number"
@@ -357,10 +366,10 @@ function PlayerForm({
                 />
               </div>
 
-              <h3 className="form-section-title">Verdedigend</h3>
+              <h3 className="form-section-title">{t.playerDefendingSection}</h3>
 
               <div className="form-field">
-                <label htmlFor="player-tackles">Tackles</label>
+                <label htmlFor="player-tackles">{t.playerTackles}</label>
                 <input
                   id="player-tackles"
                   type="number"
@@ -371,7 +380,7 @@ function PlayerForm({
               </div>
 
               <div className="form-field">
-                <label htmlFor="player-interceptions">Interceptions</label>
+                <label htmlFor="player-interceptions">{t.playerInterceptions}</label>
                 <input
                   id="player-interceptions"
                   type="number"
@@ -382,7 +391,7 @@ function PlayerForm({
               </div>
 
               <div className="form-field">
-                <label htmlFor="player-blocks">Blocks</label>
+                <label htmlFor="player-blocks">{t.playerBlocks}</label>
                 <input
                   id="player-blocks"
                   type="number"
@@ -393,7 +402,7 @@ function PlayerForm({
               </div>
 
               <div className="form-field">
-                <label htmlFor="player-clearances">Clearances</label>
+                <label htmlFor="player-clearances">{t.playerClearances}</label>
                 <input
                   id="player-clearances"
                   type="number"
@@ -404,7 +413,7 @@ function PlayerForm({
               </div>
 
               <div className="form-field">
-                <label htmlFor="player-duels">Gewonnen duels</label>
+                <label htmlFor="player-duels">{t.playerDuelsWon}</label>
                 <input
                   id="player-duels"
                   type="number"
@@ -415,7 +424,7 @@ function PlayerForm({
               </div>
 
               <div className="form-field">
-                <label htmlFor="player-fouls">Overtredingen</label>
+                <label htmlFor="player-fouls">{t.playerFouls}</label>
                 <input
                   id="player-fouls"
                   type="number"
@@ -425,10 +434,10 @@ function PlayerForm({
                 />
               </div>
 
-              <h3 className="form-section-title">Keepers</h3>
+              <h3 className="form-section-title">{t.playerGoalkeeperSection}</h3>
 
               <div className="form-field">
-                <label htmlFor="player-saves">Reddingen</label>
+                <label htmlFor="player-saves">{t.playerSaves}</label>
                 <input
                   id="player-saves"
                   type="number"
@@ -439,7 +448,7 @@ function PlayerForm({
               </div>
 
               <div className="form-field">
-                <label htmlFor="player-one-v-one-saves">1-op-1 reddingen</label>
+                <label htmlFor="player-one-v-one-saves">{t.playerOneVsOneSaves}</label>
                 <input
                   id="player-one-v-one-saves"
                   type="number"
@@ -450,7 +459,7 @@ function PlayerForm({
               </div>
 
               <div className="form-field">
-                <label htmlFor="player-clean-sheets">Clean Sheets</label>
+                <label htmlFor="player-clean-sheets">{t.playerCleanSheets}</label>
                 <input
                   id="player-clean-sheets"
                   type="number"
@@ -461,7 +470,7 @@ function PlayerForm({
               </div>
 
               <div className="form-field">
-                <label htmlFor="player-penalty-saves">Penalty's gehouden</label>
+                <label htmlFor="player-penalty-saves">{t.playerPenaltySaves}</label>
                 <input
                   id="player-penalty-saves"
                   type="number"
@@ -472,7 +481,7 @@ function PlayerForm({
               </div>
 
               <div className="form-field">
-                <label htmlFor="player-goals-conceded">Tegengoals</label>
+                <label htmlFor="player-goals-conceded">{t.playerGoalsConceded}</label>
                 <input
                   id="player-goals-conceded"
                   type="number"
@@ -482,10 +491,10 @@ function PlayerForm({
                 />
               </div>
 
-              <h3 className="form-section-title">Beoordeling</h3>
+              <h3 className="form-section-title">{t.playerRatingSection}</h3>
 
               <div className="form-field">
-                <label htmlFor="player-rating">Rating</label>
+                <label htmlFor="player-rating">{t.playerRating}</label>
                 <input
                   id="player-rating"
                   type="number"
@@ -504,7 +513,7 @@ function PlayerForm({
                 className="back-player-button"
                 onClick={goBack}
               >
-                Terug
+                {t.back}
               </button>
 
               <button
@@ -512,7 +521,7 @@ function PlayerForm({
                 className="save-player-button"
                 onClick={savePlayer}
               >
-                {editingPlayer ? "Wijzigingen opslaan" : "Speler opslaan"}
+                {editingPlayer ? t.save : t.playerSave}
               </button>
             </div>
           </>

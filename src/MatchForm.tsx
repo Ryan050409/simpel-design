@@ -1,6 +1,7 @@
 import { useState } from "react";
 import type { Dispatch, SetStateAction } from "react";
 import type { Match, Team } from "./types.ts";
+import { translations, type Language } from "./translations.ts";
 
 type MatchFormProps = {
   editingMatch?: Match | null;
@@ -8,6 +9,7 @@ type MatchFormProps = {
   setMatches: Dispatch<SetStateAction<Match[]>>;
   closeModal: () => void;
   teams: Team[];
+  language: Language;
 };
 
 function MatchForm({
@@ -16,7 +18,9 @@ function MatchForm({
   setMatches,
   closeModal,
   teams,
+  language,
 }: MatchFormProps) {
+  const t = translations[language];
   const [home, setHome] = useState(editingMatch?.home ?? "");
   const [away, setAway] = useState(editingMatch?.away ?? "");
 
@@ -42,17 +46,17 @@ function MatchForm({
       awayGoals.trim() === "" ||
       date === ""
     ) {
-      setWarning("Alle velden moeten ingevuld worden!");
+      setWarning(t.matchRequiredFields);
       return;
     }
 
     if (home.trim().toLowerCase() === away.trim().toLowerCase()) {
-      setWarning("Een team kan niet tegen zichzelf spelen!");
+      setWarning(t.matchSameTeamError);
       return;
     }
 
     if (Number(homeGoals) < 0 || Number(awayGoals) < 0) {
-      setWarning("Het aantal doelpunten kan niet negatief zijn!");
+      setWarning(t.matchNegativeGoalsError);
       return;
     }
 
@@ -84,25 +88,30 @@ function MatchForm({
   return (
     <div className="modal-overlay">
       <div className="modal">
-        <button className="modal-close" type="button" onClick={closeModal}>
+        <button
+          className="modal-close"
+          type="button"
+          aria-label={t.closeDialog}
+          onClick={closeModal}
+        >
           ×
         </button>
 
         <h2 className="h2-player">
-          {editingMatch ? "Wedstrijd bewerken" : "Wedstrijd toevoegen"}
+          {editingMatch ? t.matchFormEditTitle : t.matchFormAddTitle}
         </h2>
 
         {warning && <p className="warning">{warning}</p>}
 
         <div className="form-grid">
           <div className="form-field">
-            <label htmlFor="match-home">Thuisteam</label>
+            <label htmlFor="match-home">{t.matchHomeTeam}</label>
             <select
               id="match-home"
               value={home}
               onChange={(e) => setHome(e.target.value)}
             >
-              <option value="">Kies thuisteam</option>
+              <option value="">{t.matchChooseHomeTeam}</option>
               {teams.map((team) => (
                 <option key={team.id} value={team.name}>
                   {team.name}
@@ -112,13 +121,13 @@ function MatchForm({
           </div>
 
           <div className="form-field">
-            <label htmlFor="match-away">Uitteam</label>
+            <label htmlFor="match-away">{t.matchAwayTeam}</label>
             <select
               id="match-away"
               value={away}
               onChange={(e) => setAway(e.target.value)}
             >
-              <option value="">Kies uitteam</option>
+              <option value="">{t.matchChooseAwayTeam}</option>
               {teams.map((team) => (
                 <option key={team.id} value={team.name}>
                   {team.name}
@@ -127,7 +136,7 @@ function MatchForm({
             </select>
           </div>
           <div className="form-field">
-            <label htmlFor="match-home-goals">Goals thuis</label>
+            <label htmlFor="match-home-goals">{t.matchHomeGoals}</label>
             <input
               id="match-home-goals"
               type="number"
@@ -138,7 +147,7 @@ function MatchForm({
           </div>
 
           <div className="form-field">
-            <label htmlFor="match-away-goals">Goals uit</label>
+            <label htmlFor="match-away-goals">{t.matchAwayGoals}</label>
             <input
               id="match-away-goals"
               type="number"
@@ -149,7 +158,7 @@ function MatchForm({
           </div>
 
           <div className="form-field">
-            <label htmlFor="match-date">Datum</label>
+            <label htmlFor="match-date">{t.matchDate}</label>
             <input
               id="match-date"
               type="date"
@@ -164,7 +173,7 @@ function MatchForm({
           className="save-player-button"
           onClick={saveMatch}
         >
-          {editingMatch ? "Wijzigingen opslaan" : "Wedstrijd opslaan"}
+          {editingMatch ? t.save : t.matchSave}
         </button>
       </div>
     </div>

@@ -22,11 +22,12 @@ function getMatchResult(match: Match, team: string) {
 }
 
 function getResultLabel(result: string | null, language: Language) {
-  if (result === "W") return language === "nl" ? "Gewonnen" : "Won";
-  if (result === "G") return language === "nl" ? "Gelijkspel" : "Draw";
-  if (result === "V") return language === "nl" ? "Verloren" : "Lost";
+  const t = translations[language];
+  if (result === "W") return t.resultWon;
+  if (result === "G") return t.resultDraw;
+  if (result === "V") return t.resultLost;
 
-  return language === "nl" ? "Geen resultaat" : "No result";
+  return t.noResult;
 }
 
 function getRowClass(result: string | null) {
@@ -64,16 +65,14 @@ function MatchesPage({ matches, team, language }: MatchesPageProps) {
         <div>
           <h1>⚽ {t.matches}</h1>
           <p>
-            {language === "nl"
-              ? `Bekijk de wedstrijden van ${team}.`
-              : `View the matches for ${team}.`}
+            {t.matchesDescription} {team}.
           </p>
         </div>
 
         <div className="matches-page-actions">
           <div className="match-filter">
             <label htmlFor="match-view">
-              {language === "nl" ? "Toon wedstrijden:" : "Show matches:"}
+              {t.showMatches}
             </label>
 
             <select
@@ -83,14 +82,14 @@ function MatchesPage({ matches, team, language }: MatchesPageProps) {
                 setMatchView(event.target.value as "favorite" | "all")
               }
             >
-              <option value="favorite">{t.favoriteTeam}</option>
-              <option value="all">{t.allMatches}</option>
+              <option value="favorite">{t.favoriteTeamOption}</option>
+              <option value="all">{t.allTeams}</option>
             </select>
           </div>
 
           <div className="match-filter">
             <label htmlFor="match-sort">
-              {language === "nl" ? "Sorteer op datum:" : "Sort by date:"}
+              {t.sortByDate}
             </label>
 
             <select
@@ -101,10 +100,10 @@ function MatchesPage({ matches, team, language }: MatchesPageProps) {
               }
             >
               <option value="newest">
-                {language === "nl" ? "Nieuwste eerst" : "Newest first"}
+                {t.newestFirst}
               </option>
               <option value="oldest">
-                {language === "nl" ? "Oudste eerst" : "Oldest first"}
+                {t.oldestFirst}
               </option>
             </select>
           </div>
@@ -115,11 +114,11 @@ function MatchesPage({ matches, team, language }: MatchesPageProps) {
         <table className="matches-table">
           <thead>
             <tr>
-              <th>{language === "nl" ? "Datum" : "Date"}</th>
-              <th>{language === "nl" ? "Thuis" : "Home"}</th>
-              <th>{language === "nl" ? "Uit" : "Away"}</th>
-              <th>{language === "nl" ? "Uitslag" : "Score"}</th>
-              <th>{language === "nl" ? "Resultaat" : "Result"}</th>
+              <th>{t.dateColumn}</th>
+              <th>{t.homeColumn}</th>
+              <th>{t.awayColumn}</th>
+              <th>{t.scoreColumn}</th>
+              <th>{t.resultColumn}</th>
             </tr>
           </thead>
 
@@ -127,9 +126,7 @@ function MatchesPage({ matches, team, language }: MatchesPageProps) {
             {sortedMatches.length === 0 ? (
               <tr>
                 <td colSpan={5}>
-                  {language === "nl"
-                    ? "Geen wedstrijden gevonden."
-                    : "No matches found."}
+                  {t.noMatchesFound}.
                 </td>
               </tr>
             ) : (
@@ -161,14 +158,10 @@ function MatchesPage({ matches, team, language }: MatchesPageProps) {
                         <span
                           className="favorite-indicator"
                           aria-label={
-                            language === "nl"
-                              ? "Favoriet team"
-                              : "Favorite team"
+                            t.favoriteTeamIndicator
                           }
                           title={
-                            language === "nl"
-                              ? "Favoriet team"
-                              : "Favorite team"
+                            t.favoriteTeamIndicator
                           }
                         >
                           {" "}

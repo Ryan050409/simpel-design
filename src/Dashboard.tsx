@@ -16,7 +16,6 @@ function Dashboard({
   language,
 }: DashboardProps) {
   const t = translations[language];
-  const english = language === "en";
 
   const playedMatches = matches.filter(
     (match) => match.home === team || match.away === team,
@@ -154,35 +153,19 @@ function Dashboard({
 
   const matchWord =
     playedMatches.length === 1
-      ? english
-        ? "match"
-        : "wedstrijd"
-      : english
-        ? "matches"
-        : "wedstrijden";
-
-  const noMatchesMessage = english
-    ? `There are no matches for ${team} yet. Statistics will update when matches become available.`
-    : `Er zijn nog geen wedstrijden voor ${team}. De statistieken worden bijgewerkt zodra er wedstrijden beschikbaar zijn.`;
-
-  const teamDescription = english
-    ? `The attacking and defensive performance of ${team}.`
-    : `De aanvallende en verdedigende prestaties van ${team}.`;
-
-  const playersDescription = english
-    ? `The standout players of ${team}, based on the registered statistics.`
-    : `De opvallendste spelers van ${team}, op basis van de geregistreerde statistieken.`;
+      ? t.dashboardMatchSingular
+      : t.dashboardMatchPlural;
+  const noMatchesMessage = `${t.noMatchesForTeam} ${team}. ${t.noMatchesAvailable}`;
+  const teamDescription = `${t.teamPerformance} ${team}.`;
 
   return (
     <main className="dashboard">
       <header className="dashboard-hero">
         <div className="dashboard-hero-content">
           <span className="dashboard-eyebrow">{t.seasonOverview}</span>
-          <h1>Dashboard</h1>
+          <h1>{t.dashboardTitle}</h1>
           <p>
-            {english
-              ? "View the performance and statistics of "
-              : "Bekijk de prestaties en statistieken van "}
+            {t.dashboardTeamIntro}{" "}
             <strong>{team}</strong>.
           </p>
         </div>
@@ -291,11 +274,7 @@ function Dashboard({
             <div
               className="goals-bar"
               role="img"
-              aria-label={
-                english
-                  ? `${goalsFor} goals scored`
-                  : `${goalsFor} doelpunten voor`
-              }
+              aria-label={`${goalsFor} ${t.dashboardScoredGoalsAriaLabel}`}
             >
               <div
                 className="goals-bar-for"
@@ -312,11 +291,7 @@ function Dashboard({
             <div
               className="goals-bar"
               role="img"
-              aria-label={
-                english
-                  ? `${goalsAgainst} goals conceded`
-                  : `${goalsAgainst} doelpunten tegen`
-              }
+              aria-label={`${goalsAgainst} ${t.dashboardConcededGoalsAriaLabel}`}
             >
               <div
                 className="goals-bar-against"
@@ -336,7 +311,7 @@ function Dashboard({
           <div>
             <span className="dashboard-eyebrow">{t.highlights}</span>
             <h2 id="players-heading">{t.playersSpotlight}</h2>
-            <p>{playersDescription}</p>
+            <p>{t.dashboardPlayersDescription}</p>
           </div>
           <span className="dashboard-panel-icon" aria-hidden="true">
             🏅

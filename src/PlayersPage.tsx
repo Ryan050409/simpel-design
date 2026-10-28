@@ -10,7 +10,6 @@ type PlayersPageProps = {
 
 function PlayersPage({ playerList, teams, language }: PlayersPageProps) {
   const t = translations[language];
-  const isDutch = language === "nl";
 
   const [selectedPlayer, setSelectedPlayer] = useState<Player | null>(null);
   const [searchTerm, setSearchTerm] = useState("");
@@ -30,28 +29,28 @@ function PlayersPage({ playerList, teams, language }: PlayersPageProps) {
   }
 
   const positionLabels: Record<string, string> = {
-    Keeper: isDutch ? "Keeper" : "Goalkeeper",
-    Verdediger: isDutch ? "Verdediger" : "Defender",
-    Middenvelder: isDutch ? "Middenvelder" : "Midfielder",
-    Aanvaller: isDutch ? "Aanvaller" : "Forward",
+    Keeper: t.goalkeeperPosition,
+    Verdediger: t.defenderPosition,
+    Middenvelder: t.midfielderPosition,
+    Aanvaller: t.forwardPosition,
   };
 
   const statLabels = {
-    goals: isDutch ? "Goals" : "Goals",
-    assists: isDutch ? "Assists" : "Assists",
-    tackles: isDutch ? "Tackles" : "Tackles",
-    interceptions: isDutch ? "Onderscheppingen" : "Interceptions",
-    saves: isDutch ? "Reddingen" : "Saves",
-    oneVsOne: isDutch ? "1-op-1 reddingen" : "One-on-one saves",
-    matches: isDutch ? "Wedstrijden" : "Matches",
-    minutes: isDutch ? "Minuten" : "Minutes",
-    blocks: isDutch ? "Blokkades" : "Blocks",
-    clearances: isDutch ? "Weggewerkte ballen" : "Clearances",
-    duelsWon: isDutch ? "Gewonnen duels" : "Duels won",
-    fouls: isDutch ? "Overtredingen" : "Fouls",
-    cleanSheets: isDutch ? "Clean sheets" : "Clean sheets",
-    penaltySaves: isDutch ? "Penalty's gestopt" : "Penalties saved",
-    goalsConceded: isDutch ? "Tegengoals" : "Goals conceded",
+    goals: t.goalsStat,
+    assists: t.assistsStat,
+    tackles: t.tacklesStat,
+    interceptions: t.interceptionsStat,
+    saves: t.savesStat,
+    oneVsOne: t.oneVsOneSavesStat,
+    matches: t.matchesStat,
+    minutes: t.minutesStat,
+    blocks: t.blocksStat,
+    clearances: t.clearancesStat,
+    duelsWon: t.duelsWonStat,
+    fouls: t.foulsStat,
+    cleanSheets: t.cleanSheetsStat,
+    penaltySaves: t.penaltySavesStat,
+    goalsConceded: t.goalsConcededStat,
   };
 
   return (
@@ -60,25 +59,19 @@ function PlayersPage({ playerList, teams, language }: PlayersPageProps) {
         <div>
           <h1>👥 {t.players}</h1>
           <p>
-            {isDutch
-              ? "Bekijk de spelers en hun statistieken."
-              : "View the players and their statistics."}
+            {t.playersDescriptionPage}
           </p>
         </div>
       </div>
 
       <div className="player-search">
         <label htmlFor="player-search-input">
-          {isDutch ? "Zoek een speler" : "Search for a player"}
+          {t.searchPlayerLabel}
         </label>
         <input
           id="player-search-input"
           type="search"
-          placeholder={
-            isDutch
-              ? "Zoek op voor- of achternaam..."
-              : "Search by first or last name..."
-          }
+          placeholder={t.searchPlayerPlaceholderPage}
           value={searchTerm}
           onChange={(event) => setSearchTerm(event.target.value)}
         />
@@ -87,7 +80,7 @@ function PlayersPage({ playerList, teams, language }: PlayersPageProps) {
       <div className="players-by-team">
         {filteredPlayers.length === 0 && (
           <p role="status">
-            {isDutch ? "Geen spelers gevonden." : "No players found."}
+            {t.noPlayersMatchSearch}
           </p>
         )}
 
@@ -107,13 +100,7 @@ function PlayersPage({ playerList, teams, language }: PlayersPageProps) {
                   <h2>{team.name}</h2>
                   <span>
                     {teamPlayers.length}{" "}
-                    {teamPlayers.length === 1
-                      ? isDutch
-                        ? "speler"
-                        : "player"
-                      : isDutch
-                        ? "spelers"
-                        : "players"}
+                    {teamPlayers.length === 1 ? t.player : t.playerCount}
                   </span>
                 </div>
 
@@ -139,7 +126,7 @@ function PlayersPage({ playerList, teams, language }: PlayersPageProps) {
                         </div>
 
                         <div className="player-rating">
-                          <span>RATING</span>
+                          <span>{t.ratingUppercase}</span>
                           <strong className={getRatingClass(player.rating)}>
                             {player.rating}
                           </strong>
@@ -149,14 +136,10 @@ function PlayersPage({ playerList, teams, language }: PlayersPageProps) {
                           type="button"
                           className="player-info-button"
                           aria-label={
-                            isDutch
-                              ? `Bekijk details van ${player.firstname} ${player.lastname}`
-                              : `View details for ${player.firstname} ${player.lastname}`
+                            `${t.viewPlayerDetails} ${player.firstname} ${player.lastname}`
                           }
                           title={
-                            isDutch
-                              ? "Bekijk spelerdetails"
-                              : "View player details"
+                            t.playerDetails
                           }
                           onClick={() => setSelectedPlayer(player)}
                         >
@@ -245,7 +228,7 @@ function PlayersPage({ playerList, teams, language }: PlayersPageProps) {
             <button
               className="modal-close"
               type="button"
-              aria-label={isDutch ? "Sluit spelerdetails" : "Close player details"}
+              aria-label={t.closePlayerDetails}
               onClick={() => setSelectedPlayer(null)}
             >
               ×
@@ -272,7 +255,7 @@ function PlayersPage({ playerList, teams, language }: PlayersPageProps) {
               </div>
 
               <div className="player-details-rating">
-                <span>RATING</span>
+                <span>{t.ratingUppercase}</span>
                 <strong className={getRatingClass(selectedPlayer.rating)}>
                   {selectedPlayer.rating}
                 </strong>
@@ -280,7 +263,7 @@ function PlayersPage({ playerList, teams, language }: PlayersPageProps) {
             </div>
 
             <div className="player-details-section">
-              <h3>{isDutch ? "Algemeen" : "General"}</h3>
+              <h3>{t.playerFormGeneralSection}</h3>
               <div className="player-details-stats">
                 <div className="player-stat">
                   <strong>{selectedPlayer.matches}</strong>
@@ -294,7 +277,7 @@ function PlayersPage({ playerList, teams, language }: PlayersPageProps) {
             </div>
 
             <div className="player-details-section">
-              <h3>{isDutch ? "Aanvallend" : "Attacking"}</h3>
+              <h3>{t.playerAttackingSection}</h3>
               <div className="player-details-stats">
                 <div className="player-stat">
                   <strong>{selectedPlayer.goals}</strong>
@@ -308,7 +291,7 @@ function PlayersPage({ playerList, teams, language }: PlayersPageProps) {
             </div>
 
             <div className="player-details-section">
-              <h3>{isDutch ? "Verdedigend" : "Defending"}</h3>
+              <h3>{t.playerDefendingSection}</h3>
               <div className="player-details-stats">
                 <div className="player-stat">
                   <strong>{selectedPlayer.tackles ?? 0}</strong>
@@ -338,7 +321,7 @@ function PlayersPage({ playerList, teams, language }: PlayersPageProps) {
             </div>
 
             <div className="player-details-section">
-              <h3>{isDutch ? "Keepers" : "Goalkeepers"}</h3>
+              <h3>{t.playerGoalkeeperSection}</h3>
               <div className="player-details-stats">
                 <div className="player-stat">
                   <strong>{selectedPlayer.saves ?? 0}</strong>
