@@ -531,7 +531,7 @@ function AppContent() {
             )
           }
         />
-        <Route path="/help" element={<HelpPage isAdmin={isAdmin} />} />
+        <Route path="/help" element={<HelpPage isAdmin={isAdmin} language={language} />} />
       </Routes>
     </div>
   );
