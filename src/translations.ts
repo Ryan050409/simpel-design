@@ -1,4 +1,3 @@
-
 export type Language = "nl" | "en";
 
 export const translations = {
@@ -121,8 +120,7 @@ export const translations = {
     administrator: "Beheerder",
     playerRole: "Speler",
     noAccess: "Geen toegang",
-    noAccessDescription:
-      "Je hebt geen toestemming om deze pagina te bekijken.",
+    noAccessDescription: "Je hebt geen toestemming om deze pagina te bekijken.",
     playersInTracker: "In de tracker",
     savedMatches: "Opgeslagen wedstrijden",
     clubsInTracker: "Clubs in de tracker",
@@ -145,21 +143,17 @@ export const translations = {
     teamsOf: "van",
     teams: "teams",
     teamDeleteBlocked: "Je kunt dit team nog niet verwijderen.",
-    linkedDataWarning:
-      "Verwijder of wijzig eerst de gekoppelde gegevens.",
-    deleteTeamConfirmation:
-      "Weet je zeker dat je dit team wilt verwijderen?",
+    linkedDataWarning: "Verwijder of wijzig eerst de gekoppelde gegevens.",
+    deleteTeamConfirmation: "Weet je zeker dat je dit team wilt verwijderen?",
     noTeamsYet: "Er zijn nog geen teams",
     noTeamsFound: "Geen teams gevonden",
     addTeamToStart: "Voeg een team toe om te beginnen.",
     tryAnotherSearch: "Probeer een andere zoekterm.",
     backToTeams: "Terug naar teams",
     teamManagement: "TEAMBEHEER",
-    chooseTeamSection:
-      "Kies welk onderdeel je van dit team wilt beheren.",
+    chooseTeamSection: "Kies welk onderdeel je van dit team wilt beheren.",
     chooseWhatToManage: "Wat wil je beheren?",
-    choosePlayersOrMatches:
-      "Kies hierboven voor spelers of wedstrijden van",
+    choosePlayersOrMatches: "Kies hierboven voor spelers of wedstrijden van",
     teamCount: "teams",
     teamLinkedPlayers: "spelers aan dit team gekoppeld",
     teamLinkedMatches: "wedstrijden aan dit team gekoppeld",
@@ -176,28 +170,24 @@ export const translations = {
     displayedPlayers: "spelers weergegeven",
     noPlayersFound: "Geen spelers gevonden",
     noPlayersForTeam: "Nog geen spelers bij dit team",
-    addFirstPlayerToTeam:
-      "Voeg de eerste speler aan deze club toe.",
+    addFirstPlayerToTeam: "Voeg de eerste speler aan deze club toe.",
     playerCount: "spelers",
     deletePlayerConfirmation:
       "Weet je zeker dat je deze speler wilt verwijderen?",
     manageMatches: "Wedstrijden beheren",
-    manageMatchesDescription:
-      "Bekijk alle thuis- en uitwedstrijden van",
+    manageMatchesDescription: "Bekijk alle thuis- en uitwedstrijden van",
     addMatch: "Wedstrijd toevoegen",
     searchMatch: "Zoek een wedstrijd",
     searchMatchPlaceholder: "Team, datum of uitslag...",
     displayedMatches: "wedstrijden weergegeven",
     noMatchesFound: "Geen wedstrijden gevonden",
-    addFirstMatchToTeam:
-      "Voeg de eerste wedstrijd toe voor dit team.",
+    addFirstMatchToTeam: "Voeg de eerste wedstrijd toe voor dit team.",
     homeMatch: "Thuiswedstrijd",
     awayMatch: "Uitwedstrijd",
     matchCount: "wedstrijden",
     deleteMatchConfirmation:
       "Weet je zeker dat je deze wedstrijd wilt verwijderen?",
-    playedMatchWarning:
-      "LET OP: deze wedstrijd heeft al een uitslag.",
+    playedMatchWarning: "LET OP: deze wedstrijd heeft al een uitslag.",
     deletePlayedMatchConfirmation:
       "Weet je zeker dat je deze gespeelde wedstrijd definitief wilt verwijderen?",
     edit: "Bewerken",
@@ -211,8 +201,7 @@ export const translations = {
     awayLabel: "Uit",
     teamLabel: "Team",
     generalPermissions: "Toegangsrechten",
-    permissionsDescription:
-      "Overzicht van de rechten voor jouw huidige rol.",
+    permissionsDescription: "Overzicht van de rechten voor jouw huidige rol.",
     allowed: "Toegestaan",
     noPermission: "Geen toegang",
     managePlayersPermission: "Spelers beheren",
@@ -309,15 +298,12 @@ export const translations = {
     faqFindPlayerQuestion: "Hoe vind ik een bepaalde speler?",
     faqFindPlayerAnswer:
       "Ga naar de spelerspagina en gebruik het zoekveld om een speler op naam te zoeken.",
-    faqMissingAdminOptionsQuestion:
-      "Waarom zie ik bepaalde beheeropties niet?",
+    faqMissingAdminOptionsQuestion: "Waarom zie ik bepaalde beheeropties niet?",
     faqMissingAdminOptionsAnswer:
       "Welke opties zichtbaar zijn, hangt af van de rechten die aan de gebruiker zijn toegekend.",
     faqLogoutQuestion: "Hoe log ik uit?",
-    faqLogoutAnswer:
-      "Open het profielmenu en gebruik de uitlogoptie.",
-    faqDemoSecurityQuestion:
-      "Is de demo-login een beveiligd accountsysteem?",
+    faqLogoutAnswer: "Open het profielmenu en gebruik de uitlogoptie.",
+    faqDemoSecurityQuestion: "Is de demo-login een beveiligd accountsysteem?",
     faqDemoSecurityAnswer:
       "De demo-login is bedoeld om gebruikers en rechten tijdens de demonstratie te simuleren. Het is geen vervanging voor een beveiligd accountsysteem.",
     faqDataMissingQuestion: "Waarom zijn mijn gegevens verdwenen?",
@@ -327,8 +313,7 @@ export const translations = {
       "Worden mijn gegevens automatisch online opgeslagen?",
     faqDataOnlineAnswer:
       "Ga er niet van uit dat gegevens automatisch online worden opgeslagen. De applicatie gebruikt lokale opslag voor lokaal bewaarde gegevens.",
-    faqSearchNoResultsQuestion:
-      "Waarom vindt de zoekfunctie geen resultaat?",
+    faqSearchNoResultsQuestion: "Waarom vindt de zoekfunctie geen resultaat?",
     faqSearchNoResultsAnswer:
       "Controleer de spelling en probeer een kortere zoekterm. Als niets overeenkomt, verschijnt er een melding.",
     faqButtonIssueQuestion: "Wat kan ik doen als een knop niet werkt?",
@@ -394,8 +379,7 @@ export const translations = {
     adminPlayerPlural: "spelers",
     adminMatchSingular: "wedstrijd",
     adminMatchPlural: "wedstrijden",
-    adminDeleteTeamConfirm:
-      "Weet je zeker dat je dit team wilt verwijderen?",
+    adminDeleteTeamConfirm: "Weet je zeker dat je dit team wilt verwijderen?",
     adminDeletePlayerConfirm:
       "Weet je zeker dat je deze speler wilt verwijderen?",
     adminDeleteMatchConfirm:
@@ -423,7 +407,8 @@ export const translations = {
     faqRolesQuestion: "Wat is het verschil tussen een beheerder en een speler?",
     faqRolesAnswer:
       "Een beheerder kan onderdelen beheren waarvoor die rechten heeft. Een speler heeft geen beheerdersrechten.",
-    faqLocalDataQuestion: "Kan ik mijn gegevens op een ander apparaat bekijken?",
+    faqLocalDataQuestion:
+      "Kan ik mijn gegevens op een ander apparaat bekijken?",
     faqLocalDataAnswer:
       "Gegevens die lokaal in je browser worden opgeslagen, zijn niet automatisch beschikbaar op andere apparaten.",
     faqExportQuestion: "Hoe exporteer ik mijn gegevens?",
@@ -448,10 +433,16 @@ export const translations = {
     drawResult: "Gelijkspel",
     lostResult: "Verloren",
     noResult: "Geen resultaat",
-    noMatchesForSelection: "Er zijn geen wedstrijden gevonden voor deze selectie.",
+    noMatchesForSelection:
+      "Er zijn geen wedstrijden gevonden voor deze selectie.",
     favoriteMatchesAriaLabel: "Wedstrijden van je favoriete club",
     showAllMatchesAriaLabel: "Alle wedstrijden tonen",
     sortMatchesAriaLabel: "Wedstrijden sorteren op datum",
+    filterByOutcome: "Filter op uitslag:",
+    allOutcomes: "Alle uitslagen",
+    homeWinFilter: "Thuis gewonnen",
+    drawFilter: "Gelijkspel",
+    awayWinFilter: "Uit gewonnen",
 
     // ==================== SPELERSPAGINA ====================
     playersIntro: "Bekijk de spelers en hun statistieken.",
@@ -534,8 +525,7 @@ export const translations = {
     matchDate: "Datum",
     matchRequiredFields: "Alle velden moeten ingevuld worden!",
     matchSameTeamError: "Een team kan niet tegen zichzelf spelen!",
-    matchNegativeGoalsError:
-      "Het aantal doelpunten kan niet negatief zijn!",
+    matchNegativeGoalsError: "Het aantal doelpunten kan niet negatief zijn!",
     matchSave: "Wedstrijd opslaan",
 
     // ==================== ALGEMENE FORMULIERACTIES ====================
@@ -590,7 +580,7 @@ export const translations = {
     lastName: "Achternaam",
     playerMatches: "Gespeelde wedstrijden",
     playerMinutes: "Gespeelde minuten",
-   
+
     basicInformation: "Basisgegevens",
     playerStatistics: "Spelerstatistieken",
     nextStep: "Volgende stap",
@@ -620,7 +610,7 @@ export const translations = {
     updateMatch: "Wedstrijd bijwerken",
 
     // ==================== ALGEMENE ACTIES EN TOEGANKELIJKHEID ====================
-      open: "Openen",
+    open: "Openen",
     back: "Terug",
     search: "Zoeken",
     clearSearch: "Zoekopdracht wissen",
@@ -639,8 +629,7 @@ export const translations = {
     openProfileMenu: "Profielmenu openen",
     currentPage: "Huidige pagina",
     resultsCount: "Resultaten",
-    noResults: "Geen resultaten gevonden."
-
+    noResults: "Geen resultaten gevonden.",
   },
 
   en: {
@@ -694,8 +683,7 @@ export const translations = {
     noMatches: "No matches have been added yet.",
     viewMatches: "View matches",
     favoriteTeam: "FAVORITE TEAM",
-    addFirstMatch:
-      "Add your first match to see more team information here.",
+    addFirstMatch: "Add your first match to see more team information here.",
     wonShort: "won",
     drawShort: "drawn",
     lostShort: "lost",
@@ -720,8 +708,7 @@ export const translations = {
     averageGoals: "Avg. goals",
     perMatch: "Per match",
     noMatchesForTeam: "There are no matches for",
-    noMatchesAvailable:
-      "Statistics will update when matches become available.",
+    noMatchesAvailable: "Statistics will update when matches become available.",
     performances: "PERFORMANCE",
     teamAnalysis: "Team analysis",
     teamPerformance: "The attacking and defensive performance of",
@@ -762,8 +749,7 @@ export const translations = {
     administrator: "Administrator",
     playerRole: "Player",
     noAccess: "Access denied",
-    noAccessDescription:
-      "You do not have permission to view this page.",
+    noAccessDescription: "You do not have permission to view this page.",
     playersInTracker: "In the tracker",
     savedMatches: "Saved matches",
     clubsInTracker: "Clubs in the tracker",
@@ -772,8 +758,7 @@ export const translations = {
       "Download a backup of your players, matches and teams.",
     downloadBackup: "Download backup",
     manageTeams: "Manage teams",
-    chooseTeamDescription:
-      "Choose a club to manage its players and matches.",
+    chooseTeamDescription: "Choose a club to manage its players and matches.",
     cancel: "Cancel",
     addTeam: "Add team",
     newTeamName: "Name of the new team",
@@ -786,18 +771,15 @@ export const translations = {
     teamsOf: "of",
     teams: "teams",
     teamDeleteBlocked: "You cannot delete this team yet.",
-    linkedDataWarning:
-      "Remove or update the linked data first.",
-    deleteTeamConfirmation:
-      "Are you sure you want to delete this team?",
+    linkedDataWarning: "Remove or update the linked data first.",
+    deleteTeamConfirmation: "Are you sure you want to delete this team?",
     noTeamsYet: "There are no teams yet",
     noTeamsFound: "No teams found",
     addTeamToStart: "Add a team to get started.",
     tryAnotherSearch: "Try another search term.",
     backToTeams: "Back to teams",
     teamManagement: "TEAM MANAGEMENT",
-    chooseTeamSection:
-      "Choose which part of this team you want to manage.",
+    chooseTeamSection: "Choose which part of this team you want to manage.",
     chooseWhatToManage: "What would you like to manage?",
     choosePlayersOrMatches: "Choose players or matches for",
     teamCount: "teams",
@@ -808,8 +790,7 @@ export const translations = {
     sectionSelectorLabel: "Choose what you want to manage",
     teamSearchCount: "teams displayed",
     managePlayers: "Manage players",
-    managePlayersDescription:
-      "Add players, edit their details or delete them.",
+    managePlayersDescription: "Add players, edit their details or delete them.",
     addPlayer: "Add player",
     searchPlayer: "Search players",
     searchPlayerPlaceholder: "Name or position...",
@@ -818,8 +799,7 @@ export const translations = {
     noPlayersForTeam: "No players for this team yet",
     addFirstPlayerToTeam: "Add the first player to this club.",
     playerCount: "players",
-    deletePlayerConfirmation:
-      "Are you sure you want to delete this player?",
+    deletePlayerConfirmation: "Are you sure you want to delete this player?",
     manageMatches: "Manage matches",
     manageMatchesDescription: "View all home and away matches for",
     addMatch: "Add match",
@@ -831,10 +811,8 @@ export const translations = {
     homeMatch: "Home match",
     awayMatch: "Away match",
     matchCount: "matches",
-    deleteMatchConfirmation:
-      "Are you sure you want to delete this match?",
-    playedMatchWarning:
-      "WARNING: this match already has a result.",
+    deleteMatchConfirmation: "Are you sure you want to delete this match?",
+    playedMatchWarning: "WARNING: this match already has a result.",
     deletePlayedMatchConfirmation:
       "Are you sure you want to permanently delete this played match?",
     edit: "Edit",
@@ -859,8 +837,7 @@ export const translations = {
 
     // ==================== HELP PAGE====================
     helpTitle: "Help & frequently asked questions",
-    helpDescription:
-      "Find answers to questions about using Football Tracker.",
+    helpDescription: "Find answers to questions about using Football Tracker.",
     searchQuestions: "Search questions...",
     noQuestionsFound: "No questions found",
     noQuestionsDescription: "Try another search term.",
@@ -946,13 +923,11 @@ export const translations = {
     faqFindPlayerQuestion: "How do I find a player?",
     faqFindPlayerAnswer:
       "Open the Players page and use the search field to find a player by name.",
-    faqMissingAdminOptionsQuestion:
-      "Why are some management options missing?",
+    faqMissingAdminOptionsQuestion: "Why are some management options missing?",
     faqMissingAdminOptionsAnswer:
       "The available options depend on the permissions assigned to the user.",
     faqLogoutQuestion: "How do I log out?",
-    faqLogoutAnswer:
-      "Open the profile menu and select the logout option.",
+    faqLogoutAnswer: "Open the profile menu and select the logout option.",
     faqDemoSecurityQuestion: "Is the demo login a secure account system?",
     faqDemoSecurityAnswer:
       "The demo login simulates users and permissions for demonstration purposes. It is not a replacement for a secure account system.",
@@ -1027,12 +1002,9 @@ export const translations = {
     adminPlayerPlural: "players",
     adminMatchSingular: "match",
     adminMatchPlural: "matches",
-    adminDeleteTeamConfirm:
-      "Are you sure you want to delete this team?",
-    adminDeletePlayerConfirm:
-      "Are you sure you want to delete this player?",
-    adminDeleteMatchConfirm:
-      "Are you sure you want to delete this match?",
+    adminDeleteTeamConfirm: "Are you sure you want to delete this team?",
+    adminDeletePlayerConfirm: "Are you sure you want to delete this player?",
+    adminDeleteMatchConfirm: "Are you sure you want to delete this match?",
     adminDeletePlayedMatchConfirm:
       "Are you sure you want to permanently delete this played match?",
     adminDenied: "Access denied",
@@ -1054,7 +1026,8 @@ export const translations = {
     faqFavoriteClubQuestion: "How do I change my favorite club?",
     faqFavoriteClubAnswer:
       "Open the profile menu and choose a club in the favorite club setting.",
-    faqRolesQuestion: "What is the difference between an administrator and a player?",
+    faqRolesQuestion:
+      "What is the difference between an administrator and a player?",
     faqRolesAnswer:
       "An administrator can manage sections for which they have permission. A player does not have administrator permissions.",
     faqLocalDataQuestion: "Can I view my data on another device?",
@@ -1086,6 +1059,11 @@ export const translations = {
     favoriteMatchesAriaLabel: "Matches for your favorite club",
     showAllMatchesAriaLabel: "Show all matches",
     sortMatchesAriaLabel: "Sort matches by date",
+    filterByOutcome: "Filter by result:",
+    allOutcomes: "All results",
+    homeWinFilter: "Home win",
+    drawFilter: "Draw",
+    awayWinFilter: "Away win",
 
     // ==================== PLAYERS PAGE ====================
     playersIntro: "View the players and their statistics.",
@@ -1271,7 +1249,6 @@ export const translations = {
     openProfileMenu: "Open profile menu",
     currentPage: "Current page",
     resultsCount: "Results",
-    noResults: "No results found."
-
+    noResults: "No results found.",
   },
 } as const;
