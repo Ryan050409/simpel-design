@@ -480,13 +480,19 @@ function AppContent() {
             />
           }
         />
-
-        <Route
-          path="/dashboard"
-          element={
-            <Dashboard matches={matches} playerList={playerList} team={team} />
-          }
-        />
+   ```tsx
+<Route
+  path="/dashboard"
+  element={
+    <Dashboard
+      matches={matches}
+      playerList={playerList}
+      team={team}
+      language={language}
+    />
+  }
+/>
+```
 
         <Route
           path="/wedstrijden"

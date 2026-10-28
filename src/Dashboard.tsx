@@ -1,12 +1,23 @@
+
 import type { Player, Match } from "./types.ts";
+import { translations } from "./translations.ts";
 
 type DashboardProps = {
   matches: Match[];
   playerList: Player[];
   team: string;
+  language: "nl" | "en";
 };
 
-function Dashboard({ matches, playerList, team }: DashboardProps) {
+function Dashboard({
+  matches,
+  playerList,
+  team,
+  language,
+}: DashboardProps) {
+  const t = translations[language];
+  const english = language === "en";
+
   const playedMatches = matches.filter(
     (match) => match.home === team || match.away === team,
   );
@@ -84,78 +95,102 @@ function Dashboard({ matches, playerList, team }: DashboardProps) {
 
   const statCards = [
     {
-      label: "Wedstrijden",
+      label: t.matches,
       value: playedMatches.length,
       icon: "⚽",
-      detail: "Gespeeld",
+      detail: t.played,
       style: "matches",
     },
     {
-      label: "Gewonnen",
+      label: t.wins,
       value: wins,
       icon: "✓",
-      detail: "Overwinningen",
+      detail: t.wins,
       style: "wins",
     },
     {
-      label: "Gelijk",
+      label: t.draw,
       value: draws,
       icon: "＝",
-      detail: "Gelijkspel",
+      detail: t.draw,
       style: "draws",
     },
     {
-      label: "Verloren",
+      label: t.lost,
       value: losses,
       icon: "↘",
-      detail: "Nederlagen",
+      detail: t.lost,
       style: "losses",
     },
     {
-      label: "Punten",
+      label: t.points,
       value: points,
       icon: "🏆",
-      detail: "3 punten per winst",
+      detail: t.pointsPerWin,
       style: "points",
     },
     {
-      label: "Doelsaldo",
+      label: t.goalDifference,
       value: `${goalDifference > 0 ? "+" : ""}${goalDifference}`,
       icon: "📊",
-      detail: "Goals voor − tegen",
+      detail: t.goalsForAgainst,
       style: "difference",
     },
     {
-      label: "Winstpercentage",
+      label: t.winPercentage,
       value: `${winPercentage}%`,
       icon: "🎯",
-      detail: "Gewonnen wedstrijden",
+      detail: t.wonMatches,
       style: "percentage",
     },
     {
-      label: "Gem. goals",
+      label: t.averageGoals,
       value: averageGoals,
       icon: "🥅",
-      detail: "Per wedstrijd",
+      detail: t.perMatch,
       style: "average",
     },
   ];
+
+  const matchWord =
+    playedMatches.length === 1
+      ? english
+        ? "match"
+        : "wedstrijd"
+      : english
+        ? "matches"
+        : "wedstrijden";
+
+  const noMatchesMessage = english
+    ? `There are no matches for ${team} yet. Statistics will update when matches become available.`
+    : `Er zijn nog geen wedstrijden voor ${team}. De statistieken worden bijgewerkt zodra er wedstrijden beschikbaar zijn.`;
+
+  const teamDescription = english
+    ? `The attacking and defensive performance of ${team}.`
+    : `De aanvallende en verdedigende prestaties van ${team}.`;
+
+  const playersDescription = english
+    ? `The standout players of ${team}, based on the registered statistics.`
+    : `De opvallendste spelers van ${team}, op basis van de geregistreerde statistieken.`;
 
   return (
     <main className="dashboard">
       <header className="dashboard-hero">
         <div className="dashboard-hero-content">
-          <span className="dashboard-eyebrow">SEIZOENSOVERZICHT</span>
+          <span className="dashboard-eyebrow">{t.seasonOverview}</span>
           <h1>Dashboard</h1>
           <p>
-            Bekijk de prestaties en statistieken van <strong>{team}</strong>.
+            {english
+              ? "View the performance and statistics of "
+              : "Bekijk de prestaties en statistieken van "}
+            <strong>{team}</strong>.
           </p>
         </div>
 
         <div className="dashboard-team-badge">
           <span aria-hidden="true">⚽</span>
           <div>
-            <small>Geselecteerde club</small>
+            <small>{t.selectedClub}</small>
             <strong>{team}</strong>
           </div>
         </div>
@@ -164,12 +199,11 @@ function Dashboard({ matches, playerList, team }: DashboardProps) {
       <section className="dashboard-section" aria-labelledby="overview-heading">
         <div className="dashboard-section-heading">
           <div>
-            <span className="dashboard-eyebrow">IN ÉÉN OOGOPSLAG</span>
-            <h2 id="overview-heading">Wedstrijdresultaten</h2>
+            <span className="dashboard-eyebrow">{t.atAGlance}</span>
+            <h2 id="overview-heading">{t.matchResults}</h2>
           </div>
           <span className="dashboard-section-count">
-            {playedMatches.length}{" "}
-            {playedMatches.length === 1 ? "wedstrijd" : "wedstrijden"}
+            {playedMatches.length} {matchWord}
           </span>
         </div>
 
@@ -193,10 +227,7 @@ function Dashboard({ matches, playerList, team }: DashboardProps) {
         </div>
 
         {playedMatches.length === 0 && (
-          <p className="dashboard-empty-note">
-            Er zijn nog geen wedstrijden voor {team}. De statistieken worden
-            bijgewerkt zodra er wedstrijden beschikbaar zijn.
-          </p>
+          <p className="dashboard-empty-note">{noMatchesMessage}</p>
         )}
       </section>
 
@@ -206,9 +237,9 @@ function Dashboard({ matches, playerList, team }: DashboardProps) {
       >
         <div className="dashboard-section-heading">
           <div>
-            <span className="dashboard-eyebrow">PRESTATIES</span>
-            <h2 id="team-analysis-heading">Teamanalyse</h2>
-            <p>De aanvallende en verdedigende prestaties van {team}.</p>
+            <span className="dashboard-eyebrow">{t.performances}</span>
+            <h2 id="team-analysis-heading">{t.teamAnalysis}</h2>
+            <p>{teamDescription}</p>
           </div>
           <span className="dashboard-panel-icon" aria-hidden="true">
             ⚽
@@ -217,84 +248,85 @@ function Dashboard({ matches, playerList, team }: DashboardProps) {
 
         <div className="team-stats-overview">
           <article className="team-stat-block goals-for">
-            <span>DOELPUNTEN VOOR</span>
+            <span>{t.goalsFor}</span>
             <strong>{goalsFor}</strong>
-            <small>Gescoord</small>
+            <small>{t.scored}</small>
           </article>
 
           <article className="team-stat-block goals-against">
-            <span>DOELPUNTEN TEGEN</span>
+            <span>{t.goalsAgainst}</span>
             <strong>{goalsAgainst}</strong>
-            <small>Tegendoelpunten</small>
+            <small>{t.conceded}</small>
           </article>
 
           <article className="team-stat-block goal-difference">
-            <span>DOELSALDO</span>
+            <span>{t.goalDifference.toUpperCase()}</span>
             <strong>
               {goalDifference > 0 ? "+" : ""}
               {goalDifference}
             </strong>
             <small>
               {goalDifference > 0
-                ? "Positief doelsaldo"
+                ? t.positiveDifference
                 : goalDifference < 0
-                  ? "Negatief doelsaldo"
-                  : "Neutraal doelsaldo"}
+                  ? t.negativeDifference
+                  : t.neutralDifference}
             </small>
           </article>
         </div>
 
         <div className="goals-comparison">
           <div className="goals-comparison-heading">
-            <h3>Doelpunten vergelijken</h3>
+            <h3>{t.compareGoals}</h3>
             <span>
-              {playedMatches.length}{" "}
-              {playedMatches.length === 1 ? "wedstrijd" : "wedstrijden"}
+              {playedMatches.length} {matchWord}
             </span>
           </div>
 
           <div className="goals-comparison-item">
             <div className="goals-comparison-label">
-              <span>Gescoord</span>
+              <span>{t.scored}</span>
               <strong>{goalsFor}</strong>
             </div>
             <div
               className="goals-bar"
               role="img"
-              aria-label={`${goalsFor} doelpunten voor`}
+              aria-label={
+                english
+                  ? `${goalsFor} goals scored`
+                  : `${goalsFor} doelpunten voor`
+              }
             >
               <div
                 className="goals-bar-for"
-                style={{
-                  width: `${(goalsFor / maxGoals) * 100}%`,
-                }}
+                style={{ width: `${(goalsFor / maxGoals) * 100}%` }}
               />
             </div>
           </div>
 
           <div className="goals-comparison-item">
             <div className="goals-comparison-label">
-              <span>Tegendoelpunten</span>
+              <span>{t.conceded}</span>
               <strong>{goalsAgainst}</strong>
             </div>
             <div
               className="goals-bar"
               role="img"
-              aria-label={`${goalsAgainst} doelpunten tegen`}
+              aria-label={
+                english
+                  ? `${goalsAgainst} goals conceded`
+                  : `${goalsAgainst} doelpunten tegen`
+              }
             >
               <div
                 className="goals-bar-against"
-                style={{
-                  width: `${(goalsAgainst / maxGoals) * 100}%`,
-                }}
+                style={{ width: `${(goalsAgainst / maxGoals) * 100}%` }}
               />
             </div>
           </div>
 
           {playedMatches.length === 0 && (
-            <p className="dashboard-empty-note">
-              Er zijn nog geen gegevens om te vergelijken.
-            </p>
+            <p className="dashboard-empty-note">{t.noComparison}</p>
           )}
         </div>
       </section>
@@ -302,12 +334,9 @@ function Dashboard({ matches, playerList, team }: DashboardProps) {
       <section className="dashboard-panel" aria-labelledby="players-heading">
         <div className="dashboard-section-heading">
           <div>
-            <span className="dashboard-eyebrow">UITBLINKERS</span>
-            <h2 id="players-heading">Spelers in de spotlight</h2>
-            <p>
-              De opvallendste spelers van {team}, op basis van de geregistreerde
-              statistieken.
-            </p>
+            <span className="dashboard-eyebrow">{t.highlights}</span>
+            <h2 id="players-heading">{t.playersSpotlight}</h2>
+            <p>{playersDescription}</p>
           </div>
           <span className="dashboard-panel-icon" aria-hidden="true">
             🏅
@@ -320,7 +349,7 @@ function Dashboard({ matches, playerList, team }: DashboardProps) {
               <span className="dashboard-player-icon" aria-hidden="true">
                 ⚽
               </span>
-              <span className="dashboard-player-label">TOPSCORER</span>
+              <span className="dashboard-player-label">{t.topScorer}</span>
               {topScorers.length > 0 ? (
                 <>
                   {topScorers.map((player) => (
@@ -331,12 +360,13 @@ function Dashboard({ matches, playerList, team }: DashboardProps) {
                     </p>
                   ))}
                   <p>
-                    {topGoals} {topGoals === 1 ? "doelpunt" : "doelpunten"}
-                    {topScorers.length > 1 ? " · gedeeld" : ""}
+                    {topGoals}{" "}
+                    {topGoals === 1 ? t.goal : t.goals}
+                    {topScorers.length > 1 ? t.shared : ""}
                   </p>
                 </>
               ) : (
-                <p>Nog geen uitblinker</p>
+                <p>{t.noStandout}</p>
               )}
             </article>
 
@@ -344,7 +374,7 @@ function Dashboard({ matches, playerList, team }: DashboardProps) {
               <span className="dashboard-player-icon" aria-hidden="true">
                 🎯
               </span>
-              <span className="dashboard-player-label">MEESTE ASSISTS</span>
+              <span className="dashboard-player-label">{t.mostAssists}</span>
               {topAssistPlayers.length > 0 ? (
                 <>
                   {topAssistPlayers.map((player) => (
@@ -355,12 +385,13 @@ function Dashboard({ matches, playerList, team }: DashboardProps) {
                     </p>
                   ))}
                   <p>
-                    {topAssists} {topAssists === 1 ? "assist" : "assists"}
-                    {topAssistPlayers.length > 1 ? " · gedeeld" : ""}
+                    {topAssists}{" "}
+                    {topAssists === 1 ? t.assist : t.assists}
+                    {topAssistPlayers.length > 1 ? t.shared : ""}
                   </p>
                 </>
               ) : (
-                <p>Nog geen uitblinker</p>
+                <p>{t.noStandout}</p>
               )}
             </article>
 
@@ -368,7 +399,9 @@ function Dashboard({ matches, playerList, team }: DashboardProps) {
               <span className="dashboard-player-icon" aria-hidden="true">
                 ⭐
               </span>
-              <span className="dashboard-player-label">HOOGSTE RATING</span>
+              <span className="dashboard-player-label">
+                {t.highestRating}
+              </span>
               {highestRatedPlayers.length > 0 ? (
                 <>
                   {highestRatedPlayers.map((player) => (
@@ -379,20 +412,22 @@ function Dashboard({ matches, playerList, team }: DashboardProps) {
                     </p>
                   ))}
                   <p>
-                    Rating: <strong>{highestRating}</strong>
-                    {highestRatedPlayers.length > 1 ? " · gedeeld" : ""}
+                    {t.rating} <strong>{highestRating}</strong>
+                    {highestRatedPlayers.length > 1 ? t.shared : ""}
                   </p>
                 </>
               ) : (
-                <p>Nog geen uitblinker</p>
+                <p>{t.noStandout}</p>
               )}
             </article>
           </div>
         ) : (
           <div className="dashboard-empty-state">
             <span aria-hidden="true">👥</span>
-            <h3>Nog geen spelers beschikbaar</h3>
-            <p>Er zijn nog geen spelers geregistreerd voor {team}.</p>
+            <h3>{t.noPlayersAvailable}</h3>
+            <p>
+              {t.noRegisteredPlayers} {team}.
+            </p>
           </div>
         )}
       </section>
