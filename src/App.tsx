@@ -423,6 +423,8 @@ function AppContent() {
                   <option value="en">🇬🇧 {t.languageEnglish}</option>
                   <option value="de">🇩🇪 {t.languageGerman}</option>
                   <option value="fr">🇫🇷{t.languageFrench}</option>
+                  <option value="sp">🇪🇸{t.languageSpanish}</option>
+                  <option value="pt">🇵🇹{t.languagesPortuguese}</option>
                 </select>
                 <div className="profile-menu-section"></div>
                 <label htmlFor="profile-theme">{t.theme}</label>
