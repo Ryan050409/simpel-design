@@ -501,7 +501,7 @@ function AppContent() {
 
         <Route
           path="/spelers"
-          element={<PlayersPage playerList={playerList} teams={teams} />}
+          element={<PlayersPage playerList={playerList} teams={teams} language={language} />}
         />
 
         <Route
