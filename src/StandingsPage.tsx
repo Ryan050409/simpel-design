@@ -1,4 +1,3 @@
-
 import type { Match, Team } from "./types";
 import type { Language } from "./translations";
 
@@ -134,12 +133,33 @@ const labels = {
 
 function hasValidScore(match: Match): boolean {
   return (
-    Number.isFinite(match.homeGoals) &&
-    Number.isFinite(match.awayGoals) &&
+    Number.isInteger(match.homeGoals) &&
+    Number.isInteger(match.awayGoals) &&
     match.homeGoals >= 0 &&
     match.awayGoals >= 0
   );
 }
+
+const teamLogos: Record<string, string> = {
+  "ADO Den Haag": "/ADODenHaag_Logo.png",
+  Ajax: "/Ajax_Logo.png",
+  AZ: "/AZ_Logo.png",
+  "Excelsior Rotterdam": "/ExcelsiorRotterdam_Logo.png",
+  "FC Groningen": "/fc_groningen_logo_2026.png",
+  "FC Twente": "/FCTwente_Logo.png",
+  "FC Utrecht": "/FCUtrecht_Logo.png",
+  Feyenoord: "/Feyenoord_Logo.png",
+  "Fortuna Sittard": "/FortunaSittard_Logo.png",
+  "Go Ahead Eagles": "/GoAheadEagles_Logo.png",
+  "N.E.C. Nijmegen": "/NEC_Nijmegen_Logo.png",
+  "PEC Zwolle": "/PECZwolle_Logo.png",
+  PSV: "/PSV_Logo.png",
+  "SC Cambuur": "/SCCambuur_Logo.png",
+  "sc Heerenveen": "/scHeerenveen_Logo.png",
+  "Sparta Rotterdam": "/SpartaRotterdam_Logo.png",
+  Telstar: "/Telstar_Logo.png",
+  "Willem II": "/WillemII_Logo.png",
+};
 
 function createStandings(teams: Team[], matches: Match[]): Standing[] {
   const standings = new Map<string, Standing>();
@@ -228,13 +248,10 @@ export default function StandingsPage({
       </header>
 
       <p className="standings-favorite">
-        <span aria-hidden="true">★</span> {t.favorite}:{" "}
-        <strong>{team}</strong>
+        <span aria-hidden="true">★</span> {t.favorite}: <strong>{team}</strong>
       </p>
 
-      {countedMatches === 0 && (
-        <p role="status">{t.empty}</p>
-      )}
+      {countedMatches === 0 && <p role="status">{t.empty}</p>}
 
       <div className="standings-table-wrapper">
         <table className="standings-table">
@@ -245,11 +262,21 @@ export default function StandingsPage({
                 {t.club}
               </th>
               <th scope="col">{t.played}</th>
-              <th className="standings-mobile-hide" scope="col">{t.won}</th>
-              <th className="standings-mobile-hide" scope="col">{t.drawn}</th>
-              <th className="standings-mobile-hide" scope="col">{t.lost}</th>
-              <th className="standings-mobile-hide" scope="col">{t.goalsFor}</th>
-              <th className="standings-mobile-hide" scope="col">{t.goalsAgainst}</th>
+              <th className="standings-mobile-hide" scope="col">
+                {t.won}
+              </th>
+              <th className="standings-mobile-hide" scope="col">
+                {t.drawn}
+              </th>
+              <th className="standings-mobile-hide" scope="col">
+                {t.lost}
+              </th>
+              <th className="standings-mobile-hide" scope="col">
+                {t.goalsFor}
+              </th>
+              <th className="standings-mobile-hide" scope="col">
+                {t.goalsAgainst}
+              </th>
               <th scope="col">{t.difference}</th>
               <th scope="col">{t.points}</th>
             </tr>
@@ -262,29 +289,38 @@ export default function StandingsPage({
               return (
                 <tr
                   key={club.name}
-                  className={
-                    isFavorite ? "standings-row-favorite" : undefined
-                  }
+                  className={isFavorite ? "standings-row-favorite" : undefined}
                 >
                   <td>{index + 1}</td>
                   <th scope="row" className="standings-club-name">
+                    {teamLogos[club.name] && (
+                      <img
+                        src={teamLogos[club.name]}
+                        alt=""
+                        className="standings-team-logo"
+                      />
+                    )}
+
                     {isFavorite && (
                       <span
                         className="standings-star"
                         title={t.favorite}
                         aria-label={t.favorite}
+                        role="img"
                       >
                         ★
                       </span>
                     )}
+
                     {club.name}
                   </th>
+
                   <td>{club.played}</td>
                   <td className="standings-mobile-hide">{club.won}</td>
                   <td className="standings-mobile-hide">{club.drawn}</td>
                   <td className="standings-mobile-hide">{club.lost}</td>
                   <td className="standings-mobile-hide">{club.goalsFor}</td>
-                  <td  className="standings-mobile-hide">{club.goalsAgainst}</td>
+                  <td className="standings-mobile-hide">{club.goalsAgainst}</td>
                   <td>
                     {club.goalDifference > 0 ? "+" : ""}
                     {club.goalDifference}

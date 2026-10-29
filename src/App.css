@@ -3847,6 +3847,28 @@ textarea::placeholder {
   }
 }
 
+/* Clublogo's in de algemene stand */
+.standings-team-logo {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+  vertical-align: middle;
+  margin-right: 8px;
+  flex-shrink: 0;
+}
+
+.standings-table .standings-club-name {
+  white-space: nowrap;
+}
+
+@media (max-width: 600px) {
+  .standings-team-logo {
+    width: 19px;
+    height: 19px;
+    margin-right: 5px;
+  }
+}
+
 /* =========================================
    ADMINPAGINA — BASIS
 ========================================= */
