@@ -23,6 +23,9 @@ const translationCatalog = {
     dark: "Donker",
     light: "Licht",
     favoriteClub: "Favoriete club",
+    matchesLabel: "Wedstrijden",
+    goalsLabel: "Doelpunten",
+    clubsLabel: "Clubs",
     language: "Taal",
 
     // ==================== HOMEPAGE ====================
@@ -659,6 +662,9 @@ const translationCatalog = {
     dark: "Dark",
     light: "Light",
     favoriteClub: "Favorite club",
+    matchesLabel: "Matches",
+    goalsLabel: "Goals",
+    clubsLabel: "Clubs",
     language: "Language",
 
     // ==================== HOMEPAGE ====================
@@ -1451,6 +1457,9 @@ const translationCatalog = {
     dark: "Dunkel",
     light: "Hell",
     favoriteClub: "Lieblingsverein",
+    matchesLabel: "Spiele",
+    goalsLabel: "Tore",
+    clubsLabel: "Vereine",
     language: "Sprache",
 
     // ==================== HOMEPAGE ====================
@@ -1947,6 +1956,9 @@ const translationCatalog = {
     dark: "Sombre",
     light: "Clair",
     favoriteClub: "Club favori",
+    matchesLabel: "Matchs",
+    goalsLabel: "Buts",
+    clubsLabel: "Clubs",
     language: "Langue",
 
     // ==================== HOMEPAGE ====================
@@ -2588,6 +2600,9 @@ const translationCatalog = {
     dark: "Oscuro",
     light: "Claro",
     favoriteClub: "Club favorito",
+    matchesLabel: "Partidos",
+    goalsLabel: "Goles",
+    clubsLabel: "Clubes",
     language: "Idioma",
 
     // ==================== HOMEPAGE ====================
@@ -3219,6 +3234,9 @@ const translationCatalog = {
     dark: "Escuro",
     light: "Claro",
     favoriteClub: "Clube favorito",
+    matchesLabel: "Jogos",
+    goalsLabel: "Golos",
+    clubsLabel: "Clubes",
     language: "Idioma",
 
     // ==================== HOMEPAGE ====================

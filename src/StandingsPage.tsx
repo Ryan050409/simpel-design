@@ -37,6 +37,9 @@ const labels = {
     difference: "Ds",
     points: "P",
     favorite: "Favoriete club",
+    matchesLabel: "Wedstrijden",
+    goalsLabel: "Doelpunten",
+    clubsLabel: "Clubs",
     note: "Alleen wedstrijden met een geldige uitslag tellen mee.",
   },
   en: {
@@ -55,6 +58,9 @@ const labels = {
     difference: "+/-",
     points: "Pts",
     favorite: "Favorite club",
+    matchesLabel: "Matches",
+    goalsLabel: "Goals",
+    clubsLabel: "Clubs",
     note: "Only matches with a valid score are included.",
   },
   de: {
@@ -73,6 +79,9 @@ const labels = {
     difference: "+/-",
     points: "Pkt.",
     favorite: "Lieblingsverein",
+    matchesLabel: "Spiele",
+    goalsLabel: "Tore",
+    clubsLabel: "Vereine",
     note: "Nur Spiele mit einem gültigen Ergebnis werden berücksichtigt.",
   },
   fr: {
@@ -91,6 +100,10 @@ const labels = {
     difference: "+/-",
     points: "Pts",
     favorite: "Club favori",
+    matchesLabel: "Matchs",
+    goalsLabel: "Buts",
+    clubsLabel: "Clubs",
+
     note: "Seuls les matchs avec un score valide sont pris en compte.",
   },
   sp: {
@@ -109,6 +122,10 @@ const labels = {
     difference: "+/-",
     points: "Pts",
     favorite: "Club favorito",
+    matchesLabel: "Partidos",
+    goalsLabel: "Goles",
+    clubsLabel: "Clubes",
+
     note: "Solo se cuentan los partidos con un resultado válido.",
   },
   pt: {
@@ -127,6 +144,9 @@ const labels = {
     difference: "+/-",
     points: "Pts",
     favorite: "Clube favorito",
+    matchesLabel: "Jogos",
+    goalsLabel: "Golos",
+    clubsLabel: "Clubes",
     note: "Só são contabilizados jogos com um resultado válido.",
   },
 };
@@ -233,8 +253,19 @@ export default function StandingsPage({
   language,
 }: StandingsPageProps) {
   const t = labels[language] ?? labels.nl;
+
   const standings = createStandings(teams, matches);
-  const countedMatches = matches.filter(hasValidScore).length;
+  const validMatches = matches.filter(hasValidScore);
+  const countedMatches = validMatches.length;
+
+  const totalGoals = validMatches.reduce(
+    (total, match) => total + match.homeGoals + match.awayGoals,
+    0,
+  );
+
+  const favoriteStanding = standings.find((club) => club.name === team);
+
+  const podium = standings.slice(0, 3);
 
   return (
     <main className="standings-page">
@@ -247,11 +278,115 @@ export default function StandingsPage({
         <span className="standings-demo-label">{t.demo}</span>
       </header>
 
-      <p className="standings-favorite">
-        <span aria-hidden="true">★</span> {t.favorite}: <strong>{team}</strong>
-      </p>
+      <section className="standings-favorite-card">
+        <div className="standings-favorite-info">
+          <span className="standings-eyebrow">{t.favorite}</span>
+          <div className="standings-favorite-name">
+            {teamLogos[team] && (
+              <img
+                src={teamLogos[team]}
+                alt=""
+                className="standings-featured-logo"
+              />
+            )}
+            <h2>{team}</h2>
+            <span className="standings-star" aria-hidden="true">
+              ★
+            </span>
+          </div>
+        </div>
+
+        <div className="standings-favorite-numbers">
+          <div>
+            <span>{t.position}</span>
+            <strong>
+              {favoriteStanding
+                ? `#${standings.findIndex((club) => club.name === team) + 1}`
+                : "—"}
+            </strong>
+          </div>
+          <div>
+            <span>{t.difference}</span>
+            <strong>
+              {favoriteStanding
+                ? `${favoriteStanding.goalDifference > 0 ? "+" : ""}${favoriteStanding.goalDifference}`
+                : "—"}
+            </strong>
+          </div>
+          <div>
+            <span>{t.points}</span>
+            <strong>{favoriteStanding?.points ?? "—"}</strong>
+          </div>
+        </div>
+      </section>
 
       {countedMatches === 0 && <p role="status">{t.empty}</p>}
+
+      <section className="standings-stats" aria-label="Competitiestatistieken">
+        <article className="standings-stat-card">
+          <span className="standings-stat-icon" aria-hidden="true">
+            ⚽
+          </span>
+          <span className="standings-stat-label">{t.matchesLabel}</span>
+          <strong>{countedMatches}</strong>
+        </article>
+
+        <article className="standings-stat-card">
+          <span className="standings-stat-icon" aria-hidden="true">
+            🥅
+          </span>
+          <span className="standings-stat-label">{t.goalsLabel}</span>
+          <strong>{totalGoals}</strong>
+        </article>
+
+        <article className="standings-stat-card">
+          <span className="standings-stat-icon" aria-hidden="true">
+            🛡️
+          </span>
+          <span className="standings-stat-label">{t.clubsLabel}</span>
+          <strong>{teams.length}</strong>
+        </article>
+      </section>
+
+      {countedMatches > 0 && (
+        <section className="standings-podium-section">
+          <div className="standings-section-heading">
+            <div>
+              <h2>🏆 {t.title}</h2>
+              <p>{t.subtitle}</p>
+            </div>
+          </div>
+
+          <div className="standings-podium">
+            {podium.map((club, index) => (
+              <article
+                key={club.name}
+                className={`standings-podium-card standings-podium-${index + 1}`}
+              >
+                <span className="standings-podium-rank">{index + 1}</span>
+
+                {teamLogos[club.name] && (
+                  <img
+                    src={teamLogos[club.name]}
+                    alt=""
+                    className="standings-podium-logo"
+                  />
+                )}
+
+                <strong className="standings-podium-name">{club.name}</strong>
+
+                <span className="standings-podium-points">
+                  {club.points} {t.points}
+                </span>
+
+                <span className="standings-podium-played">
+                  {club.played} {t.played}
+                </span>
+              </article>
+            ))}
+          </div>
+        </section>
+      )}
 
       <div className="standings-table-wrapper">
         <table className="standings-table">
