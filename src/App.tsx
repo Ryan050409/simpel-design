@@ -19,7 +19,8 @@ import AdminPage from "./AdminPage";
 import { DEMO_USER } from "./demoUser";
 import { translations, type Language } from "./translations.ts";
 import type { Player, Match, Team } from "./types.ts";
-
+import ClubsPage from "./ClubsPage.tsx";
+import ClubDetailPage from "./ClubDetailPage";
 /*
   TIJDELIJKE SEEDDATA
   Deze data wordt gebruikt wanneer er nog geen gegevens
@@ -186,6 +187,8 @@ function AppContent() {
   });
 
   const [showProfileMenu, setShowProfileMenu] = useState(false);
+  const [showCompetitieMenu, setShowCompetitieMenu] = useState(false);
+  const [showSpelersMenu, setShowSpelersMenu] = useState(false);
   const [language, setLanguage] = useState<Language>(() => {
     const savedLanguage = localStorage.getItem("language");
 
@@ -200,7 +203,11 @@ function AppContent() {
     return localStorage.getItem("demoLoggedIn") === "true";
   });
 
-  const profileMenuRef = useRef<HTMLDivElement>(null);
+  
+const profileMenuRef = useRef<HTMLDivElement>(null);
+const competitieMenuRef = useRef<HTMLDivElement>(null);
+const spelersMenuRef = useRef<HTMLDivElement>(null);
+
 
   const [theme, setTheme] = useState<"dark" | "light">(() => {
     const savedTheme = localStorage.getItem("theme");
@@ -301,6 +308,35 @@ function AppContent() {
     };
   }, [showProfileMenu]);
 
+  // Sluit de navigatiedropdowns bij het wisselen van pagina.
+ // Sluit de navigatiedropdowns bij een klik buiten het menu.
+useEffect(() => {
+  if (!showCompetitieMenu && !showSpelersMenu) return;
+
+  function handleNavigationOutsideClick(event: MouseEvent) {
+    const target = event.target as Node;
+
+    if (
+      competitieMenuRef.current &&
+      !competitieMenuRef.current.contains(target)
+    ) {
+      setShowCompetitieMenu(false);
+    }
+
+    if (
+      spelersMenuRef.current &&
+      !spelersMenuRef.current.contains(target)
+    ) {
+      setShowSpelersMenu(false);
+    }
+  }
+
+  document.addEventListener("mousedown", handleNavigationOutsideClick);
+
+  return () => {
+    document.removeEventListener("mousedown", handleNavigationOutsideClick);
+  };
+}, [showCompetitieMenu, showSpelersMenu]);
   /*
     Als de gebruiker uitlogt terwijl de adminpagina openstaat,
     sturen we hem terug naar Home.
@@ -335,24 +371,86 @@ function AppContent() {
           <span className="mobile-nav-label">{t.stats}</span>
         </NavLink>
 
-        <NavLink to="/wedstrijden" aria-label={t.matchesAriaLabel}>
-          <span className="mobile-nav-icon" aria-hidden="true">
-            ⚽
-          </span>
-          <span className="mobile-nav-label">{t.matches}</span>
-        </NavLink>
-        <NavLink to="/stand" aria-label="Competitiestand">
-          <span className="mobile-nav-icon" aria-hidden="true">
-            🏆
-          </span>
-          <span className="mobile-nav-label">{t.standings}</span>
-        </NavLink>
-        <NavLink to="/spelers" aria-label={t.playersAriaLabel}>
-          <span className="mobile-nav-icon" aria-hidden="true">
-            👥
-          </span>
-          <span className="mobile-nav-label">{t.players}</span>
-        </NavLink>
+        <div className="nav-dropdown" ref={spelersMenuRef}>
+          <button
+            type="button"
+            className="nav-dropdown-trigger"
+            aria-expanded={showCompetitieMenu}
+            aria-haspopup="true"
+            onClick={() => {
+              setShowCompetitieMenu((open) => !open);
+              setShowSpelersMenu(false);
+              setShowProfileMenu(false);
+            }}
+          >
+            <span className="mobile-nav-icon" aria-hidden="true">
+              🏆
+            </span>
+            <span className="mobile-nav-label">
+              Competitie <span aria-hidden="true">▾</span>
+            </span>
+          </button>
+
+          {showCompetitieMenu && (
+            <div className="nav-dropdown-content" ref={competitieMenuRef}>
+              <NavLink
+                to="/wedstrijden"
+                onClick={() => setShowCompetitieMenu(false)}
+              >
+                ⚽ Wedstrijden
+              </NavLink>
+
+              <NavLink to="/stand" onClick={() => setShowCompetitieMenu(false)}>
+                🏆 Competitiestand
+              </NavLink>
+
+              <NavLink
+                to="/competitie/clubs"
+                onClick={() => setShowCompetitieMenu(false)}
+              >
+                🛡️ Clubs
+              </NavLink>
+            </div>
+          )}
+        </div>
+
+        <div className="nav-dropdown">
+          <button
+            type="button"
+            className="nav-dropdown-trigger"
+            aria-expanded={showSpelersMenu}
+            aria-haspopup="true"
+            onClick={() => {
+              setShowSpelersMenu((open) => !open);
+              setShowCompetitieMenu(false);
+              setShowProfileMenu(false);
+            }}
+          >
+            <span className="mobile-nav-icon" aria-hidden="true">
+              👥
+            </span>
+            <span className="mobile-nav-label">
+              Spelers <span aria-hidden="true">▾</span>
+            </span>
+          </button>
+
+          {showSpelersMenu && (
+            <div className="nav-dropdown-content">
+              <NavLink to="/spelers" onClick={() => setShowSpelersMenu(false)}>
+                👤 Spelerstatistieken
+              </NavLink>
+
+              <span
+                className="nav-dropdown-disabled"
+                aria-disabled="true"
+                title="Deze pagina wordt later toegevoegd"
+              >
+                📊 Spelersranglijst
+                <small>Binnenkort</small>
+              </span>
+            </div>
+          )}
+        </div>
 
         {isAdmin && (
           <NavLink to="/admin" aria-label={t.adminAriaLabel}>
@@ -510,12 +608,13 @@ function AppContent() {
         <Route
           path="/stand"
           element={
-<StandingsPage
-  teams={teams}
-  matches={matches}
-  team={team}
-  language={language}
-/>          }
+            <StandingsPage
+              teams={teams}
+              matches={matches}
+              team={team}
+              language={language}
+            />
+          }
         />
         <Route
           path="/spelers"
@@ -553,6 +652,29 @@ function AppContent() {
         <Route
           path="/help"
           element={<HelpPage isAdmin={isAdmin} language={language} />}
+        />
+        <Route
+          path="/competitie/clubs"
+          element={
+            <ClubsPage
+              teams={teams}
+              favoriteTeam={team}
+              onSetFavorite={setTeam}
+              language={language}
+            />
+          }
+        />
+        <Route
+          path="/competitie/clubs/:clubId"
+          element={
+            <ClubDetailPage
+              teams={teams}
+              matches={matches}
+              favoriteTeam={team}
+              onSetFavorite={setTeam}
+              language={language}
+            />
+          }
         />
       </Routes>
     </div>
