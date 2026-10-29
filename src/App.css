@@ -3732,6 +3732,120 @@ textarea::placeholder {
     padding: 10px 7px;
   }
 }
+/* ===== MOBIELE EREDIVISIESTAND ===== */
+
+@media (max-width: 600px) {
+  .standings-page {
+    padding: 16px 12px;
+    max-width: 100%;
+  }
+
+  .standings-header {
+    margin-bottom: 16px;
+    gap: 6px;
+  }
+
+  .standings-header h1 {
+    font-size: 22px;
+    margin: 0;
+  }
+
+  .standings-header p {
+    font-size: 12px;
+    margin-top: 5px;
+  }
+
+  .standings-demo-label {
+    font-size: 11px;
+    padding: 7px 10px;
+  }
+
+  .standings-favorite {
+    margin-bottom: 14px;
+    padding: 11px 12px;
+    border-radius: 10px;
+    font-size: 13px;
+  }
+
+  .standings-table-wrapper {
+    border-radius: 12px;
+    overflow: hidden;
+  }
+
+  .standings-table {
+    width: 100%;
+    table-layout: auto;
+    border-collapse: collapse;
+    font-size: 12px;
+  }
+
+  .standings-table th,
+  .standings-table td {
+    padding: 12px 5px;
+    white-space: nowrap;
+    text-align: center;
+  }
+
+  .standings-table thead th {
+    font-size: 11px;
+    background: var(--secondary-background);
+  }
+
+  /* Positie */
+  .standings-table th:first-child,
+  .standings-table td:first-child {
+    width: 28px;
+    padding-left: 6px;
+    padding-right: 4px;
+  }
+
+  /* Clubnaam: zo veel mogelijk ruimte */
+  .standings-table .standings-club-heading,
+  .standings-table .standings-club-name {
+    text-align: left;
+    padding-left: 8px;
+    padding-right: 8px;
+  }
+
+  .standings-table .standings-club-name {
+    font-weight: 600;
+  }
+
+  /* Verberg overige statistieken op mobiel */
+  .standings-table .standings-mobile-hide {
+    display: none;
+  }
+
+  /* GS en DS compact houden */
+  .standings-table th:nth-child(3),
+  .standings-table td:nth-child(3) {
+    min-width: 32px;
+  }
+
+  .standings-table .standings-points {
+    font-size: 13px;
+    font-weight: 800;
+    padding-right: 9px;
+  }
+
+  .standings-table .standings-row-favorite {
+    background: var(--accent-soft);
+  }
+
+  .standings-star {
+    margin-right: 3px;
+  }
+
+  .standings-table tbody tr:hover {
+    background: var(--accent-soft);
+  }
+
+  .standings-footnote {
+    font-size: 11px;
+    line-height: 1.5;
+    margin-top: 12px;
+  }
+}
 
 /* =========================================
    ADMINPAGINA — BASIS

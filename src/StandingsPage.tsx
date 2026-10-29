@@ -35,7 +35,7 @@ const labels = {
     lost: "V",
     goalsFor: "DV",
     goalsAgainst: "DT",
-    difference: "+/-",
+    difference: "Ds",
     points: "P",
     favorite: "Favoriete club",
     note: "Alleen wedstrijden met een geldige uitslag tellen mee.",
@@ -245,11 +245,11 @@ export default function StandingsPage({
                 {t.club}
               </th>
               <th scope="col">{t.played}</th>
-              <th scope="col">{t.won}</th>
-              <th scope="col">{t.drawn}</th>
-              <th scope="col">{t.lost}</th>
-              <th scope="col">{t.goalsFor}</th>
-              <th scope="col">{t.goalsAgainst}</th>
+              <th className="standings-mobile-hide" scope="col">{t.won}</th>
+              <th className="standings-mobile-hide" scope="col">{t.drawn}</th>
+              <th className="standings-mobile-hide" scope="col">{t.lost}</th>
+              <th className="standings-mobile-hide" scope="col">{t.goalsFor}</th>
+              <th className="standings-mobile-hide" scope="col">{t.goalsAgainst}</th>
               <th scope="col">{t.difference}</th>
               <th scope="col">{t.points}</th>
             </tr>
@@ -280,11 +280,11 @@ export default function StandingsPage({
                     {club.name}
                   </th>
                   <td>{club.played}</td>
-                  <td>{club.won}</td>
-                  <td>{club.drawn}</td>
-                  <td>{club.lost}</td>
-                  <td>{club.goalsFor}</td>
-                  <td>{club.goalsAgainst}</td>
+                  <td className="standings-mobile-hide">{club.won}</td>
+                  <td className="standings-mobile-hide">{club.drawn}</td>
+                  <td className="standings-mobile-hide">{club.lost}</td>
+                  <td className="standings-mobile-hide">{club.goalsFor}</td>
+                  <td  className="standings-mobile-hide">{club.goalsAgainst}</td>
                   <td>
                     {club.goalDifference > 0 ? "+" : ""}
                     {club.goalDifference}
