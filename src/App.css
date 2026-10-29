@@ -2465,34 +2465,43 @@ textarea::placeholder {
   width: 100%;
 }
 
+
 .matches-page-header {
   display: grid;
-  grid-template-columns: 1fr auto;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 560px);
   align-items: start;
-  gap: 20px;
-
-  width: 100%;
-  max-width: 1100px;
-  margin: 0 auto 18px;
-
-  text-align: left;
+  gap: 28px;
+  margin-bottom: 28px;
 }
 
 .matches-page-header h1 {
-  margin: 0 0 6px;
+  margin: 0 0 10px;
+  font-size: clamp(28px, 3vw, 36px);
+  letter-spacing: -0.6px;
 }
 
 .matches-page-header p {
   margin: 0;
   color: var(--muted-text-color);
+  line-height: 1.6;
+}
+
+@media (max-width: 900px) {
+  .matches-page-header {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 20px;
+  }
 }
 
 .matches-page-actions {
-  display: flex;
-  align-items: flex-end;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 12px;
-  flex-shrink: 0;
+  padding: 18px;
+  border: 1px solid var(--border-color);
+  border-radius: 16px;
+  background: var(--card-background);
+  box-shadow: var(--shadow-card);
 }
 
 .matches-page-actions .add-button {
@@ -2503,8 +2512,8 @@ textarea::placeholder {
   display: flex;
   flex-direction: column;
   align-items: stretch;
-  gap: 5px;
-  min-width: 190px;
+  gap: 7px;
+  min-width: 0;
   margin: 0;
 }
 
@@ -2516,24 +2525,50 @@ textarea::placeholder {
   font-weight: 600;
 }
 
-.match-filter select {
-  padding: 8px 10px;
 
+.match-filter select {
+  box-sizing: border-box;
+  width: 100%;
+  min-width: 0;
+  min-height: 44px;
+  padding: 10px 12px;
   background: var(--input-background);
   color: var(--text-color);
   border: 1px solid var(--border-color);
-  border-radius: 8px;
-
+  border-radius: 10px;
   outline: none;
   cursor: pointer;
   font-size: 13px;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.match-filter select:focus-visible {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
 }
 
 .match-filter select:focus {
   border-color: #2563eb;
   box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.15);
 }
+@media (max-width: 900px) {
+  .matches-page-header {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
 
+  .matches-page-actions {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 600px) {
+  .matches-page-actions {
+    grid-template-columns: 1fr;
+    gap: 14px;
+    padding: 14px;
+  }
+}
 /* Wedstrijdtabel */
 
 .matches-table {
@@ -4138,6 +4173,214 @@ textarea::placeholder {
 
   .standings-podium-played {
     font-size: 10px;
+  }
+}
+
+/* ==========================================
+   KLEURRIJKE EREDIVISIESTAND
+   Sluit aan op het bestaande blauw thema
+========================================== */
+
+/* Competitieheader */
+.standings-header {
+  padding: 26px;
+  border: 1px solid var(--border-color);
+  border-left: 5px solid var(--accent);
+  border-radius: 16px;
+  background:
+    linear-gradient(115deg, rgba(37, 99, 235, 0.24), transparent 75%),
+    var(--card-background);
+  box-shadow: var(--shadow-card);
+}
+
+.standings-header h1 {
+  letter-spacing: -0.5px;
+}
+
+.standings-demo-label {
+  border-color: rgba(96, 165, 250, 0.45);
+  background: var(--accent-soft);
+}
+
+/* Favoriete club: blauw met gouden ster */
+.standings-favorite-card {
+  border-color: rgba(59, 130, 246, 0.5);
+  border-left: 5px solid var(--accent);
+  background:
+    linear-gradient(110deg, rgba(37, 99, 235, 0.2), transparent 85%),
+    var(--card-background);
+  box-shadow: var(--shadow-card);
+}
+
+.standings-favorite-card .standings-star {
+  color: #fbbf24;
+  font-size: 22px;
+}
+
+.standings-favorite-numbers > div {
+  padding: 10px 12px;
+  border-radius: 10px;
+  background: var(--secondary-background);
+}
+
+/* Statistiekkaarten met verschillende kleuraccenten */
+.standings-stat-card {
+  border-top: 4px solid var(--accent);
+  box-shadow: var(--shadow-card);
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.standings-stat-card:nth-child(2) {
+  border-top-color: #22c55e;
+}
+
+.standings-stat-card:nth-child(3) {
+  border-top-color: #f59e0b;
+}
+
+.standings-stat-card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-card-hover);
+}
+
+.standings-stat-card:nth-child(1) .standings-stat-icon {
+  background: rgba(59, 130, 246, 0.17);
+}
+
+.standings-stat-card:nth-child(2) .standings-stat-icon {
+  background: rgba(34, 197, 94, 0.16);
+}
+
+.standings-stat-card:nth-child(3) .standings-stat-icon {
+  background: rgba(245, 158, 11, 0.17);
+}
+
+/* Podium */
+.standings-podium-card {
+  overflow: hidden;
+  border-top: 4px solid var(--border-color);
+  box-shadow: var(--shadow-card);
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.standings-podium-card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-card-hover);
+}
+
+/* Nummer 1: goud */
+.standings-podium-1 {
+  border: 1px solid rgba(245, 158, 11, 0.65);
+  border-top: 5px solid #fbbf24;
+  background:
+    linear-gradient(180deg, rgba(245, 158, 11, 0.2), transparent 75%),
+    var(--card-background);
+}
+
+.standings-podium-1 .standings-podium-rank {
+  background: #fbbf24;
+  color: #422006;
+}
+
+/* Nummer 2: zilver */
+.standings-podium-2 {
+  border-top: 5px solid #94a3b8;
+  background:
+    linear-gradient(180deg, rgba(148, 163, 184, 0.18), transparent 75%),
+    var(--card-background);
+}
+
+.standings-podium-2 .standings-podium-rank {
+  background: #cbd5e1;
+  color: #1e293b;
+}
+
+/* Nummer 3: brons */
+.standings-podium-3 {
+  border-top: 5px solid #c08457;
+  background:
+    linear-gradient(180deg, rgba(192, 132, 87, 0.18), transparent 75%),
+    var(--card-background);
+}
+
+.standings-podium-3 .standings-podium-rank {
+  background: #c08457;
+  color: #27160c;
+}
+
+.standings-podium-points {
+  color: var(--accent);
+}
+
+/* Ranglijst */
+.standings-table-wrapper {
+  overflow-x: auto;
+  border: 1px solid var(--border-color);
+  border-radius: 14px;
+  box-shadow: var(--shadow-card);
+}
+
+.standings-table thead th {
+  padding-top: 15px;
+  padding-bottom: 15px;
+  background: #1e40af;
+  color: #ffffff;
+  border-bottom: 2px solid #60a5fa;
+}
+
+.standings-table tbody tr:nth-child(even) {
+  background: var(--secondary-background);
+}
+
+.standings-table tbody tr:hover {
+  background: var(--accent-soft);
+}
+
+.standings-table tbody td:first-child {
+  color: var(--accent);
+  font-weight: 800;
+}
+
+.standings-table tbody .standings-row-favorite {
+  background: var(--accent-soft);
+  box-shadow: inset 4px 0 var(--accent);
+}
+
+.standings-table .standings-points {
+  color: var(--accent);
+  font-size: 15px;
+  font-weight: 900;
+}
+
+.standings-table .standings-team-logo {
+  vertical-align: middle;
+}
+
+/* Lichte modus: behoud goed leesbare kop */
+.app.light .standings-table thead th {
+  background: #1d4ed8;
+  color: #ffffff;
+}
+
+/* Mobiel */
+@media (max-width: 600px) {
+  .standings-header {
+    padding: 18px 14px;
+  }
+
+  .standings-stat-card,
+  .standings-podium-card {
+    box-shadow: none;
+  }
+
+  .standings-podium-1 {
+    background:
+      linear-gradient(180deg, rgba(245, 158, 11, 0.2), transparent 85%),
+      var(--card-background);
   }
 }
 
@@ -6178,4 +6421,555 @@ textarea::placeholder {
   text-decoration-color: var(--success);
   text-decoration-thickness: 2px;
   text-underline-offset: 4px;
+}
+
+/* =========================================================
+   WEDSTRIJDENPAGINA — DEFINITIEVE STIJLLAAG
+   Gebruikt de bestaande thema- en kleurvariabelen
+========================================================= */
+
+.matches-page {
+  width: 100%;
+  max-width: 1200px;
+  min-width: 0;
+  margin: 0 auto;
+  padding: 0 12px 32px;
+  color: var(--text-color);
+  text-align: left;
+}
+
+/* Titel en filters */
+
+.matches-page .matches-page-header {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 680px);
+  align-items: start;
+  gap: 28px;
+  width: 100%;
+  max-width: none;
+  margin: 0 auto 26px;
+  text-align: left;
+}
+
+.matches-page .matches-page-header > div:first-child {
+  min-width: 0;
+  padding-top: 8px;
+}
+
+.matches-page .matches-page-header h1 {
+  margin: 0 0 10px;
+  font-size: clamp(28px, 3vw, 36px);
+  line-height: 1.2;
+  letter-spacing: -0.6px;
+  overflow-wrap: anywhere;
+}
+
+.matches-page .matches-page-header p {
+  margin: 0;
+  color: var(--muted-text-color);
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+/* Filterkaart */
+
+.matches-page .matches-page-actions {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  align-items: end;
+  gap: 12px;
+  width: 100%;
+  min-width: 0;
+  padding: 18px;
+  border: 1px solid var(--border-color);
+  border-radius: 16px;
+  background:
+    linear-gradient(125deg, var(--accent-soft), transparent 65%),
+    var(--card-background);
+  box-shadow: var(--shadow-card);
+}
+
+.matches-page .matches-page-actions .match-filter {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 7px;
+  width: 100%;
+  min-width: 0;
+  margin: 0;
+}
+
+.matches-page .match-filter label {
+  display: block;
+  min-height: 34px;
+  color: var(--muted-text-color);
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1.4;
+}
+
+.matches-page .match-filter select {
+  box-sizing: border-box;
+  display: block;
+  width: 100%;
+  min-width: 0;
+  min-height: 44px;
+  margin: 0;
+  padding: 9px 10px;
+  border: 1px solid var(--border-color);
+  border-radius: 9px;
+  background: var(--input-background);
+  color: var(--text-color);
+  font-family: inherit;
+  font-size: 13px;
+  line-height: 1.4;
+  cursor: pointer;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.matches-page .match-filter select:hover {
+  border-color: var(--accent);
+}
+
+.matches-page .match-filter select:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* Tabelcontainer */
+
+.matches-page .matches-table-wrapper {
+  width: 100%;
+  max-width: 1100px;
+  min-width: 0;
+  margin: 0 auto;
+  overflow-x: auto;
+  border: 1px solid var(--border-color);
+  border-radius: 15px;
+  background: var(--table-background);
+  box-shadow: var(--shadow-card);
+}
+
+/* Wedstrijdtabel */
+
+.matches-page .matches-table {
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  table-layout: fixed;
+  border: 0;
+  border-collapse: separate;
+  border-spacing: 0;
+  border-radius: 0;
+  overflow: hidden;
+  background: var(--table-background);
+  color: var(--table-text-color);
+  font-size: 13px;
+  font-variant-numeric: tabular-nums;
+  box-shadow: none;
+}
+
+.matches-page .matches-table th,
+.matches-page .matches-table td {
+  box-sizing: border-box;
+  width: auto;
+  min-width: 0;
+  padding: 14px 10px;
+  border: 0;
+  border-bottom: 1px solid var(--border-color);
+  color: var(--table-text-color);
+  text-align: center;
+  vertical-align: middle;
+  overflow-wrap: anywhere;
+}
+
+.matches-page .matches-table thead th {
+  padding-top: 15px;
+  padding-bottom: 15px;
+  background: var(--secondary-background);
+  color: var(--muted-text-color);
+  border-bottom: 2px solid var(--border-color);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+/* Verhouding van de vijf kolommen */
+
+.matches-page .matches-table th:nth-child(1),
+.matches-page .matches-table td:nth-child(1) {
+  width: 17%;
+}
+
+.matches-page .matches-table th:nth-child(2),
+.matches-page .matches-table td:nth-child(2),
+.matches-page .matches-table th:nth-child(3),
+.matches-page .matches-table td:nth-child(3) {
+  width: 24%;
+}
+
+.matches-page .matches-table th:nth-child(4),
+.matches-page .matches-table td:nth-child(4) {
+  width: 14%;
+}
+
+.matches-page .matches-table th:nth-child(5),
+.matches-page .matches-table td:nth-child(5) {
+  width: 21%;
+}
+
+/* Clubnamen en favoriet */
+
+.matches-page .matches-table th:nth-child(2),
+.matches-page .matches-table td:nth-child(2),
+.matches-page .matches-table td:nth-child(3) {
+  font-weight: 600;
+}
+
+.matches-page .matches-table .favorite-indicator,
+.matches-page .matches-table td .favorite-indicator {
+  color: #fbbf24;
+  font-size: 14px;
+  font-weight: 900;
+  white-space: nowrap;
+}
+
+.matches-page .matches-table .favorite-team-name {
+  color: var(--table-text-color);
+}
+
+/* Subtiele afwisselende rijen en hover */
+
+.matches-page .matches-table tbody tr {
+  background: var(--table-background);
+  transition: background-color 0.16s ease;
+}
+
+.matches-page .matches-table tbody tr:nth-child(even) td {
+  background: var(--secondary-background);
+}
+
+.matches-page .matches-table tbody tr:hover td {
+  background: var(--accent-soft);
+}
+
+.matches-page .matches-table tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+/* Score */
+
+.matches-page .matches-table .match-score {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 66px;
+  padding: 7px 9px;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  background: var(--secondary-background);
+  color: var(--text-color);
+  font-size: 14px;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+/* Uitslagbadges */
+
+.matches-page .matches-table .result-win,
+.matches-page .matches-table .result-draw,
+.matches-page .matches-table .result-loss {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 90px;
+  max-width: 100%;
+  padding: 6px 9px;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 750;
+  line-height: 1.4;
+  white-space: normal;
+  box-shadow: none;
+}
+
+.matches-page .matches-table .result-win {
+  background: #dcfce7;
+  color: #166534;
+  border-color: #86efac;
+}
+
+.matches-page .matches-table .result-draw {
+  background: #dbeafe;
+  color: #1e40af;
+  border-color: #93c5fd;
+}
+
+.matches-page .matches-table .result-loss {
+  background: #fee2e2;
+  color: #991b1b;
+  border-color: #fca5a5;
+}
+
+/* Winnaar: groen, ook in donkere modus */
+
+.matches-page .matches-table .winner-team-name {
+  color: #15803d;
+  font-weight: 800;
+}
+
+.app:not(.light) .matches-page .matches-table .winner-team-name {
+  color: #4ade80;
+}
+
+/* Geen wedstrijden gevonden */
+
+.matches-page .matches-table tbody td[colspan="5"] {
+  width: 100%;
+  padding: 32px 16px;
+  color: var(--muted-text-color);
+  font-size: 14px;
+  text-align: center;
+}
+
+/* Toegankelijkheid */
+
+.matches-page button:focus-visible,
+.matches-page select:focus-visible,
+.matches-page a:focus-visible {
+  outline: 3px solid #60a5fa;
+  outline-offset: 3px;
+}
+
+/* Tablet: filters onder de titel */
+
+@media (max-width: 1000px) {
+  .matches-page .matches-page-header {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 18px;
+  }
+
+  .matches-page .matches-page-header > div:first-child {
+    padding-top: 0;
+  }
+
+  .matches-page .matches-page-actions {
+    max-width: none;
+  }
+}
+
+/* Mobiel: compacte filterkaart en wedstrijdkaarten */
+
+@media (max-width: 600px) {
+  .matches-page {
+    padding: 0 2px 24px;
+  }
+
+  .matches-page .matches-page-header {
+    gap: 16px;
+    margin-bottom: 20px;
+  }
+
+  .matches-page .matches-page-header h1 {
+    font-size: 27px;
+  }
+
+  .matches-page .matches-page-header p {
+    font-size: 13px;
+  }
+
+  .matches-page .matches-page-actions {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 12px;
+    padding: 14px;
+    border-radius: 13px;
+  }
+
+  .matches-page .matches-page-actions .match-filter {
+    gap: 5px;
+  }
+
+  .matches-page .match-filter label {
+    min-height: 0;
+    font-size: 12px;
+  }
+
+  .matches-page .match-filter select {
+    min-height: 44px;
+    font-size: 14px;
+  }
+
+  /* Op mobiel wordt elke wedstrijd een eigen kaart */
+
+  .matches-page .matches-table-wrapper {
+    overflow: visible;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    box-shadow: none;
+  }
+
+  .matches-page .matches-table {
+    display: block;
+    width: 100%;
+    margin: 0;
+    overflow: visible;
+    border: 0;
+    background: transparent;
+  }
+
+  .matches-page .matches-table thead {
+    display: none;
+  }
+
+  .matches-page .matches-table tbody {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 12px;
+    width: 100%;
+  }
+
+  .matches-page .matches-table tbody tr {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+    padding: 12px;
+    border: 1px solid var(--border-color);
+    border-radius: 13px;
+    background: var(--card-background);
+    box-shadow: var(--shadow-card);
+  }
+
+  .matches-page .matches-table tbody tr:nth-child(even) td,
+  .matches-page .matches-table tbody tr:hover td {
+    background: transparent;
+  }
+
+  .matches-page .matches-table tbody td {
+    width: auto;
+    min-width: 0;
+    padding: 5px 2px;
+    border: 0;
+    font-size: 12px;
+    overflow-wrap: anywhere;
+  }
+
+  /* Datum */
+
+  .matches-page .matches-table tbody td:first-child {
+    grid-column: 1 / -1;
+    padding: 0 0 9px;
+    border-bottom: 1px solid var(--border-color);
+    color: var(--muted-text-color);
+    font-size: 11px;
+    text-align: left;
+    white-space: normal;
+  }
+
+  /* Thuis en uit */
+
+  .matches-page .matches-table tbody td:nth-child(2),
+  .matches-page .matches-table tbody td:nth-child(3) {
+    text-align: center;
+    font-size: 12px;
+    font-weight: 700;
+  }
+
+  .matches-page .matches-table tbody td:nth-child(2)::before,
+  .matches-page .matches-table tbody td:nth-child(3)::before {
+    display: block;
+    margin-bottom: 5px;
+    color: var(--muted-text-color);
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  .matches-page .matches-table tbody td:nth-child(2)::before {
+    content: "Thuis";
+  }
+
+  .matches-page .matches-table tbody td:nth-child(3)::before {
+    content: "Uit";
+  }
+
+  /* Score */
+
+  .matches-page .matches-table tbody td:nth-child(4) {
+    text-align: center;
+  }
+
+  .matches-page .matches-table .match-score {
+    min-width: 54px;
+    padding: 6px;
+    font-size: 13px;
+  }
+
+  /* Resultaat onderaan */
+
+  .matches-page .matches-table tbody td:nth-child(5) {
+    grid-column: 1 / -1;
+    padding-top: 9px;
+    border-top: 1px solid var(--border-color);
+    text-align: left;
+  }
+
+  .matches-page .matches-table .result-win,
+  .matches-page .matches-table .result-draw,
+  .matches-page .matches-table .result-loss {
+    min-width: 0;
+    font-size: 11px;
+  }
+
+  .matches-page .matches-table tbody td[colspan="5"] {
+    display: block;
+    grid-column: 1 / -1;
+    padding: 20px 12px;
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    background: var(--card-background);
+  }
+}
+
+/* Zeer smalle telefoons */
+
+@media (max-width: 360px) {
+  .matches-page .matches-page-header h1 {
+    font-size: 24px;
+  }
+
+  .matches-page .matches-page-actions {
+    padding: 11px;
+  }
+
+  .matches-page .matches-table tbody tr {
+    gap: 5px;
+    padding: 9px;
+  }
+
+  .matches-page .matches-table tbody td {
+    font-size: 11px;
+  }
+
+  .matches-page .matches-table .match-score {
+    min-width: 48px;
+    font-size: 12px;
+  }
+}
+
+/* Minder beweging wanneer de gebruiker dat instelt */
+
+@media (prefers-reduced-motion: reduce) {
+  .matches-page .matches-table tbody tr,
+  .matches-page .match-filter select {
+    transition: none;
+  }
 }

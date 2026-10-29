@@ -473,12 +473,6 @@ function AppContent() {
               <NavLink to="/help" onClick={() => setShowProfileMenu(false)}>
                 {t.help}
               </NavLink>
-
-              {isAdmin && (
-                <NavLink to="/admin" onClick={() => setShowProfileMenu(false)}>
-                  {t.admin}
-                </NavLink>
-              )}
             </div>
           )}
         </div>
