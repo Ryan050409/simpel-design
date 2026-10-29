@@ -3592,6 +3592,147 @@ textarea::placeholder {
   }
 }
 
+/* ==================== COMPETITIESTAND ==================== */
+
+.standings-page {
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 24px;
+  text-align: left;
+}
+
+.standings-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.standings-header h1 {
+  margin-bottom: 4px;
+}
+
+.standings-header p {
+  margin-bottom: 0;
+  color: var(--muted-text-color);
+}
+
+.standings-demo-label {
+  display: inline-block;
+  padding: 6px 12px;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  background: var(--secondary-background);
+  color: var(--text-color);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.standings-favorite {
+  margin-bottom: 16px;
+  padding: 12px 16px;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  background: var(--card-background);
+}
+
+.standings-favorite span,
+.standings-star {
+  color: #fbbf24;
+}
+
+.standings-table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  background: var(--table-background);
+}
+
+.standings-table {
+  width: 100%;
+  border-collapse: collapse;
+  color: var(--table-text-color);
+  font-size: 14px;
+  font-variant-numeric: tabular-nums;
+}
+
+.standings-table th,
+.standings-table td {
+  padding: 12px 10px;
+  border-bottom: 1px solid var(--border-color);
+  text-align: center;
+  white-space: nowrap;
+}
+
+.standings-table thead th {
+  background: var(--secondary-background);
+  color: var(--text-color);
+  font-weight: 700;
+}
+
+.standings-table .standings-club-heading {
+  text-align: left;
+}
+
+.standings-table .standings-club-name {
+  font-weight: 600;
+  text-align: left;
+}
+
+.standings-star {
+  margin-right: 6px;
+}
+
+.standings-table tbody tr:last-child th,
+.standings-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.standings-table tbody tr:hover {
+  background: var(--accent-soft);
+}
+
+.standings-table .standings-row-favorite {
+  background: var(--accent-soft);
+}
+
+.standings-table .standings-points {
+  font-weight: 800;
+}
+
+.standings-footnote {
+  margin-top: 14px;
+  color: var(--muted-text-color);
+  font-size: 13px;
+}
+
+@media (max-width: 700px) {
+  .standings-page {
+    padding: 12px 8px;
+  }
+
+  .standings-header {
+    align-items: flex-start;
+  }
+
+  .standings-header h1 {
+    font-size: 25px;
+  }
+
+  .standings-table {
+    font-size: 12px;
+  }
+
+  .standings-table th,
+  .standings-table td {
+    padding: 10px 7px;
+  }
+}
+
 /* =========================================
    ADMINPAGINA — BASIS
 ========================================= */

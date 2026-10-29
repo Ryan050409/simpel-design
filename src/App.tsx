@@ -12,6 +12,7 @@ import "./App.css";
 import PlayersPage from "./PlayersPage.tsx";
 import Dashboard from "./Dashboard.tsx";
 import MatchesPage from "./MatchesPage.tsx";
+import StandingsPage from "./StandingsPage";
 import HomePage from "./HomePage";
 import HelpPage from "./HelpPage";
 import AdminPage from "./AdminPage";
@@ -187,8 +188,11 @@ function AppContent() {
   const [showProfileMenu, setShowProfileMenu] = useState(false);
   const [language, setLanguage] = useState<Language>(() => {
     const savedLanguage = localStorage.getItem("language");
-    return savedLanguage === "en" || savedLanguage === "de"
-      ? savedLanguage
+
+    const supportedLanguages: Language[] = ["nl", "en", "de", "fr", "sp", "pt"];
+
+    return supportedLanguages.includes(savedLanguage as Language)
+      ? (savedLanguage as Language)
       : "nl";
   });
 
@@ -337,7 +341,12 @@ function AppContent() {
           </span>
           <span className="mobile-nav-label">{t.matches}</span>
         </NavLink>
-
+        <NavLink to="/stand" aria-label="Competitiestand">
+          <span className="mobile-nav-icon" aria-hidden="true">
+            🏆
+          </span>
+          <span className="mobile-nav-label">{t.standings}</span>
+        </NavLink>
         <NavLink to="/spelers" aria-label={t.playersAriaLabel}>
           <span className="mobile-nav-icon" aria-hidden="true">
             👥
@@ -505,6 +514,16 @@ function AppContent() {
           }
         />
         <Route
+          path="/stand"
+          element={
+<StandingsPage
+  teams={teams}
+  matches={matches}
+  team={team}
+  language={language}
+/>          }
+        />
+        <Route
           path="/spelers"
           element={
             <PlayersPage
@@ -537,7 +556,10 @@ function AppContent() {
             )
           }
         />
-        <Route path="/help" element={<HelpPage isAdmin={isAdmin} language={language} />} />
+        <Route
+          path="/help"
+          element={<HelpPage isAdmin={isAdmin} language={language} />}
+        />
       </Routes>
     </div>
   );
