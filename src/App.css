@@ -2712,7 +2712,46 @@ textarea::placeholder {
   margin: 0 0 20px;
   text-align: right;
 }
+.player-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-top: 16px;
+  margin-bottom: 24px;
+}
 
+.player-filter {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  flex: 1 1 220px;
+  min-width: 0;
+}
+
+.player-filter label {
+  font-weight: 600;
+}
+
+.player-filter select {
+  width: 100%;
+  min-height: 42px;
+  padding: 8px 12px;
+  border: 1px solid var(--border-color, #888);
+  border-radius: 8px;
+  background: var(--card-background, #fff);
+  color: var(--text-color, #111);
+  font: inherit;
+}
+
+@media (max-width: 600px) {
+  .player-filters {
+    gap: 12px;
+  }
+
+  .player-filter {
+    flex-basis: 100%;
+  }
+}
 .player-search input {
   width: 100%;
   max-width: 420px;

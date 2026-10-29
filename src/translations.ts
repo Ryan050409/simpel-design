@@ -580,6 +580,14 @@ const translationCatalog = {
     penaltySaves: "Penalty's gestopt",
     goalsConceded: "Tegengoals",
     noPlayersMatchSearch: "Geen spelers gevonden.",
+    filterByPosition: "Filter op positie:",
+    allPositions: "Alle posities",
+    sortPlayersBy: "Sorteren op:",
+    sortAlphabetically: "Alfabetisch op naam",
+    sortPlayerGoals: "Meeste doelpunten",
+    sortPlayerAssists: "Meeste assists",
+    sortPlayerRating: "Hoogste beoordeling",
+    sortPlayerMatches: "Meeste wedstrijden",
 
     // ==================== SPELERFORMULIER ====================
     addNewPlayer: "Nieuwe speler toevoegen",
@@ -1209,6 +1217,14 @@ const translationCatalog = {
     penaltySaves: "Penalties saved",
     goalsConceded: "Goals conceded",
     noPlayersMatchSearch: "No players found.",
+    filterByPosition: "Filter by position:",
+    allPositions: "All positions",
+    sortPlayersBy: "Sort by:",
+    sortAlphabetically: "Alphabetically by name",
+    sortPlayerGoals: "Most goals",
+    sortPlayerAssists: "Most assists",
+    sortPlayerRating: "Highest rating",
+    sortPlayerMatches: "Most matches",
 
     // ==================== PLAYER FORM ====================
     addNewPlayer: "Add new player",
@@ -1763,7 +1779,14 @@ const translationCatalog = {
     penaltySaves: "Gehaltene Elfmeter",
     goalsConceded: "Gegentore",
     noPlayersMatchSearch: "Keine Spieler gefunden.",
-
+    filterByPosition: "Nach Position filtern:",
+    allPositions: "Alle Positionen",
+    sortPlayersBy: "Sortieren nach:",
+    sortAlphabetically: "Alphabetisch nach Name",
+    sortPlayerGoals: "Meiste Tore",
+    sortPlayerAssists: "Meiste Vorlagen",
+    sortPlayerRating: "Beste Bewertung",
+    sortPlayerMatches: "Meiste Spiele",
     // ==================== SPIELERFORMULAR: ÜBERSCHRIFTEN UND ALLGEMEINES ====================
     playerFormAddTitle: "Spieler hinzufügen",
     playerFormEditTitle: "Spieler bearbeiten",
@@ -2521,6 +2544,14 @@ const translationCatalog = {
     penaltySaves: "Penaltys arrêtés",
     goalsConceded: "Buts encaissés",
     noPlayersMatchSearch: "Aucun joueur trouvé.",
+    filterByPosition: "Filtrer par poste :",
+    allPositions: "Tous les postes",
+    sortPlayersBy: "Trier par :",
+    sortAlphabetically: "Ordre alphabétique",
+    sortPlayerGoals: "Plus de buts",
+    sortPlayerAssists: "Plus de passes décisives",
+    sortPlayerRating: "Meilleure note",
+    sortPlayerMatches: "Plus de matchs",
 
     // ==================== PLAYER FORM ====================
     addNewPlayer: "Ajouter un nouveau joueur",
@@ -3155,6 +3186,14 @@ const translationCatalog = {
     penaltySaves: "Penaltis parados",
     goalsConceded: "Goles encajados",
     noPlayersMatchSearch: "No se han encontrado jugadores.",
+    filterByPosition: "Filtrar por posición:",
+    allPositions: "Todas las posiciones",
+    sortPlayersBy: "Ordenar por:",
+    sortAlphabetically: "Orden alfabético por nombre",
+    sortPlayerGoals: "Más goles",
+    sortPlayerAssists: "Más asistencias",
+    sortPlayerRating: "Mejor valoración",
+    sortPlayerMatches: "Más partidos",
 
     // ==================== PLAYER FORM ====================
     addNewPlayer: "Añadir un nuevo jugador",
@@ -3798,6 +3837,14 @@ const translationCatalog = {
     penaltySaves: "Penáltis defendidos",
     goalsConceded: "Golos sofridos",
     noPlayersMatchSearch: "Não foram encontrados jogadores.",
+    filterByPosition: "Filtrar por posição:",
+    allPositions: "Todas as posições",
+    sortPlayersBy: "Ordenar por:",
+    sortAlphabetically: "Ordem alfabética por nome",
+    sortPlayerGoals: "Mais golos",
+    sortPlayerAssists: "Mais assistências",
+    sortPlayerRating: "Melhor classificação",
+    sortPlayerMatches: "Mais jogos",
 
     // ==================== PLAYER FORM ====================
     addNewPlayer: "Adicionar novo jogador",

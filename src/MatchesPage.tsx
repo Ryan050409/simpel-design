@@ -46,13 +46,23 @@ function MatchesPage({ matches, team, language }: MatchesPageProps) {
   const [resultFilter, setResultFilter] = useState<
     "all" | "home" | "draw" | "away"
   >("all");
-
+  const [venueFilter, setVenueFilter] = useState<"all" | "home" | "away">(
+    "all",
+  );
   const visibleMatches =
     matchView === "favorite"
       ? matches.filter((match) => match.home === team || match.away === team)
       : matches;
 
-  const resultFilteredMatches = visibleMatches.filter((match) => {
+  const venueFilteredMatches = visibleMatches.filter((match) => {
+    if (venueFilter === "all") return true;
+    if (venueFilter === "home") return match.home === team;
+    if (venueFilter === "away") return match.away === team;
+
+    return true;
+  });
+
+  const resultFilteredMatches = venueFilteredMatches.filter((match) => {
     if (resultFilter === "all") return true;
 
     const result = getMatchResult(match, team);
@@ -63,7 +73,7 @@ function MatchesPage({ matches, team, language }: MatchesPageProps) {
 
     return true;
   });
-
+  
   const sortedMatches = [...resultFilteredMatches].sort((a, b) => {
     const dateA = new Date(a.date).getTime();
     const dateB = new Date(b.date).getTime();
@@ -85,6 +95,21 @@ function MatchesPage({ matches, team, language }: MatchesPageProps) {
         </div>
 
         <div className="matches-page-actions">
+          <div className="match-filter">
+            <label htmlFor="match-venue-filter">Thuis / uit</label>
+
+            <select
+              id="match-venue-filter"
+              value={venueFilter}
+              onChange={(event) =>
+                setVenueFilter(event.target.value as "all" | "home" | "away")
+              }
+            >
+              <option value="all">Alle wedstrijden</option>
+              <option value="home">Thuiswedstrijden</option>
+              <option value="away">Uitwedstrijden</option>
+            </select>
+          </div>
           <div className="match-filter">
             <label htmlFor="match-view">{t.showMatches}</label>
 

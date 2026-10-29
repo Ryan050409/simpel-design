@@ -13,13 +13,42 @@ function PlayersPage({ playerList, teams, language }: PlayersPageProps) {
 
   const [selectedPlayer, setSelectedPlayer] = useState<Player | null>(null);
   const [searchTerm, setSearchTerm] = useState("");
+  const [positionFilter, setPositionFilter] = useState("all");
+  const [sortOrder, setSortOrder] = useState("name");
 
-  const filteredPlayers = playerList.filter((player) =>
-    `${player.firstname} ${player.lastname}`
-      .toLowerCase()
-      .includes(searchTerm.toLowerCase()),
-  );
+  const filteredPlayers = playerList
+    .filter((player) => {
+      const fullName = `${player.firstname} ${player.lastname}`.toLowerCase();
 
+      const matchesSearch = fullName.includes(searchTerm.toLowerCase().trim());
+
+      const matchesPosition =
+        positionFilter === "all" || player.position === positionFilter;
+
+      return matchesSearch && matchesPosition;
+    })
+    .slice()
+    .sort((a, b) => {
+      switch (sortOrder) {
+        case "goals":
+          return b.goals - a.goals;
+
+        case "assists":
+          return b.assists - a.assists;
+
+        case "rating":
+          return b.rating - a.rating;
+
+        case "matches":
+          return b.matches - a.matches;
+
+        case "name":
+        default:
+          return `${a.firstname} ${a.lastname}`.localeCompare(
+            `${b.firstname} ${b.lastname}`,
+          );
+      }
+    });
   function getRatingClass(rating: number) {
     if (rating >= 9) return "rating-excellent";
     if (rating >= 8) return "rating-very-good";
@@ -58,16 +87,12 @@ function PlayersPage({ playerList, teams, language }: PlayersPageProps) {
       <div className="players-page-header">
         <div>
           <h1>👥 {t.players}</h1>
-          <p>
-            {t.playersDescriptionPage}
-          </p>
+          <p>{t.playersDescriptionPage}</p>
         </div>
       </div>
 
       <div className="player-search">
-        <label htmlFor="player-search-input">
-          {t.searchPlayerLabel}
-        </label>
+        <label htmlFor="player-search-input">{t.searchPlayerLabel}</label>
         <input
           id="player-search-input"
           type="search"
@@ -76,12 +101,42 @@ function PlayersPage({ playerList, teams, language }: PlayersPageProps) {
           onChange={(event) => setSearchTerm(event.target.value)}
         />
       </div>
+      <div className="player-filters">
+        <div className="player-filter">
+          <label htmlFor="player-position-filter">{t.filterByPosition}</label>
 
+          <select
+            id="player-position-filter"
+            value={positionFilter}
+            onChange={(event) => setPositionFilter(event.target.value)}
+          >
+            <option value="all">{t.allPositions}</option>
+            <option value="Keeper">{t.goalkeeperPosition}</option>
+            <option value="Verdediger">{t.defenderPosition}</option>
+            <option value="Middenvelder">{t.midfielderPosition}</option>
+            <option value="Aanvaller">{t.forwardPosition}</option>
+          </select>
+        </div>
+
+        <div className="player-filter">
+          <label htmlFor="player-sort-order">{t.sortPlayersBy}</label>
+
+          <select
+            id="player-sort-order"
+            value={sortOrder}
+            onChange={(event) => setSortOrder(event.target.value)}
+          >
+            <option value="name">{t.sortAlphabetically}</option>
+            <option value="goals">{t.sortPlayerGoals}</option>
+            <option value="assists">{t.sortPlayerAssists}</option>
+            <option value="rating">{t.sortPlayerRating}</option>
+            <option value="matches">{t.sortPlayerMatches}</option>
+          </select>
+        </div>
+      </div>
       <div className="players-by-team">
         {filteredPlayers.length === 0 && (
-          <p role="status">
-            {t.noPlayersMatchSearch}
-          </p>
+          <p role="status">{t.noPlayersMatchSearch}</p>
         )}
 
         {teams
@@ -106,10 +161,7 @@ function PlayersPage({ playerList, teams, language }: PlayersPageProps) {
 
                 <div className="players">
                   {teamPlayers.map((player) => (
-                    <div
-                      className="player-card player-card-v2"
-                      key={player.id}
-                    >
+                    <div className="player-card player-card-v2" key={player.id}>
                       <div className="player-card-header">
                         <div>
                           <div className="player-fullname-row">
@@ -135,12 +187,8 @@ function PlayersPage({ playerList, teams, language }: PlayersPageProps) {
                         <button
                           type="button"
                           className="player-info-button"
-                          aria-label={
-                            `${t.viewPlayerDetails} ${player.firstname} ${player.lastname}`
-                          }
-                          title={
-                            t.playerDetails
-                          }
+                          aria-label={`${t.viewPlayerDetails} ${player.firstname} ${player.lastname}`}
+                          title={t.playerDetails}
                           onClick={() => setSelectedPlayer(player)}
                         >
                           i
@@ -214,10 +262,7 @@ function PlayersPage({ playerList, teams, language }: PlayersPageProps) {
       </div>
 
       {selectedPlayer && (
-        <div
-          className="modal-overlay"
-          onClick={() => setSelectedPlayer(null)}
-        >
+        <div className="modal-overlay" onClick={() => setSelectedPlayer(null)}>
           <div
             className="modal player-details-modal"
             role="dialog"
