@@ -463,7 +463,7 @@ function AppContent() {
           <button
             type="button"
             className="nav-dropdown-trigger"
-            aria-expanded={showCompetitieMenu || showMobileMenu}
+            aria-expanded={showCompetitieMenu}
             aria-haspopup="true"
             onClick={() => {
               setShowCompetitieMenu((open) => !open);
@@ -475,11 +475,11 @@ function AppContent() {
               🏆
             </span>
             <span className="mobile-nav-label">
-              Competitie <span aria-hidden="true">▾</span>
-            </span>
+  Competitie <span aria-hidden="true">⌄</span>
+</span>
           </button>
 
-          {(showCompetitieMenu || showMobileMenu) && (
+          {(showCompetitieMenu) && (
             <div className="nav-dropdown-content">
               <NavLink
                 to="/wedstrijden"
@@ -506,7 +506,7 @@ function AppContent() {
           <button
             type="button"
             className="nav-dropdown-trigger"
-            aria-expanded={showSpelersMenu || showMobileMenu}
+            aria-expanded={showSpelersMenu}
             aria-haspopup="true"
             onClick={() => {
               setShowSpelersMenu((open) => !open);
@@ -518,11 +518,11 @@ function AppContent() {
               👥
             </span>
             <span className="mobile-nav-label">
-              Spelers <span aria-hidden="true">▾</span>
-            </span>
+  Spelers <span aria-hidden="true">⌄</span>
+</span>
           </button>
 
-          {(showSpelersMenu || showMobileMenu) && (
+          {(showSpelersMenu) && (
             <div className="nav-dropdown-content">
               <NavLink
                 to="/spelers"
