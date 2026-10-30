@@ -1,4 +1,3 @@
-
 import { useMemo, useState } from "react";
 import { translations, type Language } from "./translations";
 import type { Player, Team } from "./types";
@@ -24,12 +23,20 @@ const categories: {
 
 const rankingOptions: Record<
   RankingCategory,
-  { key: keyof Player; labelKey: RankingTranslationKey; suffixKey?: RankingTranslationKey }[]
+  {
+    key: keyof Player;
+    labelKey: RankingTranslationKey;
+    suffixKey?: RankingTranslationKey;
+  }[]
 > = {
   general: [
     { key: "rating", labelKey: "averageRating" },
     { key: "matches", labelKey: "matchesStat" },
-    { key: "minutesplayed", labelKey: "minutesStat", suffixKey: "rankingMinutesSuffix" },
+    {
+      key: "minutesplayed",
+      labelKey: "minutesStat",
+      suffixKey: "rankingMinutesSuffix",
+    },
   ],
   attack: [
     { key: "goals", labelKey: "goalsStat" },
@@ -49,7 +56,13 @@ const rankingOptions: Record<
     { key: "goalsConceded", labelKey: "goalsConcededStat" },
   ],
 };
-
+function getRatingClass(rating: number) {
+  if (rating >= 9) return "rating-excellent";
+  if (rating >= 8) return "rating-very-good";
+  if (rating >= 7) return "rating-good";
+  if (rating >= 6) return "rating-average";
+  return "rating-low";
+}
 export default function PlayersRankingPage({
   playerList,
   teams,
@@ -65,7 +78,7 @@ export default function PlayersRankingPage({
   const availableOptions = rankingOptions[category];
 
   const activeStatistic = availableOptions.some(
-    (option) => option.key === statistic
+    (option) => option.key === statistic,
   )
     ? statistic
     : availableOptions[0].key;
@@ -83,8 +96,7 @@ export default function PlayersRankingPage({
           selectedTeam === "all" || player.team === selectedTeam;
 
         const matchesPosition =
-          selectedPosition === "all" ||
-          player.position === selectedPosition;
+          selectedPosition === "all" || player.position === selectedPosition;
 
         return matchesSearch && matchesTeam && matchesPosition;
       })
@@ -102,13 +114,7 @@ export default function PlayersRankingPage({
 
         return bValue - aValue;
       });
-  }, [
-    playerList,
-    activeStatistic,
-    selectedTeam,
-    selectedPosition,
-    search,
-  ]);
+  }, [playerList, activeStatistic, selectedTeam, selectedPosition, search]);
 
   return (
     <main className="players-ranking-page">
@@ -194,11 +200,11 @@ export default function PlayersRankingPage({
 
       <section className="ranking-table-section">
         <h2>
-          {availableOptions.find(
-            (option) => option.key === activeStatistic
-          ) && t[availableOptions.find(
-            (option) => option.key === activeStatistic
-          )!.labelKey]}
+          {availableOptions.find((option) => option.key === activeStatistic) &&
+            t[
+              availableOptions.find((option) => option.key === activeStatistic)!
+                .labelKey
+            ]}
         </h2>
 
         <div className="ranking-table-wrapper">
@@ -217,7 +223,7 @@ export default function PlayersRankingPage({
               {rankedPlayers.length > 0 ? (
                 rankedPlayers.map((player, index) => {
                   const option = availableOptions.find(
-                    (item) => item.key === activeStatistic
+                    (item) => item.key === activeStatistic,
                   );
 
                   return (
@@ -229,8 +235,20 @@ export default function PlayersRankingPage({
                       <td>{player.team}</td>
                       <td>{player.position}</td>
                       <td>
-                        {player[activeStatistic]}
-                        {option?.suffixKey ? t[option.suffixKey] : ""}
+                        {activeStatistic === "rating" ? (
+                          <span
+                            className={getRatingClass(
+                              Number(player[activeStatistic]),
+                            )}
+                          >
+                            {player[activeStatistic]}
+                          </span>
+                        ) : (
+                          <>
+                            {player[activeStatistic]}
+                            {option?.suffixKey ? t[option.suffixKey] : ""}
+                          </>
+                        )}
                       </td>
                     </tr>
                   );
