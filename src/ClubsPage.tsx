@@ -52,20 +52,20 @@ function ClubsPage({
       <header className="clubs-page-header">
         <div>
           <h1>{t.clubsLabel}</h1>
-          <p>Ontdek alle clubs in jouw Football Tracker.</p>
+          <p>{t.clubsPageDescription}</p>
         </div>
 
         <span className="clubs-count">
-          {filteredTeams.length} clubs
+          {filteredTeams.length} {t.clubsCountLabel}
         </span>
       </header>
 
       <div className="clubs-search">
-        <label htmlFor="clubs-search-input">Zoek een club</label>
+        <label htmlFor="clubs-search-input">{t.clubsSearchLabel}</label>
         <input
           id="clubs-search-input"
           type="search"
-          placeholder="Typ een clubnaam..."
+          placeholder={t.clubsSearchPlaceholder}
           value={searchTerm}
           onChange={(event) => setSearchTerm(event.target.value)}
         />
@@ -73,7 +73,7 @@ function ClubsPage({
 
       {filteredTeams.length === 0 ? (
         <p className="clubs-empty">
-          Geen clubs gevonden. Probeer een andere zoekterm.
+          {t.clubsNoResults}
         </p>
       ) : (
         <div className="clubs-grid">
@@ -89,8 +89,8 @@ function ClubsPage({
                   }`}
                   aria-label={
                     isFavorite
-                      ? `${team.name} is je favoriete club`
-                      : `${team.name} als favoriete club instellen`
+                      ? `${team.name} ${t.clubIsFavorite}`
+                      : `${team.name}: ${t.setAsFavoriteClub}`
                   }
                   aria-pressed={isFavorite}
                   onClick={() => onSetFavorite(team.name)}
@@ -101,18 +101,18 @@ function ClubsPage({
                 <Link
                   className="club-card-link"
                   to={`/competitie/clubs/${team.id}`}
-                  aria-label={`Bekijk informatie over ${team.name}`}
+                  aria-label={`${t.viewClubInformation} ${team.name}`}
                 >
                   <img
-  className="club-logo-image"
-  src={teamLogos[team.name]}
-  alt={`Logo van ${team.name}`}
-  loading="lazy"
-/>
+                    className="club-logo-image"
+                    src={teamLogos[team.name]}
+                    alt={`${t.clubLogoAlt} ${team.name}`}
+                    loading="lazy"
+                  />
 
                   <h2>{team.name}</h2>
                   <span className="club-card-detail">
-                    Bekijk clubinformatie →
+                    {t.viewClubInformation} →
                   </span>
                 </Link>
               </article>

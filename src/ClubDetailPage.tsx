@@ -1,7 +1,7 @@
 
 import { Link, useParams } from "react-router-dom";
 import type { Match, Team } from "./types";
-import type { Language } from "./translations";
+import { translations, type Language } from "./translations";
 
 type ClubDetailPageProps = {
   teams: Team[];
@@ -18,6 +18,7 @@ function ClubDetailPage({
   onSetFavorite,
   language,
 }: ClubDetailPageProps) {
+  const t = translations[language];
   const { clubId } = useParams<{ clubId: string }>();
 
   const club = teams.find((item) => String(item.id) === clubId);
@@ -34,9 +35,9 @@ function ClubDetailPage({
   if (!club) {
     return (
       <main className="club-detail-page">
-        <h1>Club niet gevonden</h1>
-        <p>Deze club bestaat niet of is verwijderd.</p>
-        <Link to="/competitie/clubs">← Terug naar alle clubs</Link>
+        <h1>{t.clubNotFound}</h1>
+        <p>{t.clubUnavailable}</p>
+        <Link to="/competitie/clubs">← {t.backToClubs}</Link>
       </main>
     );
   }
@@ -92,7 +93,7 @@ function ClubDetailPage({
   return (
     <main className="club-detail-page">
       <Link className="club-detail-back" to="/competitie/clubs">
-        ← Terug naar alle clubs
+        ← {t.backToClubs}
       </Link>
 
       <header className="club-detail-header">
@@ -101,9 +102,9 @@ function ClubDetailPage({
         </div>
 
         <div className="club-detail-title">
-          <p className="club-detail-eyebrow">CLUBPROFIEL</p>
+          <p className="club-detail-eyebrow">{t.clubProfile}</p>
           <h1>{club.name}</h1>
-          <p>Bekijk de prestaties en wedstrijden van deze club.</p>
+          <p>{t.clubDetailDescription}</p>
         </div>
 
         <button
@@ -114,68 +115,68 @@ function ClubDetailPage({
           aria-pressed={isFavorite}
           onClick={() => onSetFavorite(club.name)}
         >
-          {isFavorite ? "★ Favoriete club" : "☆ Maak favoriete club"}
+          {isFavorite ? `★ ${t.favoriteClub}` : `☆ ${t.makeFavoriteClub}`}
         </button>
       </header>
 
       <section className="club-detail-section">
-        <h2>Wedstrijdstatistieken</h2>
+        <h2>{t.clubMatchStatistics}</h2>
 
         <div className="club-stats-grid">
           <article className="club-stat-card">
-            <span>Gespeeld</span>
+            <span>{t.played}</span>
             <strong>{playedMatches.length}</strong>
           </article>
 
           <article className="club-stat-card">
-            <span>Gewonnen</span>
+            <span>{t.wins}</span>
             <strong>{wins}</strong>
           </article>
 
           <article className="club-stat-card">
-            <span>Gelijkspel</span>
+            <span>{t.drawResult}</span>
             <strong>{draws}</strong>
           </article>
 
           <article className="club-stat-card">
-            <span>Verloren</span>
+            <span>{t.losses}</span>
             <strong>{losses}</strong>
           </article>
 
           <article className="club-stat-card">
-            <span>Punten</span>
+            <span>{t.points}</span>
             <strong>{points}</strong>
           </article>
 
           <article className="club-stat-card">
-            <span>Doelsaldo</span>
+            <span>{t.goalDifference}</span>
             <strong>{goalsFor - goalsAgainst}</strong>
           </article>
         </div>
       </section>
 
       <section className="club-detail-section">
-        <h2>Doelpunten</h2>
+        <h2>{t.goals}</h2>
 
         <div className="club-stats-grid">
           <article className="club-stat-card">
-            <span>Doelpunten voor</span>
+            <span>{t.goalsFor}</span>
             <strong>{goalsFor}</strong>
           </article>
 
           <article className="club-stat-card">
-            <span>Doelpunten tegen</span>
+            <span>{t.goalsAgainst}</span>
             <strong>{goalsAgainst}</strong>
           </article>
         </div>
       </section>
 
       <section className="club-detail-section">
-        <h2>Wedstrijden van {club.name}</h2>
+        <h2>{t.matchesForClub} {club.name}</h2>
 
         {clubMatches.length === 0 ? (
           <p className="club-detail-empty">
-            Er zijn nog geen wedstrijden voor deze club geregistreerd.
+            {t.noMatchesForClub}
           </p>
         ) : (
           <div className="club-matches-list">
@@ -194,7 +195,7 @@ function ClubDetailPage({
                     <strong>
                       {hasScore
                         ? `${match.homeGoals} - ${match.awayGoals}`
-                        : "vs"}
+                        : t.versusLabel}
                     </strong>
 
                     <span>{match.away}</span>
@@ -207,7 +208,7 @@ function ClubDetailPage({
                       ? new Date(match.date).toLocaleDateString(
                           localeByLanguage[language],
                         )
-                      : "Datum onbekend"}
+                      : t.unknownDate}
                   </time>
                 </article>
               );
