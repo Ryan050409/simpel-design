@@ -6453,173 +6453,167 @@ textarea::placeholder {
 }
 
 @media (max-width: 600px) {
-  /* Mobiel: compacte filterkaart en wedstrijdkaarten */
+  /* Mobiele wedstrijdpagina */
   .matches-page {
-      padding: 0 2px 24px;
-    }
-  
+    width: calc(100% - 36px);
+    max-width: 350px;
+    margin: 0 auto;
+    padding: 0 0 24px;
+  }
+
   .matches-page .matches-page-header {
-      gap: 16px;
-      margin-bottom: 20px;
-    }
-  
+    grid-template-columns: minmax(0, 1fr);
+    gap: 12px;
+    margin-bottom: 18px;
+  }
+
   .matches-page .matches-page-header h1 {
-      font-size: 27px;
-    }
-  
+    font-size: 25px;
+  }
+
   .matches-page .matches-page-header p {
-      font-size: 13px;
-    }
-  
+    font-size: 13px;
+  }
+
+  /* Filters */
   .matches-page .matches-page-actions {
-      grid-template-columns: minmax(0, 1fr);
-      gap: 12px;
-      padding: 14px;
-      border-radius: 13px;
-    }
-  
+    grid-template-columns: minmax(0, 1fr);
+    gap: 10px;
+    padding: 13px;
+    border-radius: 12px;
+  }
+
   .matches-page .matches-page-actions .match-filter {
-      gap: 5px;
-    }
-  
+    gap: 5px;
+  }
+
   .matches-page .match-filter label {
-      min-height: 0;
-      font-size: 12px;
-    }
-  
+    min-height: 0;
+    font-size: 12px;
+  }
+
   .matches-page .match-filter select {
-      min-height: 44px;
-      font-size: 14px;
-    }
-  
-  /* Op mobiel wordt elke wedstrijd een eigen kaart */
+    min-height: 42px;
+    font-size: 13px;
+  }
+
+  /* Wedstrijdkaarten */
   .matches-page .matches-table-wrapper {
-      overflow: visible;
-      border: 0;
-      border-radius: 0;
-      background: transparent;
-      box-shadow: none;
-    }
-  
+    overflow: visible;
+    border: 0;
+    background: transparent;
+    box-shadow: none;
+  }
+
   .matches-page .matches-table {
-      display: block;
-      width: 100%;
-      margin: 0;
-      overflow: visible;
-      border: 0;
-      background: transparent;
-    }
-  
+    display: block;
+    width: 100%;
+    margin: 0;
+    border: 0;
+    background: transparent;
+  }
+
   .matches-page .matches-table thead {
-      display: none;
-    }
-  
+    display: none;
+  }
+
   .matches-page .matches-table tbody {
-      display: grid;
-      grid-template-columns: minmax(0, 1fr);
-      gap: 12px;
-      width: 100%;
-    }
-  
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 10px;
+    width: 100%;
+  }
+
   .matches-page .matches-table tbody tr {
-      display: grid;
-      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) auto;
-      align-items: center;
-      gap: 8px;
-      width: 100%;
-      padding: 12px;
-      border: 1px solid var(--border-color);
-      border-radius: 13px;
-      background: var(--card-background);
-      box-shadow: var(--shadow-card);
-    }
-  
-  .matches-page .matches-table tbody tr:nth-child(even) td,
-    .matches-page .matches-table tbody tr:hover td {
-      background: transparent;
-    }
-  
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 6px;
+    width: 100%;
+    padding: 11px;
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    background: var(--card-background);
+    box-shadow: var(--shadow-card);
+  }
+
   .matches-page .matches-table tbody td {
-      width: auto;
-      min-width: 0;
-      padding: 5px 2px;
-      border: 0;
-      font-size: 12px;
-      overflow-wrap: anywhere;
-    }
-  
+    min-width: 0;
+    padding: 5px 2px;
+    border: 0;
+    font-size: 11px;
+    overflow-wrap: anywhere;
+  }
+
   /* Datum */
   .matches-page .matches-table tbody td:first-child {
-      grid-column: 1 / -1;
-      padding: 0 0 9px;
-      border-bottom: 1px solid var(--border-color);
-      color: var(--muted-text-color);
-      font-size: 11px;
-      text-align: left;
-      white-space: normal;
-    }
-  
-  /* Thuis en uit */
+    grid-column: 1 / -1;
+    padding: 0 8px 5px;
+    border-bottom: 1px solid var(--border-color);
+    color: var(--muted-text-color);
+    font-size: 10px;
+    text-align: left;
+  }
+
+  /* Thuis- en uitclub */
   .matches-page .matches-table tbody td:nth-child(2),
-    .matches-page .matches-table tbody td:nth-child(3) {
-      text-align: center;
-      font-size: 12px;
-      font-weight: 700;
-    }
-  
+  .matches-page .matches-table tbody td:nth-child(3) {
+    text-align: center;
+    font-weight: 700;
+  }
+
   .matches-page .matches-table tbody td:nth-child(2)::before,
-    .matches-page .matches-table tbody td:nth-child(3)::before {
-      display: block;
-      margin-bottom: 5px;
-      color: var(--muted-text-color);
-      font-size: 9px;
-      font-weight: 700;
-      letter-spacing: 0.04em;
-      text-transform: uppercase;
-    }
-  
-  .matches-page .matches-table tbody td:nth-child(2)::before {
-      content: "Thuis";
-    }
-  
   .matches-page .matches-table tbody td:nth-child(3)::before {
-      content: "Uit";
-    }
-  
+    display: block;
+    margin-bottom: 4px;
+    color: var(--muted-text-color);
+    font-size: 9px;
+    font-weight: 600;
+  }
+
+  .matches-page .matches-table tbody td:nth-child(2)::before {
+    content: "Thuis";
+  }
+
+  .matches-page .matches-table tbody td:nth-child(3)::before {
+    content: "Uit";
+  }
+
   /* Score */
   .matches-page .matches-table tbody td:nth-child(4) {
-      text-align: center;
-    }
-  
+    text-align: center;
+  }
+
   .matches-page .matches-table .match-score {
-      min-width: 54px;
-      padding: 6px;
-      font-size: 13px;
-    }
-  
-  /* Resultaat onderaan */
+    min-width: 48px;
+    padding: 6px;
+    font-size: 12px;
+  }
+
+  /* Wedstrijdresultaat */
   .matches-page .matches-table tbody td:nth-child(5) {
-      grid-column: 1 / -1;
-      padding-top: 9px;
-      border-top: 1px solid var(--border-color);
-      text-align: left;
-    }
-  
+    grid-column: 1 / -1;
+    padding-top: 8px;
+    border-top: 1px solid var(--border-color);
+    text-align: left;
+  }
+
   .matches-page .matches-table .result-win,
-    .matches-page .matches-table .result-draw,
-    .matches-page .matches-table .result-loss {
-      min-width: 0;
-      font-size: 11px;
-    }
-  
+  .matches-page .matches-table .result-draw,
+  .matches-page .matches-table .result-loss {
+    min-width: 0;
+    padding: 5px 10px;
+    font-size: 11px;
+  }
+
   .matches-page .matches-table tbody td[colspan="5"] {
-      display: block;
-      grid-column: 1 / -1;
-      padding: 20px 12px;
-      border: 1px solid var(--border-color);
-      border-radius: 12px;
-      background: var(--card-background);
-    }
+    display: block;
+    grid-column: 1 / -1;
+    padding: 18px 10px;
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    background: var(--card-background);
+  }
 }
 
 @media (max-width: 360px) {
@@ -9127,5 +9121,141 @@ a:focus-visible {
     margin-left: auto;
     margin-right: auto;
     padding: 0;
+  }
+}
+/* Compactere spelerspagina op mobiel */
+@media (max-width: 600px) {
+  .players-page {
+    width: calc(100% - 36px);
+    max-width: 350px;
+    margin: 0 auto;
+    padding: 0;
+  }
+
+  .players-page-header {
+    gap: 8px;
+    margin-bottom: 12px;
+  }
+
+  .players-page-header h1 {
+    font-size: 23px;
+  }
+
+  .players-by-team {
+    width: 100%;
+    margin: 20px auto;
+  }
+
+  .players-team-section {
+    margin-bottom: 24px;
+  }
+
+  .players-team-header {
+    gap: 8px;
+    margin-bottom: 10px;
+    padding-bottom: 8px;
+  }
+
+  .players-team-header h2 {
+    font-size: 17px;
+  }
+
+  .players-team-header span {
+    font-size: 11px;
+  }
+
+  .player-search {
+    margin-bottom: 14px;
+    text-align: left;
+  }
+
+  .player-search input {
+    max-width: none;
+    box-sizing: border-box;
+    padding: 10px 12px;
+    font-size: 13px;
+  }
+
+  .player-filters {
+    gap: 9px;
+    margin-top: 12px;
+    margin-bottom: 16px;
+  }
+
+  .player-filter {
+    flex-basis: 100%;
+    gap: 4px;
+  }
+
+  .player-filter label {
+    font-size: 12px;
+  }
+
+  .player-filter select {
+    min-height: 39px;
+    padding: 7px 10px;
+    font-size: 13px;
+  }
+
+  .players {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 10px;
+    margin: 12px auto;
+  }
+
+  .player-card {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 12px;
+    border-radius: 12px;
+  }
+
+  .player-card-header {
+    gap: 8px;
+  }
+
+  .player-card h2 {
+    font-size: 17px;
+  }
+
+  .player-team {
+    margin-top: 4px;
+    font-size: 11px;
+  }
+
+  .player-rating {
+    width: 48px;
+    height: 48px;
+    border-radius: 9px;
+  }
+
+  .players-page .player-info-button {
+    width: 32px;
+    height: 32px;
+    font-size: 16px;
+  }
+
+  .player-position {
+    margin-top: 9px;
+    padding: 5px 8px;
+    font-size: 10px;
+  }
+
+  .player-stats {
+    gap: 6px;
+    margin-top: 12px;
+  }
+
+  .player-stat {
+    padding: 8px 5px;
+    border-radius: 7px;
+  }
+
+  .player-stats strong {
+    font-size: 17px;
+  }
+
+  .player-stats span {
+    font-size: 9px;
   }
 }
