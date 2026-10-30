@@ -520,7 +520,16 @@ const translationCatalog = {
     playerSave: "Speler opslaan",
     playerNext: "Volgende",
     playerPrevious: "Vorige",
-
+    playersCompareTitle: "Spelers vergelijken",
+    playersCompareDescription: "Vergelijk de statistieken van twee spelers.",
+    comparePlayerOne: "Speler 1",
+    comparePlayerTwo: "Speler 2",
+    compareSelectPlayer: "Selecteer een speler",
+    compareSelectTeam: "Filter op club",
+    compareAllTeams: "Alle clubs",
+    compareStatistic: "Statistiek",
+    compareSelectTwoPlayers:
+      "Selecteer twee spelers om hun statistieken te vergelijken.",
     // ==================== WEDSTRIJDFORMULIER ====================
     matchFormAddTitle: "Wedstrijd toevoegen",
     matchFormEditTitle: "Wedstrijd bewerken",
@@ -663,7 +672,8 @@ const translationCatalog = {
     makeFavoriteClub: "Maak favoriete club",
     clubMatchStatistics: "Wedstrijdstatistieken",
     matchesForClub: "Wedstrijden van",
-    noMatchesForClub: "Er zijn nog geen wedstrijden voor deze club geregistreerd.",
+    noMatchesForClub:
+      "Er zijn nog geen wedstrijden voor deze club geregistreerd.",
     unknownDate: "Datum onbekend",
     versusLabel: "tegen",
     playersRankingTitle: "Spelersranglijst",
@@ -1184,6 +1194,15 @@ const translationCatalog = {
     playerSave: "Save player",
     playerNext: "Next",
     playerPrevious: "Previous",
+    playersCompareTitle: "Compare players",
+    playersCompareDescription: "Compare the statistics of two players.",
+    comparePlayerOne: "Player 1",
+    comparePlayerTwo: "Player 2",
+    compareSelectPlayer: "Select a player",
+    compareSelectTeam: "Filter by club",
+    compareAllTeams: "All clubs",
+    compareStatistic: "Statistic",
+    compareSelectTwoPlayers: "Select two players to compare their statistics.",
 
     // ==================== MATCH FORM ====================
     matchFormAddTitle: "Add match",
@@ -1887,6 +1906,16 @@ const translationCatalog = {
     playerSave: "Spieler speichern",
     playerNext: "Weiter",
     playerPrevious: "Zurück",
+    playersCompareTitle: "Spieler vergleichen",
+    playersCompareDescription: "Vergleiche die Statistiken von zwei Spielern.",
+    comparePlayerOne: "Spieler 1",
+    comparePlayerTwo: "Spieler 2",
+    compareSelectPlayer: "Spieler auswählen",
+    compareSelectTeam: "Nach Verein filtern",
+    compareAllTeams: "Alle Vereine",
+    compareStatistic: "Statistik",
+    compareSelectTwoPlayers:
+      "Wähle zwei Spieler aus, um ihre Statistiken zu vergleichen.",
 
     // ==================== SPIELFORMULAR: TEAMS UND ERGEBNIS ====================
     matchFormAddTitle: "Spiel hinzufügen",
@@ -2014,7 +2043,8 @@ const translationCatalog = {
     clubsCountLabel: "Vereine",
     clubsSearchLabel: "Verein suchen",
     clubsSearchPlaceholder: "Vereinsnamen eingeben...",
-    clubsNoResults: "Keine Vereine gefunden. Versuche einen anderen Suchbegriff.",
+    clubsNoResults:
+      "Keine Vereine gefunden. Versuche einen anderen Suchbegriff.",
     clubIsFavorite: "ist dein Lieblingsverein",
     setAsFavoriteClub: "als Lieblingsverein festlegen",
     viewClubInformation: "Informationen zu",
@@ -2023,7 +2053,8 @@ const translationCatalog = {
     clubUnavailable: "Dieser Verein existiert nicht oder wurde entfernt.",
     backToClubs: "Zurück zu allen Vereinen",
     clubProfile: "VEREINSPROFIL",
-    clubDetailDescription: "Sieh dir die Leistungen und Spiele dieses Vereins an.",
+    clubDetailDescription:
+      "Sieh dir die Leistungen und Spiele dieses Vereins an.",
     makeFavoriteClub: "Als Lieblingsverein festlegen",
     clubMatchStatistics: "Spielstatistiken",
     matchesForClub: "Spiele von",
@@ -2565,7 +2596,16 @@ const translationCatalog = {
     playerSave: "Enregistrer le joueur",
     playerNext: "Suivant",
     playerPrevious: "Précédent",
-
+    playersCompareTitle: "Comparer les joueurs",
+    playersCompareDescription: "Comparez les statistiques de deux joueurs.",
+    comparePlayerOne: "Joueur 1",
+    comparePlayerTwo: "Joueur 2",
+    compareSelectPlayer: "Sélectionner un joueur",
+    compareSelectTeam: "Filtrer par club",
+    compareAllTeams: "Tous les clubs",
+    compareStatistic: "Statistique",
+    compareSelectTwoPlayers:
+      "Sélectionnez deux joueurs pour comparer leurs statistiques.",
     // ==================== MATCH FORM ====================
     matchFormAddTitle: "Ajouter un match",
     matchFormEditTitle: "Modifier un match",
@@ -2703,7 +2743,8 @@ const translationCatalog = {
     clubUnavailable: "Ce club n’existe pas ou a été supprimé.",
     backToClubs: "Retour à tous les clubs",
     clubProfile: "PROFIL DU CLUB",
-    clubDetailDescription: "Consultez les performances et les matchs de ce club.",
+    clubDetailDescription:
+      "Consultez les performances et les matchs de ce club.",
     makeFavoriteClub: "Choisir comme club favori",
     clubMatchStatistics: "Statistiques des matchs",
     matchesForClub: "Matchs de",
@@ -3234,7 +3275,16 @@ const translationCatalog = {
     playerSave: "Guardar jugador",
     playerNext: "Siguiente",
     playerPrevious: "Anterior",
-
+    playersCompareTitle: "Comparar jugadores",
+    playersCompareDescription: "Compara las estadísticas de dos jugadores.",
+    comparePlayerOne: "Jugador 1",
+    comparePlayerTwo: "Jugador 2",
+    compareSelectPlayer: "Seleccionar jugador",
+    compareSelectTeam: "Filtrar por club",
+    compareAllTeams: "Todos los clubes",
+    compareStatistic: "Estadística",
+    compareSelectTwoPlayers:
+      "Selecciona dos jugadores para comparar sus estadísticas.",
     // ==================== MATCH FORM ====================
     matchFormAddTitle: "Añadir partido",
     matchFormEditTitle: "Editar partido",
@@ -3372,7 +3422,8 @@ const translationCatalog = {
     clubUnavailable: "Este club no existe o se ha eliminado.",
     backToClubs: "Volver a todos los clubes",
     clubProfile: "PERFIL DEL CLUB",
-    clubDetailDescription: "Consulta el rendimiento y los partidos de este club.",
+    clubDetailDescription:
+      "Consulta el rendimiento y los partidos de este club.",
     makeFavoriteClub: "Elegir como club favorito",
     clubMatchStatistics: "Estadísticas de los partidos",
     matchesForClub: "Partidos de",
@@ -3911,7 +3962,16 @@ const translationCatalog = {
     playerSave: "Guardar jogador",
     playerNext: "Seguinte",
     playerPrevious: "Anterior",
-
+    playersCompareTitle: "Comparar jogadores",
+    playersCompareDescription: "Compara as estatísticas de dois jogadores.",
+    comparePlayerOne: "Jogador 1",
+    comparePlayerTwo: "Jogador 2",
+    compareSelectPlayer: "Selecionar jogador",
+    compareSelectTeam: "Filtrar por clube",
+    compareAllTeams: "Todos os clubes",
+    compareStatistic: "Estatística",
+    compareSelectTwoPlayers:
+      "Seleciona dois jogadores para comparar as suas estatísticas.",
     // ==================== MATCH FORM ====================
     matchFormAddTitle: "Adicionar jogo",
     matchFormEditTitle: "Editar jogo",
@@ -4058,7 +4118,8 @@ const translationCatalog = {
     unknownDate: "Data desconhecida",
     versusLabel: "contra",
     playersRankingTitle: "Classificação de jogadores",
-    playersRankingDescription: "Compare os jogadores com base no seu desempenho.",
+    playersRankingDescription:
+      "Compare os jogadores com base no seu desempenho.",
     rankingCategoryGeneral: "Geral",
     rankingStatisticLabel: "Estatística",
     rankingClubLabel: "Clube",

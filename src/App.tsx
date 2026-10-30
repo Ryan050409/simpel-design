@@ -11,6 +11,7 @@ import {
 import "./App.css";
 import PlayersPage from "./PlayersPage.tsx";
 import PlayersRankingPage from "./PlayersRankingPage.tsx";
+import PlayersCompare from "./PlayersCompare";
 import Dashboard from "./Dashboard.tsx";
 import MatchesPage from "./MatchesPage.tsx";
 import StandingsPage from "./StandingsPage";
@@ -405,7 +406,7 @@ function AppContent() {
           </button>
 
           {showCompetitieMenu && (
-            <div className="nav-dropdown-content" ref={spelersMenuRef}>
+            <div className="nav-dropdown-content">
               <NavLink
                 to="/wedstrijden"
                 onClick={() => setShowCompetitieMenu(false)}
@@ -658,15 +659,15 @@ function AppContent() {
             />
           }
         />
-        <Route 
-        path="/vergelijken"
-        element={ 
-<PlayersCompare.tsx 
-playerList={playerList}
-teams={teams}
-language={language}
-/>
-        }
+        <Route
+          path="/spelers-vergelijken"
+          element={
+            <PlayersCompare
+              playerList={playerList}
+              teams={teams}
+              language={language}
+            />
+          }
         />
         <Route
           path="/admin"
