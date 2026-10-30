@@ -27,6 +27,7 @@ const translationCatalog = {
     goalsLabel: "Doelpunten",
     clubsLabel: "Clubs",
     language: "Taal",
+    signIn: "Aanmelden",
 
     // ==================== HOMEPAGE ====================
     welcome: "Welkom bij Voetbaltracker",
@@ -711,6 +712,7 @@ const translationCatalog = {
     goalsLabel: "Goals",
     clubsLabel: "Clubs",
     language: "Language",
+    signIn: "Sign in",
 
     // ==================== HOMEPAGE ====================
     welcome: "Welcome to Football Tracker",
@@ -1550,6 +1552,7 @@ const translationCatalog = {
     goalsLabel: "Tore",
     clubsLabel: "Vereine",
     language: "Sprache",
+    signIn: "Anmelden",
 
     // ==================== HOMEPAGE ====================
     welcome: "Willkommen beim Fußball-Tracker",
@@ -2095,6 +2098,7 @@ const translationCatalog = {
     goalsLabel: "Buts",
     clubsLabel: "Clubs",
     language: "Langue",
+    signIn: "Connexion",
 
     // ==================== HOMEPAGE ====================
     welcome: "Bienvenue sur Football Tracker",
@@ -2784,6 +2788,7 @@ const translationCatalog = {
     goalsLabel: "Goles",
     clubsLabel: "Clubes",
     language: "Idioma",
+    signIn: "Iniciar sesión",
 
     // ==================== HOMEPAGE ====================
     welcome: "Bienvenido a Football Tracker",
@@ -3463,6 +3468,7 @@ const translationCatalog = {
     goalsLabel: "Golos",
     clubsLabel: "Clubes",
     language: "Idioma",
+    signIn: "Iniciar sessão",
 
     // ==================== HOMEPAGE ====================
     welcome: "Bem-vindo ao Football Tracker",

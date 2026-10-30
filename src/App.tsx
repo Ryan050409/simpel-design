@@ -208,7 +208,7 @@ function AppContent() {
   const profileMenuRef = useRef<HTMLDivElement>(null);
   const competitieMenuRef = useRef<HTMLDivElement>(null);
   const spelersMenuRef = useRef<HTMLDivElement>(null);
-
+  const [showMobileMenu, setShowMobileMenu] = useState (false);
   const [theme, setTheme] = useState<"dark" | "light">(() => {
     const savedTheme = localStorage.getItem("theme");
     return savedTheme === "light" ? "light" : "dark";
@@ -289,6 +289,13 @@ function AppContent() {
     localStorage.setItem("demoLoggedIn", String(isLoggedIn));
   }, [isLoggedIn]);
 
+  const closeNavigationMenus = () => {
+    setShowMobileMenu(false);
+    setShowProfileMenu(false);
+    setShowCompetitieMenu(false);
+    setShowSpelersMenu(false);
+  };
+
   useEffect(() => {
     if (!showProfileMenu) return;
 
@@ -324,7 +331,7 @@ function AppContent() {
     return () => {
       document.removeEventListener("mousedown", handleOutsideClick);
     };
-  }, [showProfileMenu]);
+  }, [showSpelersMenu]);
   // Sluit de navigatiedropdowns bij het wisselen van pagina.
   // Sluit de navigatiedropdowns bij een klik buiten het menu.
   useEffect(() => {
@@ -370,15 +377,82 @@ function AppContent() {
 
   return (
     <div className={`app ${theme}`}>
-      <nav className="nav" aria-label={t.mainNavigationLabel}>
-        <NavLink to="/" aria-label={t.homeAriaLabel}>
+      <header className="mobile-header">
+        <div className="mobile-header-logo">
+          <span className="mobile-header-logo-icon" aria-hidden="true">
+            ⚽
+          </span>
+          <span className="mobile-header-logo-text">Football Tracker</span>
+        </div>
+
+        <button
+          type="button"
+          className="mobile-header-favorite"
+          aria-label={t.favoriteClub}
+          onClick={() => {
+            setShowProfileMenu(true);
+            setShowCompetitieMenu(false);
+            setShowSpelersMenu(false);
+            setShowMobileMenu(true);
+          }}
+        >
+          ★
+        </button>
+
+        <button
+          type="button"
+          className="mobile-header-login"
+          onClick={() => {
+            setShowProfileMenu(true);
+            setShowCompetitieMenu(false);
+            setShowSpelersMenu(false);
+            setShowMobileMenu(true);
+          }}
+        >
+          {isLoggedIn ? t.profile : t.signIn}
+        </button>
+
+        <button
+          type="button"
+          className="mobile-header-toggle"
+          aria-label={showMobileMenu ? t.closeButton : t.openButton}
+          aria-controls="primary-navigation"
+          aria-expanded={showMobileMenu}
+          onClick={() => {
+            if (showMobileMenu) {
+              closeNavigationMenus();
+            } else {
+              setShowMobileMenu(true);
+              setShowProfileMenu(false);
+              setShowCompetitieMenu(false);
+              setShowSpelersMenu(false);
+            }
+          }}
+        >
+          {showMobileMenu ? "✕" : "☰"}
+        </button>
+      </header>
+      <nav
+        id="primary-navigation"
+        className={`nav ${showMobileMenu ? "mobile-menu-open" : ""}`}
+        aria-label={t.mainNavigationLabel}
+      >
+        <NavLink
+          to="/"
+          aria-label={t.homeAriaLabel}
+          onClick={closeNavigationMenus}
+        >
           <span className="mobile-nav-icon" aria-hidden="true">
             🏠
           </span>
           <span className="mobile-nav-label">{t.home}</span>
         </NavLink>
 
-        <NavLink to="/dashboard" aria-label={t.statsAriaLabel}>
+        <NavLink
+          to="/dashboard"
+          aria-label={t.statsAriaLabel}
+          onClick={closeNavigationMenus}
+        >
           <span className="mobile-nav-icon" aria-hidden="true">
             📊
           </span>
@@ -389,7 +463,7 @@ function AppContent() {
           <button
             type="button"
             className="nav-dropdown-trigger"
-            aria-expanded={showCompetitieMenu}
+            aria-expanded={showCompetitieMenu || showMobileMenu}
             aria-haspopup="true"
             onClick={() => {
               setShowCompetitieMenu((open) => !open);
@@ -405,22 +479,22 @@ function AppContent() {
             </span>
           </button>
 
-          {showCompetitieMenu && (
+          {(showCompetitieMenu || showMobileMenu) && (
             <div className="nav-dropdown-content">
               <NavLink
                 to="/wedstrijden"
-                onClick={() => setShowCompetitieMenu(false)}
+                onClick={closeNavigationMenus}
               >
                 ⚽ Wedstrijden
               </NavLink>
 
-              <NavLink to="/stand" onClick={() => setShowCompetitieMenu(false)}>
+              <NavLink to="/stand" onClick={closeNavigationMenus}>
                 🏆 Competitiestand
               </NavLink>
 
               <NavLink
                 to="/competitie/clubs"
-                onClick={() => setShowCompetitieMenu(false)}
+                onClick={closeNavigationMenus}
               >
                 🛡️ Clubs
               </NavLink>
@@ -432,7 +506,7 @@ function AppContent() {
           <button
             type="button"
             className="nav-dropdown-trigger"
-            aria-expanded={showSpelersMenu}
+            aria-expanded={showSpelersMenu || showMobileMenu}
             aria-haspopup="true"
             onClick={() => {
               setShowSpelersMenu((open) => !open);
@@ -448,26 +522,24 @@ function AppContent() {
             </span>
           </button>
 
-          {showSpelersMenu && (
+          {(showSpelersMenu || showMobileMenu) && (
             <div className="nav-dropdown-content">
               <NavLink
                 to="/spelers"
-                onClick={() => {
-                  setShowSpelersMenu(false);
-                }}
+                onClick={closeNavigationMenus}
               >
                 👤 Spelerstatistieken
               </NavLink>
 
               <NavLink
                 to="/spelersranglijst"
-                onClick={() => setShowSpelersMenu(false)}
+                onClick={closeNavigationMenus}
               >
                 📊 Spelersranglijst
               </NavLink>
               <NavLink
                 to="/spelers-vergelijken"
-                onClick={() => setShowSpelersMenu(false)}
+                onClick={closeNavigationMenus}
               >
                 ⚖️ Spelers vergelijken
               </NavLink>
@@ -475,8 +547,20 @@ function AppContent() {
           )}
         </div>
 
+        <NavLink
+          className="mobile-menu-help"
+          to="/help"
+          onClick={closeNavigationMenus}
+        >
+          {t.help}
+        </NavLink>
+
         {isAdmin && (
-          <NavLink to="/admin" aria-label={t.adminAriaLabel}>
+          <NavLink
+            to="/admin"
+            aria-label={t.adminAriaLabel}
+            onClick={closeNavigationMenus}
+          >
             <span className="mobile-nav-icon" aria-hidden="true">
               🛡️
             </span>
@@ -591,7 +675,7 @@ function AppContent() {
                 ))}
               </div>
 
-              <NavLink to="/help" onClick={() => setShowProfileMenu(false)}>
+              <NavLink to="/help" onClick={closeNavigationMenus}>
                 {t.help}
               </NavLink>
             </div>
