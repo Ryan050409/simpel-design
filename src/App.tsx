@@ -306,7 +306,24 @@ function AppContent() {
       document.removeEventListener("mousedown", handleOutsideClick);
     };
   }, [showProfileMenu]);
+  useEffect(() => {
+    if (!showProfileMenu) return;
 
+    function handleOutsideClick(event: MouseEvent) {
+      if (
+        spelersMenuRef.current &&
+        !spelersMenuRef.current.contains(event.target as Node)
+      ) {
+        setShowSpelersMenu(false);
+      }
+    }
+
+    document.addEventListener("mousedown", handleOutsideClick);
+
+    return () => {
+      document.removeEventListener("mousedown", handleOutsideClick);
+    };
+  }, [showProfileMenu]);
   // Sluit de navigatiedropdowns bij het wisselen van pagina.
   // Sluit de navigatiedropdowns bij een klik buiten het menu.
   useEffect(() => {
@@ -388,7 +405,7 @@ function AppContent() {
           </button>
 
           {showCompetitieMenu && (
-            <div className="nav-dropdown-content" ref={competitieMenuRef}>
+            <div className="nav-dropdown-content" ref={spelersMenuRef}>
               <NavLink
                 to="/wedstrijden"
                 onClick={() => setShowCompetitieMenu(false)}
@@ -410,7 +427,7 @@ function AppContent() {
           )}
         </div>
 
-        <div className="nav-dropdown">
+        <div className="nav-dropdown" ref={spelersMenuRef}>
           <button
             type="button"
             className="nav-dropdown-trigger"
@@ -446,6 +463,12 @@ function AppContent() {
                 onClick={() => setShowSpelersMenu(false)}
               >
                 📊 Spelersranglijst
+              </NavLink>
+              <NavLink
+                to="/spelers-vergelijken"
+                onClick={() => setShowSpelersMenu(false)}
+              >
+                ⚖️ Spelers vergelijken
               </NavLink>
             </div>
           )}
@@ -634,6 +657,16 @@ function AppContent() {
               language={language}
             />
           }
+        />
+        <Route 
+        path="/vergelijken"
+        element={ 
+<PlayersCompare.tsx 
+playerList={playerList}
+teams={teams}
+language={language}
+/>
+        }
         />
         <Route
           path="/admin"
