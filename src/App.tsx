@@ -308,7 +308,7 @@ function AppContent() {
     };
   }, [showProfileMenu]);
   useEffect(() => {
-    if (!showProfileMenu) return;
+    if (!showSpelersMenu) return;
 
     function handleOutsideClick(event: MouseEvent) {
       if (

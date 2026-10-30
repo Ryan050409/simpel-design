@@ -5542,24 +5542,20 @@ textarea::placeholder {
 }
 
 @media (max-width: 600px) {
-  @media (max-width: 600px) {
-    .nav {
-        justify-content: space-between;
-        gap: 2px;
-      }
-    
-    .nav > a[href="/admin"] {
-        display: flex;
-      }
-    
-    /* Navigatieteksten verbergen op kleine schermen */
-    .nav > a {
-      font-size: 0;
+  .nav {
+      justify-content: space-between;
+      gap: 2px;
     }
-  }
-}
 
-@media (max-width: 600px) {
+  .nav > a[href="/admin"] {
+      display: flex;
+    }
+
+  /* Navigatieteksten verbergen op kleine schermen */
+  .nav > a {
+    font-size: 0;
+  }
+
   /* Navigatie */
   .nav {
       max-width: none;
@@ -5886,13 +5882,6 @@ textarea::placeholder {
 }
 
 /* 5. Wedstrijdenpagina */
-
-@media (max-width: 900px) {
-  .matches-page-header {
-      grid-template-columns: minmax(0, 1fr);
-      gap: 20px;
-    }
-}
 
 @media (max-width: 900px) {
   .matches-page-header {
@@ -6644,9 +6633,7 @@ textarea::placeholder {
       height: 19px;
       margin-right: 5px;
     }
-}
 
-@media (max-width: 600px) {
   /* Mobiel */
   .standings-favorite-card {
       align-items: flex-start;
@@ -6981,26 +6968,22 @@ textarea::placeholder {
 }
 
 @media (max-width: 600px) {
-  @media (max-width: 600px) {
-    .nav > a,
-      .nav > .profile-menu {
-        flex: 1 1 0;
-        min-width: 0;
-      }
-    
-    .nav > a .mobile-nav-icon,
-    .nav .profile-menu-trigger .mobile-nav-icon {
-      font-size: 20px;
+  .nav > a,
+    .nav > .profile-menu {
+      flex: 1 1 0;
+      min-width: 0;
     }
-    
-    .nav > a .mobile-nav-label,
-    .nav .profile-menu-trigger .mobile-nav-label {
-      display: none;
-    }
-  }
-}
 
-@media (max-width: 600px) {
+  .nav > a .mobile-nav-icon,
+  .nav .profile-menu-trigger .mobile-nav-icon {
+    font-size: 20px;
+  }
+
+  .nav > a .mobile-nav-label,
+  .nav .profile-menu-trigger .mobile-nav-label {
+    display: none;
+  }
+
   /* Mobiel: instellingenknop gelijk aan de andere navigatie-items */
   .nav > .profile-menu {
       display: flex;
@@ -7258,14 +7241,12 @@ textarea::placeholder {
 }
 
 @media (max-width: 600px) {
+  /* Mobiel: teambeheer overzichtelijker maken */
   .admin-page .admin-permissions-list li {
       padding: 11px 12px;
       font-size: 0.875rem;
     }
-}
 
-@media (max-width: 600px) {
-  /* Mobiel: teambeheer overzichtelijker maken */
   .admin-team-grid {
       display: grid;
       grid-template-columns: minmax(0, 1fr);
@@ -7322,9 +7303,7 @@ textarea::placeholder {
       border-radius: 9px;
       font-size: 13px;
     }
-}
 
-@media (max-width: 600px) {
   /* =========================================
      MOBIEL — ADMINPAGINA
   ========================================= */
