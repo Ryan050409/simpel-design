@@ -10,6 +10,7 @@ import {
 
 import "./App.css";
 import PlayersPage from "./PlayersPage.tsx";
+import PlayersRankingPage from "./PlayersRankingPage.tsx";
 import Dashboard from "./Dashboard.tsx";
 import MatchesPage from "./MatchesPage.tsx";
 import StandingsPage from "./StandingsPage";
@@ -203,11 +204,9 @@ function AppContent() {
     return localStorage.getItem("demoLoggedIn") === "true";
   });
 
-  
-const profileMenuRef = useRef<HTMLDivElement>(null);
-const competitieMenuRef = useRef<HTMLDivElement>(null);
-const spelersMenuRef = useRef<HTMLDivElement>(null);
-
+  const profileMenuRef = useRef<HTMLDivElement>(null);
+  const competitieMenuRef = useRef<HTMLDivElement>(null);
+  const spelersMenuRef = useRef<HTMLDivElement>(null);
 
   const [theme, setTheme] = useState<"dark" | "light">(() => {
     const savedTheme = localStorage.getItem("theme");
@@ -309,34 +308,31 @@ const spelersMenuRef = useRef<HTMLDivElement>(null);
   }, [showProfileMenu]);
 
   // Sluit de navigatiedropdowns bij het wisselen van pagina.
- // Sluit de navigatiedropdowns bij een klik buiten het menu.
-useEffect(() => {
-  if (!showCompetitieMenu && !showSpelersMenu) return;
+  // Sluit de navigatiedropdowns bij een klik buiten het menu.
+  useEffect(() => {
+    if (!showCompetitieMenu && !showSpelersMenu) return;
 
-  function handleNavigationOutsideClick(event: MouseEvent) {
-    const target = event.target as Node;
+    function handleNavigationOutsideClick(event: MouseEvent) {
+      const target = event.target as Node;
 
-    if (
-      competitieMenuRef.current &&
-      !competitieMenuRef.current.contains(target)
-    ) {
-      setShowCompetitieMenu(false);
+      if (
+        competitieMenuRef.current &&
+        !competitieMenuRef.current.contains(target)
+      ) {
+        setShowCompetitieMenu(false);
+      }
+
+      if (spelersMenuRef.current && !spelersMenuRef.current.contains(target)) {
+        setShowSpelersMenu(false);
+      }
     }
 
-    if (
-      spelersMenuRef.current &&
-      !spelersMenuRef.current.contains(target)
-    ) {
-      setShowSpelersMenu(false);
-    }
-  }
+    document.addEventListener("mousedown", handleNavigationOutsideClick);
 
-  document.addEventListener("mousedown", handleNavigationOutsideClick);
-
-  return () => {
-    document.removeEventListener("mousedown", handleNavigationOutsideClick);
-  };
-}, [showCompetitieMenu, showSpelersMenu]);
+    return () => {
+      document.removeEventListener("mousedown", handleNavigationOutsideClick);
+    };
+  }, [showCompetitieMenu, showSpelersMenu]);
   /*
     Als de gebruiker uitlogt terwijl de adminpagina openstaat,
     sturen we hem terug naar Home.
@@ -371,7 +367,7 @@ useEffect(() => {
           <span className="mobile-nav-label">{t.stats}</span>
         </NavLink>
 
-        <div className="nav-dropdown" ref={spelersMenuRef}>
+        <div className="nav-dropdown" ref={competitieMenuRef}>
           <button
             type="button"
             className="nav-dropdown-trigger"
@@ -436,18 +432,21 @@ useEffect(() => {
 
           {showSpelersMenu && (
             <div className="nav-dropdown-content">
-              <NavLink to="/spelers" onClick={() => setShowSpelersMenu(false)}>
+              <NavLink
+                to="/spelers"
+                onClick={() => {
+                  setShowSpelersMenu(false);
+                }}
+              >
                 👤 Spelerstatistieken
               </NavLink>
 
-              <span
-                className="nav-dropdown-disabled"
-                aria-disabled="true"
-                title="Deze pagina wordt later toegevoegd"
+              <NavLink
+                to="/spelersranglijst"
+                onClick={() => setShowSpelersMenu(false)}
               >
                 📊 Spelersranglijst
-                <small>Binnenkort</small>
-              </span>
+              </NavLink>
             </div>
           )}
         </div>
@@ -620,6 +619,16 @@ useEffect(() => {
           path="/spelers"
           element={
             <PlayersPage
+              playerList={playerList}
+              teams={teams}
+              language={language}
+            />
+          }
+        />
+        <Route
+          path="/spelersranglijst"
+          element={
+            <PlayersRankingPage
               playerList={playerList}
               teams={teams}
               language={language}

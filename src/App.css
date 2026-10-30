@@ -3103,6 +3103,229 @@ textarea::placeholder {
   box-sizing: border-box;
 }
 
+/* ================================
+   SPELERSRANGLIJST
+================================ */
+
+.players-ranking-page {
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 24px;
+  color: var(--text-color, #171717);
+}
+
+.players-ranking-header {
+  margin-bottom: 24px;
+}
+
+.players-ranking-header h1 {
+  margin: 0 0 8px;
+  font-size: 28px;
+  font-weight: 700;
+}
+
+.players-ranking-header p {
+  margin: 0;
+  opacity: 0.7;
+}
+
+.ranking-categories {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 24px;
+  border-bottom: 1px solid var(--border-color, #ddd);
+}
+
+.ranking-categories button {
+  padding: 12px 18px;
+  border: none;
+  border-bottom: 3px solid transparent;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+}
+
+.ranking-categories button:hover {
+  background: rgba(128, 128, 128, 0.12);
+}
+
+.ranking-categories button.active {
+  border-bottom-color: #2563eb;
+  color: #2563eb;
+  font-weight: 700;
+}
+
+.ranking-filters {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+  margin-bottom: 28px;
+}
+
+.ranking-filters label {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.ranking-filters select,
+.ranking-filters input {
+  width: 100%;
+  min-height: 42px;
+  padding: 9px 12px;
+  border: 1px solid var(--border-color, #ccc);
+  border-radius: 8px;
+  background: var(--card-bg, #fff);
+  color: inherit;
+  font: inherit;
+}
+
+.ranking-table-section h2 {
+  margin-bottom: 16px;
+  font-size: 21px;
+}
+
+.ranking-table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+  border: 1px solid var(--border-color, #ddd);
+  border-radius: 12px;
+}
+
+.ranking-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.ranking-table th,
+.ranking-table td {
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--border-color, #ddd);
+  white-space: nowrap;
+}
+
+.ranking-table th {
+  background: rgba(128, 128, 128, 0.1);
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.ranking-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.ranking-table tbody tr:hover {
+  background: rgba(128, 128, 128, 0.08);
+}
+
+.ranking-table td:first-child {
+  font-weight: 700;
+}
+
+/* Mobiele weergave */
+
+@media (max-width: 800px) {
+  .ranking-filters {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .players-ranking-page {
+    padding: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .ranking-filters {
+    grid-template-columns: 1fr;
+  }
+
+  .players-ranking-header h1 {
+    font-size: 23px;
+  }
+
+  .ranking-categories {
+    gap: 2px;
+  }
+
+  .ranking-categories button {
+    padding: 10px;
+    font-size: 13px;
+  }
+
+  .ranking-table th,
+  .ranking-table td {
+    padding: 11px 12px;
+    font-size: 13px;
+  }
+}
+
+/* ================================
+   SPELERSRANGLIJST - DARK MODE
+================================ */
+
+.app.dark .players-ranking-page {
+  color: #f5f5f5;
+}
+
+.app.dark .ranking-filters label {
+  color: #f5f5f5;
+}
+
+.app.dark .ranking-filters select,
+.app.dark .ranking-filters input {
+  background-color: #20242c;
+  color: #f5f5f5;
+  border-color: #454b57;
+  color-scheme: dark;
+}
+
+.app.dark .ranking-filters select option {
+  background-color: #20242c;
+  color: #f5f5f5;
+}
+
+.app.dark .ranking-filters input::placeholder {
+  color: #a1a1aa;
+}
+
+.app.dark .ranking-table-wrapper {
+  border-color: #454b57;
+  background-color: #20242c;
+}
+
+.app.dark .ranking-table th {
+  background-color: #303642;
+  color: #ffffff;
+}
+
+.app.dark .ranking-table td {
+  color: #f5f5f5;
+  border-color: #454b57;
+}
+
+.app.dark .ranking-table tbody tr:hover {
+  background-color: #303642;
+}
+
+.app.dark .ranking-categories {
+  border-color: #454b57;
+}
+
+.app.dark .ranking-categories button {
+  color: #d1d5db;
+}
+
+.app.dark .ranking-categories button.active {
+  color: #60a5fa;
+  border-bottom-color: #60a5fa;
+}
+
 /* =========================================================
    8. Instellingenpagina
    ========================================================= */

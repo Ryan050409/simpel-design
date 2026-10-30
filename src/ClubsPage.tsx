@@ -1,4 +1,3 @@
-
 import { useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import type { Team } from "./types";
@@ -72,9 +71,7 @@ function ClubsPage({
       </div>
 
       {filteredTeams.length === 0 ? (
-        <p className="clubs-empty">
-          {t.clubsNoResults}
-        </p>
+        <p className="clubs-empty">{t.clubsNoResults}</p>
       ) : (
         <div className="clubs-grid">
           {filteredTeams.map((team) => {
@@ -84,9 +81,7 @@ function ClubsPage({
               <article className="club-card" key={team.id}>
                 <button
                   type="button"
-                  className={`club-favorite ${
-                    isFavorite ? "is-favorite" : ""
-                  }`}
+                  className={`club-favorite ${isFavorite ? "is-favorite" : ""}`}
                   aria-label={
                     isFavorite
                       ? `${team.name} ${t.clubIsFavorite}`
@@ -103,13 +98,18 @@ function ClubsPage({
                   to={`/competitie/clubs/${team.id}`}
                   aria-label={`${t.viewClubInformation} ${team.name}`}
                 >
-                  <img
-                    className="club-logo-image"
-                    src={teamLogos[team.name]}
-                    alt={`${t.clubLogoAlt} ${team.name}`}
-                    loading="lazy"
-                  />
-
+                  {teamLogos[team.name] ? (
+                    <img
+                      className="club-logo-image"
+                      src={teamLogos[team.name]}
+                      alt={`${t.clubLogoAlt} ${team.name}`}
+                      loading="lazy"
+                    />
+                  ) : (
+                    <div className="club-logo-fallback" aria-hidden="true">
+                      {team.name.slice(0, 3).toUpperCase()}
+                    </div>
+                  )}
                   <h2>{team.name}</h2>
                   <span className="club-card-detail">
                     {t.viewClubInformation} →
