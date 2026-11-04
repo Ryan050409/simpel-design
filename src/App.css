@@ -338,7 +338,13 @@ textarea::placeholder {
   outline: 3px solid #60a5fa;
   outline-offset: 3px;
 }
-
+/* Verberg favoriet- en profielknoppen op mobiele schermen */
+@media (max-width: 768px) {
+  .mobile-header-favorite,
+  .mobile-header-login {
+    display: none !important;
+  }
+}
 /* =========================================================
    3. Homepage
    ========================================================= */
