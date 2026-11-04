@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useEffect } from "react";
 import type { Player, Team } from "./types.ts";
 import { translations, type Language } from "./translations.ts";
 
@@ -15,6 +16,12 @@ function PlayersPage({ playerList, teams, language }: PlayersPageProps) {
   const [searchTerm, setSearchTerm] = useState("");
   const [positionFilter, setPositionFilter] = useState("all");
   const [sortOrder, setSortOrder] = useState("name");
+  const scrollToTeam = (teamId: string) => {
+    document.getElementById(`team-${teamId}`)?.scrollIntoView({
+      behavior: "smooth",
+      block: "start",
+    });
+  };
 
   const filteredPlayers = playerList
     .filter((player) => {
@@ -134,6 +141,23 @@ function PlayersPage({ playerList, teams, language }: PlayersPageProps) {
           </select>
         </div>
       </div>
+      <nav className="players-team-navigation" aria-label={t.players}>
+        {teams
+          .slice()
+          .sort((a, b) => a.name.localeCompare(b.name))
+          .filter((team) =>
+            filteredPlayers.some((player) => player.team === team.name),
+          )
+          .map((team) => (
+            <button
+              key={team.id}
+              type="button"
+              onClick={() => scrollToTeam(String(team.id))}
+            >
+              {team.name}
+            </button>
+          ))}
+      </nav>
       <div className="players-by-team">
         {filteredPlayers.length === 0 && (
           <p role="status">{t.noPlayersMatchSearch}</p>
@@ -150,7 +174,11 @@ function PlayersPage({ playerList, teams, language }: PlayersPageProps) {
             if (teamPlayers.length === 0) return null;
 
             return (
-              <section className="players-team-section" key={team.id}>
+              <section
+                className="players-team-section"
+                id={`team-${team.id}`}
+                key={team.id}
+              >
                 <div className="players-team-header">
                   <h2>{team.name}</h2>
                   <span>

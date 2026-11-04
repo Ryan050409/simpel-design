@@ -3131,7 +3131,38 @@ textarea::placeholder {
   min-height: 65px;
   box-sizing: border-box;
 }
+.players-team-navigation {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 18px 0 24px;
+  padding: 14px;
+  background: var(--card-background);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+}
 
+.players-team-navigation button {
+  padding: 8px 13px;
+  background: var(--secondary-background);
+  color: var(--text-color);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s ease, border-color 0.2s ease;
+}
+
+.players-team-navigation button:hover {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: white;
+}
+
+.players-team-section {
+  scroll-margin-top: 100px;
+}
 /* ================================
    SPELERSRANGLIJST
    Aansluitend op de bestaande website
