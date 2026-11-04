@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { useEffect } from "react";
 import type { Player, Team } from "./types.ts";
 import { translations, type Language } from "./translations.ts";
 
