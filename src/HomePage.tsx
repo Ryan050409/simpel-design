@@ -249,13 +249,14 @@ function HomePage({ matches, playerList, team, language }: HomePageProps) {
             <div className="home-page-match-list">
               {previousMatches.map((match) => {
                 const teamIsHome = match.home === team;
+
                 const teamGoals = teamIsHome
                   ? match.homeGoals
                   : match.awayGoals;
+
                 const opponentGoals = teamIsHome
                   ? match.awayGoals
                   : match.homeGoals;
-                const opponent = teamIsHome ? match.away : match.home;
 
                 const result =
                   teamGoals > opponentGoals
@@ -278,17 +279,27 @@ function HomePage({ matches, playerList, team, language }: HomePageProps) {
                         {resultLabel}
                       </span>
                     </div>
+                    <div className="home-page-match-teams">
+                      <div className="home-page-match-team">
+                        {teamLogos[match.home] && (
+                          <img src={teamLogos[match.home]} alt="" />
+                        )}
+                        <strong>{match.home}</strong>
+                      </div>
 
-                    <div className="home-page-match-info">
-                      <strong>
-                        {team} - {opponent}
+                      <strong className="home-page-match-score">
+                        {match.homeGoals} - {match.awayGoals}
                       </strong>
-                      <span>{match.date}</span>
+
+                      <div className="home-page-match-team home-page-match-opponent">
+                        {teamLogos[match.away] && (
+                          <img src={teamLogos[match.away]} alt="" />
+                        )}
+                        <strong>{match.away}</strong>
+                      </div>
                     </div>
 
-                    <strong className="home-page-match-score">
-                      {teamGoals} - {opponentGoals}
-                    </strong>
+                    <span className="home-page-match-date">{match.date}</span>
                   </div>
                 );
               })}

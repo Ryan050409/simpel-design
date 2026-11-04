@@ -590,7 +590,6 @@ textarea::placeholder {
   border: 1px solid var(--border-color);
   border-radius: 7px;
 }
-
 .home-page-match-list {
   display: grid;
   grid-template-rows: repeat(5, minmax(0, 1fr));
@@ -602,7 +601,6 @@ textarea::placeholder {
   display: flex;
   align-items: center;
   gap: 12px;
-
   min-height: 0;
   padding: 5px 0;
   border-top: 1px solid var(--border-color);
@@ -618,17 +616,13 @@ textarea::placeholder {
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  gap: 6px;
-
   min-width: 28px;
   min-height: 28px;
   padding: 5px 8px;
-
   border: 1px solid var(--border-color);
   border-radius: 7px;
   background: var(--secondary-background);
   color: var(--text-color);
-
   font-size: 12px;
   font-weight: 700;
 }
@@ -650,46 +644,60 @@ textarea::placeholder {
   border-left: 3px solid #dc2626;
 }
 
-.home-page-match-info {
-  min-width: 0;
+.home-page-match-teams {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  align-items: center;
   flex: 1;
+  min-width: 0;
+  gap: 10px;
 }
 
-.home-page-match-info strong {
-  display: block;
-  overflow: hidden;
+.home-page-match-team {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  min-width: 0;
+}
 
+.home-page-match-team img {
+  width: 25px;
+  height: 25px;
+  flex-shrink: 0;
+  object-fit: contain;
+}
+
+.home-page-match-team strong {
+  overflow: hidden;
   color: var(--text-color);
-  font-size: 13px;
+  font-size: 12px;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
-.home-page-match-info span {
-  display: block;
-  margin-top: 3px;
-
-  color: var(--muted-text-color);
-  font-size: 11px;
+.home-page-match-opponent {
+  justify-content: flex-end;
 }
 
 .home-page-match-score {
   flex-shrink: 0;
   padding: 6px 10px;
-
   background: var(--secondary-background);
   color: var(--text-color);
   border: 1px solid var(--border-color);
   border-radius: 8px;
-
-
-  font-size: 15px;
-  font-weight: 700;
+  font-size: 14px;
+  font-weight: 800;
   font-variant-numeric: tabular-nums;
   white-space: nowrap;
 }
 
-.home-page-featured-match {
+.home-page-match-date {
+  flex-shrink: 0;
+  color: var(--muted-text-color);
+  font-size: 11px;
+  white-space: nowrap;
+}.home-page-featured-match {
   margin-bottom: 18px;
   padding: 22px 24px;
 
