@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import type { Match, Player } from "./types.ts";
 import { translations, type Language } from "./translations.ts";
+import teamLogos from "./teamLogos";
 
 type HomePageProps = {
   matches: Match[];
@@ -9,12 +10,7 @@ type HomePageProps = {
   language: Language;
 };
 
-function HomePage({
-  matches,
-  playerList,
-  team,
-  language,
-}: HomePageProps) {
+function HomePage({ matches, playerList, team, language }: HomePageProps) {
   const t = translations[language];
 
   const teamMatches = matches.filter(
@@ -87,9 +83,7 @@ function HomePage({
           aria-labelledby="home-featured-match-title"
         >
           <div className="home-page-featured-match-heading">
-            <span className="home-page-panel-label">
-              ⚽ {t.latestResult}
-            </span>
+            <span className="home-page-panel-label">⚽ {t.latestResult}</span>
             <Link to="/wedstrijden">{t.allMatches} →</Link>
           </div>
 
@@ -107,42 +101,60 @@ function HomePage({
           )}
 
           <div className="home-page-featured-match-score">
-            <strong
-              className={[
-                latestMatch.home === team ? "featured-team-favorite" : "",
-                latestMatch.homeGoals > latestMatch.awayGoals
-                  ? "featured-team-winner"
-                  : "",
-              ]
-                .filter(Boolean)
-                .join(" ")}
-            >
-              {latestMatch.home}
-            </strong>
+            <div className="home-page-featured-team">
+              {teamLogos[latestMatch.home] && (
+                <img
+                  src={teamLogos[latestMatch.home]}
+                  alt=""
+                  className="home-page-featured-logo"
+                />
+              )}
+
+              <strong
+                className={[
+                  latestMatch.home === team ? "featured-team-favorite" : "",
+                  latestMatch.homeGoals > latestMatch.awayGoals
+                    ? "featured-team-winner"
+                    : "",
+                ]
+                  .filter(Boolean)
+                  .join(" ")}
+              >
+                {latestMatch.home}
+              </strong>
+            </div>
 
             <div
               className="home-page-featured-score"
-              aria-label={
-                `${t.scoreLabel} ${latestMatch.homeGoals} ${t.scoreAgainst} ${latestMatch.awayGoals}`
-              }
+              aria-label={`${t.scoreLabel} ${latestMatch.homeGoals} ${t.scoreAgainst} ${latestMatch.awayGoals}`}
             >
               <span>{latestMatch.homeGoals}</span>
               <span aria-hidden="true">–</span>
               <span>{latestMatch.awayGoals}</span>
             </div>
 
-            <strong
-              className={[
-                latestMatch.away === team ? "featured-team-favorite" : "",
-                latestMatch.awayGoals > latestMatch.homeGoals
-                  ? "featured-team-winner"
-                  : "",
-              ]
-                .filter(Boolean)
-                .join(" ")}
-            >
-              {latestMatch.away}
-            </strong>
+            <div className="home-page-featured-team">
+              {teamLogos[latestMatch.away] && (
+                <img
+                  src={teamLogos[latestMatch.away]}
+                  alt=""
+                  className="home-page-featured-logo"
+                />
+              )}
+
+              <strong
+                className={[
+                  latestMatch.away === team ? "featured-team-favorite" : "",
+                  latestMatch.awayGoals > latestMatch.homeGoals
+                    ? "featured-team-winner"
+                    : "",
+                ]
+                  .filter(Boolean)
+                  .join(" ")}
+              >
+                {latestMatch.away}
+              </strong>
+            </div>
           </div>
 
           <p className="home-page-featured-match-date">
@@ -189,9 +201,7 @@ function HomePage({
       <div className="home-page-player-summary">
         <div className="home-page-player-summary-header">
           <div>
-            <span className="home-page-panel-label">
-              👥 {t.teamSelection}
-            </span>
+            <span className="home-page-panel-label">👥 {t.teamSelection}</span>
           </div>
 
           <Link to="/spelers">{t.allPlayers} →</Link>
@@ -200,9 +210,7 @@ function HomePage({
         <div className="home-page-player-summary-stats">
           <div>
             <strong>{teamPlayers.length}</strong>
-            <span>
-              {teamPlayers.length === 1 ? t.player : t.players}
-            </span>
+            <span>{teamPlayers.length === 1 ? t.player : t.players}</span>
           </div>
 
           <div>
@@ -232,9 +240,7 @@ function HomePage({
         <div className="home-page-panel">
           <div className="home-page-panel-heading">
             <div>
-              <span className="home-page-panel-label">
-                🕐 {t.recent}
-              </span>
+              <span className="home-page-panel-label">🕐 {t.recent}</span>
               <h2>{t.previousMatches}</h2>
             </div>
           </div>
@@ -259,11 +265,7 @@ function HomePage({
                       : "V";
 
                 const resultLabel =
-                  result === "W"
-                    ? t.won
-                    : result === "G"
-                      ? t.draw
-                      : t.lost;
+                  result === "W" ? t.won : result === "G" ? t.draw : t.lost;
 
                 return (
                   <div className="home-page-match" key={match.id}>
@@ -294,11 +296,7 @@ function HomePage({
           ) : (
             <div className="home-page-empty">
               <span aria-hidden="true">⚽</span>
-              <p>
-                {latestMatch
-                  ? t.noPreviousMatches
-                  : t.noMatches}
-              </p>
+              <p>{latestMatch ? t.noPreviousMatches : t.noMatches}</p>
               <Link to="/wedstrijden">{t.viewMatches} →</Link>
             </div>
           )}
@@ -306,39 +304,13 @@ function HomePage({
 
         <div className="home-page-side-column">
           <div className="home-page-panel home-page-team-panel">
-            <span className="home-page-panel-label">
-              ⭐ {t.favoriteTeam}
-            </span>
+            <span className="home-page-panel-label">⭐ {t.favoriteTeam}</span>
             <h2>{team}</h2>
             <p>
               {teamMatches.length === 0
                 ? t.addFirstMatch
                 : `${wins} ${t.wonShort} · ${draws} ${t.drawShort} · ${losses} ${t.lostShort}`}
             </p>
-          </div>
-
-          <div className="home-page-panel home-page-top-player">
-            <span className="home-page-panel-label">
-              🏆 {t.topScorerLabel}
-            </span>
-
-            {topScorer ? (
-              <>
-                <h2>
-                  {topScorer.firstname} {topScorer.lastname}
-                </h2>
-
-                <div className="home-page-top-player-stats">
-                  <strong>{topScorer.goals}</strong>
-                  <span>{t.goals}</span>
-                </div>
-              </>
-            ) : (
-              <div className="home-page-empty-small">
-                <p>{t.noPlayers}</p>
-                <Link to="/spelers">{t.addFirstPlayer} →</Link>
-              </div>
-            )}
           </div>
         </div>
       </div>
