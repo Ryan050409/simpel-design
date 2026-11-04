@@ -674,10 +674,6 @@ function AppContent() {
                   </button>
                 ))}
               </div>
-
-              <NavLink to="/help" onClick={closeNavigationMenus}>
-                {t.help}
-              </NavLink>
             </div>
           )}
         </div>
