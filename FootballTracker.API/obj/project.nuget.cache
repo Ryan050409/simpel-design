@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "brH+XE36BdQ=",
+  "success": true,
+  "projectFilePath": "C:\\repos\\simpel-design\\FootballTracker.API\\FootballTracker.API.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\rijn\\.nuget\\packages\\microsoft.aspnetcore.openapi\\10.0.14\\microsoft.aspnetcore.openapi.10.0.14.nupkg.sha512",
+    "C:\\Users\\rijn\\.nuget\\packages\\microsoft.openapi\\2.12.2\\microsoft.openapi.2.12.2.nupkg.sha512"
+  ],
+  "logs": []
+}
