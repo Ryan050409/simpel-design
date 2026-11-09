@@ -1,6 +1,0 @@
-@FootballTracker.API_HostAddress = http://localhost:5268
-
-GET {{FootballTracker.API_HostAddress}}/weatherforecast/
-Accept: application/json
-
-###
