@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import type { Player, Team } from "./types.ts";
 import { translations, type Language } from "./translations.ts";
 
@@ -21,7 +21,26 @@ function PlayersPage({ playerList, teams, language }: PlayersPageProps) {
       block: "start",
     });
   };
+  const [showScrollTop, setShowScrollTop] = useState(false);
 
+  useEffect(() => {
+    const handleScroll = () => {
+      setShowScrollTop(window.scrollY > 300);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  };
   const filteredPlayers = playerList
     .filter((player) => {
       const fullName = `${player.firstname} ${player.lastname}`.toLowerCase();
@@ -157,6 +176,20 @@ function PlayersPage({ playerList, teams, language }: PlayersPageProps) {
             </button>
           ))}
       </nav>
+      {showScrollTop && (
+        <button
+          type="button"
+          onClick={scrollToTop}
+          className={`scroll-top-button ${
+            showScrollTop ? "visible" : "hidden"
+          }`}
+          aria-label="Terug naar boven"
+          title="Terug naar boven"
+          tabIndex={showScrollTop ? 0 : -1}
+        >
+          ↑
+        </button>
+      )}
       <div className="players-by-team">
         {filteredPlayers.length === 0 && (
           <p role="status">{t.noPlayersMatchSearch}</p>
