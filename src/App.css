@@ -8745,6 +8745,9 @@ a:focus-visible {
     color 0.2s ease,
     background-color 0.2s ease,
     transform 0.2s ease;
+    line-height: 1;
+    padding:0;
+    transform: translateX(-2px);
 }
 
 .club-favorite:hover {
