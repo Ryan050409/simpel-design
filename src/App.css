@@ -3167,25 +3167,65 @@ textarea::placeholder {
   scroll-margin-top: 100px;
 }
 .scroll-top-button {
-  transition:
-    opacity 0.4s ease,
-    transform 0.4s ease,
-    visibility 0.4s;
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 9999;
+
+  width: 48px;
+  height: 48px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: #ffffff;
+  color: #1e293b;
+
+  border: 2px solid #2563eb;
+  border-radius: 50%;
+
+  font-size: 26px;
+  font-weight: 700;
+
+  cursor: pointer;
+
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.25);
+
+  animation: scrollTopSlideIn 0.4s ease forwards;
 }
 
-.scroll-top-button.hidden {
-  opacity: 0;
-  visibility: hidden;
-  transform: translateY(-70px);
-  pointer-events: none;
+.scroll-top-button:hover {
+  background: #2563eb;
+  color: #ffffff;
 }
 
-.scroll-top-button.visible {
-  opacity: 1;
-  visibility: visible;
-  transform: translateY(0);
-  pointer-events: auto;
+/* Donkere modus */
+.dark .scroll-top-button {
+  background: #1e293b;
+  color: #ffffff;
+  border-color: #60a5fa;
+  box-shadow: 0 3px 14px rgba(0, 0, 0, 0.6);
 }
+
+.dark .scroll-top-button:hover {
+  background: #60a5fa;
+  color: #0f172a;
+}
+
+/* Animatie: knop komt van boven naar binnen */
+@keyframes scrollTopSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-70px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 /* ================================
    SPELERSRANGLIJST
    Aansluitend op de bestaande website
