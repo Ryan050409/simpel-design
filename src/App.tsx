@@ -21,6 +21,7 @@ import AdminPage from "./AdminPage";
 import { DEMO_USER } from "./demoUser";
 import { translations, type Language } from "./translations.ts";
 import type { Player, Match, Team } from "./types.ts";
+import { getTeams, getPlayers } from "./api";
 import ClubsPage from "./ClubsPage.tsx";
 import ClubDetailPage from "./ClubDetailPage";
 /*
@@ -208,30 +209,26 @@ function AppContent() {
   const profileMenuRef = useRef<HTMLDivElement>(null);
   const competitieMenuRef = useRef<HTMLDivElement>(null);
   const spelersMenuRef = useRef<HTMLDivElement>(null);
-  const [showMobileMenu, setShowMobileMenu] = useState (false);
+  const [showMobileMenu, setShowMobileMenu] = useState(false);
   const [theme, setTheme] = useState<"dark" | "light">(() => {
     const savedTheme = localStorage.getItem("theme");
     return savedTheme === "light" ? "light" : "dark";
   });
 
-  const [playerList, setPlayerList] = useState<Player[]>(() => {
-    const savedPlayers = localStorage.getItem("players");
+  const [playerList, setPlayerList] = useState<Player[]>([]);
 
-    if (savedPlayers) {
-      try {
-        const parsedPlayers: Player[] = JSON.parse(savedPlayers);
-
-        return parsedPlayers.map((player, index) => ({
-          ...player,
-          id: player.id ?? Date.now() + index,
-        }));
-      } catch {
-        return seedPlayers;
-      }
+useEffect(() => {
+  async function loadPlayers() {
+    try {
+      const data = await getPlayers();
+      setPlayerList(data);
+    } catch (error) {
+      console.error("Fout bij ophalen van spelers:", error);
     }
+  }
 
-    return seedPlayers;
-  });
+  loadPlayers();
+}, []);
 
   const [matches, setMatches] = useState<Match[]>(() => {
     const savedMatches = localStorage.getItem("matches");
@@ -247,19 +244,18 @@ function AppContent() {
     return seedMatches;
   });
 
-  const [teams, setTeams] = useState<Team[]>(() => {
-    const savedTeams = localStorage.getItem("teams");
-
-    if (savedTeams) {
+  const [teams, setTeams] = useState<Team[]>([]);
+  useEffect(() => {
+    async function loadTeams() {
       try {
-        return JSON.parse(savedTeams);
-      } catch {
-        return seedTeams;
+        const data = await getTeams();
+        setTeams(data);
+      } catch (error) {
+        console.error("Fout bij ophalen van teams", error);
       }
     }
-
-    return seedTeams;
-  });
+    loadTeams();
+  }, []);
 
   useEffect(() => {
     localStorage.setItem("players", JSON.stringify(playerList));
@@ -475,16 +471,13 @@ function AppContent() {
               🏆
             </span>
             <span className="mobile-nav-label">
-  Competitie <span aria-hidden="true">⌄</span>
-</span>
+              Competitie <span aria-hidden="true">⌄</span>
+            </span>
           </button>
 
-          {(showCompetitieMenu) && (
+          {showCompetitieMenu && (
             <div className="nav-dropdown-content">
-              <NavLink
-                to="/wedstrijden"
-                onClick={closeNavigationMenus}
-              >
+              <NavLink to="/wedstrijden" onClick={closeNavigationMenus}>
                 ⚽ Wedstrijden
               </NavLink>
 
@@ -492,10 +485,7 @@ function AppContent() {
                 🏆 Competitiestand
               </NavLink>
 
-              <NavLink
-                to="/competitie/clubs"
-                onClick={closeNavigationMenus}
-              >
+              <NavLink to="/competitie/clubs" onClick={closeNavigationMenus}>
                 🛡️ Clubs
               </NavLink>
             </div>
@@ -518,29 +508,20 @@ function AppContent() {
               👥
             </span>
             <span className="mobile-nav-label">
-  Spelers <span aria-hidden="true">⌄</span>
-</span>
+              Spelers <span aria-hidden="true">⌄</span>
+            </span>
           </button>
 
-          {(showSpelersMenu) && (
+          {showSpelersMenu && (
             <div className="nav-dropdown-content">
-              <NavLink
-                to="/spelers"
-                onClick={closeNavigationMenus}
-              >
+              <NavLink to="/spelers" onClick={closeNavigationMenus}>
                 👤 Spelerstatistieken
               </NavLink>
 
-              <NavLink
-                to="/spelersranglijst"
-                onClick={closeNavigationMenus}
-              >
+              <NavLink to="/spelersranglijst" onClick={closeNavigationMenus}>
                 📊 Spelersranglijst
               </NavLink>
-              <NavLink
-                to="/spelers-vergelijken"
-                onClick={closeNavigationMenus}
-              >
+              <NavLink to="/spelers-vergelijken" onClick={closeNavigationMenus}>
                 ⚖️ Spelers vergelijken
               </NavLink>
             </div>
@@ -658,21 +639,23 @@ function AppContent() {
               <div className="profile-menu-section">
                 <strong>{t.favoriteClub}</strong>
 
-                {teams.map((club) => (
-                  <button
-                    type="button"
-                    key={club.id}
-                    className="profile-team-option"
-                    aria-pressed={team === club.name}
-                    onClick={() => {
-                      setTeam(club.name);
-                      setShowProfileMenu(false);
-                    }}
-                  >
-                    {club.name}
-                    {team === club.name ? " ★" : ""}
-                  </button>
-                ))}
+                {[...teams]
+                  .sort((a, b) => a.name.localeCompare(b.name, "nl"))
+                  .map((club) => (
+                    <button
+                      type="button"
+                      key={club.id}
+                      className="profile-team-option"
+                      aria-pressed={team === club.name}
+                      onClick={() => {
+                        setTeam(club.name);
+                        setShowProfileMenu(false);
+                      }}
+                    >
+                      {club.name}
+                      {team === club.name ? " ★" : ""}
+                    </button>
+                  ))}
               </div>
             </div>
           )}

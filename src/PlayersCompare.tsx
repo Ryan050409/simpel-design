@@ -91,7 +91,7 @@ export default function PlayersCompare({
             <option value="">{t.compareSelectPlayer}</option>
             {filteredPlayers.map((player) => (
               <option key={player.id} value={String(player.id)}>
-                {player.firstname} {player.lastname}
+                {player.firstname} {player.lastname} - {player.position}
               </option>
             ))}
           </select>
@@ -106,7 +106,7 @@ export default function PlayersCompare({
             <option value="">{t.compareSelectPlayer}</option>
             {filteredPlayers.map((player) => (
               <option key={player.id} value={String(player.id)}>
-                {player.firstname} {player.lastname}
+                {player.firstname} {player.lastname} - {player.position}
               </option>
             ))}
           </select>

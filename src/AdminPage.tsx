@@ -5,6 +5,13 @@ import type { UserRole, Permission } from "./permissions";
 import { hasPermission, canAccessAdminPage } from "./permissions";
 
 import type { Player, Match, Team } from "./types";
+import {
+  createTeamRequest,
+  createPlayerRequest,
+  updatePlayerRequest,
+  deletePlayerRequest,
+  deleteTeamRequest,
+} from "./api.ts";
 import PlayerForm from "./PlayerForm";
 import MatchForm from "./MatchForm";
 import type { Language } from "./translations";
@@ -241,7 +248,7 @@ export default function AdminPage({
     setShowPlayerForm(true);
   }
 
-  function deletePlayer(player: Player) {
+  async function deletePlayer(player: Player) {
     if (!canManagePlayers) return;
 
     const confirmed = window.confirm(
@@ -249,10 +256,42 @@ export default function AdminPage({
     );
 
     if (!confirmed) return;
+    try {
+      await deletePlayerRequest(player.id);
 
-    setPlayerList((current) => current.filter((item) => item.id !== player.id));
+      setPlayerList((current) =>
+        current.filter((item) => item.id !== player.id),
+      );
+    } catch (error) {
+      console.error("Fout bij her verwijderen van speler:", error);
+      window.alert("De speler kon niet uit de database worden verwijderd");
+    }
   }
+  async function savePlayer(playerData: Omit<Player, "id">) {
+  if (!canManagePlayers) return;
 
+  try {
+    if (editingPlayer) {
+      const updatedPlayer = await updatePlayerRequest(
+        editingPlayer.id,
+        playerData,
+      );
+
+      setPlayerList((current) =>
+        current.map((player) =>
+          player.id === editingPlayer.id ? updatedPlayer : player,
+        ),
+      );
+    } else {
+      const createdPlayer = await createPlayerRequest(playerData);
+
+      setPlayerList((current) => [...current, createdPlayer]);
+    }
+  } catch (error) {
+    console.error("Fout bij opslaan van speler:", error);
+    throw error;
+  }
+}
   function openAddMatchForm() {
     if (!canManageMatches) return;
     setEditingMatch(null);
@@ -281,7 +320,7 @@ export default function AdminPage({
     setMatches((current) => current.filter((item) => item.id !== match.id));
   }
 
-  function addTeam(event: FormEvent<HTMLFormElement>) {
+  async function addTeam(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     if (!canManageTeams) return;
 
@@ -297,22 +336,27 @@ export default function AdminPage({
       return;
     }
 
-    const newId =
-      teams.length > 0 ? Math.max(...teams.map((item) => item.id)) + 1 : 1;
+    try {
+      const newTeam = await createTeamRequest(name);
 
-    setTeams((current) => [...current, { id: newId, name }]);
-    setNewTeamName("");
-    setTeamError("");
-    setShowTeamForm(false);
-    setTeamSearch("");
+      setTeams((current) => [...current, newTeam]);
+      setNewTeamName("");
+      setTeamError("");
+      setShowTeamForm(false);
+      setTeamSearch("");
+    } catch (error) {
+      console.error("Fout bij toevoegen van team:", error);
+      setTeamError("Het team kon niet worden toegevoegd.");
+    }
   }
 
-  function deleteTeam(teamToDelete: Team) {
+  async function deleteTeam(teamToDelete: Team) {
     if (!canManageTeams) return;
 
     const playersInTeam = playerList.filter(
       (player) => player.team === teamToDelete.name,
     );
+
     const matchesForTeam = matches.filter(
       (match) =>
         match.home === teamToDelete.name || match.away === teamToDelete.name,
@@ -339,12 +383,19 @@ export default function AdminPage({
       return;
     }
 
-    setTeams((current) =>
-      current.filter((item) => item.id !== teamToDelete.id),
-    );
+    try {
+      await deleteTeamRequest(teamToDelete.id);
 
-    if (selectedTeam === teamToDelete.name) {
-      returnToTeams();
+      setTeams((current) =>
+        current.filter((item) => item.id !== teamToDelete.id),
+      );
+
+      if (selectedTeam === teamToDelete.name) {
+        returnToTeams();
+      }
+    } catch (error) {
+      console.error("Fout bij verwijderen van team:", error);
+      window.alert("Het team kon niet uit de database worden verwijderd.");
     }
   }
 
@@ -986,7 +1037,7 @@ export default function AdminPage({
         <PlayerForm
           editingPlayer={editingPlayer}
           setEditingPlayer={setEditingPlayer}
-          setPlayerList={setPlayerList}
+          onSave={savePlayer}
           closeModal={closePlayerForm}
           teams={teams}
           language={language}

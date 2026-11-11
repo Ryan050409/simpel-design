@@ -6,7 +6,7 @@ import { translations, type Language } from "./translations.ts";
 type PlayerFormProps = {
   editingPlayer?: Player | null;
   setEditingPlayer?: Dispatch<SetStateAction<Player | null>>;
-  setPlayerList: Dispatch<SetStateAction<Player[]>>;
+  onSave: (player: Omit<Player, "id">) => Promise<void>;
   closeModal: () => void;
   teams: Team[];
   language: Language;
@@ -15,7 +15,7 @@ type PlayerFormProps = {
 function PlayerForm({
   editingPlayer,
   setEditingPlayer,
-  setPlayerList,
+  onSave,
   closeModal,
   teams,
   language,
@@ -122,7 +122,7 @@ function PlayerForm({
     setFormStep(2);
   }
 
-  function savePlayer() {
+  async function savePlayer() {
     if (
       newPlayerFirstName.trim() === "" ||
       newPlayerLastName.trim() === "" ||
@@ -167,50 +167,43 @@ function PlayerForm({
       return;
     }
 
-    const newPlayer: Player = {
-      id: editingPlayer ? editingPlayer.id : Date.now(),
+    const newPlayer: Omit<Player, "id"> = {
+  firstname: newPlayerFirstName.trim(),
+  lastname: newPlayerLastName.trim(),
+  team: newPlayerTeam.trim(),
+  position: newPlayerPosition.trim(),
+  number: Number(newPlayerNumber),
 
-      firstname: newPlayerFirstName.trim(),
-      lastname: newPlayerLastName.trim(),
-      team: newPlayerTeam.trim(),
-      position: newPlayerPosition.trim(),
-      number: Number(newPlayerNumber),
+  goals: Number(newPlayerGoals),
+  assists: Number(newPlayerAssists),
+  matches: Number(newPlayerMatches),
+  minutesplayed: Number(newPlayerMinutesPlayed),
 
-      goals: Number(newPlayerGoals),
-      assists: Number(newPlayerAssists),
-      matches: Number(newPlayerMatches),
-      minutesplayed: Number(newPlayerMinutesPlayed),
+  tackles: Number(newPlayerTackle),
+  interceptions: Number(newPlayerInterceptions),
+  blocks: Number(newPlayerBlocks),
+  clearances: Number(newPlayerClearances),
+  duelsWon: Number(newPlayerDuelsWon),
+  fouls: Number(newPlayerFouls),
 
-      tackles: Number(newPlayerTackle),
-      interceptions: Number(newPlayerInterceptions),
-      blocks: Number(newPlayerBlocks),
-      clearances: Number(newPlayerClearances),
-      duelsWon: Number(newPlayerDuelsWon),
-      fouls: Number(newPlayerFouls),
+  cleanSheets: Number(newPlayerCleanSheets),
+  saves: Number(newPlayerSaves),
+  oneVSOneSaves: Number(newPlayerOneVsOneSaves),
+  penaltySaves: Number(newPlayerPenaltySaves),
+  goalsConceded: Number(newPlayerGoalsConceded),
 
-      cleanSheets: Number(newPlayerCleanSheets),
-      saves: Number(newPlayerSaves),
-      oneVSOneSaves: Number(newPlayerOneVsOneSaves),
-      penaltySaves: Number(newPlayerPenaltySaves),
-      goalsConceded: Number(newPlayerGoalsConceded),
+  rating: Number(newPlayerRating),
+};
 
-      rating: Number(newPlayerRating),
-    };
-
-    if (editingPlayer) {
-      setPlayerList((currentPlayers) =>
-        currentPlayers.map((player) =>
-          player.id === editingPlayer.id ? newPlayer : player,
-        ),
-      );
-    } else {
-      setPlayerList((currentPlayers) => [...currentPlayers, newPlayer]);
-    }
-
-    setEditingPlayer?.(null);
-    closeModal();
+try {
+  await onSave(newPlayer);
+  setEditingPlayer?.(null);
+  closeModal();
+} catch (error) {
+  console.error("Fout bij opslaan van speler:", error);
+  setWarning("De speler kon niet worden opgeslagen.");
+}
   }
-
   function goBack() {
     setWarning("");
     setFormStep(1);
