@@ -1406,10 +1406,6 @@ textarea::placeholder {
   border-top: 3px solid #3b82f6;
 }
 
-.dashboard-player-rating {
-  border-top: 3px solid #f59e0b;
-}
-
 .dashboard-empty-note {
   margin: 16px 0 0;
   padding: 14px 16px;
@@ -2882,53 +2878,6 @@ textarea::placeholder {
   font-size: 13px;
 }
 
-/* Rating */
-.player-rating {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  flex-shrink: 0;
-
-  width: 58px;
-  height: 58px;
-
-  background: var(--secondary-background);
-  border: 1px solid var(--border-color);
-  border-radius: 11px;
-}
-
-.player-rating span {
-  color: var(--muted-text-color);
-  font-size: 8px;
-  font-weight: 700;
-  letter-spacing: 0.05em;
-}
-
-.rating-low {
-  color: #ef4444;
-  font-size: 15px;
-}
-
-.rating-average {
-  color: #f97316;
-  font-size: 17px;
-}
-
-.rating-good {
-  color: #facc15;
-  font-size: 19px;
-}
-
-.rating-very-good {
-  color: #22c55e;
-  font-size: 21px;
-}
-
-.rating-excellent {
-  color: #16a34a;
-  font-size: 23px;
-}
 
 /* Positie */
 .player-position {
@@ -3088,25 +3037,6 @@ textarea::placeholder {
 
   font-size: 0.8rem;
   font-weight: 600;
-}
-
-.player-details-rating {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 2px;
-  min-width: 65px;
-}
-
-.player-details-rating span {
-  color: var(--muted-text-color);
-  font-size: 0.7rem;
-  font-weight: 700;
-  letter-spacing: 0.05em;
-}
-
-.player-details-rating strong {
-  font-size: 1.8rem;
 }
 
 .player-details-section {
@@ -3461,35 +3391,6 @@ textarea::placeholder {
 
 .app.dark .ranking-table tbody tr:hover {
   background: var(--accent-soft);
-}
-.ranking-table .rating-low {
-  color: #ef4444 !important;
-  font-size: 15px;
-  font-weight: 700;
-}
-
-.ranking-table .rating-average {
-  color: #f97316 !important;
-  font-size: 17px;
-  font-weight: 700;
-}
-
-.ranking-table .rating-good {
-  color: #facc15 !important;
-  font-size: 19px;
-  font-weight: 700;
-}
-
-.ranking-table .rating-very-good {
-  color: #22c55e !important;
-  font-size: 21px;
-  font-weight: 700;
-}
-
-.ranking-table .rating-excellent {
-  color: #16a34a !important;
-  font-size: 23px;
-  font-weight: 700;
 }
 /* ================================
    RESPONSIVE
@@ -7104,9 +7005,7 @@ textarea::placeholder {
     gap: 16px;
   }
 
-  .player-details-rating {
-    align-items: flex-start;
-  }
+  
 }
 
 @media (max-width: 700px) {
@@ -9369,12 +9268,6 @@ a:focus-visible {
   .player-team {
     margin-top: 4px;
     font-size: 11px;
-  }
-
-  .player-rating {
-    width: 48px;
-    height: 48px;
-    border-radius: 9px;
   }
 
   .players-page .player-info-button {

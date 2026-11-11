@@ -30,10 +30,9 @@ const rankingOptions: Record<
   }[]
 > = {
   general: [
-    { key: "rating", labelKey: "averageRating" },
     { key: "matches", labelKey: "matchesStat" },
     {
-      key: "minutesplayed",
+      key: "minutesPlayed",
       labelKey: "minutesStat",
       suffixKey: "rankingMinutesSuffix",
     },
@@ -56,13 +55,6 @@ const rankingOptions: Record<
     { key: "goalsConceded", labelKey: "goalsConcededStat" },
   ],
 };
-function getRatingClass(rating: number) {
-  if (rating >= 9) return "rating-excellent";
-  if (rating >= 8) return "rating-very-good";
-  if (rating >= 7) return "rating-good";
-  if (rating >= 6) return "rating-average";
-  return "rating-low";
-}
 export default function PlayersRankingPage({
   playerList,
   teams,
@@ -70,7 +62,7 @@ export default function PlayersRankingPage({
 }: PlayersRankingPageProps) {
   const t = translations[language];
   const [category, setCategory] = useState<RankingCategory>("general");
-  const [statistic, setStatistic] = useState<keyof Player>("rating");
+  const [statistic, setStatistic] = useState<keyof Player>("matches");
   const [selectedTeam, setSelectedTeam] = useState("all");
   const [selectedPosition, setSelectedPosition] = useState("all");
   const [search, setSearch] = useState("");
@@ -234,22 +226,8 @@ export default function PlayersRankingPage({
                       </td>
                       <td>{player.team}</td>
                       <td>{player.position}</td>
-                      <td>
-                        {activeStatistic === "rating" ? (
-                          <span
-                            className={getRatingClass(
-                              Number(player[activeStatistic]),
-                            )}
-                          >
-                            {player[activeStatistic]}
-                          </span>
-                        ) : (
-                          <>
-                            {player[activeStatistic]}
-                            {option?.suffixKey ? t[option.suffixKey] : ""}
-                          </>
-                        )}
-                      </td>
+                      {player[activeStatistic]}
+{option?.suffixKey ? t[option.suffixKey] : ""}
                     </tr>
                   );
                 })

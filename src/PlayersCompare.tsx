@@ -38,10 +38,9 @@ export default function PlayersCompare({
 
   const statistics = [
     { label: t.matchesStat, key: "matches" },
-    { label: t.minutesStat, key: "minutesplayed" },
+    { label: t.minutesStat, key: "minutesPlayed" },
     { label: t.goalsStat, key: "goals" },
     { label: t.assistsStat, key: "assists" },
-    { label: t.averageRating, key: "rating" },
     { label: t.tacklesStat, key: "tackles" },
     { label: t.interceptionsStat, key: "interceptions" },
     { label: t.blocksStat, key: "blocks" },
