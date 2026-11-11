@@ -20,7 +20,7 @@ import HelpPage from "./HelpPage";
 import AdminPage from "./AdminPage";
 import { DEMO_USER } from "./demoUser";
 import { translations, type Language } from "./translations.ts";
-import type { Player, Match, Team } from "./types.ts";
+import type { Player, Match, Team, PlayerPosition } from "./types.ts";
 import { getTeams, getPlayers } from "./api";
 import ClubsPage from "./ClubsPage.tsx";
 import ClubDetailPage from "./ClubDetailPage";
@@ -54,14 +54,13 @@ const seedTeams: Team[] = [
 const firstNames = ["Lucas"];
 const lastNames = ["Jansen"];
 
-const positions = [
-  "Keeper",
-  "Verdediger",
-  "Verdediger",
-  "Middenvelder",
-  "Aanvaller",
+const positions: PlayerPosition[] = [
+  "GK",
+  "CB",
+  "LB",
+  "CM",
+  "ST",
 ];
-
 function createSeedPlayers(): Player[] {
   const players: Player[] = [];
 
@@ -73,6 +72,7 @@ function createSeedPlayers(): Player[] {
       const lastname = lastNames[playerIndex];
 
       const matches = 10 + ((teamIndex * 3 + i * 2) % 17);
+      const minutesplayed = matches * 60 + (teamIndex + i) * 13;
 
       let goals = 0;
       let assists = 0;
@@ -82,10 +82,8 @@ function createSeedPlayers(): Player[] {
       let clearances = 0;
       let duelsWon = 0;
       let fouls = 0;
-      let rating = 6.5;
 
-      if (positions[i] === "Keeper") {
-        rating = 6.8 + ((teamIndex + i) % 12) / 10;
+      if (positions[i] === "GK") {
         tackles = 4 + (teamIndex % 5);
         interceptions = 3 + (teamIndex % 4);
         blocks = 2 + (teamIndex % 3);
@@ -94,7 +92,13 @@ function createSeedPlayers(): Player[] {
         fouls = 1 + (teamIndex % 3);
       }
 
-      if (positions[i] === "Verdediger") {
+      if (
+        positions[i] === "CB" ||
+        positions[i] === "LB" ||
+        positions[i] === "RB" ||
+        positions[i] === "LWB" ||
+        positions[i] === "RWB"
+      ) {
         goals = 1 + ((teamIndex + i) % 5);
         assists = 1 + ((teamIndex + i * 2) % 5);
         tackles = 15 + ((teamIndex * 2 + i) % 16);
@@ -103,10 +107,15 @@ function createSeedPlayers(): Player[] {
         clearances = 15 + ((teamIndex * 2 + i) % 25);
         duelsWon = 20 + ((teamIndex + i * 2) % 25);
         fouls = 3 + ((teamIndex + i) % 7);
-        rating = 6.7 + ((teamIndex + i) % 12) / 10;
       }
 
-      if (positions[i] === "Middenvelder") {
+      if (
+        positions[i] === "CDM" ||
+        positions[i] === "CM" ||
+        positions[i] === "CAM" ||
+        positions[i] === "LM" ||
+        positions[i] === "RM"
+      ) {
         goals = 3 + ((teamIndex * 2 + i) % 8);
         assists = 3 + ((teamIndex + i * 2) % 8);
         tackles = 12 + ((teamIndex + i) % 18);
@@ -115,10 +124,14 @@ function createSeedPlayers(): Player[] {
         clearances = 5 + ((teamIndex + i) % 10);
         duelsWon = 20 + ((teamIndex * 2 + i) % 30);
         fouls = 4 + ((teamIndex + i) % 8);
-        rating = 6.9 + ((teamIndex + i) % 12) / 10;
       }
 
-      if (positions[i] === "Aanvaller") {
+      if (
+        positions[i] === "LW" ||
+        positions[i] === "RW" ||
+        positions[i] === "CF" ||
+        positions[i] === "ST"
+      ) {
         goals = 5 + ((teamIndex * 2 + i) % 12);
         assists = 3 + ((teamIndex + i * 3) % 9);
         tackles = 5 + ((teamIndex + i) % 10);
@@ -127,10 +140,7 @@ function createSeedPlayers(): Player[] {
         clearances = 2 + ((teamIndex + i) % 6);
         duelsWon = 15 + ((teamIndex * 2 + i) % 25);
         fouls = 2 + ((teamIndex + i) % 6);
-        rating = 7.0 + ((teamIndex + i) % 12) / 10;
       }
-
-      const minutesplayed = matches * 60 + (teamIndex + i) * 13;
 
       players.push({
         id: 1000 + team.id * 10 + i,
@@ -139,42 +149,42 @@ function createSeedPlayers(): Player[] {
         team: team.name,
         position: positions[i],
         number:
-          positions[i] === "Keeper"
+          positions[i] === "GK"
             ? 1
-            : positions[i] === "Verdediger"
-              ? i === 1
-                ? 2
-                : 4
-              : positions[i] === "Middenvelder"
-                ? 8
-                : 9,
+            : positions[i] === "CB"
+              ? 2
+              : positions[i] === "LB"
+                ? 4
+                : positions[i] === "CM"
+                  ? 8
+                  : 9,
         goals,
         assists,
         matches,
-        minutesplayed,
-        rating: Number(rating.toFixed(1)),
+        minutesPlayed: minutesplayed,
         tackles,
         interceptions,
         blocks,
         clearances,
         duelsWon,
         fouls,
-        ...(positions[i] === "Keeper"
-          ? {
-              cleanSheets: 2 + ((teamIndex + 2) % 7),
-              saves: 15 + ((teamIndex * 3) % 30),
-              oneVSOneSaves: 2 + (teamIndex % 5),
-              penaltySaves: teamIndex % 3,
-              goalsConceded: 8 + ((teamIndex * 2) % 15),
-            }
-          : {}),
+        cleanSheets:
+          positions[i] === "GK" ? 2 + ((teamIndex + 2) % 7) : null,
+        saves:
+          positions[i] === "GK" ? 15 + ((teamIndex * 3) % 30) : null,
+        oneVSOneSaves:
+          positions[i] === "GK" ? 2 + (teamIndex % 5) : null,
+        penaltySaves:
+          positions[i] === "GK" ? teamIndex % 3 : null,
+        goalsConceded:
+          positions[i] === "GK" ? 8 + ((teamIndex * 2) % 15) : null,
       });
     }
   });
 
   return players;
 }
-
+  
 const seedPlayers = createSeedPlayers();
 const seedMatches: Match[] = [];
 
@@ -217,18 +227,18 @@ function AppContent() {
 
   const [playerList, setPlayerList] = useState<Player[]>([]);
 
-useEffect(() => {
-  async function loadPlayers() {
-    try {
-      const data = await getPlayers();
-      setPlayerList(data);
-    } catch (error) {
-      console.error("Fout bij ophalen van spelers:", error);
+  useEffect(() => {
+    async function loadPlayers() {
+      try {
+        const data = await getPlayers();
+        setPlayerList(data);
+      } catch (error) {
+        console.error("Fout bij ophalen van spelers:", error);
+      }
     }
-  }
 
-  loadPlayers();
-}, []);
+    loadPlayers();
+  }, []);
 
   const [matches, setMatches] = useState<Match[]>(() => {
     const savedMatches = localStorage.getItem("matches");

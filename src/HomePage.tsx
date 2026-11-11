@@ -51,15 +51,9 @@ function HomePage({ matches, playerList, team, language }: HomePageProps) {
 
   const teamPlayers = playerList.filter((player) => player.team === team);
 
-  const topScorer = [...teamPlayers].sort((a, b) => b.goals - a.goals)[0];
-
-  const averageRating =
-    teamPlayers.length > 0
-      ? (
-          teamPlayers.reduce((total, player) => total + player.rating, 0) /
-          teamPlayers.length
-        ).toFixed(1)
-      : null;
+  const topScorer = [...teamPlayers].sort(
+  (a, b) => (b.goals ?? 0) - (a.goals ?? 0),
+)[0];
 
   return (
     <div className="home-page">
@@ -211,11 +205,6 @@ function HomePage({ matches, playerList, team, language }: HomePageProps) {
           <div>
             <strong>{teamPlayers.length}</strong>
             <span>{teamPlayers.length === 1 ? t.player : t.players}</span>
-          </div>
-
-          <div>
-            <strong>{averageRating ?? "-"}</strong>
-            <span>{t.averageRating}</span>
           </div>
         </div>
 

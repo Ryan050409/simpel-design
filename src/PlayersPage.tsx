@@ -63,9 +63,6 @@ function PlayersPage({ playerList, teams, language }: PlayersPageProps) {
         case "assists":
           return (b.assists ?? 0) - (a.assists ?? 0);
 
-        case "rating":
-          return (b.rating ?? 0) - (a.rating ?? 0);
-
         case "matches":
           return (b.matches ?? 0) - (a.matches ?? 0);
 
@@ -76,13 +73,6 @@ function PlayersPage({ playerList, teams, language }: PlayersPageProps) {
           );
       }
     });
-  function getRatingClass(rating: number) {
-    if (rating >= 9) return "rating-excellent";
-    if (rating >= 8) return "rating-very-good";
-    if (rating >= 7) return "rating-good";
-    if (rating >= 6) return "rating-average";
-    return "rating-low";
-  }
 
   const statLabels = {
     goals: t.goalsStat,
@@ -174,7 +164,6 @@ function PlayersPage({ playerList, teams, language }: PlayersPageProps) {
             <option value="name">{t.sortAlphabetically}</option>
             <option value="goals">{t.sortPlayerGoals}</option>
             <option value="assists">{t.sortPlayerAssists}</option>
-            <option value="rating">{t.sortPlayerRating}</option>
             <option value="matches">{t.sortPlayerMatches}</option>
           </select>
         </div>
@@ -255,15 +244,6 @@ function PlayersPage({ playerList, teams, language }: PlayersPageProps) {
                           </div>
 
                           <p className="player-team">{player.team}</p>
-                        </div>
-
-                        <div className="player-rating">
-                          <span>{t.ratingUppercase}</span>
-                          <strong
-                            className={getRatingClass(player.rating ?? 0)}
-                          >
-                            {player.rating}
-                          </strong>
                         </div>
 
                         <button
@@ -392,13 +372,6 @@ function PlayersPage({ playerList, teams, language }: PlayersPageProps) {
                 <span className="player-details-position">
                   {selectedPlayer.position}
                 </span>
-              </div>
-
-              <div className="player-details-rating">
-                <span>{t.ratingUppercase}</span>
-                <strong className={getRatingClass(selectedPlayer.rating ?? 0)}>
-                  {selectedPlayer.rating}
-                </strong>
               </div>
             </div>
 

@@ -101,10 +101,6 @@ function PlayerForm({
     editingPlayer ? String(editingPlayer.goalsConceded ?? "") : "",
   );
 
-  const [newPlayerRating, setNewPlayerRating] = useState(
-    editingPlayer ? String(editingPlayer.rating) : "",
-  );
-
   const [warning, setWarning] = useState("");
 
   function goToNextStep() {
@@ -130,8 +126,7 @@ function PlayerForm({
       newPlayerPosition.trim() === "" ||
       newPlayerNumber.trim() === "" ||
       newPlayerMatches.trim() === "" ||
-      newPlayerMinutesPlayed.trim() === "" ||
-      newPlayerRating.trim() === ""
+      newPlayerMinutesPlayed.trim() === "" 
     ) {
       setWarning(t.playerRequiredFields);
       return;
@@ -154,16 +149,10 @@ function PlayerForm({
       newPlayerOneVsOneSaves,
       newPlayerPenaltySaves,
       newPlayerGoalsConceded,
-      newPlayerRating,
     ];
 
     if (numericValues.some((value) => Number(value) < 0)) {
       setWarning(t.playerNegativeNumbers);
-      return;
-    }
-
-    if (Number(newPlayerRating) > 10) {
-      setWarning(t.playerRatingMax);
       return;
     }
 
@@ -191,8 +180,6 @@ function PlayerForm({
       oneVSOneSaves: Number(newPlayerOneVsOneSaves),
       penaltySaves: Number(newPlayerPenaltySaves),
       goalsConceded: Number(newPlayerGoalsConceded),
-
-      rating: Number(newPlayerRating),
     };
 
     try {
@@ -520,21 +507,6 @@ function PlayerForm({
                   min="0"
                   value={newPlayerGoalsConceded}
                   onChange={(e) => setNewPlayerGoalsConceded(e.target.value)}
-                />
-              </div>
-
-              <h3 className="form-section-title">{t.playerRatingSection}</h3>
-
-              <div className="form-field">
-                <label htmlFor="player-rating">{t.playerRating}</label>
-                <input
-                  id="player-rating"
-                  type="number"
-                  min="0"
-                  max="10"
-                  step="0.1"
-                  value={newPlayerRating}
-                  onChange={(e) => setNewPlayerRating(e.target.value)}
                 />
               </div>
             </div>

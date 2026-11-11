@@ -48,7 +48,6 @@ const translationCatalog = {
     teamSelection: "TEAMSELECTIE",
     allPlayers: "Alle spelers",
     player: "Speler",
-    averageRating: "Gemiddelde rating",
     topScorer: "Topscorer",
     goals: "doelpunten",
     recent: "RECENT",
@@ -102,13 +101,11 @@ const translationCatalog = {
     playersDescription:
       "De opvallendste spelers op basis van de geregistreerde statistieken.",
     mostAssists: "MEESTE ASSISTS",
-    highestRating: "HOOGSTE RATING",
     goal: "doelpunt",
     assist: "assist",
     assists: "assists",
     shared: " · gedeeld",
     noStandout: "Nog geen uitblinker",
-    rating: "Rating:",
     noPlayersAvailable: "Nog geen spelers beschikbaar",
     noRegisteredPlayers: "Er zijn nog geen spelers geregistreerd voor",
     positiveGoalDifference: "Positief doelsaldo",
@@ -197,7 +194,6 @@ const translationCatalog = {
       "Weet je zeker dat je deze gespeelde wedstrijd definitief wilt verwijderen?",
     edit: "Bewerken",
     delete: "Verwijderen",
-    ratingLabel: "Rating",
     positionLabel: "Positie",
     numberLabel: "Nummer",
     dateLabel: "Datum",
@@ -293,7 +289,7 @@ const translationCatalog = {
       "Controleer of de wedstrijd is toegevoegd en of zoektermen of filters de wedstrijd verbergen.",
     faqPlayerStatsQuestion: "Welke statistieken kan ik van spelers bekijken?",
     faqPlayerStatsAnswer:
-      "Afhankelijk van de beschikbare gegevens kun je doelpunten, assists, gespeelde wedstrijden en beoordelingen bekijken.",
+      "Afhankelijk van de beschikbare gegevens kun je doelpunten, assists, gespeelde wedstrijden.",
     faqGoalsAssistsQuestion: "Wat betekenen doelpunten en assists?",
     faqGoalsAssistsAnswer:
       "Doelpunten zijn goals die een speler heeft gemaakt. Een assist is een beslissende pass die voorafgaat aan een doelpunt.",
@@ -459,7 +455,6 @@ const translationCatalog = {
     searchPlayerPlaceholderPage: "Zoek op voor- of achternaam...",
     noPlayersFoundMessage: "Geen spelers gevonden.",
     closePlayerDetails: "Sluit spelerdetails",
-    ratingUppercase: "RATING",
     goalkeeperPosition: "Keeper",
     defenderPosition: "Verdediger",
     midfielderPosition: "Middenvelder",
@@ -512,12 +507,9 @@ const translationCatalog = {
     playerCleanSheets: "Clean sheets",
     playerPenaltySaves: "Penalty's gehouden",
     playerGoalsConceded: "Tegengoals",
-    playerRatingSection: "Beoordeling",
-    playerRating: "Rating",
     playerRequiredBasicFields: "Vul eerst alle basisgegevens in!",
     playerRequiredFields: "Vul alle verplichte velden in!",
     playerNegativeNumbers: "Getallen kunnen niet negatief zijn!",
-    playerRatingMax: "De rating kan maximaal 10 zijn!",
     playerSave: "Speler opslaan",
     playerNext: "Volgende",
     playerPrevious: "Vorige",
@@ -596,7 +588,6 @@ const translationCatalog = {
     sortAlphabetically: "Alfabetisch op naam",
     sortPlayerGoals: "Meeste doelpunten",
     sortPlayerAssists: "Meeste assists",
-    sortPlayerRating: "Hoogste beoordeling",
     sortPlayerMatches: "Meeste wedstrijden",
 
     // ==================== SPELERFORMULIER ====================
@@ -616,7 +607,6 @@ const translationCatalog = {
     requiredFields: "Vul alle verplichte velden in!",
     requiredBasicFields: "Vul eerst alle basisgegevens in!",
     negativeNumbersNotAllowed: "Getallen kunnen niet negatief zijn!",
-    ratingMaximum: "De rating kan maximaal 10 zijn!",
 
     // ==================== WEDSTRIJDFORMULIER ====================
     addNewMatch: "Nieuwe wedstrijd toevoegen",
@@ -733,7 +723,6 @@ const translationCatalog = {
     teamSelection: "TEAM SELECTION",
     allPlayers: "All players",
     player: "player",
-    averageRating: "Average rating",
     topScorer: "Top scorer",
     goals: "Goals",
     recent: "RECENT",
@@ -785,13 +774,11 @@ const translationCatalog = {
     playersDescription:
       "The standout players based on the registered statistics.",
     mostAssists: "MOST ASSISTS",
-    highestRating: "HIGHEST RATING",
     goal: "goal",
     assist: "assist",
     assists: "assists",
     shared: " · shared",
     noStandout: "No standout player yet",
-    rating: "Rating:",
     noPlayersAvailable: "No players available yet",
     noRegisteredPlayers: "No players have been registered for",
     positiveGoalDifference: "Positive goal difference",
@@ -876,7 +863,6 @@ const translationCatalog = {
       "Are you sure you want to permanently delete this played match?",
     edit: "Edit",
     delete: "Delete",
-    ratingLabel: "Rating",
     positionLabel: "Position",
     numberLabel: "Number",
     dateLabel: "Date",
@@ -972,7 +958,7 @@ const translationCatalog = {
       "Check whether the match has been added and whether search terms or filters are hiding it.",
     faqPlayerStatsQuestion: "Which player statistics can I view?",
     faqPlayerStatsAnswer:
-      "Depending on the available data, you can view goals, assists, appearances and ratings.",
+      "Depending on the available data, you can view goals, assists, appearances.",
     faqGoalsAssistsQuestion: "What do goals and assists mean?",
     faqGoalsAssistsAnswer:
       "Goals are scored by a player. An assist is a pass that directly contributes to a goal.",
@@ -1134,7 +1120,6 @@ const translationCatalog = {
     searchPlayerPlaceholderPage: "Search by first or last name...",
     noPlayersFoundMessage: "No players found.",
     closePlayerDetails: "Close player details",
-    ratingUppercase: "RATING",
     goalkeeperPosition: "Goalkeeper",
     defenderPosition: "Defender",
     midfielderPosition: "Midfielder",
@@ -1187,12 +1172,9 @@ const translationCatalog = {
     playerCleanSheets: "Clean sheets",
     playerPenaltySaves: "Penalties saved",
     playerGoalsConceded: "Goals conceded",
-    playerRatingSection: "Rating",
-    playerRating: "Rating",
     playerRequiredBasicFields: "Please fill in all basic details first!",
     playerRequiredFields: "Please fill in all required fields!",
     playerNegativeNumbers: "Numbers cannot be negative!",
-    playerRatingMax: "The rating cannot be higher than 10!",
     playerSave: "Save player",
     playerNext: "Next",
     playerPrevious: "Previous",
@@ -1271,7 +1253,6 @@ const translationCatalog = {
     sortAlphabetically: "Alphabetically by name",
     sortPlayerGoals: "Most goals",
     sortPlayerAssists: "Most assists",
-    sortPlayerRating: "Highest rating",
     sortPlayerMatches: "Most matches",
 
     // ==================== PLAYER FORM ====================
@@ -1290,7 +1271,6 @@ const translationCatalog = {
     requiredFields: "Fill in all required fields!",
     requiredBasicFields: "Fill in the basic information first!",
     negativeNumbersNotAllowed: "Numbers cannot be negative!",
-    ratingMaximum: "The maximum rating is 10!",
 
     // ==================== MATCH FORM ====================
     addNewMatch: "Add new match",
@@ -1425,7 +1405,7 @@ const translationCatalog = {
       "Die Statistiken hängen von den im Tracker gespeicherten Daten ab. Füge bei Bedarf Spiele oder Spieler hinzu.",
     faqPlayerStatsQuestion: "Welche Spielerstatistiken kann ich ansehen?",
     faqPlayerStatsAnswer:
-      "Je nach verfügbaren Daten kannst du Tore, Vorlagen, Einsätze und Bewertungen ansehen.",
+      "Je nach verfügbaren Daten kannst du Tore, Vorlagen, Einsätze.",
     faqGoalsAssistsQuestion: "Was bedeuten Tore und Vorlagen?",
     faqGoalsAssistsAnswer:
       "Ein Tor wird von einem Spieler erzielt. Eine Vorlage ist ein Pass, der unmittelbar zu einem Tor führt.",
@@ -1573,7 +1553,6 @@ const translationCatalog = {
     teamSelection: "VEREINSAUSWAHL",
     allPlayers: "Alle Spieler",
     player: "Spieler",
-    averageRating: "Durchschnittliche Bewertung",
     topScorer: "Torschützenkönig",
     goals: "Tore",
     recent: "AKTUELL",
@@ -1627,13 +1606,11 @@ const translationCatalog = {
     playersDescription:
       "Die auffälligsten Spieler anhand der erfassten Statistiken.",
     mostAssists: "MEISTE VORLAGEN",
-    highestRating: "HÖCHSTE BEWERTUNG",
     goal: "Tor",
     assist: "Vorlage",
     assists: "Vorlagen",
     shared: " · geteilt",
     noStandout: "Noch kein herausragender Spieler",
-    rating: "Bewertung:",
     noPlayersAvailable: "Noch keine Spieler verfügbar",
     noRegisteredPlayers: "Für",
     positiveGoalDifference: "Positive Tordifferenz",
@@ -1721,7 +1698,6 @@ const translationCatalog = {
       "Möchtest du dieses bereits gespielte Spiel endgültig löschen?",
     edit: "Bearbeiten",
     delete: "Löschen",
-    ratingLabel: "Bewertung",
     positionLabel: "Position",
     numberLabel: "Nummer",
     dateLabel: "Datum",
@@ -1807,7 +1783,6 @@ const translationCatalog = {
     searchPlayerPlaceholderPage: "Nach Vor- oder Nachnamen suchen...",
     noPlayersFoundMessage: "Keine Spieler gefunden.",
     closePlayerDetails: "Spielerdetails schließen",
-    ratingUppercase: "BEWERTUNG",
 
     // ==================== SPIELERSEITE: POSITIONEN ====================
     goalkeeperPosition: "Torwart",
@@ -1861,7 +1836,6 @@ const translationCatalog = {
     sortAlphabetically: "Alphabetisch nach Name",
     sortPlayerGoals: "Meiste Tore",
     sortPlayerAssists: "Meiste Vorlagen",
-    sortPlayerRating: "Beste Bewertung",
     sortPlayerMatches: "Meiste Spiele",
     // ==================== SPIELERFORMULAR: ÜBERSCHRIFTEN UND ALLGEMEINES ====================
     playerFormAddTitle: "Spieler hinzufügen",
@@ -1899,13 +1873,10 @@ const translationCatalog = {
     playerCleanSheets: "Zu-Null-Spiele",
     playerPenaltySaves: "Gehaltene Elfmeter",
     playerGoalsConceded: "Gegentore",
-    playerRatingSection: "Bewertung",
-    playerRating: "Bewertung",
     playerRequiredBasicFields:
       "Bitte fülle zuerst alle grundlegenden Angaben aus!",
     playerRequiredFields: "Bitte fülle alle Pflichtfelder aus!",
     playerNegativeNumbers: "Negative Zahlen sind nicht erlaubt!",
-    playerRatingMax: "Die Bewertung darf nicht höher als 10 sein!",
     playerSave: "Spieler speichern",
     playerNext: "Weiter",
     playerPrevious: "Zurück",
@@ -2002,7 +1973,6 @@ const translationCatalog = {
     requiredFields: "Alle Pflichtfelder müssen ausgefüllt werden!",
     requiredBasicFields: "Bitte fülle alle grundlegenden Angaben aus!",
     negativeNumbersNotAllowed: "Negative Zahlen sind nicht erlaubt!",
-    ratingMaximum: "Die Bewertung darf nicht höher als 10 sein!",
 
     // ==================== SPIELFORMULAR: WEITERE BEZEICHNUNGEN ====================
     addNewMatch: "Neues Spiel hinzufügen",
@@ -2119,7 +2089,6 @@ const translationCatalog = {
     teamSelection: "SÉLECTION DE L’ÉQUIPE",
     allPlayers: "Tous les joueurs",
     player: "Joueur",
-    averageRating: "Note moyenne",
     topScorer: "Meilleur buteur",
     goals: "buts",
     recent: "RÉCENT",
@@ -2173,13 +2142,11 @@ const translationCatalog = {
     playersDescription:
       "Les joueurs qui se distinguent selon les statistiques enregistrées.",
     mostAssists: "LE PLUS DE PASSES DÉCISIVES",
-    highestRating: "MEILLEURE NOTE",
     goal: "but",
     assist: "passe décisive",
     assists: "passes décisives",
     shared: " · à égalité",
     noStandout: "Aucun joueur ne se distingue encore",
-    rating: "Note :",
     noPlayersAvailable: "Aucun joueur disponible pour le moment",
     noRegisteredPlayers: "Aucun joueur n’a été enregistré pour",
     positiveGoalDifference: "Différence de buts positive",
@@ -2268,7 +2235,6 @@ const translationCatalog = {
       "Voulez-vous vraiment supprimer ce match déjà joué ?",
     edit: "Modifier",
     delete: "Supprimer",
-    ratingLabel: "Note",
     positionLabel: "Poste",
     numberLabel: "Numéro",
     dateLabel: "Date",
@@ -2367,7 +2333,7 @@ const translationCatalog = {
     faqPlayerStatsQuestion:
       "Quelles statistiques de joueur puis-je consulter ?",
     faqPlayerStatsAnswer:
-      "Selon les données disponibles, vous pouvez consulter les buts, les passes décisives, les matchs, les minutes jouées et les statistiques défensives ou de gardien.",
+      "Selon les données disponibles, vous pouvez consulter les buts, les passes décisives, les matchs, les minutes jouées.",
     faqGoalsAssistsQuestion:
       "Que signifient les buts et les passes décisives ?",
     faqGoalsAssistsAnswer:
@@ -2537,7 +2503,6 @@ const translationCatalog = {
     searchPlayerPlaceholderPage: "Rechercher par prénom ou nom…",
     noPlayersFoundMessage: "Aucun joueur trouvé.",
     closePlayerDetails: "Fermer les détails du joueur",
-    ratingUppercase: "NOTE",
     goalkeeperPosition: "Gardien",
     defenderPosition: "Défenseur",
     midfielderPosition: "Milieu de terrain",
@@ -2590,13 +2555,10 @@ const translationCatalog = {
     playerCleanSheets: "Matchs sans encaisser de but",
     playerPenaltySaves: "Penaltys arrêtés",
     playerGoalsConceded: "Buts encaissés",
-    playerRatingSection: "Note",
-    playerRating: "Note",
     playerRequiredBasicFields:
       "Veuillez d’abord remplir toutes les informations de base !",
     playerRequiredFields: "Veuillez remplir tous les champs obligatoires !",
     playerNegativeNumbers: "Les nombres ne peuvent pas être négatifs !",
-    playerRatingMax: "La note ne peut pas dépasser 10 !",
     playerSave: "Enregistrer le joueur",
     playerNext: "Suivant",
     playerPrevious: "Précédent",
@@ -2675,7 +2637,6 @@ const translationCatalog = {
     sortAlphabetically: "Ordre alphabétique",
     sortPlayerGoals: "Plus de buts",
     sortPlayerAssists: "Plus de passes décisives",
-    sortPlayerRating: "Meilleure note",
     sortPlayerMatches: "Plus de matchs",
 
     // ==================== PLAYER FORM ====================
@@ -2694,7 +2655,6 @@ const translationCatalog = {
     requiredFields: "Veuillez remplir tous les champs obligatoires !",
     requiredBasicFields: "Veuillez d’abord remplir les informations de base !",
     negativeNumbersNotAllowed: "Les nombres ne peuvent pas être négatifs !",
-    ratingMaximum: "La note maximale est de 10 !",
 
     // ==================== MATCH FORM ====================
     addNewMatch: "Ajouter un nouveau match",
@@ -2809,7 +2769,6 @@ const translationCatalog = {
     teamSelection: "SELECCIÓN DEL EQUIPO",
     allPlayers: "Todos los jugadores",
     player: "Jugador",
-    averageRating: "Calificación media",
     topScorer: "Máximo goleador",
     goals: "Goles",
     recent: "RECIENTE",
@@ -2863,13 +2822,11 @@ const translationCatalog = {
     playersDescription:
       "Los jugadores que destacan según las estadísticas registradas.",
     mostAssists: "MÁS ASISTENCIAS",
-    highestRating: "MEJOR CALIFICACIÓN",
     goal: "gol",
     assist: "asistencia",
     assists: "asistencias",
     shared: " · empatados",
     noStandout: "Todavía no destaca ningún jugador",
-    rating: "Calificación:",
     noPlayersAvailable: "No hay jugadores disponibles por el momento",
     noRegisteredPlayers: "No se han registrado jugadores para",
     positiveGoalDifference: "Diferencia de goles positiva",
@@ -2954,7 +2911,6 @@ const translationCatalog = {
       "¿Seguro que quieres eliminar este partido ya jugado?",
     edit: "Editar",
     delete: "Eliminar",
-    ratingLabel: "Calificación",
     positionLabel: "Posición",
     numberLabel: "Número",
     dateLabel: "Fecha",
@@ -3051,7 +3007,7 @@ const translationCatalog = {
       "Comprueba el equipo seleccionado, los filtros y los criterios de búsqueda.",
     faqPlayerStatsQuestion: "¿Qué estadísticas de jugador puedo consultar?",
     faqPlayerStatsAnswer:
-      "Según los datos disponibles, puedes consultar los goles, las asistencias, los partidos, los minutos jugados y las estadísticas defensivas o de portero.",
+      "Según los datos disponibles, puedes consultar los goles, las asistencias, los partidos, los minutos jugados.",
     faqGoalsAssistsQuestion: "¿Qué significan los goles y las asistencias?",
     faqGoalsAssistsAnswer:
       "Se marca un gol cuando un jugador anota un tanto. Una asistencia es el pase que conduce directamente a un gol.",
@@ -3218,7 +3174,6 @@ const translationCatalog = {
     searchPlayerPlaceholderPage: "Buscar por nombre o apellido…",
     noPlayersFoundMessage: "No se han encontrado jugadores.",
     closePlayerDetails: "Cerrar los detalles del jugador",
-    ratingUppercase: "CALIFICACIÓN",
     goalkeeperPosition: "Portero",
     defenderPosition: "Defensa",
     midfielderPosition: "Centrocampista",
@@ -3271,12 +3226,9 @@ const translationCatalog = {
     playerCleanSheets: "Partidos sin encajar goles",
     playerPenaltySaves: "Penaltis parados",
     playerGoalsConceded: "Goles encajados",
-    playerRatingSection: "Calificación",
-    playerRating: "Calificación",
     playerRequiredBasicFields: "¡Completa primero toda la información básica!",
     playerRequiredFields: "¡Completa todos los campos obligatorios!",
     playerNegativeNumbers: "¡Los números no pueden ser negativos!",
-    playerRatingMax: "¡La calificación no puede superar el 10!",
     playerSave: "Guardar jugador",
     playerNext: "Siguiente",
     playerPrevious: "Anterior",
@@ -3355,7 +3307,6 @@ const translationCatalog = {
     sortAlphabetically: "Orden alfabético por nombre",
     sortPlayerGoals: "Más goles",
     sortPlayerAssists: "Más asistencias",
-    sortPlayerRating: "Mejor valoración",
     sortPlayerMatches: "Más partidos",
 
     // ==================== PLAYER FORM ====================
@@ -3374,7 +3325,6 @@ const translationCatalog = {
     requiredFields: "¡Completa todos los campos obligatorios!",
     requiredBasicFields: "¡Completa primero la información básica!",
     negativeNumbersNotAllowed: "¡Los números no pueden ser negativos!",
-    ratingMaximum: "La calificación máxima es 10.",
 
     // ==================== MATCH FORM ====================
     addNewMatch: "Añadir un nuevo partido",
@@ -3489,7 +3439,6 @@ const translationCatalog = {
     teamSelection: "SELEÇÃO DA EQUIPA",
     allPlayers: "Todos os jogadores",
     player: "Jogador",
-    averageRating: "Classificação média",
     topScorer: "Melhor marcador",
     goals: "Golos",
     recent: "RECENTES",
@@ -3543,13 +3492,11 @@ const translationCatalog = {
     playersDescription:
       "Os jogadores que se destacam com base nas estatísticas registadas.",
     mostAssists: "MAIS ASSISTÊNCIAS",
-    highestRating: "MELHOR CLASSIFICAÇÃO",
     goal: "golo",
     assist: "assistência",
     assists: "assistências",
     shared: " · empatado",
     noStandout: "Ainda não há jogadores em destaque",
-    rating: "Classificação:",
     noPlayersAvailable: "Ainda não existem jogadores disponíveis",
     noRegisteredPlayers: "Não foram registados jogadores para",
     positiveGoalDifference: "Diferença de golos positiva",
@@ -3638,7 +3585,6 @@ const translationCatalog = {
       "Tem a certeza de que pretende eliminar este jogo já disputado?",
     edit: "Editar",
     delete: "Eliminar",
-    ratingLabel: "Classificação",
     positionLabel: "Posição",
     numberLabel: "Número",
     dateLabel: "Data",
@@ -3734,7 +3680,7 @@ const translationCatalog = {
       "Verifique a equipa selecionada, os filtros e os critérios de pesquisa.",
     faqPlayerStatsQuestion: "Que estatísticas dos jogadores posso consultar?",
     faqPlayerStatsAnswer:
-      "Consoante os dados disponíveis, pode consultar os golos, as assistências, os jogos, os minutos jogados e as estatísticas defensivas ou de guarda-redes.",
+      "Consoante os dados disponíveis, pode consultar os golos, as assistências, os jogos, os minutos jogados.",
     faqGoalsAssistsQuestion: "O que significam os golos e as assistências?",
     faqGoalsAssistsAnswer:
       "Um golo é marcado quando um jogador introduz a bola na baliza. Uma assistência é o passe que conduz diretamente a um golo.",
@@ -3905,7 +3851,6 @@ const translationCatalog = {
     searchPlayerPlaceholderPage: "Pesquisar pelo primeiro ou último nome…",
     noPlayersFoundMessage: "Não foram encontrados jogadores.",
     closePlayerDetails: "Fechar os detalhes do jogador",
-    ratingUppercase: "CLASSIFICAÇÃO",
     goalkeeperPosition: "Guarda-redes",
     defenderPosition: "Defesa",
     midfielderPosition: "Médio",
@@ -3958,13 +3903,10 @@ const translationCatalog = {
     playerCleanSheets: "Jogos sem sofrer golos",
     playerPenaltySaves: "Penáltis defendidos",
     playerGoalsConceded: "Golos sofridos",
-    playerRatingSection: "Classificação",
-    playerRating: "Classificação",
     playerRequiredBasicFields:
       "Preencha primeiro todas as informações básicas!",
     playerRequiredFields: "Preencha todos os campos obrigatórios!",
     playerNegativeNumbers: "Os números não podem ser negativos!",
-    playerRatingMax: "A classificação não pode ser superior a 10!",
     playerSave: "Guardar jogador",
     playerNext: "Seguinte",
     playerPrevious: "Anterior",
@@ -4044,7 +3986,6 @@ const translationCatalog = {
     sortAlphabetically: "Ordem alfabética por nome",
     sortPlayerGoals: "Mais golos",
     sortPlayerAssists: "Mais assistências",
-    sortPlayerRating: "Melhor classificação",
     sortPlayerMatches: "Mais jogos",
 
     // ==================== PLAYER FORM ====================
@@ -4063,7 +4004,6 @@ const translationCatalog = {
     requiredFields: "Preencha todos os campos obrigatórios!",
     requiredBasicFields: "Preencha primeiro as informações básicas!",
     negativeNumbersNotAllowed: "Os números não podem ser negativos!",
-    ratingMaximum: "A classificação máxima é 10!",
 
     // ==================== MATCH FORM ====================
     addNewMatch: "Adicionar novo jogo",

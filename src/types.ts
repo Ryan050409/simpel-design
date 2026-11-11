@@ -26,7 +26,6 @@ export type Player = {
     assists: number | null;
     matches: number | null;
     minutesPlayed: number | null;
-    rating: number | null;
 
     tackles: number | null;
     interceptions: number | null;

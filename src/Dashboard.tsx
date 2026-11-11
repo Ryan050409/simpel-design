@@ -65,29 +65,24 @@ function Dashboard({
 
   const teamPlayers = playerList.filter((player) => player.team === team);
 
-  const scorers = teamPlayers.filter((player) => player.goals > 0);
-  const topGoals = Math.max(0, ...scorers.map((player) => player.goals));
+  const scorers = teamPlayers.filter((player) => (player.goals ?? 0) > 0);
+  const topGoals = Math.max(
+  0,
+  ...scorers.map((player) => player.goals ?? 0),
+);
   const topScorers =
     topGoals > 0 ? scorers.filter((player) => player.goals === topGoals) : [];
 
-  const assistLeaders = teamPlayers.filter((player) => player.assists > 0);
+  const assistLeaders = teamPlayers.filter(
+  (player) => (player.assists ?? 0) > 0,
+);
   const topAssists = Math.max(
-    0,
-    ...assistLeaders.map((player) => player.assists),
-  );
+  0,
+  ...assistLeaders.map((player) => player.assists ?? 0),
+);
   const topAssistPlayers =
     topAssists > 0
       ? assistLeaders.filter((player) => player.assists === topAssists)
-      : [];
-
-  const ratedPlayers = teamPlayers.filter((player) => player.rating > 0);
-  const highestRating = Math.max(
-    0,
-    ...ratedPlayers.map((player) => player.rating),
-  );
-  const highestRatedPlayers =
-    highestRating > 0
-      ? ratedPlayers.filter((player) => player.rating === highestRating)
       : [];
 
   const maxGoals = Math.max(goalsFor, goalsAgainst, 1);
@@ -363,32 +358,6 @@ function Dashboard({
                     {topAssists}{" "}
                     {topAssists === 1 ? t.assist : t.assists}
                     {topAssistPlayers.length > 1 ? t.shared : ""}
-                  </p>
-                </>
-              ) : (
-                <p>{t.noStandout}</p>
-              )}
-            </article>
-
-            <article className="dashboard-player-card dashboard-player-rating">
-              <span className="dashboard-player-icon" aria-hidden="true">
-                ⭐
-              </span>
-              <span className="dashboard-player-label">
-                {t.highestRating}
-              </span>
-              {highestRatedPlayers.length > 0 ? (
-                <>
-                  {highestRatedPlayers.map((player) => (
-                    <p key={player.id}>
-                      <strong>
-                        {player.firstname} {player.lastname}
-                      </strong>
-                    </p>
-                  ))}
-                  <p>
-                    {t.rating} <strong>{highestRating}</strong>
-                    {highestRatedPlayers.length > 1 ? t.shared : ""}
                   </p>
                 </>
               ) : (
