@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import type { Player, Team } from "./types.ts";
+import type { Player, Team, PlayerPosition } from "./types.ts";
 import { translations, type Language } from "./translations.ts";
 
 type PlayersPageProps = {
@@ -13,7 +13,9 @@ function PlayersPage({ playerList, teams, language }: PlayersPageProps) {
 
   const [selectedPlayer, setSelectedPlayer] = useState<Player | null>(null);
   const [searchTerm, setSearchTerm] = useState("");
-  const [positionFilter, setPositionFilter] = useState("all");
+  const [positionFilter, setPositionFilter] = useState<PlayerPosition | "all">(
+    "all",
+  );
   const [sortOrder, setSortOrder] = useState("name");
   const scrollToTeam = (teamId: string) => {
     document.getElementById(`team-${teamId}`)?.scrollIntoView({
@@ -56,16 +58,16 @@ function PlayersPage({ playerList, teams, language }: PlayersPageProps) {
     .sort((a, b) => {
       switch (sortOrder) {
         case "goals":
-          return b.goals - a.goals;
+          return (b.goals ?? 0) - (a.goals ?? 0);
 
         case "assists":
-          return b.assists - a.assists;
+          return (b.assists ?? 0) - (a.assists ?? 0);
 
         case "rating":
-          return b.rating - a.rating;
+          return (b.rating ?? 0) - (a.rating ?? 0);
 
         case "matches":
-          return b.matches - a.matches;
+          return (b.matches ?? 0) - (a.matches ?? 0);
 
         case "name":
         default:
@@ -81,13 +83,6 @@ function PlayersPage({ playerList, teams, language }: PlayersPageProps) {
     if (rating >= 6) return "rating-average";
     return "rating-low";
   }
-
-  const positionLabels: Record<string, string> = {
-    Keeper: t.goalkeeperPosition,
-    Verdediger: t.defenderPosition,
-    Middenvelder: t.midfielderPosition,
-    Aanvaller: t.forwardPosition,
-  };
 
   const statLabels = {
     goals: t.goalsStat,
@@ -133,13 +128,38 @@ function PlayersPage({ playerList, teams, language }: PlayersPageProps) {
           <select
             id="player-position-filter"
             value={positionFilter}
-            onChange={(event) => setPositionFilter(event.target.value)}
+            onChange={(event) =>
+              setPositionFilter(event.target.value as PlayerPosition | "all")
+            }
           >
             <option value="all">{t.allPositions}</option>
-            <option value="Keeper">{t.goalkeeperPosition}</option>
-            <option value="Verdediger">{t.defenderPosition}</option>
-            <option value="Middenvelder">{t.midfielderPosition}</option>
-            <option value="Aanvaller">{t.forwardPosition}</option>
+
+            <optgroup label="Keeper">
+              <option value="GK">GK</option>
+            </optgroup>
+
+            <optgroup label="Verdedigers">
+              <option value="CB">CB</option>
+              <option value="LB">LB</option>
+              <option value="RB">RB</option>
+              <option value="LWB">LWB</option>
+              <option value="RWB">RWB</option>
+            </optgroup>
+
+            <optgroup label="Middenvelders">
+              <option value="CDM">CDM</option>
+              <option value="CM">CM</option>
+              <option value="CAM">CAM</option>
+              <option value="LM">LM</option>
+              <option value="RM">RM</option>
+            </optgroup>
+
+            <optgroup label="Aanvallers">
+              <option value="LW">LW</option>
+              <option value="RW">RW</option>
+              <option value="CF">CF</option>
+              <option value="ST">ST</option>
+            </optgroup>
           </select>
         </div>
 
@@ -239,7 +259,9 @@ function PlayersPage({ playerList, teams, language }: PlayersPageProps) {
 
                         <div className="player-rating">
                           <span>{t.ratingUppercase}</span>
-                          <strong className={getRatingClass(player.rating)}>
+                          <strong
+                            className={getRatingClass(player.rating ?? 0)}
+                          >
                             {player.rating}
                           </strong>
                         </div>
@@ -255,27 +277,40 @@ function PlayersPage({ playerList, teams, language }: PlayersPageProps) {
                         </button>
                       </div>
 
-                      <div className="player-position">
-                        {positionLabels[player.position] ?? player.position}
-                      </div>
+                      <div className="player-position">{player.position}</div>
 
                       <div className="player-stats">
-                        {(player.position === "Aanvaller" ||
-                          player.position === "Middenvelder") && (
+                        {/* Aanvallers en middenvelders */}
+                        {(
+                          [
+                            "LW",
+                            "RW",
+                            "CF",
+                            "ST",
+                            "CDM",
+                            "CM",
+                            "CAM",
+                            "LM",
+                            "RM",
+                          ] as PlayerPosition[]
+                        ).includes(player.position) && (
                           <>
                             <div className="player-stat">
-                              <strong>{player.goals}</strong>
+                              <strong>{player.goals ?? 0}</strong>
                               <span>{statLabels.goals}</span>
                             </div>
 
                             <div className="player-stat">
-                              <strong>{player.assists}</strong>
+                              <strong>{player.assists ?? 0}</strong>
                               <span>{statLabels.assists}</span>
                             </div>
                           </>
                         )}
 
-                        {player.position === "Verdediger" && (
+                        {/* Verdedigers */}
+                        {(
+                          ["CB", "LB", "RB", "LWB", "RWB"] as PlayerPosition[]
+                        ).includes(player.position) && (
                           <>
                             <div className="player-stat">
                               <strong>{player.tackles ?? 0}</strong>
@@ -289,7 +324,8 @@ function PlayersPage({ playerList, teams, language }: PlayersPageProps) {
                           </>
                         )}
 
-                        {player.position === "Keeper" && (
+                        {/* Keepers */}
+                        {player.position === "GK" && (
                           <>
                             <div className="player-stat">
                               <strong>{player.saves ?? 0}</strong>
@@ -304,12 +340,12 @@ function PlayersPage({ playerList, teams, language }: PlayersPageProps) {
                         )}
 
                         <div className="player-stat">
-                          <strong>{player.matches}</strong>
+                          <strong>{player.matches ?? 0}</strong>
                           <span>{statLabels.matches}</span>
                         </div>
 
                         <div className="player-stat">
-                          <strong>{player.minutesplayed}</strong>
+                          <strong>{player.minutesPlayed ?? 0}</strong>
                           <span>{statLabels.minutes}</span>
                         </div>
                       </div>
@@ -354,14 +390,13 @@ function PlayersPage({ playerList, teams, language }: PlayersPageProps) {
                 <p className="player-details-team">{selectedPlayer.team}</p>
 
                 <span className="player-details-position">
-                  {positionLabels[selectedPlayer.position] ??
-                    selectedPlayer.position}
+                  {selectedPlayer.position}
                 </span>
               </div>
 
               <div className="player-details-rating">
                 <span>{t.ratingUppercase}</span>
-                <strong className={getRatingClass(selectedPlayer.rating)}>
+                <strong className={getRatingClass(selectedPlayer.rating ?? 0)}>
                   {selectedPlayer.rating}
                 </strong>
               </div>
@@ -375,7 +410,7 @@ function PlayersPage({ playerList, teams, language }: PlayersPageProps) {
                   <span>{statLabels.matches}</span>
                 </div>
                 <div className="player-stat">
-                  <strong>{selectedPlayer.minutesplayed}</strong>
+                  <strong>{selectedPlayer.minutesPlayed}</strong>
                   <span>{statLabels.minutes}</span>
                 </div>
               </div>

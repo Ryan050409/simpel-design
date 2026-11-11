@@ -1,29 +1,45 @@
+export type PlayerPosition =
+  | "GK"
+  | "CB"
+  | "LB"
+  | "RB"
+  | "LWB"
+  | "RWB"
+  | "CDM"
+  | "CM"
+  | "CAM"
+  | "LM"
+  | "RM"
+  | "LW"
+  | "RW"
+  | "CF"
+  | "ST";
 export type Player = {
     id: number;
     firstname: string;
     lastname: string;
     team: string;
-    position: string;
+    position: PlayerPosition;
     number: number;
 
-    goals: number;
-    assists: number;
-    matches: number;
-    minutesplayed: number;
-    rating: number;
+    goals: number | null;
+    assists: number | null;
+    matches: number | null;
+    minutesPlayed: number | null;
+    rating: number | null;
 
-    tackles: number; 
-    interceptions:number;
-    blocks: number;
-    clearances: number;
-    duelsWon: number;
-    fouls: number;
+    tackles: number | null;
+    interceptions: number | null;
+    blocks: number | null;
+    clearances: number | null;
+    duelsWon: number | null;
+    fouls: number | null;
 
-    cleanSheets?: number;
-    saves?: number;
-    oneVSOneSaves?: number;
-    penaltySaves?: number;
-    goalsConceded?: number;
+    cleanSheets: number | null;
+    saves: number | null;
+    oneVSOneSaves: number | null;
+    penaltySaves: number | null;
+    goalsConceded: number | null;
 };
 
 export type Match = {

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import type { Dispatch, SetStateAction } from "react";
-import type { Player, Team } from "./types.ts";
+import type { Player, Team, PlayerPosition } from "./types.ts";
 import { translations, type Language } from "./translations.ts";
 
 type PlayerFormProps = {
@@ -54,7 +54,7 @@ function PlayerForm({
   );
 
   const [newPlayerMinutesPlayed, setNewPlayerMinutesPlayed] = useState(
-    editingPlayer ? String(editingPlayer.minutesplayed) : "",
+    editingPlayer ? String(editingPlayer.minutesPlayed) : "",
   );
 
   const [newPlayerTackle, setNewPlayerTackle] = useState(
@@ -168,41 +168,41 @@ function PlayerForm({
     }
 
     const newPlayer: Omit<Player, "id"> = {
-  firstname: newPlayerFirstName.trim(),
-  lastname: newPlayerLastName.trim(),
-  team: newPlayerTeam.trim(),
-  position: newPlayerPosition.trim(),
-  number: Number(newPlayerNumber),
+      firstname: newPlayerFirstName.trim(),
+      lastname: newPlayerLastName.trim(),
+      team: newPlayerTeam.trim(),
+      position: newPlayerPosition.trim() as PlayerPosition,
+      number: Number(newPlayerNumber),
 
-  goals: Number(newPlayerGoals),
-  assists: Number(newPlayerAssists),
-  matches: Number(newPlayerMatches),
-  minutesplayed: Number(newPlayerMinutesPlayed),
+      goals: Number(newPlayerGoals),
+      assists: Number(newPlayerAssists),
+      matches: Number(newPlayerMatches),
+      minutesPlayed: Number(newPlayerMinutesPlayed),
 
-  tackles: Number(newPlayerTackle),
-  interceptions: Number(newPlayerInterceptions),
-  blocks: Number(newPlayerBlocks),
-  clearances: Number(newPlayerClearances),
-  duelsWon: Number(newPlayerDuelsWon),
-  fouls: Number(newPlayerFouls),
+      tackles: Number(newPlayerTackle),
+      interceptions: Number(newPlayerInterceptions),
+      blocks: Number(newPlayerBlocks),
+      clearances: Number(newPlayerClearances),
+      duelsWon: Number(newPlayerDuelsWon),
+      fouls: Number(newPlayerFouls),
 
-  cleanSheets: Number(newPlayerCleanSheets),
-  saves: Number(newPlayerSaves),
-  oneVSOneSaves: Number(newPlayerOneVsOneSaves),
-  penaltySaves: Number(newPlayerPenaltySaves),
-  goalsConceded: Number(newPlayerGoalsConceded),
+      cleanSheets: Number(newPlayerCleanSheets),
+      saves: Number(newPlayerSaves),
+      oneVSOneSaves: Number(newPlayerOneVsOneSaves),
+      penaltySaves: Number(newPlayerPenaltySaves),
+      goalsConceded: Number(newPlayerGoalsConceded),
 
-  rating: Number(newPlayerRating),
-};
+      rating: Number(newPlayerRating),
+    };
 
-try {
-  await onSave(newPlayer);
-  setEditingPlayer?.(null);
-  closeModal();
-} catch (error) {
-  console.error("Fout bij opslaan van speler:", error);
-  setWarning("De speler kon niet worden opgeslagen.");
-}
+    try {
+      await onSave(newPlayer);
+      setEditingPlayer?.(null);
+      closeModal();
+    } catch (error) {
+      console.error("Fout bij opslaan van speler:", error);
+      setWarning("De speler kon niet worden opgeslagen.");
+    }
   }
   function goBack() {
     setWarning("");
@@ -230,7 +230,9 @@ try {
         {formStep === 1 && (
           <>
             <div className="form-grid">
-              <h3 className="form-section-title">{t.playerFormGeneralSection}</h3>
+              <h3 className="form-section-title">
+                {t.playerFormGeneralSection}
+              </h3>
 
               <div className="form-field">
                 <label htmlFor="player-firstname">{t.playerFirstName}</label>
@@ -274,10 +276,33 @@ try {
                   onChange={(e) => setNewPlayerPosition(e.target.value)}
                 >
                   <option value="">{t.playerChoosePosition}</option>
-                  <option value="Keeper">{t.goalkeeperPosition}</option>
-                  <option value="Verdediger">{t.defenderPosition}</option>
-                  <option value="Middenvelder">{t.midfielderPosition}</option>
-                  <option value="Aanvaller">{t.forwardPosition}</option>
+
+                  <optgroup label="Keeper">
+                    <option value="GK">GK</option>
+                  </optgroup>
+
+                  <optgroup label="Verdedigers">
+                    <option value="CB">CB</option>
+                    <option value="LB">LB</option>
+                    <option value="RB">RB</option>
+                    <option value="LWB">LWB</option>
+                    <option value="RWB">RWB</option>
+                  </optgroup>
+
+                  <optgroup label="Middenvelders">
+                    <option value="CDM">CDM</option>
+                    <option value="CM">CM</option>
+                    <option value="CAM">CAM</option>
+                    <option value="LM">LM</option>
+                    <option value="RM">RM</option>
+                  </optgroup>
+
+                  <optgroup label="Aanvallers">
+                    <option value="LW">LW</option>
+                    <option value="RW">RW</option>
+                    <option value="CF">CF</option>
+                    <option value="ST">ST</option>
+                  </optgroup>
                 </select>
               </div>
             </div>
@@ -295,7 +320,9 @@ try {
         {formStep === 2 && (
           <>
             <div className="form-grid">
-              <h3 className="form-section-title">{t.playerFormGeneralSection}</h3>
+              <h3 className="form-section-title">
+                {t.playerFormGeneralSection}
+              </h3>
 
               <div className="form-field">
                 <label htmlFor="player-team">{t.playerTeam}</label>
@@ -373,7 +400,9 @@ try {
               </div>
 
               <div className="form-field">
-                <label htmlFor="player-interceptions">{t.playerInterceptions}</label>
+                <label htmlFor="player-interceptions">
+                  {t.playerInterceptions}
+                </label>
                 <input
                   id="player-interceptions"
                   type="number"
@@ -427,7 +456,9 @@ try {
                 />
               </div>
 
-              <h3 className="form-section-title">{t.playerGoalkeeperSection}</h3>
+              <h3 className="form-section-title">
+                {t.playerGoalkeeperSection}
+              </h3>
 
               <div className="form-field">
                 <label htmlFor="player-saves">{t.playerSaves}</label>
@@ -441,7 +472,9 @@ try {
               </div>
 
               <div className="form-field">
-                <label htmlFor="player-one-v-one-saves">{t.playerOneVsOneSaves}</label>
+                <label htmlFor="player-one-v-one-saves">
+                  {t.playerOneVsOneSaves}
+                </label>
                 <input
                   id="player-one-v-one-saves"
                   type="number"
@@ -452,7 +485,9 @@ try {
               </div>
 
               <div className="form-field">
-                <label htmlFor="player-clean-sheets">{t.playerCleanSheets}</label>
+                <label htmlFor="player-clean-sheets">
+                  {t.playerCleanSheets}
+                </label>
                 <input
                   id="player-clean-sheets"
                   type="number"
@@ -463,7 +498,9 @@ try {
               </div>
 
               <div className="form-field">
-                <label htmlFor="player-penalty-saves">{t.playerPenaltySaves}</label>
+                <label htmlFor="player-penalty-saves">
+                  {t.playerPenaltySaves}
+                </label>
                 <input
                   id="player-penalty-saves"
                   type="number"
@@ -474,7 +511,9 @@ try {
               </div>
 
               <div className="form-field">
-                <label htmlFor="player-goals-conceded">{t.playerGoalsConceded}</label>
+                <label htmlFor="player-goals-conceded">
+                  {t.playerGoalsConceded}
+                </label>
                 <input
                   id="player-goals-conceded"
                   type="number"
