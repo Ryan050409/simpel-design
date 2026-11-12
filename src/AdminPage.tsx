@@ -7,17 +7,16 @@ import { hasPermission, canAccessAdminPage } from "./permissions";
 import type { Player, Match, Team } from "./types";
 import {
   createTeamRequest,
+  deleteTeamRequest,
   createPlayerRequest,
   updatePlayerRequest,
   deletePlayerRequest,
-  deleteTeamRequest,
-  createMatchRequest
+  deleteMatchRequest,
 } from "./api.ts";
 import PlayerForm from "./PlayerForm";
 import MatchForm from "./MatchForm";
 import type { Language } from "./translations";
 import { translations } from "./translations.ts";
-
 
 type AdminPageProps = {
   role: UserRole;
@@ -270,30 +269,30 @@ export default function AdminPage({
     }
   }
   async function savePlayer(playerData: Omit<Player, "id">) {
-  if (!canManagePlayers) return;
+    if (!canManagePlayers) return;
 
-  try {
-    if (editingPlayer) {
-      const updatedPlayer = await updatePlayerRequest(
-        editingPlayer.id,
-        playerData,
-      );
+    try {
+      if (editingPlayer) {
+        const updatedPlayer = await updatePlayerRequest(
+          editingPlayer.id,
+          playerData,
+        );
 
-      setPlayerList((current) =>
-        current.map((player) =>
-          player.id === editingPlayer.id ? updatedPlayer : player,
-        ),
-      );
-    } else {
-      const createdPlayer = await createPlayerRequest(playerData);
+        setPlayerList((current) =>
+          current.map((player) =>
+            player.id === editingPlayer.id ? updatedPlayer : player,
+          ),
+        );
+      } else {
+        const createdPlayer = await createPlayerRequest(playerData);
 
-      setPlayerList((current) => [...current, createdPlayer]);
+        setPlayerList((current) => [...current, createdPlayer]);
+      }
+    } catch (error) {
+      console.error("Fout bij opslaan van speler:", error);
+      throw error;
     }
-  } catch (error) {
-    console.error("Fout bij opslaan van speler:", error);
-    throw error;
   }
-}
   function openAddMatchForm() {
     if (!canManageMatches) return;
     setEditingMatch(null);
@@ -306,7 +305,7 @@ export default function AdminPage({
     setShowMatchForm(true);
   }
 
-  function deleteMatch(match: Match) {
+  async function deleteMatch(match: Match) {
     if (!canManageMatches) return;
 
     const hasResult =
@@ -314,12 +313,21 @@ export default function AdminPage({
       typeof match.awayGoals === "number";
 
     const message = hasResult
-      ? `${t.playedMatchWarning}\n\n${match.home} ${match.homeGoals} - ${match.awayGoals} ${match.away}\n\n${t.deletePlayedMatchConfirm}`
-      : `${t.deleteMatchConfirm}\n\n${match.home} - ${match.away}`;
+      ? `Weet je zeker dat je ${match.home} - ${match.away} wilt verwijderen?`
+      : `Weet je zeker dat je ${match.home} - ${match.away} wilt verwijderen?`;
 
     if (!window.confirm(message)) return;
 
-    setMatches((current) => current.filter((item) => item.id !== match.id));
+    try {
+      await deleteMatchRequest(match.id);
+
+      setMatches((currentMatches) =>
+        currentMatches.filter((item) => item.id !== match.id),
+      );
+    } catch (error) {
+      console.error("Fout bij verwijderen van wedstrijd:", error);
+      alert("Wedstrijd verwijderen is mislukt. Probeer het opnieuw.");
+    }
   }
 
   async function addTeam(event: FormEvent<HTMLFormElement>) {

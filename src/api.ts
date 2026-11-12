@@ -122,22 +122,33 @@ export async function createMatchRequest(
 
   return response.json();
 }
-// Wedstrijd aanpassen //
+// Wedstrijd updaten //
 export async function updateMatchRequest(
   id: number,
   match: Omit<Match, "id">,
-): Promise<Match> {
+): Promise<void> {
   const response = await fetch(`${API_URL}/Matches/${id}`, {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify(match),
+    body: JSON.stringify({
+      id,
+      ...match,
+    }),
   });
 
   if (!response.ok) {
     throw new Error("Wedstrijd aanpassen is mislukt.");
   }
+}
+// Wedstrijd verwijderen //
+export async function deleteMatchRequest(id: number): Promise<void> {
+  const response = await fetch(`${API_URL}/Matches/${id}`, {
+    method: "DELETE",
+  });
 
-  return response.json();
+  if (!response.ok) {
+    throw new Error("Wedstrijd verwijderen is mislukt.");
+  }
 }

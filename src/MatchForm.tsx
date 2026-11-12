@@ -73,9 +73,18 @@ function MatchForm({
       date,
     };
     try {
-      const savedMatch = editingMatch
-        ? await updateMatchRequest(editingMatch.id, matchData)
-        : await createMatchRequest(matchData);
+      let savedMatch: Match;
+
+      if (editingMatch) {
+        await updateMatchRequest(editingMatch.id, matchData);
+
+        savedMatch = {
+          ...editingMatch,
+          ...matchData,
+        };
+      } else {
+        savedMatch = await createMatchRequest(matchData);
+      }
 
       setMatches((currentMatches) => {
         const updatedMatches = editingMatch
