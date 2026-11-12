@@ -1,5 +1,4 @@
-
-import type { Team, Player } from "./types";
+import type { Team, Player, Match } from "./types";
 
 const API_URL = "http://localhost:5001/api";
 //Teams ophalen uit database //
@@ -50,7 +49,7 @@ export async function getPlayers(): Promise<Player[]> {
 }
 //Spelers aanmaken //
 export async function createPlayerRequest(
-  player: Omit<Player, "id">
+  player: Omit<Player, "id">,
 ): Promise<Player> {
   const response = await fetch(`${API_URL}/Players`, {
     method: "POST",
@@ -76,9 +75,10 @@ export async function deletePlayerRequest(id: number): Promise<void> {
     throw new Error("Speler verwijderen is mislukt.");
   }
 }
+//Spelers updaten //
 export async function updatePlayerRequest(
   id: number,
-  player: Omit<Player, "id">
+  player: Omit<Player, "id">,
 ): Promise<Player> {
   const response = await fetch(`${API_URL}/Players/${id}`, {
     method: "PUT",
@@ -90,6 +90,53 @@ export async function updatePlayerRequest(
 
   if (!response.ok) {
     throw new Error("Speler aanpassen is mislukt.");
+  }
+
+  return response.json();
+}
+// Wedstrijden ophalen uit database
+export async function getMatches(): Promise<Match[]> {
+  const response = await fetch(`${API_URL}/Matches`);
+
+  if (!response.ok) {
+    throw new Error("Wedstrijden ophalen is mislukt.");
+  }
+
+  return response.json();
+}
+//Wedstrijd aanmaken //
+export async function createMatchRequest(
+  match: Omit<Match, "id">,
+): Promise<Match> {
+  const response = await fetch(`${API_URL}/Matches`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(match),
+  });
+
+  if (!response.ok) {
+    throw new Error("Wedstrijd toevoegen is mislukt.");
+  }
+
+  return response.json();
+}
+// Wedstrijd aanpassen //
+export async function updateMatchRequest(
+  id: number,
+  match: Omit<Match, "id">,
+): Promise<Match> {
+  const response = await fetch(`${API_URL}/Matches/${id}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(match),
+  });
+
+  if (!response.ok) {
+    throw new Error("Wedstrijd aanpassen is mislukt.");
   }
 
   return response.json();

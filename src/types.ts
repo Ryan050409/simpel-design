@@ -42,12 +42,13 @@ export type Player = {
 };
 
 export type Match = {
-    id: number;
-    home: string;
-    away: string;
-    homeGoals: number;
-    awayGoals: number;
-    date: string;
+  id: number;
+  home: string;
+  away: string;
+  homeGoals: number | null;
+  awayGoals: number | null;
+  date: string;
+  matchday: number;
 };
 
 export type Team = {

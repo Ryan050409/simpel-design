@@ -20,178 +20,11 @@ import HelpPage from "./HelpPage";
 import AdminPage from "./AdminPage";
 import { DEMO_USER } from "./demoUser";
 import { translations, type Language } from "./translations.ts";
-import type { Player, Match, Team, PlayerPosition } from "./types.ts";
-import { getTeams, getPlayers } from "./api";
+import type { Player, Match, Team } from "./types.ts";
+import { getTeams, getPlayers, getMatches } from "./api";
 import ClubsPage from "./ClubsPage.tsx";
 import ClubDetailPage from "./ClubDetailPage";
-/*
-  TIJDELIJKE SEEDDATA
-  Deze data wordt gebruikt wanneer er nog geen gegevens
-  in localStorage zijn opgeslagen.
-*/
 
-const seedTeams: Team[] = [
-  { id: 1, name: "ADO Den Haag" },
-  { id: 2, name: "Ajax" },
-  { id: 3, name: "AZ" },
-  { id: 4, name: "Excelsior Rotterdam" },
-  { id: 5, name: "FC Groningen" },
-  { id: 6, name: "FC Twente" },
-  { id: 7, name: "FC Utrecht" },
-  { id: 8, name: "Feyenoord" },
-  { id: 9, name: "Fortuna Sittard" },
-  { id: 10, name: "Go Ahead Eagles" },
-  { id: 11, name: "N.E.C. Nijmegen" },
-  { id: 12, name: "PEC Zwolle" },
-  { id: 13, name: "PSV" },
-  { id: 14, name: "SC Cambuur" },
-  { id: 15, name: "sc Heerenveen" },
-  { id: 16, name: "Sparta Rotterdam" },
-  { id: 17, name: "Telstar" },
-  { id: 18, name: "Willem II" },
-];
-
-const firstNames = ["Lucas"];
-const lastNames = ["Jansen"];
-
-const positions: PlayerPosition[] = [
-  "GK",
-  "CB",
-  "LB",
-  "CM",
-  "ST",
-];
-function createSeedPlayers(): Player[] {
-  const players: Player[] = [];
-
-  seedTeams.forEach((team, teamIndex) => {
-    for (let i = 0; i < 5; i++) {
-      const playerIndex = teamIndex * 5 + i;
-
-      const firstname = firstNames[playerIndex];
-      const lastname = lastNames[playerIndex];
-
-      const matches = 10 + ((teamIndex * 3 + i * 2) % 17);
-      const minutesplayed = matches * 60 + (teamIndex + i) * 13;
-
-      let goals = 0;
-      let assists = 0;
-      let tackles = 0;
-      let interceptions = 0;
-      let blocks = 0;
-      let clearances = 0;
-      let duelsWon = 0;
-      let fouls = 0;
-
-      if (positions[i] === "GK") {
-        tackles = 4 + (teamIndex % 5);
-        interceptions = 3 + (teamIndex % 4);
-        blocks = 2 + (teamIndex % 3);
-        clearances = 8 + (teamIndex % 7);
-        duelsWon = 5 + (teamIndex % 6);
-        fouls = 1 + (teamIndex % 3);
-      }
-
-      if (
-        positions[i] === "CB" ||
-        positions[i] === "LB" ||
-        positions[i] === "RB" ||
-        positions[i] === "LWB" ||
-        positions[i] === "RWB"
-      ) {
-        goals = 1 + ((teamIndex + i) % 5);
-        assists = 1 + ((teamIndex + i * 2) % 5);
-        tackles = 15 + ((teamIndex * 2 + i) % 16);
-        interceptions = 10 + ((teamIndex + i * 3) % 18);
-        blocks = 4 + ((teamIndex + i) % 8);
-        clearances = 15 + ((teamIndex * 2 + i) % 25);
-        duelsWon = 20 + ((teamIndex + i * 2) % 25);
-        fouls = 3 + ((teamIndex + i) % 7);
-      }
-
-      if (
-        positions[i] === "CDM" ||
-        positions[i] === "CM" ||
-        positions[i] === "CAM" ||
-        positions[i] === "LM" ||
-        positions[i] === "RM"
-      ) {
-        goals = 3 + ((teamIndex * 2 + i) % 8);
-        assists = 3 + ((teamIndex + i * 2) % 8);
-        tackles = 12 + ((teamIndex + i) % 18);
-        interceptions = 8 + ((teamIndex * 2 + i) % 15);
-        blocks = 2 + ((teamIndex + i) % 6);
-        clearances = 5 + ((teamIndex + i) % 10);
-        duelsWon = 20 + ((teamIndex * 2 + i) % 30);
-        fouls = 4 + ((teamIndex + i) % 8);
-      }
-
-      if (
-        positions[i] === "LW" ||
-        positions[i] === "RW" ||
-        positions[i] === "CF" ||
-        positions[i] === "ST"
-      ) {
-        goals = 5 + ((teamIndex * 2 + i) % 12);
-        assists = 3 + ((teamIndex + i * 3) % 9);
-        tackles = 5 + ((teamIndex + i) % 10);
-        interceptions = 2 + ((teamIndex + i) % 7);
-        blocks = 1 + ((teamIndex + i) % 4);
-        clearances = 2 + ((teamIndex + i) % 6);
-        duelsWon = 15 + ((teamIndex * 2 + i) % 25);
-        fouls = 2 + ((teamIndex + i) % 6);
-      }
-
-      players.push({
-        id: 1000 + team.id * 10 + i,
-        firstname,
-        lastname,
-        team: team.name,
-        position: positions[i],
-        number:
-          positions[i] === "GK"
-            ? 1
-            : positions[i] === "CB"
-              ? 2
-              : positions[i] === "LB"
-                ? 4
-                : positions[i] === "CM"
-                  ? 8
-                  : 9,
-        goals,
-        assists,
-        matches,
-        minutesPlayed: minutesplayed,
-        tackles,
-        interceptions,
-        blocks,
-        clearances,
-        duelsWon,
-        fouls,
-        cleanSheets:
-          positions[i] === "GK" ? 2 + ((teamIndex + 2) % 7) : null,
-        saves:
-          positions[i] === "GK" ? 15 + ((teamIndex * 3) % 30) : null,
-        oneVSOneSaves:
-          positions[i] === "GK" ? 2 + (teamIndex % 5) : null,
-        penaltySaves:
-          positions[i] === "GK" ? teamIndex % 3 : null,
-        goalsConceded:
-          positions[i] === "GK" ? 8 + ((teamIndex * 2) % 15) : null,
-      });
-    }
-  });
-
-  return players;
-}
-  
-const seedPlayers = createSeedPlayers();
-const seedMatches: Match[] = [];
-
-/*
-  Interne component om te controleren of een gebruiker
-  nog toegang heeft tot de huidige route.
-*/
 function AppContent() {
   const location = useLocation();
 
@@ -240,20 +73,19 @@ function AppContent() {
     loadPlayers();
   }, []);
 
-  const [matches, setMatches] = useState<Match[]>(() => {
-    const savedMatches = localStorage.getItem("matches");
-
-    if (savedMatches) {
+  const [matches, setMatches] = useState<Match[]>([]);
+  useEffect(() => {
+    async function loadMatches() {
       try {
-        return JSON.parse(savedMatches);
-      } catch {
-        return seedMatches;
+        const data = await getMatches();
+        setMatches(data);
+      } catch (error) {
+        console.error("Fout bij ophalen van wedstrijden", error);
       }
     }
 
-    return seedMatches;
-  });
-
+    loadMatches();
+  }, []);
   const [teams, setTeams] = useState<Team[]>([]);
   useEffect(() => {
     async function loadTeams() {
@@ -274,10 +106,6 @@ function AppContent() {
   useEffect(() => {
     localStorage.setItem("favoriteTeam", team);
   }, [team]);
-
-  useEffect(() => {
-    localStorage.setItem("matches", JSON.stringify(matches));
-  }, [matches]);
 
   useEffect(() => {
     localStorage.setItem("teams", JSON.stringify(teams));

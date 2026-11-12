@@ -2,10 +2,11 @@ import { useState } from "react";
 import type { Dispatch, SetStateAction } from "react";
 import type { Match, Team } from "./types.ts";
 import { translations, type Language } from "./translations.ts";
+import { createMatchRequest, updateMatchRequest } from "./api.ts";
 
 type MatchFormProps = {
   editingMatch?: Match | null;
-  setEditingMatch?: Dispatch<SetStateAction<Match | null>>;
+  setEditingMatch: Dispatch<SetStateAction<Match | null>>;
   setMatches: Dispatch<SetStateAction<Match[]>>;
   closeModal: () => void;
   teams: Team[];
@@ -31,19 +32,22 @@ function MatchForm({
   const [awayGoals, setAwayGoals] = useState(
     editingMatch ? String(editingMatch.awayGoals) : "",
   );
-
+  const [matchday, setMatchday] = useState(
+    editingMatch ? String(editingMatch.matchday) : "",
+  );
   const [date, setDate] = useState(
     editingMatch?.date ?? new Date().toISOString().split("T")[0],
   );
 
   const [warning, setWarning] = useState("");
 
-  function saveMatch() {
+  async function saveMatch() {
     if (
       home.trim() === "" ||
       away.trim() === "" ||
       homeGoals.trim() === "" ||
       awayGoals.trim() === "" ||
+      matchday.trim() === "" ||
       date === ""
     ) {
       setWarning(t.matchRequiredFields);
@@ -60,29 +64,37 @@ function MatchForm({
       return;
     }
 
-    const newMatch: Match = {
-      id: editingMatch ? editingMatch.id : Date.now(),
+    const matchData = {
       home: home.trim(),
       away: away.trim(),
       homeGoals: Number(homeGoals),
       awayGoals: Number(awayGoals),
+      matchday: Number(matchday),
       date,
     };
+    try {
+      const savedMatch = editingMatch
+        ? await updateMatchRequest(editingMatch.id, matchData)
+        : await createMatchRequest(matchData);
 
-    setMatches((currentMatches) => {
-      const updatedMatches = editingMatch
-        ? currentMatches.map((match) =>
-            match.id === editingMatch.id ? newMatch : match,
-          )
-        : [...currentMatches, newMatch];
+      setMatches((currentMatches) => {
+        const updatedMatches = editingMatch
+          ? currentMatches.map((match) =>
+              match.id === savedMatch.id ? savedMatch : match,
+            )
+          : [...currentMatches, savedMatch];
 
-      return [...updatedMatches].sort(
-        (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
-      );
-    });
+        return updatedMatches.sort(
+          (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
+        );
+      });
 
-    setEditingMatch?.(null);
-    closeModal();
+      setEditingMatch(null);
+      closeModal();
+    } catch (error) {
+      console.error("Fout bij opslaan van wedstrijd:", error);
+      setWarning("Wedstrijd opslaan is mislukt. Probeer het opnieuw.");
+    }
   }
 
   return (
@@ -156,7 +168,17 @@ function MatchForm({
               onChange={(e) => setAwayGoals(e.target.value)}
             />
           </div>
-
+          <div className="form-field">
+            <label htmlFor="match-matchday">Speelronde</label>
+            <input
+              id="match-matchday"
+              type="number"
+              min="1"
+              max="34"
+              value={matchday}
+              onChange={(e) => setMatchday(e.target.value)}
+            />
+          </div>
           <div className="form-field">
             <label htmlFor="match-date">{t.matchDate}</label>
             <input
