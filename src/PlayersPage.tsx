@@ -19,6 +19,7 @@ function PlayersPage({ playerList, teams, language }: PlayersPageProps) {
   const [sortOrder, setSortOrder] = useState("name");
   const [selectedTeams, setSelectedTeams] = useState<string[]>([]);
   const [showTeamFilter, setShowTeamFilter] = useState(false);
+  const [teamSearchTerm, setTeamSearchTerm] = useState("");
   const scrollToTeam = (teamId: string) => {
     document.getElementById(`team-${teamId}`)?.scrollIntoView({
       behavior: "smooth",
@@ -189,6 +190,13 @@ function PlayersPage({ playerList, teams, language }: PlayersPageProps) {
 
           {showTeamFilter && (
             <div className="team-filter-dropdown">
+              <input
+                type="search"
+                className="team-filter-search"
+                placeholder="Zoek team"
+                value={teamSearchTerm}
+                onChange={(event) => setTeamSearchTerm(event.target.value)}
+              />
               <button
                 type="button"
                 className="team-filter-clear"
@@ -198,6 +206,11 @@ function PlayersPage({ playerList, teams, language }: PlayersPageProps) {
               </button>
               {teams
                 .slice()
+                .filter((team) =>
+                  team.name
+                    .toLowerCase()
+                    .includes(teamSearchTerm.toLowerCase()),
+                )
                 .sort((a, b) => a.name.localeCompare(b.name))
                 .map((team) => (
                   <label key={team.id} className="team-filter-option">
