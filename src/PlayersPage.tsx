@@ -17,6 +17,8 @@ function PlayersPage({ playerList, teams, language }: PlayersPageProps) {
     "all",
   );
   const [sortOrder, setSortOrder] = useState("name");
+  const [selectedTeams, setSelectedTeams] = useState<string[]>([]);
+  const [showTeamFilter, setShowTeamFilter] = useState(false);
   const scrollToTeam = (teamId: string) => {
     document.getElementById(`team-${teamId}`)?.scrollIntoView({
       behavior: "smooth",
@@ -52,7 +54,9 @@ function PlayersPage({ playerList, teams, language }: PlayersPageProps) {
       const matchesPosition =
         positionFilter === "all" || player.position === positionFilter;
 
-      return matchesSearch && matchesPosition;
+      const matchesTeam =
+        selectedTeams.length === 0 || selectedTeams.includes(player.team);
+      return matchesSearch && matchesPosition && matchesTeam;
     })
     .slice()
     .sort((a, b) => {
@@ -166,6 +170,53 @@ function PlayersPage({ playerList, teams, language }: PlayersPageProps) {
             <option value="assists">{t.sortPlayerAssists}</option>
             <option value="matches">{t.sortPlayerMatches}</option>
           </select>
+        </div>
+        <div className="player-filter player-team-filter">
+          <label>Teams</label>
+          <button
+            type="button"
+            className="team-filter-button"
+            onClick={() => setShowTeamFilter(!showTeamFilter)}
+            aria-expanded={showTeamFilter}
+            aria-haspopup="true"
+          >
+            {selectedTeams.length === 0
+              ? "Alle teams"
+              : `${selectedTeams.length} teams geselecteerd`}
+
+            <span>{showTeamFilter ? "▲" : "▼"}</span>
+          </button>
+
+          {showTeamFilter && (
+            <div className="team-filter-dropdown">
+              <button
+                type="button"
+                className="team-filter-clear"
+                onClick={() => setSelectedTeams([])}
+              >
+                Alle teams tonen
+              </button>
+              {teams
+                .slice()
+                .sort((a, b) => a.name.localeCompare(b.name))
+                .map((team) => (
+                  <label key={team.id} className="team-filter-option">
+                    <input
+                      type="checkbox"
+                      checked={selectedTeams.includes(team.name)}
+                      onChange={() => {
+                        setSelectedTeams((previous) =>
+                          previous.includes(team.name)
+                            ? previous.filter((name) => name !== team.name)
+                            : [...previous, team.name],
+                        );
+                      }}
+                    />
+                    {team.name}
+                  </label>
+                ))}
+            </div>
+          )}
         </div>
       </div>
       <nav className="players-team-navigation" aria-label={t.players}>
