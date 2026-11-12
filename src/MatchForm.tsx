@@ -45,15 +45,19 @@ function MatchForm({
     if (
       home.trim() === "" ||
       away.trim() === "" ||
-      homeGoals.trim() === "" ||
-      awayGoals.trim() === "" ||
       matchday.trim() === "" ||
       date === ""
     ) {
       setWarning(t.matchRequiredFields);
       return;
     }
-
+    if (
+      (homeGoals.trim() === "" && awayGoals.trim() !== "") ||
+      (homeGoals.trim() !== "" && awayGoals.trim() === "")
+    ) {
+      setWarning("Vul beide doelpuntenvelden in of laat ze allebei leeg.");
+      return;
+    }
     if (home.trim().toLowerCase() === away.trim().toLowerCase()) {
       setWarning(t.matchSameTeamError);
       return;
@@ -67,8 +71,8 @@ function MatchForm({
     const matchData = {
       home: home.trim(),
       away: away.trim(),
-      homeGoals: Number(homeGoals),
-      awayGoals: Number(awayGoals),
+      homeGoals: homeGoals.trim() === "" ? null : Number(homeGoals),
+      awayGoals: awayGoals.trim() === "" ? null : Number(awayGoals),
       matchday: Number(matchday),
       date,
     };

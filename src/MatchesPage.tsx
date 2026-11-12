@@ -12,7 +12,9 @@ function getMatchResult(match: Match, team: string) {
   if (match.home !== team && match.away !== team) {
     return null;
   }
-
+  if (match.homeGoals === null || match.awayGoals === null) {
+    return null;
+  }
   const teamGoals = match.home === team ? match.homeGoals : match.awayGoals;
   const opponentGoals = match.home === team ? match.awayGoals : match.homeGoals;
 
@@ -43,6 +45,9 @@ function MatchesPage({ matches, team, language }: MatchesPageProps) {
 
   const [matchView, setMatchView] = useState<"favorite" | "all">("favorite");
   const [sortOrder, setSortOrder] = useState<"newest" | "oldest">("newest");
+  const [matchStatus, setMatchStatus] = useState<"all" | "upcoming" | "played">(
+    "all",
+  );
   const [resultFilter, setResultFilter] = useState<
     "all" | "home" | "draw" | "away"
   >("all");
@@ -73,8 +78,17 @@ function MatchesPage({ matches, team, language }: MatchesPageProps) {
 
     return true;
   });
-  
-  const sortedMatches = [...resultFilteredMatches].sort((a, b) => {
+
+  const statusFilteredMatches = resultFilteredMatches.filter((match) => {
+    const hasResult = match.homeGoals !== null && match.awayGoals !== null;
+
+    if (matchStatus === "upcoming") return !hasResult;
+    if (matchStatus === "played") return hasResult;
+
+    return true;
+  });
+
+  const sortedMatches = [...statusFilteredMatches].sort((a, b) => {
     const dateA = new Date(a.date).getTime();
     const dateB = new Date(b.date).getTime();
 
@@ -158,6 +172,38 @@ function MatchesPage({ matches, team, language }: MatchesPageProps) {
               <option value="oldest">{t.oldestFirst}</option>
             </select>
           </div>
+          <div className="match-filter">
+            <label>Wedstrijdstatus:</label>
+
+            <div className="match-filter match-status-filter">
+              <button
+                type="button"
+                className={matchStatus === "all" ? "active" : ""}
+                aria-pressed={matchStatus === "all"}
+                onClick={() => setMatchStatus("all")}
+              >
+                Alles
+              </button>
+
+              <button
+                type="button"
+                className={matchStatus === "upcoming" ? "active" : ""}
+                aria-pressed={matchStatus === "upcoming"}
+                onClick={() => setMatchStatus("upcoming")}
+              >
+                Aankomend
+              </button>
+
+              <button
+                type="button"
+                className={matchStatus === "played" ? "active" : ""}
+                aria-pressed={matchStatus === "played"}
+                onClick={() => setMatchStatus("played")}
+              >
+                Gespeeld
+              </button>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -183,8 +229,17 @@ function MatchesPage({ matches, team, language }: MatchesPageProps) {
                 const result = getMatchResult(match, team);
                 const homeIsFavorite = match.home === team;
                 const awayIsFavorite = match.away === team;
-                const homeIsWinner = match.homeGoals > match.awayGoals;
-                const awayIsWinner = match.awayGoals > match.homeGoals;
+                const hasResult =
+                  match.homeGoals !== null && match.awayGoals !== null;
+                const homeIsWinner =
+                  match.homeGoals !== null &&
+                  match.awayGoals !== null &&
+                  match.homeGoals > match.awayGoals;
+
+                const awayIsWinner =
+                  match.homeGoals !== null &&
+                  match.awayGoals !== null &&
+                  match.awayGoals > match.homeGoals;
                 const label = resultLabel(result);
 
                 return (
@@ -233,7 +288,9 @@ function MatchesPage({ matches, team, language }: MatchesPageProps) {
 
                     <td>
                       <span className="match-score">
-                        {match.homeGoals} - {match.awayGoals}
+                        {hasResult
+                          ? `${match.homeGoals} - ${match.awayGoals}`
+                          : "-"}
                       </span>
                     </td>
 
