@@ -8,37 +8,6 @@ type MatchesPageProps = {
   team: string;
   language: Language;
 };
-
-function getMatchResult(match: Match, team: string) {
-  if (match.home !== team && match.away !== team) {
-    return null;
-  }
-
-  if (
-    typeof match.homeGoals !== "number" ||
-    typeof match.awayGoals !== "number"
-  ) {
-    return null;
-  }
-
-  const teamGoals = match.home === team ? match.homeGoals : match.awayGoals;
-  const opponentGoals = match.home === team ? match.awayGoals : match.homeGoals;
-
-  if (teamGoals > opponentGoals) return "W";
-  if (teamGoals === opponentGoals) return "G";
-  return "V";
-}
-
-function getResultLabel(result: string | null, language: Language) {
-  const t = translations[language];
-
-  if (result === "W") return t.resultWon;
-  if (result === "G") return t.resultDraw;
-  if (result === "V") return t.resultLost;
-
-  return t.noResult;
-}
-
 function getLocale(language: Language) {
   const locales: Record<Language, string> = {
     nl: "nl-NL",
@@ -82,9 +51,7 @@ function MatchesPage({ matches, team, language }: MatchesPageProps) {
   const [matchStatus, setMatchStatus] = useState<"all" | "upcoming" | "played">(
     "all",
   );
-  const [resultFilter, setResultFilter] = useState<
-    "all" | "home" | "draw" | "away"
-  >("all");
+
   const [venueFilter, setVenueFilter] = useState<"all" | "home" | "away">(
     "all",
   );
@@ -101,25 +68,12 @@ function MatchesPage({ matches, team, language }: MatchesPageProps) {
     return true;
   });
 
-  const resultFilteredMatches = venueFilteredMatches.filter((match) => {
-    if (resultFilter === "all") return true;
-
-    const result = getMatchResult(match, team);
-
-    if (resultFilter === "home") return result === "W";
-    if (resultFilter === "draw") return result === "G";
-    if (resultFilter === "away") return result === "V";
-
-    return true;
-  });
-
-  const statusFilteredMatches = resultFilteredMatches.filter((match) => {
+  const statusFilteredMatches = venueFilteredMatches.filter((match) => {
     const hasResult =
       typeof match.homeGoals === "number" &&
       typeof match.awayGoals === "number";
 
-    const isUpcoming =
-     match.homeGoals == null && match.awayGoals === null;
+    const isUpcoming = match.homeGoals == null && match.awayGoals == null;
 
     if (matchStatus === "upcoming") return isUpcoming;
     if (matchStatus === "played") return hasResult;
@@ -202,25 +156,6 @@ function MatchesPage({ matches, team, language }: MatchesPageProps) {
               <option value="away">Uitwedstrijden</option>
             </select>
           </div>
-
-          <div className="match-filter">
-            <label htmlFor="match-result-filter">{t.filterByOutcome}</label>
-            <select
-              id="match-result-filter"
-              value={resultFilter}
-              onChange={(event) =>
-                setResultFilter(
-                  event.target.value as "all" | "home" | "draw" | "away",
-                )
-              }
-            >
-              <option value="all">{t.allOutcomes}</option>
-              <option value="home">{t.homeWinFilter}</option>
-              <option value="draw">{t.drawFilter}</option>
-              <option value="away">{t.awayWinFilter}</option>
-            </select>
-          </div>
-
           <div className="match-filter">
             <label htmlFor="match-sort">{t.sortByDate}</label>
             <select
@@ -275,7 +210,6 @@ function MatchesPage({ matches, team, language }: MatchesPageProps) {
           </div>
         ) : (
           sortedMatches.map((match) => {
-            const result = getMatchResult(match, team);
             const hasResult =
               typeof match.homeGoals === "number" &&
               typeof match.awayGoals === "number";
@@ -292,21 +226,8 @@ function MatchesPage({ matches, team, language }: MatchesPageProps) {
             const awayIsWinner =
               hasResult && match.awayGoals! > match.homeGoals!;
 
-            const resultLabel = getResultLabel(result, language);
-
             return (
-              <article
-                key={match.id}
-                className={`match-card ${
-                  result === "W"
-                    ? "match-card-win"
-                    : result === "G"
-                      ? "match-card-draw"
-                      : result === "V"
-                        ? "match-card-loss"
-                        : "match-card-upcoming"
-                }`}
-              >
+              <article key={match.id} className="match-card">
                 <div className="match-card-top">
                   <span className="match-card-date">
                     {formatMatchDate(match.date, language)}
@@ -317,7 +238,7 @@ function MatchesPage({ matches, team, language }: MatchesPageProps) {
                       isUpcoming ? "status-upcoming" : "status-played"
                     }`}
                   >
-                    {isUpcoming ? "Aankomend" : resultLabel}
+                    {isUpcoming ? "Aankomend" : t.played}
                   </span>
                 </div>
 
@@ -385,15 +306,6 @@ function MatchesPage({ matches, team, language }: MatchesPageProps) {
                     <span className="match-card-team-role">Uit</span>
                   </div>
                 </div>
-
-                {hasResult && (
-                  <div className="match-card-footer">
-                    <span>{resultLabel}</span>
-                    {result === "W" && <span>3 punten</span>}
-                    {result === "G" && <span>1 punt</span>}
-                    {result === "V" && <span>0 punten</span>}
-                  </div>
-                )}
               </article>
             );
           })
