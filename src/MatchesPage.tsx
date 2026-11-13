@@ -1,6 +1,7 @@
 import { useState } from "react";
 import type { Match } from "./types.ts";
 import { translations, type Language } from "./translations.ts";
+import teamLogos from "./teamLogos";
 
 type MatchesPageProps = {
   matches: Match[];
@@ -12,9 +13,14 @@ function getMatchResult(match: Match, team: string) {
   if (match.home !== team && match.away !== team) {
     return null;
   }
-  if (match.homeGoals === null || match.awayGoals === null) {
+
+  if (
+    typeof match.homeGoals !== "number" ||
+    typeof match.awayGoals !== "number"
+  ) {
     return null;
   }
+
   const teamGoals = match.home === team ? match.homeGoals : match.awayGoals;
   const opponentGoals = match.home === team ? match.awayGoals : match.homeGoals;
 
@@ -25,6 +31,7 @@ function getMatchResult(match: Match, team: string) {
 
 function getResultLabel(result: string | null, language: Language) {
   const t = translations[language];
+
   if (result === "W") return t.resultWon;
   if (result === "G") return t.resultDraw;
   if (result === "V") return t.resultLost;
@@ -32,12 +39,39 @@ function getResultLabel(result: string | null, language: Language) {
   return t.noResult;
 }
 
-function getRowClass(result: string | null) {
-  if (result === "W") return "match-row-win";
-  if (result === "G") return "match-row-draw";
-  if (result === "V") return "match-row-loss";
+function getLocale(language: Language) {
+  const locales: Record<Language, string> = {
+    nl: "nl-NL",
+    en: "en-GB",
+    de: "de-DE",
+    fr: "fr-FR",
+    sp: "es-ES",
+    pt: "pt-PT",
+  };
 
-  return undefined;
+  return locales[language];
+}
+
+function formatMatchDate(date: string, language: Language) {
+  const parsedDate = new Date(date);
+
+  if (Number.isNaN(parsedDate.getTime())) {
+    return date;
+  }
+
+  const hasKickoffTime =
+    parsedDate.getHours() !== 0 || parsedDate.getMinutes() !== 0;
+
+  return new Intl.DateTimeFormat(getLocale(language), {
+    weekday: "short",
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+    ...(hasKickoffTime && {
+      hour: "2-digit",
+      minute: "2-digit",
+    }),
+  }).format(parsedDate);
 }
 
 function MatchesPage({ matches, team, language }: MatchesPageProps) {
@@ -54,13 +88,13 @@ function MatchesPage({ matches, team, language }: MatchesPageProps) {
   const [venueFilter, setVenueFilter] = useState<"all" | "home" | "away">(
     "all",
   );
+
   const visibleMatches =
     matchView === "favorite"
       ? matches.filter((match) => match.home === team || match.away === team)
       : matches;
 
   const venueFilteredMatches = visibleMatches.filter((match) => {
-    if (venueFilter === "all") return true;
     if (venueFilter === "home") return match.home === team;
     if (venueFilter === "away") return match.away === team;
 
@@ -80,9 +114,14 @@ function MatchesPage({ matches, team, language }: MatchesPageProps) {
   });
 
   const statusFilteredMatches = resultFilteredMatches.filter((match) => {
-    const hasResult = match.homeGoals !== null && match.awayGoals !== null;
+    const hasResult =
+      typeof match.homeGoals === "number" &&
+      typeof match.awayGoals === "number";
 
-    if (matchStatus === "upcoming") return !hasResult;
+    const isUpcoming =
+     match.homeGoals == null && match.awayGoals === null;
+
+    if (matchStatus === "upcoming") return isUpcoming;
     if (matchStatus === "played") return hasResult;
 
     return true;
@@ -95,12 +134,19 @@ function MatchesPage({ matches, team, language }: MatchesPageProps) {
     return sortOrder === "newest" ? dateB - dateA : dateA - dateB;
   });
 
-  const resultLabel = (result: string | null) =>
-    getResultLabel(result, language);
+  const playedCount = visibleMatches.filter(
+    (match) =>
+      typeof match.homeGoals === "number" &&
+      typeof match.awayGoals === "number",
+  ).length;
+
+  const upcomingCount = visibleMatches.filter(
+    (match) => match.homeGoals === null && match.awayGoals === null,
+  ).length;
 
   return (
-    <div className="matches-page">
-      <div className="matches-page-header">
+    <main className="matches-page">
+      <header className="matches-page-header">
         <div>
           <h1>⚽ {t.matches}</h1>
           <p>
@@ -108,25 +154,28 @@ function MatchesPage({ matches, team, language }: MatchesPageProps) {
           </p>
         </div>
 
+        <div className="matches-page-summary">
+          <div className="matches-summary-item">
+            <span>Gespeeld</span>
+            <strong>{playedCount}</strong>
+          </div>
+
+          <div className="matches-summary-item">
+            <span>Aankomend</span>
+            <strong>{upcomingCount}</strong>
+          </div>
+        </div>
+      </header>
+
+      <section className="matches-filter-panel">
+        <div className="matches-filter-heading">
+          <h2>Wedstrijden filteren</h2>
+          <span>{sortedMatches.length} wedstrijden</span>
+        </div>
+
         <div className="matches-page-actions">
           <div className="match-filter">
-            <label htmlFor="match-venue-filter">Thuis / uit</label>
-
-            <select
-              id="match-venue-filter"
-              value={venueFilter}
-              onChange={(event) =>
-                setVenueFilter(event.target.value as "all" | "home" | "away")
-              }
-            >
-              <option value="all">Alle wedstrijden</option>
-              <option value="home">Thuiswedstrijden</option>
-              <option value="away">Uitwedstrijden</option>
-            </select>
-          </div>
-          <div className="match-filter">
             <label htmlFor="match-view">{t.showMatches}</label>
-
             <select
               id="match-view"
               value={matchView}
@@ -140,8 +189,22 @@ function MatchesPage({ matches, team, language }: MatchesPageProps) {
           </div>
 
           <div className="match-filter">
-            <label htmlFor="match-result-filter">{t.filterByOutcome}</label>
+            <label htmlFor="match-venue-filter">Thuis / uit</label>
+            <select
+              id="match-venue-filter"
+              value={venueFilter}
+              onChange={(event) =>
+                setVenueFilter(event.target.value as "all" | "home" | "away")
+              }
+            >
+              <option value="all">Alle wedstrijden</option>
+              <option value="home">Thuiswedstrijden</option>
+              <option value="away">Uitwedstrijden</option>
+            </select>
+          </div>
 
+          <div className="match-filter">
+            <label htmlFor="match-result-filter">{t.filterByOutcome}</label>
             <select
               id="match-result-filter"
               value={resultFilter}
@@ -160,7 +223,6 @@ function MatchesPage({ matches, team, language }: MatchesPageProps) {
 
           <div className="match-filter">
             <label htmlFor="match-sort">{t.sortByDate}</label>
-
             <select
               id="match-sort"
               value={sortOrder}
@@ -172,153 +234,172 @@ function MatchesPage({ matches, team, language }: MatchesPageProps) {
               <option value="oldest">{t.oldestFirst}</option>
             </select>
           </div>
-          <div className="match-filter">
-            <label>Wedstrijdstatus:</label>
-
-            <div className="match-filter match-status-filter">
-              <button
-                type="button"
-                className={matchStatus === "all" ? "active" : ""}
-                aria-pressed={matchStatus === "all"}
-                onClick={() => setMatchStatus("all")}
-              >
-                Alles
-              </button>
-
-              <button
-                type="button"
-                className={matchStatus === "upcoming" ? "active" : ""}
-                aria-pressed={matchStatus === "upcoming"}
-                onClick={() => setMatchStatus("upcoming")}
-              >
-                Aankomend
-              </button>
-
-              <button
-                type="button"
-                className={matchStatus === "played" ? "active" : ""}
-                aria-pressed={matchStatus === "played"}
-                onClick={() => setMatchStatus("played")}
-              >
-                Gespeeld
-              </button>
-            </div>
-          </div>
         </div>
-      </div>
 
-      <div className="matches-table-wrapper">
-        <table className="matches-table">
-          <thead>
-            <tr>
-              <th>{t.dateColumn}</th>
-              <th>{t.homeColumn}</th>
-              <th>{t.awayColumn}</th>
-              <th>{t.scoreColumn}</th>
-              <th>{t.resultColumn}</th>
-            </tr>
-          </thead>
+        <div className="matches-status-tabs" aria-label="Wedstrijdstatus">
+          <button
+            type="button"
+            className={matchStatus === "all" ? "active" : ""}
+            aria-pressed={matchStatus === "all"}
+            onClick={() => setMatchStatus("all")}
+          >
+            Alles
+          </button>
 
-          <tbody>
-            {sortedMatches.length === 0 ? (
-              <tr>
-                <td colSpan={5}>{t.noMatchesFound}.</td>
-              </tr>
-            ) : (
-              sortedMatches.map((match) => {
-                const result = getMatchResult(match, team);
-                const homeIsFavorite = match.home === team;
-                const awayIsFavorite = match.away === team;
-                const hasResult =
-                  match.homeGoals !== null && match.awayGoals !== null;
-                const homeIsWinner =
-                  match.homeGoals !== null &&
-                  match.awayGoals !== null &&
-                  match.homeGoals > match.awayGoals;
+          <button
+            type="button"
+            className={matchStatus === "upcoming" ? "active" : ""}
+            aria-pressed={matchStatus === "upcoming"}
+            onClick={() => setMatchStatus("upcoming")}
+          >
+            Aankomend
+          </button>
 
-                const awayIsWinner =
-                  match.homeGoals !== null &&
-                  match.awayGoals !== null &&
-                  match.awayGoals > match.homeGoals;
-                const label = resultLabel(result);
+          <button
+            type="button"
+            className={matchStatus === "played" ? "active" : ""}
+            aria-pressed={matchStatus === "played"}
+            onClick={() => setMatchStatus("played")}
+          >
+            Gespeeld
+          </button>
+        </div>
+      </section>
 
-                return (
-                  <tr key={match.id} className={getRowClass(result)}>
-                    <td>
-                      {new Date(match.date).toLocaleDateString(
-                        language === "nl"
-                          ? "nl-NL"
-                          : language === "de"
-                            ? "de-DE"
-                            : "en-GB",
-                      )}
-                    </td>
+      <section className="matches-card-list" aria-label={t.matches}>
+        {sortedMatches.length === 0 ? (
+          <div className="matches-empty-state">
+            <span>⚽</span>
+            <h2>Geen wedstrijden gevonden</h2>
+            <p>{t.noMatchesFound}.</p>
+          </div>
+        ) : (
+          sortedMatches.map((match) => {
+            const result = getMatchResult(match, team);
+            const hasResult =
+              typeof match.homeGoals === "number" &&
+              typeof match.awayGoals === "number";
 
-                    <td className={homeIsWinner ? "winner-team-name" : ""}>
-                      {homeIsFavorite && (
-                        <span
-                          className="favorite-indicator"
-                          aria-label={t.favoriteTeamIndicator}
-                          title={t.favoriteTeamIndicator}
-                        >
-                          ★{" "}
-                        </span>
-                      )}
-                      {match.home}
-                    </td>
+            const isUpcoming =
+              match.homeGoals === null && match.awayGoals === null;
 
-                    <td
-                      className={[
-                        awayIsFavorite ? "favorite-team-name" : "",
-                        awayIsWinner ? "winner-team-name" : "",
-                      ]
-                        .filter(Boolean)
-                        .join(" ")}
-                    >
-                      {awayIsFavorite && (
-                        <span
-                          aria-label={t.favoriteTeamIndicator}
-                          title={t.favoriteTeamIndicator}
-                        >
-                          ★{" "}
-                        </span>
-                      )}
-                      {match.away}
-                    </td>
+            const homeIsFavorite = match.home === team;
+            const awayIsFavorite = match.away === team;
 
-                    <td>
-                      <span className="match-score">
-                        {hasResult
-                          ? `${match.homeGoals} - ${match.awayGoals}`
-                          : "-"}
-                      </span>
-                    </td>
+            const homeIsWinner =
+              hasResult && match.homeGoals! > match.awayGoals!;
 
-                    <td>
+            const awayIsWinner =
+              hasResult && match.awayGoals! > match.homeGoals!;
+
+            const resultLabel = getResultLabel(result, language);
+
+            return (
+              <article
+                key={match.id}
+                className={`match-card ${
+                  result === "W"
+                    ? "match-card-win"
+                    : result === "G"
+                      ? "match-card-draw"
+                      : result === "V"
+                        ? "match-card-loss"
+                        : "match-card-upcoming"
+                }`}
+              >
+                <div className="match-card-top">
+                  <span className="match-card-date">
+                    {formatMatchDate(match.date, language)}
+                  </span>
+
+                  <span
+                    className={`match-card-status ${
+                      isUpcoming ? "status-upcoming" : "status-played"
+                    }`}
+                  >
+                    {isUpcoming ? "Aankomend" : resultLabel}
+                  </span>
+                </div>
+
+                <div className="match-card-content">
+                  <div
+                    className={`match-card-team ${
+                      homeIsWinner ? "match-card-winner" : ""
+                    }`}
+                  >
+                    {homeIsFavorite && (
                       <span
-                        className={
-                          result === "W"
-                            ? "result-win"
-                            : result === "G"
-                              ? "result-draw"
-                              : result === "V"
-                                ? "result-loss"
-                                : "match-result-text"
-                        }
-                        aria-label={label}
-                        title={label}
+                        className="match-card-favorite"
+                        title={t.favoriteTeamIndicator}
+                        aria-label={t.favoriteTeamIndicator}
                       >
-                        {result ? label : "-"}
+                        ★
                       </span>
-                    </td>
-                  </tr>
-                );
-              })
-            )}
-          </tbody>
-        </table>
-      </div>
-    </div>
+                    )}
+
+                    <img
+                      src={teamLogos[match.home]}
+                      alt={`${match.home} logo`}
+                      className="match-card-team-logo"
+                    />
+                    <strong>{match.home}</strong>
+                    <span className="match-card-team-role">Thuis</span>
+                  </div>
+
+                  <div className="match-card-score">
+                    {hasResult ? (
+                      <>
+                        <span className={homeIsWinner ? "score-winner" : ""}>
+                          {match.homeGoals}
+                        </span>
+                        <span className="score-divider">-</span>
+                        <span className={awayIsWinner ? "score-winner" : ""}>
+                          {match.awayGoals}
+                        </span>
+                      </>
+                    ) : (
+                      <span className="match-card-vs">VS</span>
+                    )}
+                  </div>
+
+                  <div
+                    className={`match-card-team match-card-team-away ${
+                      awayIsWinner ? "match-card-winner" : ""
+                    }`}
+                  >
+                    {awayIsFavorite && (
+                      <span
+                        className="match-card-favorite"
+                        title={t.favoriteTeamIndicator}
+                        aria-label={t.favoriteTeamIndicator}
+                      >
+                        ★
+                      </span>
+                    )}
+                    <img
+                      src={teamLogos[match.away]}
+                      alt={`${match.away} logo`}
+                      className="match-card-team-logo"
+                    />
+                    <strong>{match.away}</strong>{" "}
+                    <span className="match-card-team-role">Uit</span>
+                  </div>
+                </div>
+
+                {hasResult && (
+                  <div className="match-card-footer">
+                    <span>{resultLabel}</span>
+                    {result === "W" && <span>3 punten</span>}
+                    {result === "G" && <span>1 punt</span>}
+                    {result === "V" && <span>0 punten</span>}
+                  </div>
+                )}
+              </article>
+            );
+          })
+        )}
+      </section>
+    </main>
   );
 }
 

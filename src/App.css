@@ -1483,18 +1483,23 @@ textarea::placeholder {
    5. Wedstrijdenpagina
    ========================================================= */
 
-/* =========================================================
-   Wedstrijden
-   ========================================================= */
 .matches-page {
   width: 100%;
+  max-width: 1200px;
+  min-width: 0;
+  margin: 0 auto;
+  padding: 0 12px 36px;
+  color: var(--text-color);
 }
 
+/* Header */
+
 .matches-page-header {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 560px);
-  align-items: start;
-  gap: 28px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 24px;
   margin-bottom: 28px;
 }
 
@@ -1510,35 +1515,85 @@ textarea::placeholder {
   line-height: 1.6;
 }
 
-.matches-page-actions {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+/* Samenvatting */
+
+.matches-page-summary {
+  display: flex;
   gap: 12px;
-  padding: 18px;
+}
+
+.matches-summary-item {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  min-width: 105px;
+  padding: 14px 18px;
+  border: 1px solid var(--border-color);
+  border-radius: 13px;
+  background: var(--card-background);
+  box-shadow: var(--shadow-card);
+}
+
+.matches-summary-item span {
+  color: var(--muted-text-color);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.matches-summary-item strong {
+  font-size: 23px;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Filterpaneel */
+
+.matches-filter-panel {
+  margin-bottom: 24px;
+  padding: 20px;
   border: 1px solid var(--border-color);
   border-radius: 16px;
   background: var(--card-background);
   box-shadow: var(--shadow-card);
 }
 
-.matches-page-actions .add-button {
+.matches-filter-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.matches-filter-heading h2 {
   margin: 0;
+  font-size: 16px;
+  font-weight: 750;
+}
+
+.matches-filter-heading span {
+  color: var(--muted-text-color);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.matches-page-actions {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
 }
 
 .matches-page-actions .match-filter {
   display: flex;
   flex-direction: column;
-  align-items: stretch;
   gap: 7px;
   min-width: 0;
-  margin: 0;
 }
 
-/* Wedstrijdfilter */
 .match-filter label {
-  color: var(--text-color);
-  font-size: 13px;
-  font-weight: 600;
+  color: var(--muted-text-color);
+  font-size: 12px;
+  font-weight: 700;
 }
 
 .match-filter select {
@@ -1546,683 +1601,323 @@ textarea::placeholder {
   width: 100%;
   min-width: 0;
   min-height: 44px;
-  padding: 10px 12px;
+  padding: 9px 12px;
+  border: 1px solid var(--border-color);
+  border-radius: 9px;
   background: var(--input-background);
   color: var(--text-color);
-  border: 1px solid var(--border-color);
-  border-radius: 10px;
-  outline: none;
-  cursor: pointer;
+  font-family: inherit;
   font-size: 13px;
-  transition:
-    border-color 0.2s ease,
-    box-shadow 0.2s ease;
+  cursor: pointer;
 }
 
 .match-filter select:focus-visible {
-  border-color: #2563eb;
-  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
-}
-
-.match-filter select:focus {
-  border-color: #2563eb;
-  box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.15);
-}
-/* Wedstrijdstatus knoppen */
-.matches-page .match-status-buttons {
-  display: flex;
-  width: 100%;
-  min-height: 44px;
-  gap: 5px;
-  padding: 4px;
-  box-sizing: border-box;
-  border: 1px solid var(--border-color);
-  border-radius: 9px;
-  background: var(--input-background);
-}
-
-/* Wedstrijdstatus knoppen */
-.matches-page .match-status-buttons {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  width: 100%;
-  min-height: 44px;
-  gap: 5px;
-  padding: 4px;
-  box-sizing: border-box;
-  border: 1px solid var(--border-color);
-  border-radius: 9px;
-  background: var(--input-background);
-}
-
-.matches-page .match-status-buttons button {
-  width: 100%;
-  min-width: 0;
-  padding: 7px 2px;
-  border: none;
-  border-radius: 6px;
-  background: transparent;
-  color: var(--text-color);
-  font-family: inherit;
-  font-size: 12px;
-  font-weight: 600;
-  white-space: nowrap;
-  cursor: pointer;
-  transition:
-    background 0.2s ease,
-    color 0.2s ease,
-    box-shadow 0.2s ease;
-}
-
-.matches-page .match-status-buttons button:hover {
-  background: var(--border-color);
-}
-
-.matches-page .match-status-buttons button.active {
-  background: var(--accent);
-  color: white;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
-}
-
-.matches-page .match-status-buttons button:focus-visible {
-  outline: 2px solid var(--accent);
-  outline-offset: 2px;
-}
-.matches-page .match-status-buttons button:hover {
-  background: var(--border-color);
-}
-
-.matches-page .match-status-buttons button.active {
-  background: var(--accent);
-  color: white;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
-}
-
-.matches-page .match-status-buttons button:focus-visible {
-  outline: 2px solid var(--accent);
-  outline-offset: 2px;
-}
-.matches-page .matches-page-actions .match-status-filter {
-  grid-column: span 2;
-}
-/* Wedstrijdtabel */
-.matches-table {
-  width: 100%;
-  max-width: 960px;
-  margin: 30px auto;
-  table-layout: fixed;
-
-  background: var(--table-background);
-  color: var(--table-text-color);
-
-  border: 1px solid var(--border-color);
-  border-collapse: separate;
-  border-spacing: 0;
-  border-radius: 12px;
-  overflow: hidden;
-
-  box-shadow: var(--shadow-card);
-}
-
-.matches-table th,
-.matches-table td {
-  width: 20%;
-  padding: 14px 16px;
-
-  color: var(--table-text-color);
-  border-bottom: 1px solid var(--border-color);
-
-  text-align: center;
-  vertical-align: middle;
-}
-
-/* Duidelijke kolomkoppen */
-.matches-table thead th {
-  background: var(--secondary-background);
-  color: var(--text-color);
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.04em;
-  border-bottom: 2px solid var(--border-color);
-  text-transform: uppercase;
-}
-
-.matches-table tbody tr {
-  transition: background-color 0.16s ease;
-}
-
-.matches-table tbody tr:nth-child(even) td {
-  background: var(--secondary-background);
-}
-
-.matches-table tbody tr:hover td {
-  background: var(--accent-soft);
-}
-
-.matches-table tbody .match-row-win td:first-child {
-  box-shadow: inset 3px 0 #22c55e;
-}
-
-.matches-table tbody .match-row-draw td:first-child {
-  box-shadow: inset 3px 0 #f59e0b;
-}
-
-.matches-table tbody .match-row-loss td:first-child {
-  box-shadow: inset 3px 0 #ef4444;
-}
-
-.matches-table tbody td[colspan="5"] {
-  width: 100%;
-  padding: 35px 20px;
-  color: var(--table-text-color);
-  font-size: 14px;
-  font-weight: 500;
-  text-align: center;
-}
-
-.matches-table th:first-child,
-.matches-table td:first-child {
-  min-width: 0;
-  white-space: nowrap;
-}
-
-.matches-table th:nth-child(2),
-.matches-table td:nth-child(2),
-.matches-table td:nth-child(3) {
-  font-weight: 600;
-}
-
-.matches-table td:nth-child(2)::before {
-  content: "Thuis";
-  display: none;
-  margin-bottom: 3px;
-
-  color: var(--table-text-color);
-  font-size: 10px;
-  font-weight: 500;
-  text-transform: uppercase;
-}
-
-.matches-table td:nth-child(3)::before {
-  content: "Uit";
-  display: none;
-  margin-bottom: 3px;
-
-  color: var(--table-text-color);
-  font-size: 10px;
-  font-weight: 500;
-  text-transform: uppercase;
-}
-
-.matches-table .match-score {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-width: 58px;
-  padding: 5px 9px;
-  border: 1px solid var(--border-color);
-  border-radius: 7px;
-  background: var(--secondary-background);
-  color: var(--text-color);
-  font-size: 14px;
-  font-variant-numeric: tabular-nums;
-  font-weight: 800;
-  white-space: nowrap;
-}
-
-/* Wedstrijdresultaten */
-.match-row-win,
-.match-row-draw,
-.match-row-loss {
-  background: var(--card-background);
-}
-
-.match-row-win:hover,
-.match-row-draw:hover,
-.match-row-loss:hover {
-  background: var(--secondary-background);
-}
-
-.result-win,
-.result-draw,
-.result-loss {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-width: 90px;
-  padding: 6px 10px;
-  border-radius: 7px;
-  font-size: 12px;
-  font-weight: 700;
-  white-space: nowrap;
-  border: 1px solid var(--border-color);
-  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.08);
-}
-
-.result-win {
-  background: #dcfce7;
-  color: #166534;
-  border-color: #86efac;
-}
-
-.result-draw {
-  background: #dbeafe;
-  color: #1e40af;
-  border-color: #93c5fd;
-}
-
-.result-loss {
-  background: #fee2e2;
-  color: #991b1b;
-  border-color: #fca5a5;
-}
-
-/* ========================================
-   Wedstrijdtabel - visuele afwerking
-   ======================================== */
-/* 1. Datum zoveel mogelijk op één regel houden */
-.matches-table th:nth-child(1),
-.matches-table td:nth-child(1) {
-  white-space: nowrap;
-  min-width: 105px;
-}
-
-/* Favoriete team altijd herkenbaar */
-.matches-table .favorite-team-name {
-  color: inherit;
-}
-
-.matches-table .favorite-indicator {
-  color: #16a34a;
-  font-weight: 700;
-  margin-right: 4px;
-}
-
-/* Winnaar duidelijk aangeven zonder gekleurde resultaatbadge */
-.matches-table .winner-team-name {
-  color: #15803d;
-  font-weight: 700;
-}
-
-/* Resultaat als gewone, goed leesbare tekst */
-.matches-table .match-result-text {
-  display: inline-block;
-  color: var(--table-text-color);
-  font-size: 13px;
-  font-weight: 600;
-}
-
-.matches-table .favorite-indicator {
-  color: #16a34a;
-  font-size: 14px;
-  font-weight: 800;
-}
-
-/* Toegankelijkheid: duidelijke toetsenbordfocus op de wedstrijdpagina */
-.matches-page button:focus-visible,
-.matches-page select:focus-visible,
-.matches-page input:focus-visible,
-.matches-page textarea:focus-visible {
-  outline: 3px solid #2563eb;
-  outline-offset: 3px;
-}
-
-/* Wedstrijdscore duidelijker leesbaar maken */
-.matches-page .match-score {
-  display: inline-block;
-  min-width: 3.5rem;
-  padding: 5px 8px;
-  border-radius: 6px;
-  font-size: 1rem;
-  font-weight: 700;
-  font-variant-numeric: tabular-nums;
-  text-align: center;
-  white-space: nowrap;
-}
-
-/* =========================================================
-   WEDSTRIJDENPAGINA — DEFINITIEVE STIJLLAAG
-   Gebruikt de bestaande thema- en kleurvariabelen
-========================================================= */
-.matches-page {
-  width: 100%;
-  max-width: 1200px;
-  min-width: 0;
-  margin: 0 auto;
-  padding: 0 12px 32px;
-  color: var(--text-color);
-  text-align: left;
-}
-
-/* Titel en filters */
-.matches-page .matches-page-header {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 680px);
-  align-items: start;
-  gap: 28px;
-  width: 100%;
-  max-width: none;
-  margin: 0 auto 26px;
-  text-align: left;
-}
-
-.matches-page .matches-page-header > div:first-child {
-  min-width: 0;
-  padding-top: 8px;
-}
-
-.matches-page .matches-page-header h1 {
-  margin: 0 0 10px;
-  font-size: clamp(28px, 3vw, 36px);
-  line-height: 1.2;
-  letter-spacing: -0.6px;
-  overflow-wrap: anywhere;
-}
-
-.matches-page .matches-page-header p {
-  margin: 0;
-  color: var(--muted-text-color);
-  font-size: 14px;
-  line-height: 1.7;
-}
-
-/* Filterkaart */
-.matches-page .matches-page-actions {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  align-items: end;
-  gap: 12px;
-  width: 100%;
-  min-width: 0;
-  padding: 18px;
-  border: 1px solid var(--border-color);
-  border-radius: 16px;
-  background:
-    linear-gradient(125deg, var(--accent-soft), transparent 65%),
-    var(--card-background);
-  box-shadow: var(--shadow-card);
-}
-
-.matches-page .matches-page-actions .match-filter {
-  display: flex;
-  flex-direction: column;
-  align-items: stretch;
-  gap: 7px;
-  width: 100%;
-  min-width: 0;
-  margin: 0;
-}
-
-.matches-page .matches-page-actions > .match-filter:has(.match-status-filter) {
-  grid-column: span 2;
-}
-
-.matches-page .matches-page-actions .match-status-filter {
-  flex-direction: row;
-  gap: 8px;
-}
-
-.matches-page .matches-page-actions .match-status-filter > button {
-  flex: 1 1 0;
-  min-width: 0;
-  min-height: 44px;
-  padding: 9px 8px;
-  border: 1px solid var(--border-color);
-  border-radius: 9px;
-  background: var(--input-background);
-  color: var(--text-color);
-  font-family: inherit;
-  font-size: 14px;
-  font-weight: 600;
-  line-height: 1.2;
-  white-space: nowrap;
-  transition:
-    background 0.2s ease,
-    border-color 0.2s ease,
-    transform 0.2s ease,
-    box-shadow 0.2s ease;
-}
-
-.matches-page .matches-page-actions .match-status-filter > button:hover {
-  border-color: var(--accent);
-  background: var(--input-background);
-}
-
-.matches-page .matches-page-actions .match-status-filter > button.active {
-  border: 2px solid var(--accent);
-}
-
-.matches-page .match-filter label {
-  display: block;
-  min-height: 34px;
-  color: var(--muted-text-color);
-  font-size: 12px;
-  font-weight: 700;
-  line-height: 1.4;
-}
-
-.matches-page .match-filter select {
-  box-sizing: border-box;
-  display: block;
-  width: 100%;
-  min-width: 0;
-  min-height: 44px;
-  margin: 0;
-  padding: 9px 10px;
-  border: 1px solid var(--border-color);
-  border-radius: 9px;
-  background: var(--input-background);
-  color: var(--text-color);
-  font-family: inherit;
-  font-size: 13px;
-  line-height: 1.4;
-  cursor: pointer;
-  transition:
-    border-color 0.2s ease,
-    box-shadow 0.2s ease;
-}
-
-.matches-page .match-filter select:hover {
-  border-color: var(--accent);
-}
-
-.matches-page .match-filter select:focus-visible {
   outline: 3px solid var(--accent);
   outline-offset: 2px;
 }
 
-/* Tabelcontainer */
-.matches-page .matches-table-wrapper {
-  width: 100%;
-  max-width: 1100px;
+/* Statusfilters */
+
+.matches-status-tabs {
+  display: flex;
+  gap: 7px;
+  margin-top: 18px;
+  padding: 4px;
+  width: fit-content;
+  max-width: 100%;
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  background: var(--input-background);
+}
+
+.matches-status-tabs button {
+  min-height: 38px;
+  padding: 8px 18px;
+  border: none;
+  border-radius: 7px;
+  background: transparent;
+  color: var(--muted-text-color);
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 650;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.matches-status-tabs button:hover {
+  background: var(--border-color);
+  color: var(--text-color);
+}
+
+.matches-status-tabs button.active {
+  background: var(--accent);
+  color: white;
+}
+
+/* Wedstrijdkaarten */
+
+.matches-card-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.match-card {
   min-width: 0;
-  margin: 0 auto;
-  overflow-x: auto;
+  padding: 18px;
   border: 1px solid var(--border-color);
   border-radius: 15px;
-  background: var(--table-background);
+  background: var(--card-background);
   box-shadow: var(--shadow-card);
+  transition:
+    transform 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
 }
 
-/* Wedstrijdtabel */
-.matches-page .matches-table {
-  width: 100%;
-  max-width: none;
-  margin: 0;
-  table-layout: fixed;
-  border: 0;
-  border-collapse: separate;
-  border-spacing: 0;
-  border-radius: 0;
-  overflow: hidden;
-  background: var(--table-background);
-  color: var(--table-text-color);
-  font-size: 13px;
-  font-variant-numeric: tabular-nums;
-  box-shadow: none;
+.match-card:hover {
+  transform: translateY(-2px);
+  border-color: var(--accent);
 }
 
-.matches-page .matches-table th,
-.matches-page .matches-table td {
-  box-sizing: border-box;
-  width: auto;
-  min-width: 0;
-  padding: 14px 10px;
-  border: 0;
+.match-card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  padding-bottom: 14px;
   border-bottom: 1px solid var(--border-color);
-  color: var(--table-text-color);
+}
+
+.match-card-date {
+  color: var(--muted-text-color);
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.5;
+}
+
+.match-card-status {
+  flex-shrink: 0;
+  padding: 5px 9px;
+  border: 1px solid var(--border-color);
+  border-radius: 7px;
+  font-size: 11px;
+  font-weight: 750;
+}
+
+.status-upcoming {
+  background: var(--accent-soft);
+  color: var(--text-color);
+}
+
+.status-played {
+  background: var(--secondary-background);
+  color: var(--text-color);
+}
+
+/* Teams en score */
+
+.match-card-content {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  align-items: center;
+  gap: 12px;
+  padding: 22px 0;
+}
+
+.match-card-team {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  min-width: 0;
   text-align: center;
-  vertical-align: middle;
+}
+
+.match-card-team strong {
+  font-size: 14px;
+  font-weight: 750;
+  line-height: 1.4;
   overflow-wrap: anywhere;
 }
 
-.matches-page .matches-table thead th {
-  padding-top: 15px;
-  padding-bottom: 15px;
-  background: var(--secondary-background);
+.match-card-team-role {
   color: var(--muted-text-color);
-  border-bottom: 2px solid var(--border-color);
-  font-size: 11px;
-  font-weight: 800;
-  letter-spacing: 0.05em;
+  font-size: 10px;
+  font-weight: 650;
   text-transform: uppercase;
+  letter-spacing: 0.05em;
 }
 
-/* Verhouding van de vijf kolommen */
-.matches-page .matches-table th:nth-child(1),
-.matches-page .matches-table td:nth-child(1) {
-  width: 17%;
-}
-
-.matches-page .matches-table th:nth-child(2),
-.matches-page .matches-table td:nth-child(2),
-.matches-page .matches-table th:nth-child(3),
-.matches-page .matches-table td:nth-child(3) {
-  width: 24%;
-}
-
-.matches-page .matches-table th:nth-child(4),
-.matches-page .matches-table td:nth-child(4) {
-  width: 14%;
-}
-
-.matches-page .matches-table th:nth-child(5),
-.matches-page .matches-table td:nth-child(5) {
-  width: 21%;
-}
-
-/* Clubnamen en favoriet */
-.matches-page .matches-table th:nth-child(2),
-.matches-page .matches-table td:nth-child(2),
-.matches-page .matches-table td:nth-child(3) {
-  font-weight: 600;
-}
-
-.matches-page .matches-table .favorite-indicator,
-.matches-page .matches-table td .favorite-indicator {
-  color: #fbbf24;
-  font-size: 14px;
-  font-weight: 900;
-  white-space: nowrap;
-}
-
-.matches-page .matches-table .favorite-team-name {
-  color: var(--table-text-color);
-}
-
-/* Subtiele afwisselende rijen en hover */
-.matches-page .matches-table tbody tr {
-  background: var(--table-background);
-  transition: background-color 0.16s ease;
-}
-
-.matches-page .matches-table tbody tr:nth-child(even) td {
-  background: var(--secondary-background);
-}
-
-.matches-page .matches-table tbody tr:hover td {
-  background: var(--accent-soft);
-}
-
-.matches-page .matches-table tbody tr:last-child td {
-  border-bottom: 0;
-}
-
-/* Score */
-.matches-page .matches-table .match-score {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-width: 66px;
-  padding: 7px 9px;
-  border: 1px solid var(--border-color);
-  border-radius: 8px;
-  background: var(--secondary-background);
-  color: var(--text-color);
-  font-size: 14px;
-  font-weight: 800;
-  font-variant-numeric: tabular-nums;
-  white-space: nowrap;
-}
-
-/* Uitslagbadges */
-.matches-page .matches-table .result-win,
-.matches-page .matches-table .result-draw,
-.matches-page .matches-table .result-loss {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-width: 90px;
-  max-width: 100%;
-  padding: 6px 9px;
-  border: 1px solid transparent;
-  border-radius: 8px;
-  font-size: 12px;
-  font-weight: 750;
-  line-height: 1.4;
-  white-space: normal;
-  box-shadow: none;
-}
-
-.matches-page .matches-table .result-win {
-  background: #dcfce7;
-  color: #166534;
-  border-color: #86efac;
-}
-
-.matches-page .matches-table .result-draw {
-  background: #dbeafe;
-  color: #1e40af;
-  border-color: #93c5fd;
-}
-
-.matches-page .matches-table .result-loss {
-  background: #fee2e2;
-  color: #991b1b;
-  border-color: #fca5a5;
-}
-
-/* Winnaar: groen, ook in donkere modus */
-.matches-page .matches-table .winner-team-name {
-  color: #15803d;
-  font-weight: 800;
-}
-
-/* Geen wedstrijden gevonden */
-.matches-page .matches-table tbody td[colspan="5"] {
-  width: 100%;
-  padding: 32px 16px;
-  color: var(--muted-text-color);
-  font-size: 14px;
+.match-card-team-away {
   text-align: center;
 }
 
+.match-card-favorite {
+  color: #eab308;
+  font-size: 17px;
+  line-height: 1;
+}
+
+.match-card-winner strong {
+  color: #16a34a;
+}
+
+.match-card-score {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  min-width: 76px;
+  font-size: 25px;
+  font-weight: 850;
+  font-variant-numeric: tabular-nums;
+}
+
+.score-winner {
+  color: #16a34a;
+}
+
+.score-divider {
+  color: var(--muted-text-color);
+  font-size: 19px;
+}
+
+.match-card-vs {
+  color: var(--muted-text-color);
+  font-size: 15px;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+}
+
+/* Kaartvoet */
+
+.match-card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  padding-top: 12px;
+  border-top: 1px solid var(--border-color);
+  color: var(--muted-text-color);
+  font-size: 12px;
+  font-weight: 650;
+}
+
+/* Geen wedstrijden */
+
+.matches-empty-state {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 220px;
+  padding: 30px;
+  border: 1px dashed var(--border-color);
+  border-radius: 15px;
+  background: var(--card-background);
+  text-align: center;
+}
+
+.matches-empty-state > span {
+  margin-bottom: 12px;
+  font-size: 35px;
+}
+
+.matches-empty-state h2 {
+  margin: 0 0 8px;
+  font-size: 17px;
+}
+
+.matches-empty-state p {
+  margin: 0;
+  color: var(--muted-text-color);
+  font-size: 13px;
+}
+
 /* Toegankelijkheid */
+
 .matches-page button:focus-visible,
-.matches-page select:focus-visible,
-.matches-page a:focus-visible {
-  outline: 3px solid #60a5fa;
+.matches-page select:focus-visible {
+  outline: 3px solid #2563eb;
   outline-offset: 3px;
+}
+
+/* Responsive */
+
+@media (max-width: 850px) {
+  .matches-page-actions {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .matches-card-list {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 600px) {
+  .matches-page {
+    padding-right: 8px;
+    padding-left: 8px;
+  }
+
+  .matches-page-header {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .matches-page-summary {
+    width: 100%;
+  }
+
+  .matches-summary-item {
+    flex: 1;
+  }
+
+  .matches-filter-panel {
+    padding: 14px;
+  }
+
+  .matches-page-actions {
+    grid-template-columns: 1fr;
+  }
+
+  .matches-status-tabs {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .matches-status-tabs button {
+    padding: 8px 5px;
+    font-size: 12px;
+  }
+
+  .match-card {
+    padding: 14px;
+  }
+
+  .match-card-content {
+    gap: 6px;
+    padding: 18px 0;
+  }
+
+  .match-card-team strong {
+    font-size: 12px;
+  }
+
+  .match-card-score {
+    min-width: 65px;
+    gap: 6px;
+    font-size: 22px;
+  }
+
+  .match-card-date {
+    font-size: 11px;
+  }
 }
 
 /* =========================================================
