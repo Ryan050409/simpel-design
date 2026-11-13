@@ -1,6 +1,13 @@
-
 import type { Player, Match } from "./types.ts";
 import { translations, type Language } from "./translations.ts";
+const formatMatchDate = (date: string) => 
+  new Intl.DateTimeFormat("nl-NL", { 
+    day: "numeric", 
+    month: "long",
+    year: "numeric",
+    hour: "2-digit", 
+    minute: "2-digit",
+  }).format(new Date(date))
 
 type DashboardProps = {
   matches: Match[];
@@ -9,17 +16,25 @@ type DashboardProps = {
   language: Language;
 };
 
-function Dashboard({
-  matches,
-  playerList,
-  team,
-  language,
-}: DashboardProps) {
+function Dashboard({ matches, playerList, team, language }: DashboardProps) {
   const t = translations[language];
 
-  const playedMatches = matches.filter(
+  // Alle wedstrijden van het favoriete team
+  const teamMatches = matches.filter(
     (match) => match.home === team || match.away === team,
   );
+
+  // Alleen wedstrijden met een volledige uitslag
+  const playedMatches = teamMatches.filter(
+    (match) =>
+      typeof match.homeGoals === "number" &&
+      typeof match.awayGoals === "number",
+  );
+
+  // Alleen wedstrijden zonder uitslag
+  const upcomingMatches = teamMatches
+    .filter((match) => match.homeGoals === null && match.awayGoals === null)
+    .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
 
   const getTeamGoals = (match: Match) =>
     match.home === team ? match.homeGoals : match.awayGoals;
@@ -28,7 +43,7 @@ function Dashboard({
     match.home === team ? match.awayGoals : match.homeGoals;
 
   const wins = playedMatches.filter(
-    (match) => getTeamGoals(match) > getOpponentGoals(match),
+    (match) => getTeamGoals(match)! > getOpponentGoals(match)!,
   ).length;
 
   const draws = playedMatches.filter(
@@ -36,18 +51,18 @@ function Dashboard({
   ).length;
 
   const losses = playedMatches.filter(
-    (match) => getTeamGoals(match) < getOpponentGoals(match),
+    (match) => getTeamGoals(match)! < getOpponentGoals(match)!,
   ).length;
 
   const points = wins * 3 + draws;
 
   const goalsFor = playedMatches.reduce(
-    (total, match) => total + getTeamGoals(match),
+    (total, match) => total + getTeamGoals(match)!,
     0,
   );
 
   const goalsAgainst = playedMatches.reduce(
-    (total, match) => total + getOpponentGoals(match),
+    (total, match) => total + getOpponentGoals(match)!,
     0,
   );
 
@@ -66,20 +81,17 @@ function Dashboard({
   const teamPlayers = playerList.filter((player) => player.team === team);
 
   const scorers = teamPlayers.filter((player) => (player.goals ?? 0) > 0);
-  const topGoals = Math.max(
-  0,
-  ...scorers.map((player) => player.goals ?? 0),
-);
+  const topGoals = Math.max(0, ...scorers.map((player) => player.goals ?? 0));
   const topScorers =
     topGoals > 0 ? scorers.filter((player) => player.goals === topGoals) : [];
 
   const assistLeaders = teamPlayers.filter(
-  (player) => (player.assists ?? 0) > 0,
-);
+    (player) => (player.assists ?? 0) > 0,
+  );
   const topAssists = Math.max(
-  0,
-  ...assistLeaders.map((player) => player.assists ?? 0),
-);
+    0,
+    ...assistLeaders.map((player) => player.assists ?? 0),
+  );
   const topAssistPlayers =
     topAssists > 0
       ? assistLeaders.filter((player) => player.assists === topAssists)
@@ -160,8 +172,7 @@ function Dashboard({
           <span className="dashboard-eyebrow">{t.seasonOverview}</span>
           <h1>{t.dashboardTitle}</h1>
           <p>
-            {t.dashboardTeamIntro}{" "}
-            <strong>{team}</strong>.
+            {t.dashboardTeamIntro} <strong>{team}</strong>.
           </p>
         </div>
 
@@ -208,6 +219,40 @@ function Dashboard({
           <p className="dashboard-empty-note">{noMatchesMessage}</p>
         )}
       </section>
+
+<section className="dashboard-panel" aria-labelledby="upcoming-matches-heading">
+  <div className="dashboard-section-heading">
+    <div>
+      <span className="dashboard-eyebrow">📅 Aankomend</span>
+      <h2 id="upcoming-matches-heading">Volgende wedstrijden</h2>
+    </div>
+    <span className="dashboard-section-count">
+      {upcomingMatches.length}
+    </span>
+  </div>
+
+  {upcomingMatches.length > 0 ? (
+    <div className="home-page-match-list">
+      {upcomingMatches.slice(0, 5).map((match) => (
+        <div className="home-page-match" key={match.id}>
+          <div className="home-page-match-teams">
+            <strong>{match.home}</strong>
+            <strong className="home-page-match-score">vs</strong>
+            <strong>{match.away}</strong>
+          </div>
+
+          <span className="home-page-match-date">
+            {formatMatchDate(match.date)}
+          </span>
+        </div>
+      ))}
+    </div>
+  ) : (
+    <p className="dashboard-empty-note">
+      Geen aankomende wedstrijden.
+    </p>
+  )}
+</section>
 
       <section
         className="dashboard-panel"
@@ -330,8 +375,7 @@ function Dashboard({
                     </p>
                   ))}
                   <p>
-                    {topGoals}{" "}
-                    {topGoals === 1 ? t.goal : t.goals}
+                    {topGoals} {topGoals === 1 ? t.goal : t.goals}
                     {topScorers.length > 1 ? t.shared : ""}
                   </p>
                 </>
@@ -355,8 +399,7 @@ function Dashboard({
                     </p>
                   ))}
                   <p>
-                    {topAssists}{" "}
-                    {topAssists === 1 ? t.assist : t.assists}
+                    {topAssists} {topAssists === 1 ? t.assist : t.assists}
                     {topAssistPlayers.length > 1 ? t.shared : ""}
                   </p>
                 </>

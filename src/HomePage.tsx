@@ -13,18 +13,44 @@ type HomePageProps = {
 function HomePage({ matches, playerList, team, language }: HomePageProps) {
   const t = translations[language];
 
-  const teamMatches = matches.filter(
-    (match) => match.home === team || match.away === team,
-  );
 
-  const recentMatches = [...teamMatches]
-    .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
-    .slice(0, 6);
+// Alle wedstrijden van het favoriete team
+const teamMatches = matches.filter(
+  (match) => match.home === team || match.away === team,
+);
 
-  const latestMatch = recentMatches[0];
-  const previousMatches = recentMatches.slice(1);
+// Alleen wedstrijden met een volledige uitslag
+const playedTeamMatches = teamMatches.filter(
+  (match) =>
+    typeof match.homeGoals === "number" &&
+    typeof match.awayGoals === "number",
+);
 
-  const latestMatchResult = latestMatch
+// Alleen wedstrijden zonder uitslag
+const upcomingTeamMatches = teamMatches.filter(
+  (match) =>
+    match.homeGoals === null &&
+    match.awayGoals === null,
+);
+
+// Laatst gespeelde wedstrijden: nieuwste eerst
+const recentMatches = [...playedTeamMatches]
+  .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+  .slice(0, 6);
+
+// Eerstvolgende wedstrijden: oudste datum eerst
+const upcomingMatches = [...upcomingTeamMatches]
+  .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime())
+  .slice(0, 5);
+
+const latestMatch = recentMatches[0];
+const previousMatches = recentMatches.slice(1);
+
+// Resultaat van de laatst gespeelde wedstrijd
+const latestMatchResult =
+  latestMatch &&
+  latestMatch.homeGoals !== null &&
+  latestMatch.awayGoals !== null
     ? latestMatch.homeGoals === latestMatch.awayGoals
       ? t.draw
       : (
@@ -35,19 +61,19 @@ function HomePage({ matches, playerList, team, language }: HomePageProps) {
         ? t.won
         : t.lost
     : null;
-  const wins = teamMatches.filter((match) => {
-    const teamGoals = match.home === team ? match.homeGoals : match.awayGoals;
-    const opponentGoals =
-      match.home === team ? match.awayGoals : match.homeGoals;
+// Statistieken uitsluitend op basis van gespeelde wedstrijden
+const wins = playedTeamMatches.filter((match) => {
+  const teamGoals = match.home === team ? match.homeGoals! : match.awayGoals!;
+  const opponentGoals = match.home === team ? match.awayGoals! : match.homeGoals!;
 
-    return teamGoals > opponentGoals;
-  }).length;
+  return teamGoals > opponentGoals;
+}).length;
 
-  const draws = teamMatches.filter(
-    (match) => match.homeGoals === match.awayGoals,
-  ).length;
+const draws = playedTeamMatches.filter(
+  (match) => match.homeGoals === match.awayGoals,
+).length;
 
-  const losses = teamMatches.length - wins - draws;
+const losses = playedTeamMatches.length - wins - draws;
 
   const teamPlayers = playerList.filter((player) => player.team === team);
 
@@ -107,7 +133,7 @@ function HomePage({ matches, playerList, team, language }: HomePageProps) {
               <strong
                 className={[
                   latestMatch.home === team ? "featured-team-favorite" : "",
-                  latestMatch.homeGoals > latestMatch.awayGoals
+                  latestMatch.homeGoals! > latestMatch.awayGoals!
                     ? "featured-team-winner"
                     : "",
                 ]
@@ -139,7 +165,7 @@ function HomePage({ matches, playerList, team, language }: HomePageProps) {
               <strong
                 className={[
                   latestMatch.away === team ? "featured-team-favorite" : "",
-                  latestMatch.awayGoals > latestMatch.homeGoals
+                  latestMatch.awayGoals! > latestMatch.homeGoals!
                     ? "featured-team-winner"
                     : "",
                 ]
@@ -167,7 +193,7 @@ function HomePage({ matches, playerList, team, language }: HomePageProps) {
       <div className="home-page-stats">
         <div className="home-page-stat">
           <span>{t.matches}</span>
-          <strong>{teamMatches.length}</strong>
+          <strong>{playedTeamMatches.length}</strong>
           <small>{t.totalMatches}</small>
         </div>
 
@@ -248,7 +274,7 @@ function HomePage({ matches, playerList, team, language }: HomePageProps) {
                   : match.homeGoals;
 
                 const result =
-                  teamGoals > opponentGoals
+                  teamGoals! > opponentGoals!
                     ? "W"
                     : teamGoals === opponentGoals
                       ? "G"
@@ -303,6 +329,50 @@ function HomePage({ matches, playerList, team, language }: HomePageProps) {
         </div>
 
         <div className="home-page-side-column">
+
+<div className="home-page-panel">
+  <div className="home-page-panel-heading">
+    <div>
+      <span className="home-page-panel-label">📅 Aankomend</span>
+      <h2>{t.matches}</h2>
+    </div>
+    <Link to="/wedstrijden">{t.allMatches} →</Link>
+  </div>
+
+  {upcomingMatches.length > 0 ? (
+    <div className="home-page-match-list">
+      {upcomingMatches.map((match) => (
+        <div className="home-page-match" key={match.id}>
+          <div className="home-page-match-teams">
+            <div className="home-page-match-team">
+              {teamLogos[match.home] && (
+                <img src={teamLogos[match.home]} alt="" />
+              )}
+              <strong>{match.home}</strong>
+            </div>
+
+            <strong className="home-page-match-score">vs</strong>
+
+            <div className="home-page-match-team home-page-match-opponent">
+              {teamLogos[match.away] && (
+                <img src={teamLogos[match.away]} alt="" />
+              )}
+              <strong>{match.away}</strong>
+            </div>
+          </div>
+
+          <span className="home-page-match-date">{match.date}</span>
+        </div>
+      ))}
+    </div>
+  ) : (
+    <div className="home-page-empty">
+      <span aria-hidden="true">📅</span>
+      <p>Geen aankomende wedstrijden.</p>
+    </div>
+  )}
+</div>
+
           <div className="home-page-panel home-page-team-panel">
             <span className="home-page-panel-label">⭐ {t.favoriteTeam}</span>
             <h2>{team}</h2>
