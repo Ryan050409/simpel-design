@@ -152,3 +152,29 @@ export async function deleteMatchRequest(id: number): Promise<void> {
     throw new Error("Wedstrijd verwijderen is mislukt.");
   }
 }
+
+export type LoginResponse = {
+  tokenType: string;
+  accessToken: string;
+  expiresIn: number;
+  refreshToken: string;
+};
+
+export async function loginRequest(
+  email: string,
+  password: string,
+): Promise<LoginResponse> {
+  const response = await fetch(`${API_URL}/auth/login?useCookies=false`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ email, password }),
+  });
+
+  if (!response.ok) {
+    throw new Error("Inloggen mislukt. Controleer je e-mailadres en wachtwoord.");
+  }
+
+  return response.json();
+}

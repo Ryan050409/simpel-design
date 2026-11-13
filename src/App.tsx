@@ -19,6 +19,7 @@ import HomePage from "./HomePage";
 import HelpPage from "./HelpPage";
 import AdminPage from "./AdminPage";
 import { DEMO_USER } from "./demoUser";
+import { loginRequest } from "./api";
 import { translations, type Language } from "./translations.ts";
 import type { Player, Match, Team } from "./types.ts";
 import { getTeams, getPlayers, getMatches } from "./api";
@@ -48,6 +49,10 @@ function AppContent() {
   const [isLoggedIn, setIsLoggedIn] = useState(() => {
     return localStorage.getItem("demoLoggedIn") === "true";
   });
+  const [showLoginForm, setShowLoginForm] = useState(false);
+  const [loginEmail, setLoginEmail] = useState(" ");
+  const [loginPassword, setLoginPassword] = useState(" ");
+  const [loginError, setLoginError] = useState(" ");
 
   const profileMenuRef = useRef<HTMLDivElement>(null);
   const competitieMenuRef = useRef<HTMLDivElement>(null);
@@ -208,6 +213,29 @@ function AppContent() {
 
   const isAdmin = isLoggedIn && DEMO_USER.role === "admin";
   const t = translations[language];
+const handleLogin = async (event: React.FormEvent<HTMLFormElement>) => {
+  event.preventDefault();
+
+  try {
+    setLoginError("");
+
+    const result = await loginRequest(loginEmail, loginPassword);
+
+    localStorage.setItem("accessToken", result.accessToken);
+
+    setIsLoggedIn(true);
+    setShowLoginForm(false);
+    setShowProfileMenu(false);
+
+    setLoginPassword("");
+  } catch (error) {
+    setLoginError(
+      error instanceof Error
+        ? error.message
+        : "Er is iets misgegaan tijdens het inloggen.",
+    );
+  }
+};
 
   return (
     <div className={`app ${theme}`}>
@@ -430,15 +458,47 @@ function AppContent() {
                   <>
                     <span>{t.notLoggedIn}</span>
 
-                    <button
-                      type="button"
-                      onClick={() => {
-                        setIsLoggedIn(true);
-                        setShowProfileMenu(false);
-                      }}
-                    >
-                      {t.demoLogin}
-                    </button>
+                    {showLoginForm ? (
+                      <form onSubmit={handleLogin}>
+                        <input
+                          type="email"
+                          placeholder="E-mailadres"
+                          value={loginEmail}
+                          onChange={(event) =>
+                            setLoginEmail(event.target.value)
+                          }
+                          required
+                        />
+
+                        <input
+                          type="password"
+                          placeholder="Wachtwoord"
+                          value={loginPassword}
+                          onChange={(event) =>
+                            setLoginPassword(event.target.value)
+                          }
+                          required
+                        />
+
+                        {loginError && <p>{loginError}</p>}
+
+                        <button type="submit">Inloggen</button>
+
+                        <button
+                          type="button"
+                          onClick={() => setShowLoginForm(false)}
+                        >
+                          Annuleren
+                        </button>
+                      </form>
+                    ) : (
+                      <button
+                        type="button"
+                        onClick={() => setShowLoginForm(true)}
+                      >
+                        Inloggen
+                      </button>
+                    )}
                   </>
                 )}
               </div>
@@ -626,6 +686,7 @@ function AppContent() {
 }
 
 function App() {
+  
   return (
     <BrowserRouter>
       <AppContent />
