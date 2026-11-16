@@ -87,8 +87,16 @@ export default function PlayersRankingPage({
         const matchesTeam =
           selectedTeam === "all" || player.team === selectedTeam;
 
+        const positionGroups: Record<string, string[]> = {
+          GK: ["GK"],
+          DEF: ["CB", "LB", "RB", "LWB", "RWB"],
+          MID: ["CDM", "CM", "CAM", "LM", "RM"],
+          ATT: ["LW", "RW", "CF", "ST"],
+        };
+
         const matchesPosition =
-          selectedPosition === "all" || player.position === selectedPosition;
+          selectedPosition === "all" ||
+          positionGroups[selectedPosition]?.includes(player.position);
 
         return matchesSearch && matchesTeam && matchesPosition;
       })
@@ -172,10 +180,10 @@ export default function PlayersRankingPage({
             onChange={(event) => setSelectedPosition(event.target.value)}
           >
             <option value="all">{t.allPositions}</option>
-            <option value="Keeper">{t.goalkeeperPosition}</option>
-            <option value="Verdediger">{t.defenderPosition}</option>
-            <option value="Middenvelder">{t.midfielderPosition}</option>
-            <option value="Aanvaller">{t.forwardPosition}</option>
+            <option value="GK">{t.goalkeeperPosition}</option>
+            <option value="DEF">Verdedigers</option>
+            <option value="MID">Middenvelders</option>
+            <option value="ATT">Aanvallers</option>
           </select>
         </label>
 
@@ -227,7 +235,7 @@ export default function PlayersRankingPage({
                       <td>{player.team}</td>
                       <td>{player.position}</td>
                       {player[activeStatistic]}
-{option?.suffixKey ? t[option.suffixKey] : ""}
+                      {option?.suffixKey ? t[option.suffixKey] : ""}
                     </tr>
                   );
                 })
