@@ -47,22 +47,25 @@ function ClubDetailPage({
   );
 
   // Een wedstrijd telt als gespeeld wanneer beide scores geldig zijn.
-  const playedMatches = clubMatches.filter(
-    (match) =>
-      match.homeGoals !== undefined &&
-      match.awayGoals !== undefined &&
-      Number.isFinite(Number(match.homeGoals)) &&
-      Number.isFinite(Number(match.awayGoals)),
-  );
+ const playedMatches = clubMatches.filter(
+  (match) =>
+    match.homeGoals !== null &&
+    match.awayGoals !== null &&
+    Number.isFinite(match.homeGoals) &&
+    Number.isFinite(match.awayGoals),
+);
 
-  const wins = playedMatches.filter((match) => {
-    if (match.home === club.name) {
-      return match.homeGoals > match.awayGoals;
-    }
+const wins = playedMatches.filter((match) => {
+  if (match.homeGoals === null || match.awayGoals === null) {
+    return false;
+  }
 
-    return match.awayGoals > match.homeGoals;
-  }).length;
+  if (match.home === club.name) {
+    return match.homeGoals > match.awayGoals;
+  }
 
+  return match.awayGoals > match.homeGoals;
+}).length;
   const draws = playedMatches.filter(
     (match) => match.homeGoals === match.awayGoals,
   ).length;

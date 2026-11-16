@@ -151,15 +151,18 @@ const labels = {
   },
 };
 
-function hasValidScore(match: Match): boolean {
-  return (
-    Number.isInteger(match.homeGoals) &&
-    Number.isInteger(match.awayGoals) &&
+function hasValidScore( 
+  match: Match,
+): match is Match & { homeGoals: number; awayGoals: number} { 
+  return ( 
+    match.homeGoals !== null &&
+    match.awayGoals !== null && 
+    Number.isInteger(match.homeGoals) && 
+    Number.isInteger(match.awayGoals) && 
     match.homeGoals >= 0 &&
     match.awayGoals >= 0
   );
 }
-
 const teamLogos: Record<string, string> = {
   "ADO Den Haag": "/ADODenHaag_Logo.png",
   Ajax: "/Ajax_Logo.png",

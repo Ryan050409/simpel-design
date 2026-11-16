@@ -18,8 +18,7 @@ import StandingsPage from "./StandingsPage";
 import HomePage from "./HomePage";
 import HelpPage from "./HelpPage";
 import AdminPage from "./AdminPage";
-import { DEMO_USER } from "./demoUser";
-import { loginRequest } from "./api";
+import { loginRequest, getCurrentUserRequest } from "./api";
 import { translations, type Language } from "./translations.ts";
 import type { Player, Match, Team } from "./types.ts";
 import { getTeams, getPlayers, getMatches } from "./api";
@@ -47,8 +46,11 @@ function AppContent() {
   });
 
   const [isLoggedIn, setIsLoggedIn] = useState(() => {
-    return localStorage.getItem("demoLoggedIn") === "true";
+    return localStorage.getItem("accessToken") !== null;
   });
+  const [currentUser, setCurrentUser] = useState < 
+  Awaited<ReturnType<typeof getCurrentUserRequest>> | null 
+  >(null);
   const [showLoginForm, setShowLoginForm] = useState(false);
   const [loginEmail, setLoginEmail] = useState(" ");
   const [loginPassword, setLoginPassword] = useState(" ");
@@ -127,7 +129,23 @@ function AppContent() {
   useEffect(() => {
     localStorage.setItem("demoLoggedIn", String(isLoggedIn));
   }, [isLoggedIn]);
+  useEffect(() => { 
+    if(!isLoggedIn) { 
+      setCurrentUser(null);
+      return;
+    }
 
+    getCurrentUserRequest()
+    .then((user) => { 
+      setCurrentUser(user);
+    })
+    .catch((error) => { 
+      console.error("Gebruiker ophalen mislukt:", error);
+      setCurrentUser(null);
+      setIsLoggedIn(false);
+      localStorage.removeItem("accessToken");
+    });
+  }, [isLoggedIn]);
   const closeNavigationMenus = () => {
     setShowMobileMenu(false);
     setShowProfileMenu(false);
@@ -204,14 +222,16 @@ function AppContent() {
   useEffect(() => {
     if (
       location.pathname === "/admin" &&
-      (!isLoggedIn || DEMO_USER.role !== "admin")
-    ) {
+      (!isLoggedIn || 
+        (currentUser !== null && !currentUser.roles.includes("Admin")))
+      ){
       window.history.replaceState(null, "", "/");
       window.dispatchEvent(new PopStateEvent("popstate"));
     }
-  }, [isLoggedIn, location.pathname]);
+  }, [isLoggedIn, currentUser, location.pathname]);
 
-  const isAdmin = isLoggedIn && DEMO_USER.role === "admin";
+  const isAdmin = 
+  isLoggedIn && currentUser?.roles.includes("Admin") === true;
   const t = translations[language];
 const handleLogin = async (event: React.FormEvent<HTMLFormElement>) => {
   event.preventDefault();
@@ -635,7 +655,7 @@ const handleLogin = async (event: React.FormEvent<HTMLFormElement>) => {
           element={
             isAdmin ? (
               <AdminPage
-                role={DEMO_USER.role}
+                role={isAdmin ? "admin" : "player"}
                 language={language}
                 playersCount={playerList.length}
                 matchesCount={matches.length}

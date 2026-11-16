@@ -1,6 +1,6 @@
 import type { Team, Player, Match } from "./types";
 
-const API_URL = "http://localhost:5001/api";
+const API_URL = "http://localhost:5000/api";
 //Teams ophalen uit database //
 export async function getTeams(): Promise<Team[]> {
   const response = await fetch(`${API_URL}/Teams`);
@@ -176,5 +176,25 @@ export async function loginRequest(
     throw new Error("Inloggen mislukt. Controleer je e-mailadres en wachtwoord.");
   }
 
+  return response.json();
+}
+export type CurrentUser = { 
+  id: string, 
+  email: string; 
+  roles: string[];
+};
+
+export async function getCurrentUserRequest(): Promise<CurrentUser> { 
+  const token = localStorage.getItem("accessToken"); 
+
+  const response = await fetch (`${API_URL}/auth/me`, { 
+    headers: { 
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  if (!response.ok) { 
+    throw new Error("Gebruikersgegevens ophalen mislukt.")
+  }
   return response.json();
 }
