@@ -21,6 +21,13 @@ function getLocale(language: Language) {
   return locales[language];
 }
 
+function formatCount(template: string, count: number, language: Language) {
+  return template.replace(
+    "{count}",
+    new Intl.NumberFormat(getLocale(language)).format(count),
+  );
+}
+
 function formatMatchDate(date: string, language: Language) {
   const parsedDate = new Date(date);
 
@@ -130,12 +137,12 @@ function MatchesPage({ matches, team, language }: MatchesPageProps) {
 
         <div className="matches-page-summary">
           <div className="matches-summary-item">
-            <span>Gespeeld</span>
+            <span>{t.played}</span>
             <strong>{playedCount}</strong>
           </div>
 
           <div className="matches-summary-item">
-            <span>Aankomend</span>
+            <span>{t.upcomingMatches}</span>
             <strong>{upcomingCount}</strong>
           </div>
         </div>
@@ -143,8 +150,12 @@ function MatchesPage({ matches, team, language }: MatchesPageProps) {
 
       <section className="matches-filter-panel">
         <div className="matches-filter-heading">
-          <h2>Wedstrijden filteren</h2>
-          <span>{sortedMatches.length} wedstrijden</span>
+          <h2>{t.matchesFilterTitle}</h2>
+          <span>
+            {sortedMatches.length} {sortedMatches.length === 1
+              ? t.matchesCountSingular
+              : t.matchesCountPlural}
+          </span>
         </div>
 
         <div className="matches-page-actions">
@@ -154,8 +165,12 @@ function MatchesPage({ matches, team, language }: MatchesPageProps) {
             <details className="team-multiselect">
               <summary>
                 {selectedTeams.length === 0
-                  ? "Alle teams"
-                  : `${selectedTeams.length} teams geselecteerd`}
+                  ? t.allTeams
+                  : formatCount(
+                      t.selectedTeamsCount,
+                      selectedTeams.length,
+                      language,
+                    )}
               </summary>
 
               <div className="team-multiselect-options">
@@ -177,19 +192,23 @@ function MatchesPage({ matches, team, language }: MatchesPageProps) {
                 ))}
 
                 <button type="button" onClick={() => setSelectedTeams([])}>
-                  Alle teams tonen
+                  {t.showAllTeams}
                 </button>
               </div>
             </details>
           </div>
           <div className="match-filter">
-            <label>Speelronde</label>
+            <label>{t.matchdayLabel}</label>
 
             <details className="team-multiselect">
               <summary>
                 {selectedMatchDays.length === 0
-                  ? "Alle speelrondes"
-                  : `${selectedMatchDays.length} speelrondes geselecteerd`}
+                  ? t.allMatchdays
+                  : formatCount(
+                      t.selectedMatchdaysCount,
+                      selectedMatchDays.length,
+                      language,
+                    )}
               </summary>
 
               <div className="team-multiselect-options">
@@ -206,19 +225,19 @@ function MatchesPage({ matches, team, language }: MatchesPageProps) {
                         );
                       }}
                     />
-                    Speelronde {matchday}
+                    {t.matchdayLabel} {matchday}
                   </label>
                 ))}
 
                 <button type="button" onClick={() => setSelectedMatchDays([])}>
-                  Alle speelrondes tonen
+                  {t.showAllMatchdays}
                 </button>
               </div>
             </details>
           </div>
 
           <div className="match-filter">
-            <label htmlFor="match-venue-filter">Thuis / uit</label>
+            <label htmlFor="match-venue-filter">{t.matchVenueFilter}</label>
             <select
               id="match-venue-filter"
               value={venueFilter}
@@ -226,9 +245,9 @@ function MatchesPage({ matches, team, language }: MatchesPageProps) {
                 setVenueFilter(event.target.value as "all" | "home" | "away")
               }
             >
-              <option value="all">Alle wedstrijden</option>
-              <option value="home">Thuiswedstrijden</option>
-              <option value="away">Uitwedstrijden</option>
+              <option value="all">{t.allMatches}</option>
+              <option value="home">{t.matchHome}</option>
+              <option value="away">{t.matchAway}</option>
             </select>
           </div>
           <div className="match-filter">
@@ -246,14 +265,17 @@ function MatchesPage({ matches, team, language }: MatchesPageProps) {
           </div>
         </div>
 
-        <div className="matches-status-tabs" aria-label="Wedstrijdstatus">
+        <div
+          className="matches-status-tabs"
+          aria-label={t.matchStatusFilter}
+        >
           <button
             type="button"
             className={matchStatus === "all" ? "active" : ""}
             aria-pressed={matchStatus === "all"}
             onClick={() => setMatchStatus("all")}
           >
-            Alles
+            {t.allMatchesStatus}
           </button>
 
           <button
@@ -262,7 +284,7 @@ function MatchesPage({ matches, team, language }: MatchesPageProps) {
             aria-pressed={matchStatus === "upcoming"}
             onClick={() => setMatchStatus("upcoming")}
           >
-            Aankomend
+            {t.upcomingMatches}
           </button>
 
           <button
@@ -271,7 +293,7 @@ function MatchesPage({ matches, team, language }: MatchesPageProps) {
             aria-pressed={matchStatus === "played"}
             onClick={() => setMatchStatus("played")}
           >
-            Gespeeld
+            {t.played}
           </button>
         </div>
       </section>
@@ -280,8 +302,7 @@ function MatchesPage({ matches, team, language }: MatchesPageProps) {
         {sortedMatches.length === 0 ? (
           <div className="matches-empty-state">
             <span>⚽</span>
-            <h2>Geen wedstrijden gevonden</h2>
-            <p>{t.noMatchesFound}.</p>
+            <h2>{t.noMatchesFound}</h2>
           </div>
         ) : (
           sortedMatches.map((match) => {
@@ -311,7 +332,7 @@ function MatchesPage({ matches, team, language }: MatchesPageProps) {
 
                     <span className="match-card-matchday">
                       <span className="match-card-matchday-label">
-                        Speelronde
+                        {t.matchdayLabel}
                       </span>
                       <strong>{match.matchday}</strong>
                     </span>
@@ -322,7 +343,7 @@ function MatchesPage({ matches, team, language }: MatchesPageProps) {
                       isUpcoming ? "status-upcoming" : "status-played"
                     }`}
                   >
-                    {isUpcoming ? "Aankomend" : t.played}
+                    {isUpcoming ? t.upcomingMatches : t.played}
                   </span>
                 </div>
 
@@ -348,7 +369,7 @@ function MatchesPage({ matches, team, language }: MatchesPageProps) {
                       className="match-card-team-logo"
                     />
                     <strong>{match.home}</strong>
-                    <span className="match-card-team-role">Thuis</span>
+                    <span className="match-card-team-role">{t.matchHome}</span>
                   </div>
 
                   <div className="match-card-score">
@@ -387,7 +408,7 @@ function MatchesPage({ matches, team, language }: MatchesPageProps) {
                       className="match-card-team-logo"
                     />
                     <strong>{match.away}</strong>{" "}
-                    <span className="match-card-team-role">Uit</span>
+                    <span className="match-card-team-role">{t.matchAway}</span>
                   </div>
                 </div>
               </article>
