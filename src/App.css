@@ -1596,7 +1596,8 @@ textarea::placeholder {
   font-weight: 700;
 }
 
-.match-filter select {
+.match-filter select,
+.match-filter .team-multiselect summary {
   box-sizing: border-box;
   width: 100%;
   min-width: 0;
@@ -1608,10 +1609,14 @@ textarea::placeholder {
   color: var(--text-color);
   font-family: inherit;
   font-size: 13px;
+}
+
+.match-filter select {
   cursor: pointer;
 }
 
-.match-filter select:focus-visible {
+.match-filter select:focus-visible,
+.match-filter .team-multiselect summary:focus-visible {
   outline: 3px solid var(--accent);
   outline-offset: 2px;
 }
@@ -6413,7 +6418,8 @@ textarea::placeholder {
     font-size: 12px;
   }
 
-  .matches-page .match-filter select {
+  .matches-page .match-filter select,
+  .matches-page .match-filter .team-multiselect summary {
     min-height: 42px;
     font-size: 13px;
   }
@@ -9175,4 +9181,190 @@ a:focus-visible {
   .player-stats span {
     font-size: 9px;
   }
+}
+/* Team meerkeuzemenu */
+.team-multiselect {
+  position: relative;
+  width: 100%;
+  font-size: 0.9rem;
+}
+
+.team-multiselect summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 11px 14px;
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  background: var(--card-background);
+  color: var(--text-color);
+  cursor: pointer;
+  list-style: none;
+  user-select: none;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    background 0.2s ease,
+    transform 0.15s ease;
+}
+
+.team-multiselect summary::-webkit-details-marker {
+  display: none;
+}
+
+.team-multiselect summary:hover {
+  border-color: var(--primary-color);
+}
+
+.team-multiselect summary:active {
+  transform: scale(0.99);
+}
+
+.team-multiselect summary:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.team-multiselect summary::after {
+  content: "⌄";
+  font-size: 1.1rem;
+  transition: transform 0.2s ease;
+}
+
+.team-multiselect[open] summary {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(128, 128, 128, 0.12);
+}
+
+.team-multiselect[open] summary::after {
+  transform: rotate(180deg);
+}
+
+.team-multiselect-options {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  z-index: 30;
+  width: 100%;
+  max-height: 340px;
+  overflow-y: auto;
+  padding: 6px;
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  background: var(--card-background);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.18);
+  transform-origin: top center;
+  animation: teamDropdownOpen 0.22s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+.team-multiselect-options label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 40px;
+  padding: 8px 10px;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  color: var(--text-color);
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition:
+    background 0.15s ease,
+    border-color 0.15s ease,
+    color 0.15s ease;
+}
+
+.team-multiselect-options label:hover {
+  background: rgba(128, 128, 128, 0.12);
+}
+
+.team-multiselect-options label:has(input:checked) {
+  border-color: color-mix(in srgb, var(--accent) 35%, transparent);
+  background: color-mix(in srgb, var(--accent) 12%, var(--card-background));
+  font-weight: 650;
+}
+
+.team-multiselect-options input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  flex: 0 0 18px;
+  margin: 0;
+  accent-color: var(--accent);
+  cursor: pointer;
+}
+
+.team-multiselect-options button {
+  position: sticky;
+  bottom: -6px;
+  width: 100%;
+  margin-top: 8px;
+  padding: 11px 10px;
+  border-top: 1px solid var(--border-color);
+  border-right: 1px solid var(--border-color);
+  border-bottom: 1px solid var(--border-color);
+  border-left: 1px solid var(--border-color);
+  border-radius: 8px;
+  background: var(--card-background);
+  color: var(--text-color);
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.team-multiselect-options button:hover {
+  background: rgba(128, 128, 128, 0.12);
+  border-color: var(--primary-color);
+}
+
+@keyframes teamDropdownOpen {
+  from {
+    opacity: 0;
+    transform: translateY(-6px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .team-multiselect summary,
+  .team-multiselect summary::after {
+    transition: none;
+  }
+
+  .team-multiselect-options {
+    animation: none;
+  }
+}
+.match-card-meta {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.match-card-matchday {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 3px 8px;
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  background: var(--secondary-background);
+  color: var(--muted-text-color);
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 1.3;
+  white-space: nowrap;
+}
+
+.match-card-matchday strong {
+  color: var(--text-color);
+  font-weight: 750;
 }

@@ -46,7 +46,14 @@ function formatMatchDate(date: string, language: Language) {
 function MatchesPage({ matches, team, language }: MatchesPageProps) {
   const t = translations[language];
 
-  const [matchView, setMatchView] = useState<"favorite" | "all">("favorite");
+  const [selectedTeams, setSelectedTeams] = useState<string[]>([team]);
+  const [selectedMatchDays, setSelectedMatchDays] = useState<number[]>([]);
+  const availableTeams = Array.from(
+    new Set(matches.flatMap((match) => [match.home, match.away])),
+  ).sort((a, b) => a.localeCompare(b));
+  const availableMatchDays = Array.from(
+    new Set(matches.map((match) => match.matchday).filter((day) => day > 0)),
+  ).sort((a, b) => a - b);
   const [sortOrder, setSortOrder] = useState<"newest" | "oldest">("newest");
   const [matchStatus, setMatchStatus] = useState<"all" | "upcoming" | "played">(
     "all",
@@ -56,15 +63,28 @@ function MatchesPage({ matches, team, language }: MatchesPageProps) {
     "all",
   );
 
-  const visibleMatches =
-    matchView === "favorite"
-      ? matches.filter((match) => match.home === team || match.away === team)
-      : matches;
+  const visibleMatches = matches.filter((match) => {
+    const matchesTeam =
+      selectedTeams.length === 0 ||
+      selectedTeams.includes(match.home) ||
+      selectedTeams.includes(match.away);
+
+    const matchesMatchday =
+      selectedMatchDays.length === 0 ||
+      selectedMatchDays.includes(match.matchday);
+
+    return matchesTeam && matchesMatchday;
+  });
 
   const venueFilteredMatches = visibleMatches.filter((match) => {
-    if (venueFilter === "home") return match.home === team;
-    if (venueFilter === "away") return match.away === team;
+    if (selectedTeams.length === 0 || venueFilter === "all") return true;
 
+    if (venueFilter === "home") {
+      return selectedTeams.includes(match.home);
+    }
+    if (venueFilter === "away") {
+      return selectedTeams.includes(match.away);
+    }
     return true;
   });
 
@@ -129,17 +149,72 @@ function MatchesPage({ matches, team, language }: MatchesPageProps) {
 
         <div className="matches-page-actions">
           <div className="match-filter">
-            <label htmlFor="match-view">{t.showMatches}</label>
-            <select
-              id="match-view"
-              value={matchView}
-              onChange={(event) =>
-                setMatchView(event.target.value as "favorite" | "all")
-              }
-            >
-              <option value="favorite">{t.favoriteTeamOption}</option>
-              <option value="all">{t.allTeams}</option>
-            </select>
+            <label>{t.showMatches}</label>
+
+            <details className="team-multiselect">
+              <summary>
+                {selectedTeams.length === 0
+                  ? "Alle teams"
+                  : `${selectedTeams.length} teams geselecteerd`}
+              </summary>
+
+              <div className="team-multiselect-options">
+                {availableTeams.map((teamName) => (
+                  <label key={teamName}>
+                    <input
+                      type="checkbox"
+                      checked={selectedTeams.includes(teamName)}
+                      onChange={(event) => {
+                        setSelectedTeams((current) =>
+                          event.target.checked
+                            ? [...current, teamName]
+                            : current.filter((name) => name !== teamName),
+                        );
+                      }}
+                    />
+                    {teamName}
+                  </label>
+                ))}
+
+                <button type="button" onClick={() => setSelectedTeams([])}>
+                  Alle teams tonen
+                </button>
+              </div>
+            </details>
+          </div>
+          <div className="match-filter">
+            <label>Speelronde</label>
+
+            <details className="team-multiselect">
+              <summary>
+                {selectedMatchDays.length === 0
+                  ? "Alle speelrondes"
+                  : `${selectedMatchDays.length} speelrondes geselecteerd`}
+              </summary>
+
+              <div className="team-multiselect-options">
+                {availableMatchDays.map((matchday) => (
+                  <label key={matchday}>
+                    <input
+                      type="checkbox"
+                      checked={selectedMatchDays.includes(matchday)}
+                      onChange={(event) => {
+                        setSelectedMatchDays((current) =>
+                          event.target.checked
+                            ? [...current, matchday]
+                            : current.filter((day) => day !== matchday),
+                        );
+                      }}
+                    />
+                    Speelronde {matchday}
+                  </label>
+                ))}
+
+                <button type="button" onClick={() => setSelectedMatchDays([])}>
+                  Alle speelrondes tonen
+                </button>
+              </div>
+            </details>
           </div>
 
           <div className="match-filter">
@@ -229,9 +304,18 @@ function MatchesPage({ matches, team, language }: MatchesPageProps) {
             return (
               <article key={match.id} className="match-card">
                 <div className="match-card-top">
-                  <span className="match-card-date">
-                    {formatMatchDate(match.date, language)}
-                  </span>
+                  <div className="match-card-meta">
+                    <span className="match-card-date">
+                      {formatMatchDate(match.date, language)}
+                    </span>
+
+                    <span className="match-card-matchday">
+                      <span className="match-card-matchday-label">
+                        Speelronde
+                      </span>
+                      <strong>{match.matchday}</strong>
+                    </span>
+                  </div>
 
                   <span
                     className={`match-card-status ${
