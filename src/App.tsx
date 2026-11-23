@@ -126,9 +126,6 @@ function AppContent() {
     localStorage.setItem("language", language);
   }, [language]);
 
-  useEffect(() => {
-    localStorage.setItem("demoLoggedIn", String(isLoggedIn));
-  }, [isLoggedIn]);
   useEffect(() => { 
     if(!isLoggedIn) { 
       setCurrentUser(null);
@@ -459,7 +456,7 @@ const handleLogin = async (event: React.FormEvent<HTMLFormElement>) => {
 
                 {isLoggedIn ? (
                   <>
-                    <span>{t.demoUserName}</span>
+                    <span>{currentUser?.email ?? "Gebruiker laden..."}</span>
                     <small>
                       {t.role}: {isAdmin ? t.administrator : t.playerRole}
                     </small>
@@ -467,7 +464,9 @@ const handleLogin = async (event: React.FormEvent<HTMLFormElement>) => {
                     <button
                       type="button"
                       onClick={() => {
+                        localStorage.removeItem("accessToken");
                         setIsLoggedIn(false);
+                        setCurrentUser(null);
                         setShowProfileMenu(false);
                       }}
                     >

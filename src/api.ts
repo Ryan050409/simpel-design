@@ -28,15 +28,22 @@ export async function createTeamRequest(name: string): Promise<Team> {
   return response.json();
 }
 //Teams verwijderen //
+
 export async function deleteTeamRequest(id: number): Promise<void> {
+  const token = localStorage.getItem("accessToken");
+
   const response = await fetch(`${API_URL}/Teams/${id}`, {
     method: "DELETE",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
   });
 
   if (!response.ok) {
     throw new Error("Team verwijderen is mislukt.");
   }
 }
+
 //Spelers ophalen uit database //
 export async function getPlayers(): Promise<Player[]> {
   const response = await fetch(`${API_URL}/Players`);
@@ -48,13 +55,17 @@ export async function getPlayers(): Promise<Player[]> {
   return response.json();
 }
 //Spelers aanmaken //
+
 export async function createPlayerRequest(
   player: Omit<Player, "id">,
 ): Promise<Player> {
+  const token = localStorage.getItem("accessToken");
+
   const response = await fetch(`${API_URL}/Players`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
     },
     body: JSON.stringify(player),
   });
@@ -65,25 +76,37 @@ export async function createPlayerRequest(
 
   return response.json();
 }
+
 //Spelers verwijderen //
+
 export async function deletePlayerRequest(id: number): Promise<void> {
+  const token = localStorage.getItem("accessToken");
+
   const response = await fetch(`${API_URL}/Players/${id}`, {
     method: "DELETE",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
   });
 
   if (!response.ok) {
     throw new Error("Speler verwijderen is mislukt.");
   }
 }
+
 //Spelers updaten //
+
 export async function updatePlayerRequest(
   id: number,
   player: Omit<Player, "id">,
 ): Promise<Player> {
+  const token = localStorage.getItem("accessToken");
+
   const response = await fetch(`${API_URL}/Players/${id}`, {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
     },
     body: JSON.stringify(player),
   });
@@ -94,6 +117,7 @@ export async function updatePlayerRequest(
 
   return response.json();
 }
+
 // Wedstrijden ophalen uit database
 export async function getMatches(): Promise<Match[]> {
   const response = await fetch(`${API_URL}/Matches`);
@@ -108,10 +132,13 @@ export async function getMatches(): Promise<Match[]> {
 export async function createMatchRequest(
   match: Omit<Match, "id">,
 ): Promise<Match> {
+  const token = localStorage.getItem("accessToken");
+
   const response = await fetch(`${API_URL}/Matches`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
     },
     body: JSON.stringify(match),
   });
@@ -127,10 +154,13 @@ export async function updateMatchRequest(
   id: number,
   match: Omit<Match, "id">,
 ): Promise<void> {
+  const token = localStorage.getItem("accessToken");
+
   const response = await fetch(`${API_URL}/Matches/${id}`, {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
     },
     body: JSON.stringify({
       id,
@@ -144,15 +174,19 @@ export async function updateMatchRequest(
 }
 // Wedstrijd verwijderen //
 export async function deleteMatchRequest(id: number): Promise<void> {
+  const token = localStorage.getItem("accessToken");
+
   const response = await fetch(`${API_URL}/Matches/${id}`, {
     method: "DELETE",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
   });
 
   if (!response.ok) {
     throw new Error("Wedstrijd verwijderen is mislukt.");
   }
 }
-
 export type LoginResponse = {
   tokenType: string;
   accessToken: string;
