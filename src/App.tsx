@@ -51,6 +51,7 @@ function AppContent() {
   const [currentUser, setCurrentUser] = useState < 
   Awaited<ReturnType<typeof getCurrentUserRequest>> | null 
   >(null);
+  const [isAuthLoading, setIsAuthLoading] = useState(true);
   const [showLoginForm, setShowLoginForm] = useState(false);
   const [loginEmail, setLoginEmail] = useState(" ");
   const [loginPassword, setLoginPassword] = useState(" ");
@@ -126,23 +127,29 @@ function AppContent() {
     localStorage.setItem("language", language);
   }, [language]);
 
-  useEffect(() => { 
-    if(!isLoggedIn) { 
-      setCurrentUser(null);
-      return;
-    }
+useEffect(() => {
+  if (!isLoggedIn) {
+    setCurrentUser(null);
+    setIsAuthLoading(false);
+    return;
+  }
 
-    getCurrentUserRequest()
-    .then((user) => { 
+  setIsAuthLoading(true);
+
+  getCurrentUserRequest()
+    .then((user) => {
       setCurrentUser(user);
     })
-    .catch((error) => { 
+    .catch((error) => {
       console.error("Gebruiker ophalen mislukt:", error);
       setCurrentUser(null);
       setIsLoggedIn(false);
       localStorage.removeItem("accessToken");
+    })
+    .finally(() => {
+      setIsAuthLoading(false);
     });
-  }, [isLoggedIn]);
+}, [isLoggedIn]);
   const closeNavigationMenus = () => {
     setShowMobileMenu(false);
     setShowProfileMenu(false);
@@ -652,7 +659,9 @@ const handleLogin = async (event: React.FormEvent<HTMLFormElement>) => {
         <Route
           path="/admin"
           element={
-            isAdmin ? (
+            isAuthLoading ? ( 
+            <div>Laden...</div>
+            ) : isAdmin ? (
               <AdminPage
                 role={isAdmin ? "admin" : "player"}
                 language={language}
