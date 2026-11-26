@@ -2479,9 +2479,20 @@ textarea::placeholder {
 }
 
 .lineup-player-name {
-  padding: 2px 4px;
-  border-radius: 4px;
-  background: rgba(0, 0, 0, 0.75);
+  display: block;
+  width: max-content;
+  max-width: 120px;
+  padding: 3px 6px;
+  border-radius: 5px;
+  background: rgba(0, 0, 0, 0.82);
+  color: white;
+  font-size: 10px;
+  font-weight: 600;
+  line-height: 1.2;
+  text-align: center;
+  white-space: normal;
+  overflow-wrap: anywhere;
+  box-sizing: border-box;
 }
 
 .lineup-player-position {
@@ -2608,6 +2619,72 @@ textarea::placeholder {
   .lineup-team-selector button span {
     font-size: 12px;
     text-align: center;
+  }
+}
+/* Mobiele opstelling - ruimere weergave */
+
+@media (max-width: 600px) {
+  .lineup-pitch {
+    width: 100%;
+    max-width: 100%;
+    aspect-ratio: 4 / 5;
+    margin: 16px auto;
+  }
+
+  .lineup-player {
+    width: 25%;
+    font-size: 10px;
+  }
+
+  .lineup-player-number {
+    width: 30px;
+    height: 30px;
+    font-size: 12px;
+    margin-bottom: 4px;
+  }
+
+  .lineup-player-name {
+    width: max-content;
+    max-width: 100px;
+    padding: 4px 6px;
+    font-size: 10px;
+    line-height: 1.25;
+    overflow-wrap: break-word;
+    word-break: normal;
+  }
+
+  .lineup-player-position {
+    font-size: 9px;
+    margin-top: 2px;
+  }
+
+  .lineup-team-selector button img {
+    width: 38px;
+    height: 38px;
+  }
+
+  .lineup-substitutes {
+    grid-template-columns: 1fr;
+    gap: 12px;
+    padding: 12px;
+  }
+
+  .lineup-substitute-player {
+    font-size: 13px;
+    padding: 11px 0;
+  }
+
+  .substitute-number {
+    flex-basis: 30px;
+    height: 30px;
+  }
+
+  .substitute-name {
+    font-size: 13px;
+  }
+
+  .substitute-replaced {
+    font-size: 12px;
   }
 }
 /* Wisselspelers onder het voetbalveld */
