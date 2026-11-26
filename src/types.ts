@@ -82,3 +82,14 @@ export type TeamLineup = {
   substitutes_used: LineupPlayer[];
   unused_substitutes: LineupPlayer[];
 };
+export type AuditLog = {
+  id: number;
+  userId: string;
+  userEmail: string;
+  action: string;
+  entityType: string;
+  entityId: number;
+  oldValues: string | null;
+  newValues: string | null;
+  createdAt: string;
+};

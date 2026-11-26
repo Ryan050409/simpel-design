@@ -22,3 +22,17 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# .NET backend
+**/bin/
+**/obj/
+**/.vs/
+**/*.user
+**/*.suo
+**/*.mdf
+**/*.ldf
+
+# Gevoelige backendconfiguratie
+/FootballTracker.API/appsettings*.json
+/FootballTracker.API/*.http
+/FootballTracker.API/Properties/launchSettings.json

@@ -1,4 +1,4 @@
-import type { Team, Player, Match } from "./types";
+import type { Team, Player, Match, AuditLog } from "./types";
 
 const API_URL = "http://localhost:5001/api";
 //Teams ophalen uit database //
@@ -13,19 +13,21 @@ export async function getTeams(): Promise<Team[]> {
 }
 //Team aanmaken //
 export async function createTeamRequest(name: string): Promise<Team> {
-  const response = await fetch(`${API_URL}/Teams`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ name }),
-  });
+const token = localStorage.getItem("accessToken"); 
 
-  if (!response.ok) {
-    throw new Error("Team toevoegen is mislukt.");
-  }
+const response = await fetch(`${API_URL}/Teams`,{ 
+  method: "POST",
+  headers: { 
+    "Content-Type": "application/json",
+    Authorization: `Bearer ${token}`,
+  },
+  body: JSON.stringify({ name}),
+});
 
-  return response.json();
+if (!response.ok){ 
+  throw new Error(`Team toevoegen is mislukt (${response.status}).`);
+}
+return response.json();
 }
 //Teams verwijderen //
 
@@ -207,28 +209,46 @@ export async function loginRequest(
   });
 
   if (!response.ok) {
-    throw new Error("Inloggen mislukt. Controleer je e-mailadres en wachtwoord.");
+    throw new Error(
+      "Inloggen mislukt. Controleer je e-mailadres en wachtwoord.",
+    );
   }
 
   return response.json();
 }
-export type CurrentUser = { 
-  id: string, 
-  email: string; 
+export type CurrentUser = {
+  id: string;
+  email: string;
   roles: string[];
 };
 
-export async function getCurrentUserRequest(): Promise<CurrentUser> { 
-  const token = localStorage.getItem("accessToken"); 
+export async function getCurrentUserRequest(): Promise<CurrentUser> {
+  const token = localStorage.getItem("accessToken");
 
-  const response = await fetch (`${API_URL}/auth/me`, { 
-    headers: { 
+  const response = await fetch(`${API_URL}/auth/me`, {
+    headers: {
       Authorization: `Bearer ${token}`,
     },
   });
 
-  if (!response.ok) { 
-    throw new Error("Gebruikersgegevens ophalen mislukt.")
+  if (!response.ok) {
+    throw new Error("Gebruikersgegevens ophalen mislukt.");
   }
+  return response.json();
+}
+
+export async function getAuditLogs(): Promise<AuditLog[]> {
+  const token = localStorage.getItem("accessToken");
+
+  const response = await fetch(`${API_URL}/AuditLogs`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  if (!response.ok) {
+    throw new Error(`Activiteitenlogboek ophalen mislukt (${response.status}).`);
+  }
+
   return response.json();
 }

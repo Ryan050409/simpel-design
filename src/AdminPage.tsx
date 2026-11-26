@@ -1,6 +1,6 @@
 import { useState } from "react";
 import type { Dispatch, SetStateAction, FormEvent } from "react";
-
+import AuditLogPanel from "./AuditLogPanel.tsx";
 import type { UserRole, Permission } from "./permissions";
 import { hasPermission, canAccessAdminPage } from "./permissions";
 
@@ -170,7 +170,7 @@ export default function AdminPage({
   const [showTeamForm, setShowTeamForm] = useState(false);
   const [newTeamName, setNewTeamName] = useState("");
   const [teamError, setTeamError] = useState("");
-
+  const [auditRefreshKey, setAuditRefreshKey] = useState(0);
   const canManagePlayers = hasPermission(role, "players.manage");
   const canManageMatches = hasPermission(role, "matches.manage");
   const canManageTeams = hasPermission(role, "teams.manage");
@@ -213,7 +213,9 @@ export default function AdminPage({
     closePlayerForm();
     closeMatchForm();
   }
-
+  function refreshAuditLogs() {
+    setAuditRefreshKey((current) => current + 1);
+  }
   function exportData() {
     const data = {
       players: playerList,
@@ -259,7 +261,7 @@ export default function AdminPage({
     if (!confirmed) return;
     try {
       await deletePlayerRequest(player.id);
-
+      refreshAuditLogs();
       setPlayerList((current) =>
         current.filter((item) => item.id !== player.id),
       );
@@ -288,6 +290,7 @@ export default function AdminPage({
 
         setPlayerList((current) => [...current, createdPlayer]);
       }
+      refreshAuditLogs();
     } catch (error) {
       console.error("Fout bij opslaan van speler:", error);
       throw error;
@@ -320,7 +323,7 @@ export default function AdminPage({
 
     try {
       await deleteMatchRequest(match.id);
-
+      refreshAuditLogs();
       setMatches((currentMatches) =>
         currentMatches.filter((item) => item.id !== match.id),
       );
@@ -350,6 +353,7 @@ export default function AdminPage({
       const newTeam = await createTeamRequest(name);
 
       setTeams((current) => [...current, newTeam]);
+      refreshAuditLogs();
       setNewTeamName("");
       setTeamError("");
       setShowTeamForm(false);
@@ -395,6 +399,7 @@ export default function AdminPage({
 
     try {
       await deleteTeamRequest(teamToDelete.id);
+      refreshAuditLogs();
 
       setTeams((current) =>
         current.filter((item) => item.id !== teamToDelete.id),
@@ -1012,7 +1017,11 @@ export default function AdminPage({
           )}
         </section>
       )}
-
+      {role === "admin" && (
+        <div className="admin-panel">
+          <AuditLogPanel refreshKey={auditRefreshKey} />
+        </div>
+      )}
       <section
         className="admin-panel admin-permissions-panel"
         aria-labelledby="admin-permissions-title"
@@ -1058,7 +1067,10 @@ export default function AdminPage({
         <MatchForm
           editingMatch={editingMatch}
           setEditingMatch={setEditingMatch}
-          setMatches={setMatches}
+          setMatches={(value) => {
+            setMatches(value);
+            refreshAuditLogs();
+          }}
           closeModal={closeMatchForm}
           teams={teams}
           language={language}
