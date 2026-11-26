@@ -67,15 +67,16 @@ function MatchForm({
       setWarning(t.matchNegativeGoalsError);
       return;
     }
-
-    const matchData = {
-      home: home.trim(),
-      away: away.trim(),
-      homeGoals: homeGoals.trim() === "" ? null : Number(homeGoals),
-      awayGoals: awayGoals.trim() === "" ? null : Number(awayGoals),
-      matchday: Number(matchday),
-      date,
-    };
+const matchData = {
+  home: home.trim(),
+  away: away.trim(),
+  homeGoals: homeGoals.trim() === "" ? null : Number(homeGoals),
+  awayGoals: awayGoals.trim() === "" ? null : Number(awayGoals),
+  matchday: Number(matchday),
+  date,
+  homeLineup: null,
+  awayLineup: null,
+};
     try {
       let savedMatch: Match;
 
