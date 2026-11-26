@@ -1019,7 +1019,9 @@ export default function AdminPage({
       )}
       {role === "admin" && (
         <div className="admin-panel">
-          <AuditLogPanel refreshKey={auditRefreshKey} />
+          <AuditLogPanel 
+          refreshKey={auditRefreshKey}
+          language={language} />
         </div>
       )}
       <section
